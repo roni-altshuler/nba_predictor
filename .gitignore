@@ -1,0 +1,41 @@
+# The warehouse is a 300MB+ SQLite file rebuilt from ESPN. It is derived
+# data, not source, and it is republished as a release asset rather than
+# committed.
+backend/data/*.sqlite
+backend/data/*.sqlite-wal
+backend/data/*.sqlite-shm
+backend/data/*.duckdb
+
+# Published artifacts ARE committed — they are what the static site renders,
+# and a deploy must not depend on the pipeline having run on the builder.
+!backend/data/predictions/*.json
+!backend/data/diagnostics/*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Env
+.env
+.env.local
+.env*.local
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Scratch
+/tmp/
+*.log

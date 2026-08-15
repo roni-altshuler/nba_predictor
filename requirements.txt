@@ -1,0 +1,22 @@
+# Core
+numpy>=1.24.0
+scipy>=1.11.0
+pandas>=2.0.0
+
+# API
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+
+# HTTP
+httpx>=0.26.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+
+# Optional: only needed if a machine-learned challenger is added. The served
+# model is a ridge fit in numpy and deliberately has no heavyweight
+# dependency — CI installs a bare 3.12 and runs `python -m ...`, so a script
+# that only works under a named venv is a script CI cannot run.
+# scikit-learn>=1.3.0

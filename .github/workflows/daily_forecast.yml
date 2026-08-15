@@ -1,0 +1,121 @@
+name: Daily Forecast
+
+# Refreshes results from ESPN, re-rates, re-simulates, and republishes the
+# artifacts the site renders.
+#
+# The forecast re-syncs by construction: each run rebuilds ratings from every
+# game played to date, so the projection tightens as the season runs and
+# played games leave the remaining set. Nothing here is a preseason snapshot.
+
+on:
+  schedule:
+    # 11:00 UTC = 06:00 ET, after every North American game has finished and
+    # ESPN has settled the previous night's results.
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      sims:
+        description: 'Monte Carlo iterations'
+        required: false
+        default: '20000'
+      full_rebuild:
+        description: 'Rebuild the whole warehouse from 2004'
+        required: false
+        default: 'false'
+
+# One forecast at a time. Two concurrent runs would both push the artifacts
+# and the git push would lose.
+concurrency:
+  group: daily-forecast
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore the warehouse
+        # The warehouse is gitignored — it is derived data, and a 300MB
+        # SQLite file does not belong in git history. It is republished as a
+        # release asset each run, so a runner that cannot download it must
+        # rebuild rather than forecast from nothing.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release download warehouse-latest \
+               --pattern 'warehouse.sqlite.gz' --dir /tmp --clobber; then
+            gunzip -f /tmp/warehouse.sqlite.gz
+            mv /tmp/warehouse.sqlite backend/data/warehouse.sqlite
+            echo "restored warehouse"
+          else
+            echo "no published warehouse — will rebuild from scratch"
+            echo "NEEDS_FULL_BUILD=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Rebuild the warehouse in full
+        if: env.NEEDS_FULL_BUILD == 'true' || github.event.inputs.full_rebuild == 'true'
+        run: |
+          python -m backend.scripts.build_warehouse --seasons 2004-2027
+          python -m backend.scripts.backfill_odds --seasons 2004-2027 --missing-only
+
+      - name: Refresh the current season
+        # New results are the entire reason this job runs. A failure here
+        # means forecasting from a stale corpus, which is stale but not
+        # WRONG — so it may fail without stopping the run.
+        continue-on-error: true
+        run: |
+          python -m backend.scripts.build_warehouse --current-season
+          python -m backend.scripts.backfill_odds --missing-only --limit 400
+
+      - name: Integrity check
+        # NOT continue-on-error. Publishing a forecast derived from a corpus
+        # that counts games twice, holds phantom fixtures, or has grown a
+        # placeholder franchise is worse than publishing nothing — the
+        # previous artifact stays up and is still correct.
+        run: python -m backend.scripts.validate_warehouse_integrity
+
+      - name: Publish the forecast
+        run: |
+          python -m backend.scripts.forecast_season \
+            --sims ${{ github.event.inputs.sims || '20000' }}
+
+      - name: Commit refreshed artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backend/data/predictions/ backend/data/diagnostics/ || true
+          # Artifacts stamp generated_at every run, so ignore a diff that is
+          # only a timestamp — otherwise this job commits daily noise.
+          if git diff --cached --quiet -I'"generated_at":'; then
+            echo "forecast unchanged"
+          else
+            git commit -m "chore: refresh forecast [automated]"
+            git pull --rebase --autostash origin main || true
+            git push
+          fi
+
+      - name: Republish the warehouse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gzip -c backend/data/warehouse.sqlite > /tmp/warehouse.sqlite.gz
+          gh release view warehouse-latest >/dev/null 2>&1 || \
+            gh release create warehouse-latest --title 'Warehouse (latest)' \
+              --notes 'Derived NBA game warehouse. Rebuilt daily.'
+          gh release upload warehouse-latest /tmp/warehouse.sqlite.gz --clobber

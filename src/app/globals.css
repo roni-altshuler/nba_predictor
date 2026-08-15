@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ────────────────────────────────────────────────────────────
+   Design tokens — Bugatti, dark only.
+
+   Ported from the sibling Pitchverse (soccer) and RaceIQ (F1) projects.
+   Pure black canvas, hairline borders, no gradients, no shadows, no chrome.
+   Colour carries MEANING only — win/loss, value, live state — never
+   decoration.
+
+   Dark-only by design. `<html class="dark">` is hardcoded and there is no
+   theme provider; :root is the single source of truth and `.dark` below is
+   intentionally empty so the hardcoded class stays harmless.
+   ──────────────────────────────────────────────────────────── */
+:root {
+  --background: #000000;
+  --background-secondary: #0d0d0d;
+  --background-tertiary: #141414;
+  --card-bg: #0d0d0d;
+  --card-hover: #141414;
+  --input-bg: #141414;
+  --muted-bg: #1f1f1f;
+  --nav-bg: #000000;
+  --nav-border: #262626;
+
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-tertiary: #999999;
+
+  /* Four signals, muted. Anything that is not one of these is not carrying
+     meaning and should be a hairline or a shade of grey instead. */
+  --accent-primary: #5fa657;      /* positive / favoured / model edge */
+  --accent-primary-soft: #7cbb74;
+  --accent-warn: #d4a017;         /* uncertainty / play-in / caution */
+  --accent-warn-soft: #e0b545;
+  --accent-loss: #c1443c;         /* negative / eliminated / live */
+  --accent-loss-soft: #d4655e;
+  --accent-info: #c3d9f3;         /* links, market, informational */
+  --accent-info-soft: #d6e5f7;
+  --accent-market: var(--accent-info);
+
+  --border-color: #262626;
+  --border-hover: #3a3a3a;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
+  --success: var(--accent-primary);
+  --warning: var(--accent-warn);
+  --danger: var(--accent-loss);
+  --live-bg: rgba(193, 68, 60, 0.12);
+  --live-border: rgba(193, 68, 60, 0.35);
+  --live-text: #d4655e;
+
+  --accent-on-primary: #000000;
+  --overlay-bg: rgba(0, 0, 0, 0.72);
+
+  --radius: 0.75rem;
+
+  --shell-sidebar-w: 220px;
+  --shell-topbar-h: 56px;
+  --shell-content-max: 1160px;
+
+  /* Team logos are authored for light backgrounds — several NBA marks go
+     invisible on pure black. Every product of this class (ESPN, FotMob)
+     seats them on a light tile for exactly this reason. */
+  --logo-plate: #ffffff;
+  --logo-plate-ring: rgba(19, 19, 22, 0.12);
+}
+
+.dark {
+  /*
+   * Intentionally empty. See the header comment: the app hardcodes
+   * <html class="dark"> and there is no toggle, so :root is the single
+   * source of truth. If a light mode ever arrives, invert this — put the
+   * light values in :root and the dark ones here — rather than
+   * reintroducing a second full palette without a provider to switch it.
+   */
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--background);
+  color: var(--text-secondary);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display type is the loudest thing on the page: white, uppercase, widely
+   letterspaced. It is what makes the restraint elsewhere read as deliberate
+   rather than unfinished. Note the POSITIVE tracking. */
+h1, h2, h3 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+h4, h5, h6 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+/* Nav, buttons, captions and every number run monospace — tabular figures
+   keep probability columns from shifting as digits change. */
+nav, button, .caption, th, [role='tab'] {
+  font-family: var(--font-mono-numeric), ui-monospace, monospace;
+  letter-spacing: 0.04em;
+}
+
+/* Every number in a table is tabular. A win column that jitters as the
+   digits change reads as a broken table, not a live one. */
+.numeric, td.numeric, th.numeric {
+  font-family: var(--font-mono-numeric), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ────────────────────────────────────────────────────────────
+   Surface primitives
+   ──────────────────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  transition: border-color 0.18s;
+}
+.card:hover { border-color: var(--border-hover); }
+
+.hairline { border-color: var(--border-color); }
+
+.eyebrow {
+  font-family: var(--font-mono-numeric), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+}
+
+/* A probability bar. The value is ALWAYS also rendered as text beside it —
+   colour alone never carries the number, both for accessibility and because
+   a reader cannot read 63% off a bar. */
+.prob-track {
+  background: var(--muted-bg);
+  height: 4px;
+  border-radius: 0;
+  overflow: hidden;
+}
+.prob-fill { height: 100%; background: var(--accent-primary); }
+
+table { border-collapse: collapse; width: 100%; }
+th {
+  text-align: left;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+td {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8125rem;
+}
+tbody tr:hover { background: var(--card-hover); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

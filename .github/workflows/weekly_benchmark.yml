@@ -1,0 +1,71 @@
+name: Weekly Benchmark
+
+# Re-derives the measured state that every claim on the site rests on.
+#
+# Weekly rather than daily because a walk-forward over 29,653 games does not
+# move meaningfully in 24 hours, and because the numbers quoted in CLAUDE.md
+# should change on a schedule someone can notice rather than continuously.
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'   # Mondays, after the weekend's games are settled
+  workflow_dispatch:
+
+concurrency:
+  group: weekly-benchmark
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore the warehouse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download warehouse-latest \
+            --pattern 'warehouse.sqlite.gz' --dir /tmp --clobber
+          gunzip -f /tmp/warehouse.sqlite.gz
+          mv /tmp/warehouse.sqlite backend/data/warehouse.sqlite
+
+      - name: Integrity check
+        run: python -m backend.scripts.validate_warehouse_integrity
+
+      - name: Market benchmark
+        run: python -m backend.scripts.benchmark_market
+
+      - name: Elo sweep
+        run: python -m backend.scripts.tune_elo
+
+      - name: Playoff series backtest
+        run: python -m backend.scripts.benchmark_series
+
+      - name: Commit refreshed diagnostics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backend/data/diagnostics/ || true
+          if git diff --cached --quiet -I'"generated_at":'; then
+            echo "diagnostics unchanged"
+          else
+            git commit -m "chore: refresh benchmarks [automated]"
+            git pull --rebase --autostash origin main || true
+            git push
+          fi
