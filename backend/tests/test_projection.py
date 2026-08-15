@@ -6,7 +6,13 @@ import json
 
 import pytest
 
-from backend.scripts.build_history import build_context, seasons_lost
+from backend.scripts.build_history import (
+    _ALLSTAR_RE,
+    _allstar_label,
+    _allstar_side,
+    build_context,
+    seasons_lost,
+)
 from backend.scripts.title_race import _checkpoint_dates, _eastern_day
 from backend.services.playoffs.projection import (
     FIRST_ROUND_PAIRS,
@@ -296,6 +302,64 @@ class TestFixtureContext:
         assert len(out["form"]["AAA"]) == out["form_depth"]
         # The kept ones are the LATEST, not the first.
         assert out["head_to_head"]["AAA|BBB"][-1]["id"] == "20"
+
+
+class TestAllStarLabels:
+    """Twenty-three seasons of inconsistent phase strings, tidied."""
+
+    @pytest.mark.parametrize(
+        "phase,expected",
+        [
+            ("NBA All-Star Game", "All-Star Game"),
+            ("NBA ALL-STAR GAME", "All-Star Game"),
+            ("ALL STAR GAME", "All-Star Game"),
+            ("NBA ALL-STAR GAME AT ORLANDO FL", "All-Star Game"),
+            ("NBA ALL-STAR GAME AT LOS ANGELES CA", "All-Star Game"),
+            ("NBA All-Star - Round Robin", "All-Star Round Robin"),
+            (
+                "NBA All-Star - Championship First team to 40 points wins - Untimed",
+                "All-Star Championship",
+            ),
+            ("RISING STARS", "Rising Stars"),
+        ],
+    )
+    def test_it_reduces_the_source_string_to_an_event_name(self, phase, expected):
+        assert _allstar_label(phase) == expected
+
+    def test_it_never_returns_an_empty_label(self):
+        # A blank chip is worse than an ugly one: the reader cannot tell
+        # whether the event has no name or the page failed to render it.
+        assert _allstar_label("") == "All-Star"
+
+    def test_it_repairs_the_truncated_conference_names(self):
+        # ESPN stores "Eastern Confe All-Stars" — a 20-character column
+        # somewhere upstream. Repaired on the way out, not in the teams
+        # table, which holds what the source said.
+        side = _allstar_side(
+            {"display_name": "Eastern Confe All-Stars", "abbreviation": "EAST"}, 39
+        )
+        assert side["name"] == "Eastern Conference All-Stars"
+
+    def test_it_collapses_a_doubled_side_name(self):
+        assert _allstar_side({"display_name": "Team Stars Team Stars"}, 35)["name"] == (
+            "Team Stars"
+        )
+
+    def test_an_unknown_side_still_gets_a_name(self):
+        assert _allstar_side(None, 99)["name"] == "Team 99"
+
+    def test_the_pattern_matches_all_star_but_not_an_exhibition(self):
+        """The discriminator, and why it is the name rather than the teams.
+
+        "One side is not an NBA franchise" also catches all 120 international
+        exhibitions in the corpus — Real Madrid at Memphis, Maccabi at
+        Cleveland — which are preseason friendlies, not All-Star weekend.
+        """
+        assert _ALLSTAR_RE.search("NBA ALL-STAR GAME")
+        assert _ALLSTAR_RE.search("RISING STARS")
+        assert not _ALLSTAR_RE.search("Final")
+        assert not _ALLSTAR_RE.search("AT MADRID SPAIN")
+        assert not _ALLSTAR_RE.search("NBA PRESEASON")
 
 
 class TestArchiveIndexGuard:

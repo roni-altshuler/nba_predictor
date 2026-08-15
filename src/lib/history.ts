@@ -52,6 +52,7 @@ export interface ArchiveGame {
   ot: number
   venue: string | null
   neutral: boolean
+  series_id?: string
   q_home?: number[]
   q_away?: number[]
   box_home?: Record<string, number>
@@ -287,6 +288,92 @@ export function meetingsBetween(a: string, b: string): Meeting[] {
 export function formFor(abbreviation: string): FormGame[] {
   const found = getGameContext()?.form[abbreviation] ?? []
   return [...found].reverse()
+}
+
+/**
+ * All-Star weekend, which sits outside the model entirely.
+ *
+ * The sides are one-night drafts with no conference, so every franchise
+ * filter on the site drops these games — correctly, since a rating means
+ * nothing in a game where half the format is an untimed race to a target
+ * score. That is exactly why they need publishing separately.
+ */
+export interface AllStarSide {
+  team_id: number
+  name: string
+  abbreviation: string | null
+  logo: string | null
+}
+
+export interface AllStarEvent {
+  id: string
+  date: string
+  season: number
+  phase: string
+  label: string
+  venue: string | null
+  home: AllStarSide
+  away: AllStarSide
+  home_score: number
+  away_score: number
+  q_home?: number[]
+  q_away?: number[]
+}
+
+export interface AllStarArchive {
+  generated_at: string
+  basis: string
+  n_events: number
+  note: string
+  seasons: Array<{ season: number; label: string; events: AllStarEvent[] }>
+}
+
+let allStarCache: AllStarArchive | null | undefined
+
+export function getAllStar(): AllStarArchive | null {
+  if (allStarCache === undefined) {
+    allStarCache = readJson<AllStarArchive>('allstar.json')
+  }
+  return allStarCache
+}
+
+/** One All-Star game by id — these are not in the season archive. */
+export function getAllStarEvent(id: string): AllStarEvent | null {
+  for (const season of getAllStar()?.seasons ?? []) {
+    const found = season.events.find((event) => event.id === id)
+    if (found) return found
+  }
+  return null
+}
+
+/**
+ * The URL-safe half of a series id.
+ *
+ * Series ids are `2026:1v18` — season, colon, the two franchise ids. **The
+ * colon cannot go in a path segment.** Next prerendered
+ * `/seasons/2026/series/2026:1v18` quite happily and then 404'd every one of
+ * them at runtime, encoded or not; a colon is reserved in a URL path and the
+ * router will not match it. The season is already in the path, so the
+ * segment is just the tail: `/seasons/2026/series/1v18`.
+ */
+export function seriesSlug(seriesId: string): string {
+  const tail = seriesId.split(':').pop() || seriesId
+  return tail.replace(/[^A-Za-z0-9_-]/g, '-')
+}
+
+/** Every game of one playoff series, in order. Takes the SLUG, not the id. */
+export function getSeries(
+  season: number | string,
+  slug: string,
+): { file: SeasonFile; series: SeasonFile['series'][number]; games: ArchiveGame[] } | null {
+  const file = getSeason(season)
+  if (!file) return null
+  const series = file.series.find((s) => seriesSlug(s.series_id) === slug)
+  if (!series) return null
+  const games = file.games
+    .filter((g) => g.series_id === series.series_id)
+    .sort((a, b) => a.date.localeCompare(b.date))
+  return { file, series, games }
 }
 
 export interface RatingHistory {

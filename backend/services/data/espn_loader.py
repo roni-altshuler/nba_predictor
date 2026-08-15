@@ -56,14 +56,25 @@ COMPETITIONS: Tuple[Dict[str, Any], ...] = (
     {"competition_id": "nba", "name": "NBA", "level": "major"},
 )
 
-# ESPN box-score stat names → warehouse column suffixes. Split pairs like
-# "fieldGoalsMade-fieldGoalsAttempted" expand into two columns.
+# ESPN box-score stat names → warehouse column suffixes.
+#
+# **Both spellings of every made/attempted pair are here, and that is not
+# belt-and-braces.** The SUMMARY endpoint publishes the hyphenated pair
+# ("fieldGoalsMade-fieldGoalsAttempted", displayValue "36-92"); the
+# SCOREBOARD publishes two separate scalars ("fieldGoalsMade" = 36,
+# "fieldGoalsAttempted" = 92) and uses "rebounds" where the summary says
+# "totalRebounds". The first version of this map carried only the summary's
+# names, and since the warehouse is built from the scoreboard, exactly one
+# column matched: assists. Every other team-stat column in all 31,844 games
+# was NULL, and the site rendered a "team box score" with a single row in it
+# for two months without anything failing.
 _SPLIT_STATS = {
     "fieldGoalsMade-fieldGoalsAttempted": ("fgm", "fga"),
     "threePointFieldGoalsMade-threePointFieldGoalsAttempted": ("fg3m", "fg3a"),
     "freeThrowsMade-freeThrowsAttempted": ("ftm", "fta"),
 }
 _SCALAR_STATS = {
+    "rebounds": "reb",
     "totalRebounds": "reb",
     "offensiveRebounds": "oreb",
     "defensiveRebounds": "dreb",
@@ -73,7 +84,22 @@ _SCALAR_STATS = {
     "turnovers": "tov",
     "totalTurnovers": "tov",
     "fouls": "pf",
+    "personalFouls": "pf",
+    "fieldGoalsMade": "fgm",
+    "fieldGoalsAttempted": "fga",
+    "threePointFieldGoalsMade": "fg3m",
+    "threePointFieldGoalsAttempted": "fg3a",
+    "freeThrowsMade": "ftm",
+    "freeThrowsAttempted": "fta",
 }
+# Averages ("avgRebounds", "avgPoints") sit in the same list and carry the
+# same abbreviation as the totals. Matching on `abbreviation` would pick
+# whichever came last; matching on `name` and ignoring these keeps the total.
+_IGNORED_STATS = frozenset({
+    "avgRebounds", "avgAssists", "avgPoints", "avgSteals", "avgBlocks",
+    "avgTurnovers", "avgFouls", "points", "fieldGoalPct", "threePointPct",
+    "freeThrowPct", "threePointFieldGoalPct",
+})
 
 # ESPN sometimes files the play-in round under the postseason type with a
 # note naming it. Recognised so the play-in never trains the playoff-series
@@ -442,7 +468,12 @@ def _team_box(competitor: Dict[str, Any], side: str) -> Dict[str, Any]:
     """
     out: Dict[str, Any] = {}
     for stat in competitor.get("statistics") or []:
-        name = stat.get("name") or stat.get("abbreviation")
+        # `name` only. Falling back to `abbreviation` makes "avgRebounds"
+        # look like "rebounds" (both are REB) and the average overwrites the
+        # total, silently, in the direction that looks plausible.
+        name = stat.get("name")
+        if not name or name in _IGNORED_STATS:
+            continue
         display = stat.get("displayValue")
         if name in _SPLIT_STATS and isinstance(display, str) and "-" in display:
             made_col, att_col = _SPLIT_STATS[name]

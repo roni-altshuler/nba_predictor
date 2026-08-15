@@ -1,29 +1,32 @@
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
-import { GameCard } from '@/components/forecast/GameCard'
+import { WeekCalendar } from '@/components/schedule/WeekCalendar'
 import {
   getGameForecasts,
   getSeasonProjections,
   groupByWeek,
   type GameWeek,
 } from '@/lib/artifacts'
-import { dayLabel, stamp } from '@/lib/format'
+import { stamp } from '@/lib/format'
 
 export const metadata = { title: 'Games' }
 export const dynamic = 'force-static'
 
 /*
- * Organised by NBA WEEK, which is the unit the league itself schedules in.
+ * Organised by NBA WEEK, which is the unit the league itself schedules in,
+ * and drawn as a CALENDAR rather than a list.
  *
  * A day is a slate; a week is a schedule. Every argument about rest,
  * back-to-backs and travel is framed in weeks, the league publishes its
  * calendar as "Week 1" and "Week 2", and a reader planning anything is
- * planning around one. The previous version showed six days and then
- * stopped, which answered "what is on tonight" and nothing else.
+ * planning around one.
  *
- * The current week renders open and the rest are `<details>`: 1,200 cards in
- * the DOM at once is unusable on a phone, and collapsing them keeps every
- * week one click away AND still present for in-page search. Two weeks open
- * was the first attempt and made the landing view ninety cards long.
+ * The list form was the real problem though. Forty-odd games a week at one
+ * forecast card each is a page you scroll for a minute to read a single
+ * week; the calendar puts the whole week on one screen and moves the detail
+ * to the game page, which has room for it. See `WeekCalendar`.
+ *
+ * The current week renders open and the rest are `<details>`, so every week
+ * is one click away AND still in the DOM for in-page search.
  */
 const WEEKS_OPEN = 1
 
@@ -59,7 +62,7 @@ export default function GamesPage() {
           {forecasts.n_priced === 0
             ? ' No lines are published this far out, so the value surface is empty rather than zero.'
             : ''}{' '}
-          Every card opens the full match detail.
+          Every game opens its full match detail.
         </p>
       </header>
 
@@ -126,22 +129,7 @@ function WeekSection({ week, open }: { week: GameWeek; open: boolean }) {
         </span>
       </summary>
 
-      {week.days.map(([day, games]) => (
-        <section key={day} className="mt-4">
-          <h3 className="mb-3 font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
-            {dayLabel(day)}
-            <span className="text-[var(--text-tertiary)]">
-              {' · '}
-              {games.length} {games.length === 1 ? 'game' : 'games'}
-            </span>
-          </h3>
-          <div className="grid gap-3 md:grid-cols-2">
-            {games.map((game) => (
-              <GameCard key={game.game_id} game={game} />
-            ))}
-          </div>
-        </section>
-      ))}
+      <WeekCalendar week={week} />
     </details>
   )
 }

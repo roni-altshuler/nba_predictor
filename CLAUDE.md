@@ -187,10 +187,12 @@ model changes.
 | `/` | today's slate, title odds, power ratings — all named by team mark |
 | `/season` | projected standings, the projected-finish chart, the title race |
 | `/bracket` | the projected postseason, priced by exact enumeration |
-| `/games` | the schedule **by NBA week**, every card a link |
-| `/games/[id]` | one game — upcoming OR archived; series history, both sides' form, player box score from ESPN |
+| `/games` | the schedule **by NBA week, as a calendar** |
+| `/games/[id]` | one game — upcoming, archived OR All-Star; series history, form, period breakdown, team totals, player box score |
+| `/allstar` | All-Star weekend, 31 games over 23 seasons, archive-only |
 | `/seasons` | the 23-season archive index |
 | `/seasons/[season]` | standings, playoff bracket, the title race replayed, the model's five biggest misses |
+| `/seasons/[season]/series/[slug]` | one playoff series, game by game |
 | `/seasons/[season]/games` | every game that season, by month |
 | `/teams/[abbr]` | rating history, seed distribution, next games |
 | `/predict` | head-to-head for any two franchises |
@@ -227,6 +229,33 @@ archived game URL into a 404 while 22 intact season files sat beside it.
 Nothing failed; the pages simply stopped existing. `seasons_lost()` now
 refuses to publish an index smaller than the live one, the same guard
 `forecast_season` applies to franchises.
+
+**A series id cannot go in a URL.** Ids are `2026:1v18` and a colon is
+reserved in a path segment: Next prerendered all 345 series routes happily
+and then 404'd every one of them at runtime, encoded or not. `seriesSlug()`
+drops the season prefix the path already carries, so the URL is
+`/seasons/2026/series/1v18`.
+
+**All-Star games are identified by PHASE, and that is the exception to the
+participation rule.** "One side is not an NBA franchise" also matches all 120
+international exhibitions in the corpus — Real Madrid at Memphis, the
+Guangzhou Loong-Lions on tour — which are preseason friendlies. What makes a
+game the All-Star Game is that it IS the All-Star Game. They live outside the
+model entirely: the sides carry no conference so every franchise filter drops
+them, which is correct and is exactly why they need publishing separately.
+**No forecast appears on `/allstar`**, deliberately — a rating fitted on
+82-game franchises has nothing to say about an untimed race to 40 points.
+
+**The team box score had one row in it for two months.** `_team_box` was
+written against the SUMMARY endpoint's stat names (`totalRebounds`,
+`fieldGoalsMade-fieldGoalsAttempted`) while the warehouse is built from the
+SCOREBOARD, which uses `rebounds` and two separate scalars. Exactly one
+column matched — `assists` — so every team-stat column in all 31,844 games
+was NULL and nothing failed. The loader now carries both spellings, and the
+game page renders team totals from the ESPN summary it already fetches for
+the player lines, so the full set is there without a re-ingest. Matching on
+`abbreviation` is also forbidden there: `avgRebounds` and `rebounds` share
+REB, and the average would overwrite the total.
 
 **Weeks run Monday to Sunday, anchored on `season_start`.** That field is
 published in `game_forecasts.json` from the whole season, played and

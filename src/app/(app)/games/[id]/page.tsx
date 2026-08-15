@@ -8,10 +8,12 @@ import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
 import {
   SEASON_TYPE_LABEL,
   formFor,
+  getAllStarEvent,
   getArchivedGame,
   getGameContext,
   meetingsBetween,
   teamMetaFromStandings,
+  type AllStarEvent,
   type ArchiveGame,
   type Meeting,
 } from '@/lib/history'
@@ -75,10 +77,125 @@ export default async function GamePage({
     )
   }
 
+  // All-Star games are not in the season archive: their sides carry no
+  // conference, so every franchise filter in the pipeline drops them. They
+  // are published separately and looked up here.
+  const allStar = getAllStarEvent(id)
+  if (allStar) {
+    const box = await getEspnBoxScore(id)
+    return <AllStarGame event={allStar} box={box} />
+  }
+
   const upcoming = getGameForecasts()?.games.find((g) => g.game_id === id)
   if (upcoming) return <UpcomingGame game={upcoming} />
 
   notFound()
+}
+
+/* -------------------------------------------------------------- all-star */
+
+/**
+ * An All-Star game: the result, the periods and the box score — and no
+ * forecast, because there is not one and inventing one would be a category
+ * error rather than a feature.
+ */
+function AllStarGame({
+  event,
+  box,
+}: {
+  event: AllStarEvent
+  box: GameBoxScore | null
+}) {
+  const homeWon = event.home_score > event.away_score
+  return (
+    <div>
+      <header className="mb-6">
+        <Link
+          href="/allstar"
+          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
+        >
+          ← All-Star weekend
+        </Link>
+        <p className="eyebrow mt-3">
+          {event.label} · {event.season - 1}-{String(event.season).slice(2)}
+        </p>
+
+        <div className="mt-3 flex items-center justify-between gap-4">
+          <ScoreSide
+            team={event.away.abbreviation ?? event.away.name}
+            meta={event.away}
+            score={event.away_score}
+            won={!homeWon}
+          />
+          <span className="font-numeric text-xs text-[var(--text-tertiary)]">
+            final
+          </span>
+          <ScoreSide
+            team={event.home.abbreviation ?? event.home.name}
+            meta={event.home}
+            score={event.home_score}
+            won={homeWon}
+            align="right"
+          />
+        </div>
+
+        <p className="mt-3 text-xs text-[var(--text-tertiary)]">
+          {new Date(event.date).toLocaleString('en-US', {
+            weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+            timeZone: 'America/New_York',
+          })}
+          {event.venue ? ` · ${event.venue}` : ''}
+        </p>
+      </header>
+
+      {event.q_home && event.q_away ? (
+        <div className="mb-6">
+          <PeriodTable
+            awayLabel={event.away.abbreviation ?? event.away.name}
+            homeLabel={event.home.abbreviation ?? event.home.name}
+            qAway={event.q_away}
+            qHome={event.q_home}
+            ot={0}
+            awayTotal={event.away_score}
+            homeTotal={event.home_score}
+          />
+        </div>
+      ) : (
+        <section className="card mb-6 p-4">
+          <h2 className="text-sm">No period breakdown</h2>
+          <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+            This format was not played in quarters — since 2024 the All-Star
+            Game has been an untimed race to a target score — so the source
+            publishes no period scores. Shown as absent rather than as four
+            zeros.
+          </p>
+        </section>
+      )}
+
+      <section className="card mb-6 p-4">
+        <h2 className="text-sm">No forecast</h2>
+        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+          Deliberately. The sides were drafted the week before and exist for
+          one night, and the ratings this model carries describe 82-game
+          franchises. A probability here would be a number with nothing behind
+          it. The raw source label was{' '}
+          <code className="font-numeric">{event.phase}</code>.
+        </p>
+      </section>
+
+      {box ? (
+        <PlayerBoxScores box={box} />
+      ) : (
+        <section className="card p-4">
+          <h2 className="text-sm">No player box score</h2>
+          <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+            Player lines are read from ESPN when this page is built, and the
+            request did not come back.
+          </p>
+        </section>
+      )}
+    </div>
+  )
 }
 
 /* ---------------------------------------------------------------- played */
@@ -141,49 +258,26 @@ function PlayedGame({
       </header>
 
       {game.q_home && game.q_away ? (
-        <section className="mb-6">
-          <h2 className="mb-3 text-sm">By quarter</h2>
-          <div className="card overflow-x-auto">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Team</th>
-                  {game.q_home.map((_, i) => (
-                    <th key={i} scope="col" className="numeric text-right">
-                      Q{i + 1}
-                    </th>
-                  ))}
-                  {game.ot > 0 ? (
-                    <th scope="col" className="numeric text-right">OT</th>
-                  ) : null}
-                  <th scope="col" className="numeric text-right">Final</th>
-                </tr>
-              </thead>
-              <tbody>
-                <QuarterRow
-                  label={game.away}
-                  quarters={game.q_away}
-                  ot={game.ot}
-                  total={game.away_score}
-                />
-                <QuarterRow
-                  label={game.home}
-                  quarters={game.q_home}
-                  ot={game.ot}
-                  total={game.home_score}
-                />
-              </tbody>
-            </table>
-          </div>
-          {game.ot > 0 ? (
-            <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
-              The OT column is the balance between the four quarters and the
-              final score — the source publishes period totals, not each
-              overtime separately.
-            </p>
-          ) : null}
+        <div className="mb-6">
+          <PeriodTable
+            awayLabel={game.away}
+            homeLabel={game.home}
+            qAway={game.q_away}
+            qHome={game.q_home}
+            ot={game.ot}
+            awayTotal={game.away_score}
+            homeTotal={game.home_score}
+          />
+        </div>
+      ) : (
+        <section className="card mb-6 p-4">
+          <h2 className="text-sm">No period breakdown</h2>
+          <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+            The source published no quarter scores for this game. Shown as
+            absent rather than as four zeros.
+          </p>
         </section>
-      ) : null}
+      )}
 
       {game.p_model !== undefined ? (
         <RecordedForecast game={game} homeWon={homeWon} margin={margin} />
@@ -199,30 +293,26 @@ function PlayedGame({
       )}
 
       {box ? (
-        <PlayerBoxScores box={box} />
+        <>
+          <TeamComparison box={box} />
+          <PlayerBoxScores box={box} />
+        </>
       ) : (
-        <section className="card mb-6 p-4">
-          <h2 className="text-sm">No player box score</h2>
-          <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            Player lines are read from ESPN when this page is built, not
-            stored here, and the request did not come back. The result,
-            quarters and forecast above are ours and are unaffected.
-          </p>
-        </section>
-      )}
-
-      {game.box_home && game.box_away ? (
-        <div className="mb-6">
-          <BoxScore game={game} />
-        </div>
-      ) : (
-        <section className="card mb-6 p-4">
-          <h2 className="text-sm">No team box score</h2>
-          <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
-            The source carried no team statistics for this game. Shown as
-            missing rather than as a table of zeros.
-          </p>
-        </section>
+        <>
+          <section className="card mb-6 p-4">
+            <h2 className="text-sm">No player box score</h2>
+            <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+              Player lines are read from ESPN when this page is built, not
+              stored here, and the request did not come back. The result,
+              periods and forecast above are ours and are unaffected.
+            </p>
+          </section>
+          {game.box_home && game.box_away ? (
+            <div className="mb-6">
+              <BoxScore game={game} />
+            </div>
+          ) : null}
+        </>
       )}
 
       <SeriesHistory away={game.away} home={game.home} excludeId={game.id} />
@@ -455,12 +545,101 @@ function RecordedForecast({
   )
 }
 
+/** Warehouse box columns, used only when ESPN cannot be reached. */
 const BOX_ROWS: Array<[string, string]> = [
   ['fgm', 'FG made'], ['fga', 'FG att'], ['fg3m', '3P made'], ['fg3a', '3P att'],
   ['ftm', 'FT made'], ['fta', 'FT att'], ['reb', 'Rebounds'],
   ['oreb', 'Off. reb'], ['ast', 'Assists'], ['stl', 'Steals'],
   ['blk', 'Blocks'], ['tov', 'Turnovers'], ['pf', 'Fouls'],
 ]
+
+/**
+ * Team totals, side by side, from the SUMMARY endpoint.
+ *
+ * **This replaced a table that had one row in it.** The warehouse's team
+ * columns were parsed with the summary endpoint's stat names while the
+ * warehouse is built from the scoreboard, which spells them differently —
+ * exactly one column matched, `assists`, so every archived game rendered a
+ * "team box score" consisting of the assist count. The loader is fixed for
+ * future ingests, but the complete set was already arriving here with the
+ * player lines, so this reads it from there and needs no re-ingest at all.
+ *
+ * The percentage rows are derived from made and attempted rather than read
+ * from the feed's own `FG%`, so a shooting line and its percentage can never
+ * disagree on the same row.
+ */
+function TeamComparison({ box }: { box: GameBoxScore }) {
+  if (box.teams.length < 2) return null
+  const [first, second] = box.teams
+  const labels = first.labels.filter(
+    (label) => label !== 'MIN' && label !== '+/-',
+  )
+  if (!labels.length) return null
+
+  const shooting: Array<[string, string]> = [
+    ['FG', 'Field goals'],
+    ['3PT', 'Three-pointers'],
+    ['FT', 'Free throws'],
+  ]
+
+  return (
+    <section className="mb-6">
+      <h2 className="mb-3 text-sm">Team totals</h2>
+      <div className="card overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Stat</th>
+              <th scope="col" className="numeric text-right">
+                {first.abbreviation ?? first.displayName}
+              </th>
+              <th scope="col" className="numeric text-right">
+                {second.abbreviation ?? second.displayName}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {labels.map((label) => {
+              const a = first.totals[label]
+              const b = second.totals[label]
+              if (a === undefined && b === undefined) return null
+              const shot = shooting.find(([key]) => key === label)
+              return (
+                <tr key={label}>
+                  <td className="text-[var(--text-secondary)]">
+                    {shot ? shot[1] : label}
+                  </td>
+                  <td className="numeric text-right">
+                    {a ?? '—'}
+                    {shot ? <Percent value={a} /> : null}
+                  </td>
+                  <td className="numeric text-right">
+                    {b ?? '—'}
+                    {shot ? <Percent value={b} /> : null}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
+
+/** The percentage behind a "36-92" shooting line, derived not read. */
+function Percent({ value }: { value?: string }) {
+  if (!value || !value.includes('-')) return null
+  const [made, attempted] = value.split('-').map(Number)
+  if (!Number.isFinite(made) || !Number.isFinite(attempted) || attempted <= 0) {
+    return null
+  }
+  return (
+    <span className="ml-1.5 text-[10px] text-[var(--text-tertiary)]">
+      {pct(made / attempted, 1)}
+    </span>
+  )
+}
 
 function BoxScore({ game }: { game: ArchiveGame }) {
   const home = game.box_home!
@@ -495,6 +674,11 @@ function BoxScore({ game }: { game: ArchiveGame }) {
           </tbody>
         </table>
       </div>
+      <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+        Read from the stored warehouse columns, which the scoreboard fills
+        only partly. The complete set comes from ESPN and is shown above when
+        that request succeeds.
+      </p>
     </section>
   )
 }
@@ -831,29 +1015,108 @@ function ScoreSide({
   )
 }
 
-function QuarterRow({
-  label,
-  quarters,
+/**
+ * The point breakdown by period, with the running score beside it.
+ *
+ * **The cumulative column is the one people actually read.** Q1-Q4 answers
+ * "who won the third", but the question a reader is reconstructing is "when
+ * did this get away from them", and that needs the running total. Both are
+ * here; neither is derivable at a glance from the other.
+ */
+function PeriodTable({
+  awayLabel,
+  homeLabel,
+  qAway,
+  qHome,
   ot,
-  total,
+  awayTotal,
+  homeTotal,
 }: {
-  label: string
-  quarters: number[]
+  awayLabel: string
+  homeLabel: string
+  qAway: number[]
+  qHome: number[]
   ot: number
-  total: number
+  awayTotal: number
+  homeTotal: number
 }) {
-  const regulation = quarters.reduce((a, b) => a + b, 0)
+  const periods = Math.max(qAway.length, qHome.length)
+  const running = (quarters: number[], upTo: number) =>
+    quarters.slice(0, upTo + 1).reduce((a, b) => a + b, 0)
+
   return (
-    <tr>
-      <td className="text-[var(--text-primary)]">{label}</td>
-      {quarters.map((q, i) => (
-        <td key={i} className="numeric text-right">{q}</td>
-      ))}
+    <section>
+      <h2 className="mb-3 text-sm">Scoring by period</h2>
+      <div className="card overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Team</th>
+              {Array.from({ length: periods }, (_, i) => (
+                <th key={i} scope="col" className="numeric text-right">
+                  Q{i + 1}
+                </th>
+              ))}
+              {ot > 0 ? (
+                <th scope="col" className="numeric text-right">OT</th>
+              ) : null}
+              <th scope="col" className="numeric text-right">Final</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { label: awayLabel, quarters: qAway, total: awayTotal },
+              { label: homeLabel, quarters: qHome, total: homeTotal },
+            ].map((side) => {
+              const regulation = side.quarters.reduce((a, b) => a + b, 0)
+              return (
+                <tr key={side.label}>
+                  <td className="text-[var(--text-primary)]">{side.label}</td>
+                  {Array.from({ length: periods }, (_, i) => (
+                    <td key={i} className="numeric text-right">
+                      {side.quarters[i] ?? '—'}
+                    </td>
+                  ))}
+                  {ot > 0 ? (
+                    <td className="numeric text-right">
+                      {side.total - regulation}
+                    </td>
+                  ) : null}
+                  <td className="numeric text-right text-[var(--text-primary)]">
+                    {side.total}
+                  </td>
+                </tr>
+              )
+            })}
+            <tr>
+              <td className="text-[var(--text-tertiary)]">Running score</td>
+              {Array.from({ length: periods }, (_, i) => (
+                <td
+                  key={i}
+                  className="numeric text-right text-[var(--text-tertiary)]"
+                >
+                  {running(qAway, i)}–{running(qHome, i)}
+                </td>
+              ))}
+              {ot > 0 ? (
+                <td className="numeric text-right text-[var(--text-tertiary)]">
+                  {awayTotal}–{homeTotal}
+                </td>
+              ) : null}
+              <td className="numeric text-right text-[var(--text-tertiary)]">
+                {awayTotal}–{homeTotal}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       {ot > 0 ? (
-        <td className="numeric text-right">{total - regulation}</td>
+        <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+          The OT column is the balance between regulation and the final score
+          — the source publishes period totals, not each overtime separately.
+        </p>
       ) : null}
-      <td className="numeric text-right text-[var(--text-primary)]">{total}</td>
-    </tr>
+    </section>
   )
 }
 

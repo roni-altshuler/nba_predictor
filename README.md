@@ -12,9 +12,14 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 4. **Playoff bracket** — the projected postseason, with every first-round series priced by exact enumeration
 5. **The title race** — each conference's contenders as a line that moves as the season is played
 
-The schedule is organised by **NBA week**, and every matchup card opens a
-match detail page: the last six meetings, both sides' recent form, the
-forecast, and — once the game is played — the full player box score.
+The schedule is a **calendar, one NBA week at a time**, and every game opens
+a match detail page: the last six meetings, both sides' recent form, the
+forecast, and — once it is played — the scoring by period, the team totals
+and the full player box score. Completed playoff series get their own pages,
+reachable from any card on the bracket.
+
+Plus **All-Star weekend**: 31 games over 23 seasons, through every format the
+league has tried. Nothing there is forecast, and the page says why.
 
 Plus a **23-season archive**: final standings, every game with quarters, the
 team and player box scores, the playoff bracket, the title race replayed at

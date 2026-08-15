@@ -10,6 +10,10 @@ Writes into `backend/data/history/`:
 * `game_index.json`     — game_id → season, so a game URL needs no season
 * `matchups.json`       — every ordered pair of franchises, forecast at
                           current ratings (the head-to-head surface)
+* `game_context.json`   — series history, recent form and records, for the
+                          fixture pages
+* `allstar.json`        — All-Star weekend games, which live outside the
+                          model entirely and are archive-only
 
 **Every historical forecast in these files is a BACKTEST and is labelled
 one.** The model that produced it was refit monthly on games strictly
@@ -39,6 +43,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -250,6 +255,10 @@ def build_season_file(
             "venue": row["venue"],
             "neutral": bool(row["neutral_site"]),
         }
+        # Carried so a playoff series page can gather its own games without
+        # re-deriving the grouping the loader already did.
+        if row["series_id"]:
+            game["series_id"] = row["series_id"]
         quarters_home = _quarters(row, "home")
         quarters_away = _quarters(row, "away")
         if quarters_home and quarters_away:
@@ -399,6 +408,19 @@ def build_matchups(
 H2H_DEPTH = 6
 FORM_DEPTH = 10
 
+# An All-Star event is identified by its PHASE, and here that is the right
+# discriminator rather than the usual participation rule. The alternative
+# signal — "one side is not an NBA franchise" — also catches every
+# international exhibition in the corpus, and there are 120 of them: Real
+# Madrid at Memphis, Maccabi at Cleveland, the Guangzhou Loong-Lions on tour.
+# Those are preseason friendlies, not All-Star weekend. What makes a game the
+# All-Star Game is that it IS the All-Star Game, so the name is the fact.
+#
+# The vocabulary is wildly inconsistent across 23 seasons and the pattern has
+# to absorb all of it: "NBA All-Star Game", "NBA ALL-STAR GAME AT ORLANDO
+# FL", "ALL STAR GAME", "NBA All-Star - Round Robin", "RISING STARS".
+_ALLSTAR_RE = re.compile(r"all.?star|rising stars", re.I)
+
 
 def build_context(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
     """The context a fixture page needs: the series history and recent form.
@@ -485,6 +507,123 @@ def build_context(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
         "form": {k: v[-FORM_DEPTH:] for k, v in form.items()},
         "records": records,
     }
+
+
+def build_allstar(warehouse) -> Dict:
+    """Every All-Star weekend game the source publishes, by season.
+
+    **Not a model surface.** Nothing here is forecast, benchmarked or fed to
+    anything: the sides are drafted teams that exist for one night, half the
+    games are untimed races to a target score, and a franchise rating means
+    nothing in them. This is an archive, and the artifact says so.
+
+    Kept OUT of the ratings and the standings for the same reason, which is
+    why these games are invisible everywhere else on the site — the sides
+    carry no conference, so every franchise filter drops them. That was the
+    right call and it is also why they needed publishing separately.
+
+    **What is missing is stated rather than hidden.** ESPN's scoreboard
+    publishes All-Star weekend GAMES. The Saturday-night events — the
+    three-point contest, the dunk contest, the skills challenge — are not
+    games and are not in the feed at all, so they are absent here. An
+    archive that quietly omitted them would imply this is the whole weekend.
+    """
+    teams = {
+        int(r["team_id"]): dict(r)
+        for r in warehouse.conn.execute("SELECT * FROM teams")
+    }
+    by_season: Dict[int, List[Dict]] = defaultdict(list)
+    for row in warehouse.iter_games():
+        phase = row["phase"] or ""
+        if not _ALLSTAR_RE.search(phase):
+            continue
+        home, away = int(row["home_team_id"]), int(row["away_team_id"])
+        event = {
+            "id": row["game_id"],
+            "date": row["date_utc"],
+            "season": int(row["season"]),
+            "phase": phase,
+            "label": _allstar_label(phase),
+            "venue": row["venue"],
+            "home": _allstar_side(teams.get(home), home),
+            "away": _allstar_side(teams.get(away), away),
+            "home_score": int(row["home_score"]),
+            "away_score": int(row["away_score"]),
+        }
+        quarters_home, quarters_away = _quarters(row, "home"), _quarters(row, "away")
+        if quarters_home and quarters_away:
+            event["q_home"] = quarters_home
+            event["q_away"] = quarters_away
+        by_season[int(row["season"])].append(event)
+
+    seasons = [
+        {
+            "season": season,
+            "label": f"{season - 1}-{str(season)[2:]}",
+            "events": sorted(events, key=lambda e: e["date"]),
+        }
+        for season, events in sorted(by_season.items(), reverse=True)
+    ]
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "basis": "results",
+        "seasons": seasons,
+        "n_events": sum(len(s["events"]) for s in seasons),
+        "note": (
+            "All-Star weekend games as the source publishes them. The "
+            "three-point contest, the dunk contest and the skills challenge "
+            "are not games and are not in the feed, so they are not here. "
+            "Nothing on this page is forecast or scored: the sides are "
+            "one-night drafts and several of these games are untimed races "
+            "to a target score, so a rating model has nothing to say."
+        ),
+    }
+
+
+def _allstar_side(team: Optional[Dict], team_id: int) -> Dict:
+    """One All-Star side, with ESPN's truncated names repaired.
+
+    The feed stores "Eastern Confe All-Stars" — a 20-character column
+    somewhere upstream. Repaired on the way out rather than in the teams
+    table, because the table holds what the source said and this is a
+    display concern.
+    """
+    name = (team or {}).get("display_name") or f"Team {team_id}"
+    name = re.sub(r"\bConfe\b", "Conference", name)
+    # "Team Stars Team Stars" — the feed doubles some side names.
+    words = name.split()
+    half = len(words) // 2
+    if half and words[:half] == words[half:]:
+        name = " ".join(words[:half])
+    return {
+        "team_id": team_id,
+        "name": name,
+        "abbreviation": (team or {}).get("abbreviation"),
+        "logo": (team or {}).get("logo"),
+    }
+
+
+def _allstar_label(phase: str) -> str:
+    """A readable event name from ESPN's inconsistent phase string.
+
+    Twenty-three seasons of "NBA ALL-STAR GAME AT ORLANDO FL", "NBA All-Star
+    - Round Robin" and "First team to 40 points wins - Untimed" reduce to
+    something a reader can scan. The raw phase is kept alongside it, because
+    the tidied version is a convenience and the source string is the record.
+    """
+    text = re.sub(r"\s+", " ", phase).strip()
+    if re.search(r"rising stars", text, re.I):
+        return "Rising Stars"
+    # Drop the venue tail: "... AT ORLANDO FL", "... at Los Angeles CA".
+    text = re.sub(r"\s+AT\s+[A-Z][A-Za-z .]*$", "", text, flags=re.I)
+    # Drop the format footnote: "First team to 40 points wins - Untimed".
+    text = re.sub(r"\s*First team to.*$", "", text, flags=re.I)
+    text = text.strip(" -")
+    if re.fullmatch(r"(nba\s+)?all.?star(\s+game)?", text, re.I):
+        return "All-Star Game"
+    if re.match(r"(nba\s+)?all.?star\s*-\s*", text, re.I):
+        return re.sub(r"^(nba\s+)?all.?star\s*-\s*", "All-Star ", text, flags=re.I)
+    return text or "All-Star"
 
 
 def build_rating_history(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
@@ -636,6 +775,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # rebuilding it from the current season alone would silently empty it
     # every morning the daily job runs.
     _publish(out_dir / "game_context.json", build_context(rows, franchises))
+    _publish(out_dir / "allstar.json", build_allstar(warehouse))
 
     if not args.skip_matchups:
         _publish(out_dir / "matchups.json", build_matchups(warehouse, franchises))

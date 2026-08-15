@@ -1,9 +1,12 @@
+import Link from 'next/link'
+
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import {
   type BracketNode,
   planBracket,
   roundName,
 } from '@/lib/bracketLayout'
+import { seriesSlug } from '@/lib/history'
 import { cn } from '@/lib/utils'
 
 /**
@@ -123,30 +126,41 @@ export function PlayoffBracket({
                 node={node}
                 series={assigned.get(key)}
                 teams={teams}
+                season={season}
               />
             )
           })}
         </div>
       </div>
 
-      <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
-        Card positions and connectors are computed arithmetic, not nested
-        boxes — the card feeding a round sits exactly halfway between the two
-        beneath it, and that is asserted by a test rather than left to the
-        box model.
+      <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        Every card opens the series: which games, by how much, where, and
+        what the model made of each one. Card positions and connectors are
+        computed arithmetic, not nested boxes — the card feeding a round sits
+        exactly halfway between the two beneath it, and that is asserted by a
+        test rather than left to the box model.
       </p>
     </section>
   )
 }
 
+/**
+ * One card on the board — and, when it names a real series, a link into it.
+ *
+ * A bracket cell can say "BOS 4 — MIA 1" and no more. The series page behind
+ * it says which games, by how much, where, and what the model made of each
+ * one, so the cell is a doorway rather than a dead end.
+ */
 function SeriesCard({
   node,
   series,
   teams,
+  season,
 }: {
   node: BracketNode
   series?: BracketSeries
   teams: Record<string, TeamMeta>
+  season: number
 }) {
   const style = {
     left: node.x,
@@ -176,8 +190,10 @@ function SeriesCard({
   const validWinner = winner && (winner === a || winner === b) ? winner : null
 
   return (
-    <div
-      className="absolute flex flex-col justify-center gap-0.5 rounded-sm border border-[var(--border-color)] bg-[var(--card-bg)] px-2 py-1"
+    <Link
+      href={`/seasons/${season}/series/${seriesSlug(series.series_id)}`}
+      aria-label={`${a} ${series.wins_a} against ${b} ${series.wins_b}, ${roundName(node.depth)} — every game`}
+      className="absolute flex flex-col justify-center gap-0.5 rounded-sm border border-[var(--border-color)] bg-[var(--card-bg)] px-2 py-1 transition-colors hover:border-[var(--border-hover)] hover:bg-[var(--card-hover)]"
       style={style}
     >
       <SeriesRow
@@ -194,7 +210,7 @@ function SeriesCard({
         won={validWinner === b}
         teams={teams}
       />
-    </div>
+    </Link>
   )
 }
 
