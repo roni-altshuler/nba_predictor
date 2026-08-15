@@ -1,0 +1,230 @@
+{
+  "season": 2027,
+  "basis": "live",
+  "metric": "p_conference_title",
+  "generated_at": "2026-08-15T15:44:13+00:00",
+  "tracked_per_conference": 6,
+  "teams": {
+    "NY": {
+      "name": "New York Knicks",
+      "abbreviation": "NY",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png"
+    },
+    "SA": {
+      "name": "San Antonio Spurs",
+      "abbreviation": "SA",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png"
+    },
+    "OKC": {
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png"
+    },
+    "DET": {
+      "name": "Detroit Pistons",
+      "abbreviation": "DET",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png"
+    },
+    "BOS": {
+      "name": "Boston Celtics",
+      "abbreviation": "BOS",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png"
+    },
+    "CHA": {
+      "name": "Charlotte Hornets",
+      "abbreviation": "CHA",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png"
+    },
+    "DEN": {
+      "name": "Denver Nuggets",
+      "abbreviation": "DEN",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png"
+    },
+    "CLE": {
+      "name": "Cleveland Cavaliers",
+      "abbreviation": "CLE",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png"
+    },
+    "LAL": {
+      "name": "Los Angeles Lakers",
+      "abbreviation": "LAL",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png"
+    },
+    "HOU": {
+      "name": "Houston Rockets",
+      "abbreviation": "HOU",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png"
+    },
+    "MIN": {
+      "name": "Minnesota Timberwolves",
+      "abbreviation": "MIN",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png"
+    },
+    "ORL": {
+      "name": "Orlando Magic",
+      "abbreviation": "ORL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png"
+    },
+    "TOR": {
+      "name": "Toronto Raptors",
+      "abbreviation": "TOR",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png"
+    },
+    "PHI": {
+      "name": "Philadelphia 76ers",
+      "abbreviation": "PHI",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png"
+    },
+    "ATL": {
+      "name": "Atlanta Hawks",
+      "abbreviation": "ATL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png"
+    },
+    "PHX": {
+      "name": "Phoenix Suns",
+      "abbreviation": "PHX",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png"
+    },
+    "LAC": {
+      "name": "LA Clippers",
+      "abbreviation": "LAC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png"
+    },
+    "MIA": {
+      "name": "Miami Heat",
+      "abbreviation": "MIA",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png"
+    },
+    "POR": {
+      "name": "Portland Trail Blazers",
+      "abbreviation": "POR",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png"
+    },
+    "GS": {
+      "name": "Golden State Warriors",
+      "abbreviation": "GS",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png"
+    },
+    "NO": {
+      "name": "New Orleans Pelicans",
+      "abbreviation": "NO",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png"
+    },
+    "DAL": {
+      "name": "Dallas Mavericks",
+      "abbreviation": "DAL",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png"
+    },
+    "MIL": {
+      "name": "Milwaukee Bucks",
+      "abbreviation": "MIL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png"
+    },
+    "CHI": {
+      "name": "Chicago Bulls",
+      "abbreviation": "CHI",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png"
+    },
+    "IND": {
+      "name": "Indiana Pacers",
+      "abbreviation": "IND",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png"
+    },
+    "SAC": {
+      "name": "Sacramento Kings",
+      "abbreviation": "SAC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png"
+    },
+    "UTAH": {
+      "name": "Utah Jazz",
+      "abbreviation": "UTAH",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png"
+    },
+    "MEM": {
+      "name": "Memphis Grizzlies",
+      "abbreviation": "MEM",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png"
+    },
+    "BKN": {
+      "name": "Brooklyn Nets",
+      "abbreviation": "BKN",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png"
+    },
+    "WSH": {
+      "name": "Washington Wizards",
+      "abbreviation": "WSH",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png"
+    }
+  },
+  "checkpoints": [
+    {
+      "date": "2026-08-15",
+      "generated_at": "2026-08-15T15:43:08+00:00",
+      "games_played": 0,
+      "model_version": "2026.08.1+943bde8b",
+      "probabilities": {
+        "NY": 0.464,
+        "SA": 0.381,
+        "OKC": 0.3086,
+        "DET": 0.1245,
+        "BOS": 0.1187,
+        "CHA": 0.0931,
+        "DEN": 0.0906,
+        "CLE": 0.0655,
+        "LAL": 0.0547,
+        "HOU": 0.0581,
+        "MIN": 0.0437,
+        "ORL": 0.038,
+        "TOR": 0.0321,
+        "PHI": 0.0241,
+        "ATL": 0.0213,
+        "PHX": 0.0205,
+        "LAC": 0.0215,
+        "MIA": 0.0184,
+        "POR": 0.0186,
+        "GS": 0.0018,
+        "NO": 0.0007,
+        "DAL": 0.0,
+        "MIL": 0.0001,
+        "CHI": 0.0002,
+        "IND": 0.0,
+        "SAC": 0.0001,
+        "UTAH": 0.0,
+        "MEM": 0.0,
+        "BKN": 0.0,
+        "WSH": 0.0
+      }
+    }
+  ],
+  "note": "One point per day the forecast ran. These numbers were published in advance, unlike the season replays in the archive."
+}

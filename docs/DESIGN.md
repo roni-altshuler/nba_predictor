@@ -69,6 +69,8 @@ from a link or a caption:
 | `--viz-market` | `#3987e5` | categorical 2 — the closing line |
 | `--viz-reference` | `#4d4d4d` | de-emphasis: baselines, the ideal diagonal |
 | `--viz-seq-1..5` | `#2c1a0e` → `#e2882f` | sequential, one hue, light→dark |
+| `--viz-cat-1..3` | `#5fa657`, `#3987e5`, `#c25ba6` | categorical, for team identity |
+| `--viz-cat-field` | `#57575a` | the aggregated tail, deliberately recessive |
 
 These passed all six checks of the dataviz validator against the `#0d0d0d`
 chart surface. **The first attempt used `--accent-info` for the market
@@ -79,13 +81,33 @@ Tritan separation for the green/blue pair is ΔE 5.7, which is only legal
 **with secondary encoding**, so both series are always direct-labelled as
 well as coloured. That is a requirement, not styling.
 
+**The categorical scale stops at three, and that is a measurement.** Re-run
+with `--pairs all` — every line on a title-race chart is visible at once, so
+checking only adjacent pairs misses the pair a reader actually confuses — the
+trio above passes at worst ΔE 10.6 under CVD and 21.4 with normal vision.
+Every four-hue set attempted failed:
+
+| Pair | Worst ΔE | Why |
+|---|---|---|
+| green / orange | 4.6 deutan | the classic red-green confusion |
+| blue / purple | 2.1 deutan, 13.1 normal | indistinguishable even with full colour vision |
+| orange / red | 11.4 normal | too close in hue at a shared lightness |
+
+So a fourth contender is never given a fourth hue. It folds into an explicit
+"field" line — and because conference-title probabilities sum to one, three
+named contenders plus the field is the entire distribution rather than a
+truncation. Tritan separation for the trio is 4.6, below the floor, so a team
+is ALWAYS direct-labelled at its line's right edge, with the labels nudged
+apart so two never land on one row.
+
 Rules that do not bend:
 - Sequential = one hue, light→dark. Diverging = two hues + a neutral grey
   midpoint. **Never a rainbow.**
 - **One axis. Never a dual-axis chart.**
 - Colour follows the entity, never its rank.
 - Past ~4 series, fold the tail into a de-emphasised band (see
-  `RatingHistoryChart`) rather than generating more hues.
+  `RatingHistoryChart`) or an explicit aggregate (see `TitleRaceChart`)
+  rather than generating more hues.
 
 ---
 

@@ -1,9 +1,11 @@
 import Link from 'next/link'
 
+import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
 import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { getPowerRatings, getSeasonProjections, type TeamProjection } from '@/lib/artifacts'
 import { num, pct, stamp } from '@/lib/format'
+import { getLiveTitleRace, getSeasonsIndex } from '@/lib/history'
 
 export const metadata = { title: 'Season projection' }
 export const dynamic = 'force-static'
@@ -13,9 +15,16 @@ const CONFERENCES = ['Eastern Conference', 'Western Conference'] as const
 export default function SeasonPage() {
   const projections = getSeasonProjections()
   const ratings = getPowerRatings()
+  const race = getLiveTitleRace()
   const meta = new Map(
     (ratings?.teams ?? []).map((t) => [t.team_id, t]),
   )
+  // The most recent season the archive can replay, offered while the live
+  // line is still a single point. A worked example of what this chart
+  // becomes beats an explanation of it.
+  const replayable = (getSeasonsIndex()?.seasons ?? [])
+    .map((s) => s.season)
+    .sort((a, b) => b - a)[0]
 
   if (!projections) {
     return (
@@ -54,6 +63,40 @@ export default function SeasonPage() {
           confident as any market price.
         </p>
       </div>
+
+      {race ? (
+        <section className="mb-8">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-sm">The title race</h2>
+            <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--accent-primary)]">
+              Live · published in advance
+            </span>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {CONFERENCES.map((conference) => (
+              <div key={conference} className="card p-4">
+                <h3 className="mb-3 text-xs text-[var(--text-secondary)]">
+                  {conference}
+                </h3>
+                <TitleRaceChart race={race} conference={conference} />
+              </div>
+            ))}
+          </div>
+          {race.checkpoints.length < 2 && replayable ? (
+            <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+              To see what this becomes over a full season, the archive replays
+              a completed one the same way —{' '}
+              <Link
+                href={`/seasons/${replayable}`}
+                className="text-[var(--accent-info)] hover:underline"
+              >
+                the {replayable - 1}-{String(replayable).slice(2)} race
+              </Link>
+              , reconstructed at ten-day checkpoints.
+            </p>
+          ) : null}
+        </section>
+      ) : null}
 
       {CONFERENCES.map((conference) => {
         const members = projections.teams

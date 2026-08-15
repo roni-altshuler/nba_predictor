@@ -184,12 +184,13 @@ model changes.
 
 | route | what it is |
 |---|---|
-| `/` | today's slate, title odds, power ratings |
-| `/season` | projected standings, seeds, playoff/title odds |
+| `/` | today's slate, title odds, power ratings — all named by team mark |
+| `/season` | projected standings, seeds, playoff/title odds, the LIVE title race |
+| `/bracket` | the projected postseason, priced by exact enumeration |
 | `/games` | upcoming forecasts with the value surface |
-| `/games/[id]` | one game — works for upcoming AND archived |
+| `/games/[id]` | one game — works for upcoming AND archived; player box score from ESPN |
 | `/seasons` | the 23-season archive index |
-| `/seasons/[season]` | standings, playoff bracket, the model's five biggest misses |
+| `/seasons/[season]` | standings, playoff bracket, the title race replayed, the model's five biggest misses |
 | `/seasons/[season]/games` | every game that season, by month |
 | `/teams/[abbr]` | rating history, seed distribution, next games |
 | `/predict` | head-to-head for any two franchises |
@@ -209,6 +210,26 @@ board.
 conference meet in FOUR series. The first version got this off by one and
 rendered four empty placeholder cards under every real one.
 
+**A projected bracket is not a bracket with the results missing.** Only the
+first round is drawn as matchups, from the modal seeding, with each seed
+carrying the probability that team actually lands there. Every later cell
+shows the likeliest occupant and its MARGINAL probability of reaching that
+round, taken from the simulation. Advancing the modal winner and re-pricing
+the next round draws a far more satisfying board and is wrong: it compounds
+one seeding assumption four rounds deep and publishes the result as a
+championship number. The centre cell prints the same figure the season
+projection does, because it is the same figure.
+
+**The title race is one chart drawn from two very different files.**
+`title_race_current.json` is LIVE — the daily job appends one point and those
+numbers were published in advance. `title_race_<season>.json` is a BACKTEST —
+a completed season re-simulated at ten-day checkpoints, each from ratings
+built on games strictly earlier than it. The component prints which one it is
+drawing; a line chart is unusually good at implying somebody watched it
+happen. The replay does **not** call `regress_to_season` — it walks a corpus,
+so the Elo system applies its carryover lazily at the boundary, and calling it
+would regress twice.
+
 **Charts are validated, not styled.** The dataviz validator was run against
 the `#0d0d0d` chart surface; `--viz-model` / `--viz-market` pass all six
 checks. The first attempt used `--accent-info` for the market series and
@@ -216,6 +237,16 @@ failed two of them — L 0.877 is far outside the band and chroma 0.043 reads
 as grey. Tritan separation for the surviving pair is ΔE 5.7, legal only WITH
 secondary encoding, so both series are always direct-labelled. See
 [docs/DESIGN.md](docs/DESIGN.md).
+
+**Three team lines per conference, because three is what passed.** Re-run with
+`--pairs all` (every line is visible at once, so adjacent-only checking misses
+the pair a reader confuses), `#5fa657,#3987e5,#c25ba6` passes; every four-hue
+set tried failed — green/orange ΔE 4.6 deutan, blue/purple ΔE 2.1 deutan and
+13.1 with normal vision. The tail folds into an explicit "field" line, and
+because conference-title probabilities sum to one, three named contenders plus
+the field is the whole distribution. End labels are nudged apart before
+drawing: they are the only channel carrying identity for a colour-blind reader
+here, so two on one row means a team disappears.
 
 **Team marks sit on a light plate.** NBA logos are authored for light
 backgrounds and several — Brooklyn, San Antonio, Memphis — go invisible on
@@ -232,6 +263,7 @@ never to a broken image.
 - **`services/prediction/`** — `margin_model.py` (the served forecaster), `market.py` (de-vig, scoring rules, EV, Kelly), `feature_builder.py` (19 features, structurally point-in-time).
 - **`services/simulation/season_simulator.py`** — Monte Carlo, one correlated strength offset per team per season.
 - **`services/playoffs/series.py`** — exact best-of-seven enumeration, home-court patterns, depth by counting.
+- **`services/playoffs/projection.py`** — the forward-looking twin: modal seeding by greedy assignment, first-round series priced with the simulator's OWN game probability (passed in, never reimplemented).
 - **`main.py`** — FastAPI, serving the same artifacts the frontend reads.
 
 ### Frontend (`src/`)
@@ -262,6 +294,8 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 | Playoff series backtest | `python3 -m backend.scripts.benchmark_series` |
 | Publish the forecast | `python3 -m backend.scripts.forecast_season --sims 20000` |
 | Export the season archive | `python3 -m backend.scripts.build_history` |
+| Append today's title-race point | `python3 -m backend.scripts.title_race --track` |
+| Replay a season's title race | `python3 -m backend.scripts.title_race --replay 2026 --every 10 --sims 4000` |
 | Regenerate icons | `npm run icons` |
 | Screenshot every route | `node scripts/shoot.mjs` |
 | Backend tests | `python3 -m pytest backend/tests/` |
@@ -275,6 +309,7 @@ Recorded rather than papered over:
 
 - **No injury or roster data.** The model knows nothing about trades, the draft, or who is playing. This is the largest single gap and it is why preseason title odds stay more concentrated than a real futures market.
 - **No live win probability.** ESPN serves `winprobability` per game; it is not ingested.
-- **No player-level anything.** Box scores are stored at team level only.
+- **No player-level anything in the MODEL.** `/games/[id]` renders full player box scores, but they are fetched from ESPN at request time and cached for a day — deliberately not in the warehouse, which holds only what the model consumes. 31,844 games of player lines is hundreds of megabytes of JSON that no forecast reads. Nothing player-level feeds a probability.
+- **Title-race replays exist for 2024, 2025 and 2026 only.** Each is ~2 minutes of compute and past seasons never change, so they are generated on demand rather than in a workflow. Add one with `title_race --replay <season>`.
 - **Odds coverage is uneven by era** — see the provider table above. 2019 has no market at all.
 - **The live published record is empty** because the season has not started. It will grow from zero and be reported at whatever n it reaches, never merged with the historical walk-forward.

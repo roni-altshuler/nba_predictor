@@ -1,3 +1,4 @@
+import { TeamLogo } from '@/components/primitives/TeamLogo'
 import type { GameForecast } from '@/lib/artifacts'
 import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
 import { ProbabilityBar } from './ProbabilityBar'
@@ -100,6 +101,17 @@ export function GameCard({ game }: { game: GameForecast }) {
   )
 }
 
+/**
+ * A side of the matchup: the club's mark, its three-letter code, its rating.
+ *
+ * **The mark leads and the abbreviation stays.** A logo is the fastest thing
+ * on the card to recognise, which is why it is here — but a logo alone is an
+ * image, and an image that fails to load, or is read by a screen reader, or
+ * belongs to one of the several NBA clubs whose marks are near-identical at
+ * 34px, has to fall back on something. `TeamLogo` carries the full club name
+ * as its accessible label and degrades to the abbreviation rather than to a
+ * broken image.
+ */
 function TeamLine({
   team,
   align = 'left',
@@ -108,11 +120,25 @@ function TeamLine({
   align?: 'left' | 'right'
 }) {
   return (
-    <div className={align === 'right' ? 'min-w-0 text-right' : 'min-w-0'}>
-      <p className="truncate text-sm text-[var(--text-primary)]">{team.name}</p>
-      <p className="font-numeric text-[11px] text-[var(--text-tertiary)]">
-        {Math.round(team.elo)}
-      </p>
+    <div
+      className={`flex min-w-0 items-center gap-2.5 ${
+        align === 'right' ? 'flex-row-reverse text-right' : ''
+      }`}
+    >
+      <TeamLogo
+        logo={team.logo}
+        abbreviation={team.abbreviation}
+        name={team.name}
+        size={34}
+      />
+      <div className="min-w-0">
+        <p className="font-numeric text-sm text-[var(--text-primary)]">
+          {team.abbreviation}
+        </p>
+        <p className="font-numeric text-[11px] text-[var(--text-tertiary)]">
+          {Math.round(team.elo)}
+        </p>
+      </div>
     </div>
   )
 }

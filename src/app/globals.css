@@ -99,6 +99,43 @@
   --viz-seq-4: #b96b28;
   --viz-seq-5: #e2882f;
 
+  /* ────────────────────────────────────────────────────────────
+     Categorical scale, for charts that carry team identity (the title
+     race). Three slots, and three is not a shortage of imagination — it is
+     the answer the validator gave.
+
+     Re-run with `--pairs all`, because every line on a title-race chart is
+     visible at once and adjacent-only checking would miss the pair a reader
+     actually confuses:
+
+       #5fa657,#3987e5,#c25ba6   ALL PASS
+         worst all-pairs CVD  dE 10.6 (protan), tritan 4.6
+         worst normal vision  dE 21.4
+
+     Every four-hue set tried FAILED, and the failures are instructive
+     rather than arbitrary:
+
+       + green/orange   dE 4.6 deutan   — the classic red-green confusion
+       + blue/purple    dE 2.1 deutan, 13.1 normal — indistinguishable even
+                        with full colour vision
+       + orange/red     dE 11.4 normal
+
+     So the tail folds into an explicit "field" line instead of inventing a
+     fourth hue. Because conference-title probabilities sum to one, the
+     three named contenders plus the field account for everything — nothing
+     is dropped, it is aggregated, and the chart says so.
+
+     Tritan separation is 4.6, below the floor, so team identity is ALWAYS
+     carried by a direct label at the line's right edge as well as by
+     colour. Slots 1 and 2 are the same validated steps as the model and
+     market series above; that is deliberate reuse of passing values, not a
+     semantic claim about the team.
+     ──────────────────────────────────────────────────────────── */
+  --viz-cat-1: #5fa657;
+  --viz-cat-2: #3987e5;
+  --viz-cat-3: #c25ba6;
+  --viz-cat-field: #57575a;  /* the aggregated tail — deliberately recessive */
+
   /* Team logos are authored for light backgrounds — several NBA marks go
      invisible on pure black. Every product of this class (ESPN, FotMob)
      seats them on a light tile for exactly this reason. */

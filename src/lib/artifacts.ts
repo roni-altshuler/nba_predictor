@@ -30,6 +30,8 @@ export interface TeamProjection {
   p_playoffs: number
   p_play_in: number
   p_top_seed: number
+  p_conf_semis: number
+  p_conf_finals: number
   p_conference_title: number
   p_championship: number
   seed_distribution: Record<string, number>
@@ -166,6 +168,75 @@ export function getGameForecasts(): GameForecasts | null {
 
 export function getPowerRatings(): PowerRatings | null {
   return readJson<PowerRatings>(PREDICTIONS_DIR, 'power_ratings.json')
+}
+
+/* ------------------------------------------------------ playoff bracket */
+
+export interface BracketSeed {
+  seed: number
+  p_seed: number
+  team_id: number
+  name: string
+  abbreviation: string | null
+  logo: string | null
+  wins: number
+  losses: number
+}
+
+export interface BracketSide {
+  team_id: number
+  name: string | null
+  abbreviation: string | null
+  logo: string | null
+  wins: number | null
+  losses: number | null
+  elo: number
+  p_seed: number
+}
+
+export interface ProjectedSeries {
+  high_seed: number
+  low_seed: number
+  high: BracketSide
+  low: BracketSide
+  p_high_game_home: number
+  p_high_game_away: number
+  p_high_series: number
+  p_low_series: number
+  modal_length: number | null
+  lengths: Record<string, number>
+}
+
+export interface RoundReach {
+  team_id: number
+  name: string
+  abbreviation: string | null
+  logo: string | null
+  conference: string
+  p_playoffs: number
+  p_conf_semis: number
+  p_conf_finals: number
+  p_finals: number
+  p_title: number
+}
+
+export interface ProjectedBracket {
+  season: number
+  generated_at: string
+  model_version: string
+  simulations: number
+  games_played: number
+  basis: string
+  conferences: Record<
+    string,
+    { seeds: BracketSeed[]; first_round: ProjectedSeries[] }
+  >
+  rounds: RoundReach[]
+  note: string
+}
+
+export function getProjectedBracket(): ProjectedBracket | null {
+  return readJson<ProjectedBracket>(PREDICTIONS_DIR, 'playoff_bracket.json')
 }
 
 export function getMarketBenchmark(): Record<string, unknown> | null {

@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-08-15T13:48:46+00:00",
+  "generated_at": "2026-08-15T15:43:08+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -16,6 +16,8 @@
       "p_playoffs": 0.9987,
       "p_play_in": 0.0054,
       "p_top_seed": 0.7428,
+      "p_conf_semis": 0.8119,
+      "p_conf_finals": 0.6211,
       "p_conference_title": 0.464,
       "p_championship": 0.2912,
       "seed_distribution": {
@@ -46,6 +48,8 @@
       "p_playoffs": 0.999,
       "p_play_in": 0.0055,
       "p_top_seed": 0.5333,
+      "p_conf_semis": 0.8024,
+      "p_conf_finals": 0.5873,
       "p_conference_title": 0.381,
       "p_championship": 0.226,
       "seed_distribution": {
@@ -76,6 +80,8 @@
       "p_playoffs": 0.9975,
       "p_play_in": 0.0117,
       "p_top_seed": 0.3707,
+      "p_conf_semis": 0.7713,
+      "p_conf_finals": 0.5376,
       "p_conference_title": 0.3086,
       "p_championship": 0.1735,
       "seed_distribution": {
@@ -106,6 +112,8 @@
       "p_playoffs": 0.9464,
       "p_play_in": 0.1541,
       "p_top_seed": 0.0746,
+      "p_conf_semis": 0.5568,
+      "p_conf_finals": 0.2835,
       "p_conference_title": 0.1245,
       "p_championship": 0.0529,
       "seed_distribution": {
@@ -136,6 +144,8 @@
       "p_playoffs": 0.9348,
       "p_play_in": 0.1757,
       "p_top_seed": 0.0679,
+      "p_conf_semis": 0.5353,
+      "p_conf_finals": 0.2669,
       "p_conference_title": 0.1187,
       "p_championship": 0.0481,
       "seed_distribution": {
@@ -166,6 +176,8 @@
       "p_playoffs": 0.9097,
       "p_play_in": 0.22,
       "p_top_seed": 0.0502,
+      "p_conf_semis": 0.4918,
+      "p_conf_finals": 0.2272,
       "p_conference_title": 0.0931,
       "p_championship": 0.0372,
       "seed_distribution": {
@@ -196,6 +208,8 @@
       "p_playoffs": 0.9343,
       "p_play_in": 0.1822,
       "p_top_seed": 0.0392,
+      "p_conf_semis": 0.5163,
+      "p_conf_finals": 0.2202,
       "p_conference_title": 0.0906,
       "p_championship": 0.0367,
       "seed_distribution": {
@@ -226,6 +240,8 @@
       "p_playoffs": 0.8603,
       "p_play_in": 0.3111,
       "p_top_seed": 0.0288,
+      "p_conf_semis": 0.4123,
+      "p_conf_finals": 0.1754,
       "p_conference_title": 0.0655,
       "p_championship": 0.0245,
       "seed_distribution": {
@@ -256,6 +272,8 @@
       "p_playoffs": 0.8646,
       "p_play_in": 0.3083,
       "p_top_seed": 0.0149,
+      "p_conf_semis": 0.3963,
+      "p_conf_finals": 0.1492,
       "p_conference_title": 0.0547,
       "p_championship": 0.0211,
       "seed_distribution": {
@@ -286,6 +304,8 @@
       "p_playoffs": 0.8893,
       "p_play_in": 0.2697,
       "p_top_seed": 0.0204,
+      "p_conf_semis": 0.4239,
+      "p_conf_finals": 0.159,
       "p_conference_title": 0.0581,
       "p_championship": 0.0187,
       "seed_distribution": {
@@ -316,6 +336,8 @@
       "p_playoffs": 0.8097,
       "p_play_in": 0.3894,
       "p_top_seed": 0.0097,
+      "p_conf_semis": 0.3474,
+      "p_conf_finals": 0.124,
       "p_conference_title": 0.0437,
       "p_championship": 0.0142,
       "seed_distribution": {
@@ -346,6 +368,8 @@
       "p_playoffs": 0.7425,
       "p_play_in": 0.4738,
       "p_top_seed": 0.0109,
+      "p_conf_semis": 0.297,
+      "p_conf_finals": 0.113,
       "p_conference_title": 0.038,
       "p_championship": 0.0111,
       "seed_distribution": {
@@ -376,6 +400,8 @@
       "p_playoffs": 0.6914,
       "p_play_in": 0.5251,
       "p_top_seed": 0.0083,
+      "p_conf_semis": 0.2643,
+      "p_conf_finals": 0.098,
       "p_conference_title": 0.0321,
       "p_championship": 0.0096,
       "seed_distribution": {
@@ -406,6 +432,8 @@
       "p_playoffs": 0.6331,
       "p_play_in": 0.5656,
       "p_top_seed": 0.0063,
+      "p_conf_semis": 0.2225,
+      "p_conf_finals": 0.0797,
       "p_conference_title": 0.0241,
       "p_championship": 0.0072,
       "seed_distribution": {
@@ -436,6 +464,8 @@
       "p_playoffs": 0.6208,
       "p_play_in": 0.5766,
       "p_top_seed": 0.0062,
+      "p_conf_semis": 0.2135,
+      "p_conf_finals": 0.074,
       "p_conference_title": 0.0213,
       "p_championship": 0.0066,
       "seed_distribution": {
@@ -466,6 +496,8 @@
       "p_playoffs": 0.6852,
       "p_play_in": 0.5185,
       "p_top_seed": 0.004,
+      "p_conf_semis": 0.2311,
+      "p_conf_finals": 0.0736,
       "p_conference_title": 0.0205,
       "p_championship": 0.006,
       "seed_distribution": {
@@ -496,6 +528,8 @@
       "p_playoffs": 0.6825,
       "p_play_in": 0.5188,
       "p_top_seed": 0.0043,
+      "p_conf_semis": 0.2271,
+      "p_conf_finals": 0.0693,
       "p_conference_title": 0.0215,
       "p_championship": 0.0059,
       "seed_distribution": {
@@ -526,6 +560,8 @@
       "p_playoffs": 0.5732,
       "p_play_in": 0.6004,
       "p_top_seed": 0.004,
+      "p_conf_semis": 0.1849,
+      "p_conf_finals": 0.0596,
       "p_conference_title": 0.0184,
       "p_championship": 0.005,
       "seed_distribution": {
@@ -556,6 +592,8 @@
       "p_playoffs": 0.6431,
       "p_play_in": 0.5506,
       "p_top_seed": 0.0032,
+      "p_conf_semis": 0.2066,
+      "p_conf_finals": 0.0636,
       "p_conference_title": 0.0186,
       "p_championship": 0.0043,
       "seed_distribution": {
@@ -586,6 +624,8 @@
       "p_playoffs": 0.2429,
       "p_play_in": 0.4931,
       "p_top_seed": 0.0002,
+      "p_conf_semis": 0.046,
+      "p_conf_finals": 0.0104,
       "p_conference_title": 0.0018,
       "p_championship": 0.0001,
       "seed_distribution": {
@@ -616,6 +656,8 @@
       "p_playoffs": 0.1527,
       "p_play_in": 0.3764,
       "p_top_seed": 0.0001,
+      "p_conf_semis": 0.0223,
+      "p_conf_finals": 0.0046,
       "p_conference_title": 0.0007,
       "p_championship": 0.0001,
       "seed_distribution": {
@@ -646,6 +688,8 @@
       "p_playoffs": 0.0548,
       "p_play_in": 0.1869,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0054,
+      "p_conf_finals": 0.0008,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -675,6 +719,8 @@
       "p_playoffs": 0.0315,
       "p_play_in": 0.1351,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0032,
+      "p_conf_finals": 0.0006,
       "p_conference_title": 0.0001,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -704,6 +750,8 @@
       "p_playoffs": 0.029,
       "p_play_in": 0.1226,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0036,
+      "p_conf_finals": 0.0007,
       "p_conference_title": 0.0002,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -733,6 +781,8 @@
       "p_playoffs": 0.0256,
       "p_play_in": 0.1109,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0024,
+      "p_conf_finals": 0.0003,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -762,6 +812,8 @@
       "p_playoffs": 0.0272,
       "p_play_in": 0.1052,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0024,
+      "p_conf_finals": 0.0003,
       "p_conference_title": 0.0001,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -790,6 +842,8 @@
       "p_playoffs": 0.0101,
       "p_play_in": 0.0467,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0008,
+      "p_conf_finals": 0.0001,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -817,6 +871,8 @@
       "p_playoffs": 0.0072,
       "p_play_in": 0.0369,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0005,
+      "p_conf_finals": 0.0,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -844,6 +900,8 @@
       "p_playoffs": 0.0024,
       "p_play_in": 0.0177,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0003,
+      "p_conf_finals": 0.0001,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -869,6 +927,8 @@
       "p_playoffs": 0.0007,
       "p_play_in": 0.0059,
       "p_top_seed": 0.0,
+      "p_conf_semis": 0.0001,
+      "p_conf_finals": 0.0,
       "p_conference_title": 0.0,
       "p_championship": 0.0,
       "seed_distribution": {
@@ -923,7 +983,7 @@
   },
   "measured": {
     "available": true,
-    "generated_at": "2026-08-15T13:19:52+00:00",
+    "generated_at": "2026-08-15T14:48:23+00:00",
     "walk_forward_n": 25749,
     "walk_forward_brier": 0.21060396481683463,
     "walk_forward_ece": 0.011369166013610309,

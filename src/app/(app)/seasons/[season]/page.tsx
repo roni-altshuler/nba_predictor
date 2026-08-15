@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import { PlayoffBracket } from '@/components/playoffs/PlayoffBracket'
 import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { num, pct } from '@/lib/format'
 import {
   SEASON_TYPE_LABEL,
   getSeason,
+  getSeasonTitleRace,
   getSeasonsIndex,
   teamMetaFromStandings,
   type StandingRow,
@@ -44,6 +46,7 @@ export default async function SeasonPage({
   const label = `${value - 1}-${String(value).slice(2)}`
   const teams = teamMetaFromStandings(file.standings)
   const resolvedSeries = file.series.filter((s) => s.team_a && s.team_b)
+  const race = getSeasonTitleRace(value)
 
   // A handful of the season's most lopsided results — the games a reader
   // remembers, and the ones the model got most wrong.
@@ -112,6 +115,27 @@ export default async function SeasonPage({
           </section>
         )
       })}
+
+      {race ? (
+        <section className="mb-8">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-sm">How the title race moved</h2>
+            <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--accent-warn)]">
+              Backtest
+            </span>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {CONFERENCES.map((conference) => (
+              <div key={conference} className="card p-4">
+                <h3 className="mb-3 text-xs text-[var(--text-secondary)]">
+                  {conference}
+                </h3>
+                <TitleRaceChart race={race} conference={conference} />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {resolvedSeries.length ? (
         <div className="mb-8">

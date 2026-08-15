@@ -178,6 +178,55 @@ export function getMatchups(): Matchups | null {
   return readJson<Matchups>('matchups.json')
 }
 
+/**
+ * The conference title race over time.
+ *
+ * Two files share this shape and the `basis` field is the whole difference:
+ * `title_race_current.json` is LIVE — one point per day the forecast ran, and
+ * those numbers were published in advance. `title_race_<season>.json` is a
+ * BACKTEST — a completed season re-simulated at checkpoints, each using only
+ * games earlier than it. A line chart implies somebody watched it happen, so
+ * the component that draws these must say which one it is drawing.
+ */
+export interface TitleRaceTeam {
+  name: string
+  abbreviation: string
+  conference: string
+  logo: string | null
+}
+
+export interface TitleRaceCheckpoint {
+  date: string
+  games_played: number
+  generated_at?: string
+  model_version?: string
+  probabilities: Record<string, number>
+}
+
+export interface TitleRace {
+  season: number
+  basis: 'live' | 'backtest'
+  metric: string
+  generated_at: string
+  simulations?: number
+  every_days?: number
+  tracked_per_conference: number
+  champion?: string | null
+  teams: Record<string, TitleRaceTeam>
+  checkpoints: TitleRaceCheckpoint[]
+  note: string
+}
+
+export function getLiveTitleRace(): TitleRace | null {
+  return readJson<TitleRace>('title_race_current.json')
+}
+
+export function getSeasonTitleRace(season: number | string): TitleRace | null {
+  const value = Number(season)
+  if (!Number.isInteger(value)) return null
+  return readJson<TitleRace>(`title_race_${value}.json`)
+}
+
 export interface RatingHistory {
   seasons: number[]
   teams: Record<string, Array<number | null>>

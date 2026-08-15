@@ -11,6 +11,9 @@ Writes into `backend/data/predictions/`:
   probability, expected margin and total, and the value surface where a
   price exists
 * `power_ratings.json`      — current Elo, for the ratings page
+* `playoff_bracket.json`    — the projected postseason: the modal occupant
+  of each seed, the four first-round series priced by exact enumeration, and
+  every franchise's marginal probability of reaching each round
 
 **It re-syncs every run, by construction.** Nothing here is a preseason
 snapshot: each run rebuilds ratings from every game played to date, so the
@@ -49,6 +52,10 @@ from backend.services.data.warehouse import (
 )
 from backend.services.espn.client import current_season
 from backend.services.forecast.version import model_version
+from backend.services.playoffs.projection import (
+    assign_projected_seeds,
+    project_first_round,
+)
 from backend.services.prediction import market as mkt
 from backend.services.prediction.feature_builder import (
     FEATURE_NAMES,
@@ -462,8 +469,117 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         },
     )
 
+    _publish(
+        out_dir / "playoff_bracket.json",
+        _projected_bracket(
+            result,
+            franchises=franchises,
+            elo=elo_snapshot,
+            simulator=simulator,
+            generated_at=generated_at,
+            version=version,
+        ),
+    )
+
     _print_summary(result, ratings, priced, flagged, len(games))
     return 0
+
+
+def _projected_bracket(
+    result,
+    *,
+    franchises: Dict[int, Dict],
+    elo: Dict[int, float],
+    simulator: SeasonSimulator,
+    generated_at: str,
+    version: str,
+) -> Dict:
+    """The projected postseason, per conference.
+
+    **Priced with the simulator's own game probability**, passed in rather
+    than reimplemented. A bracket that computes its series odds from a second
+    copy of the same maths will eventually disagree with the season
+    projection printed beside it, and the disagreement will be small enough
+    that nobody notices it is a bug.
+    """
+    enriched: Dict[str, List[Dict]] = defaultdict(list)
+    for team in result.teams:
+        info = franchises.get(team.team_id, {})
+        enriched[team.conference].append(
+            {
+                "team_id": team.team_id,
+                "name": team.name,
+                "abbreviation": info.get("abbreviation"),
+                "logo": info.get("logo"),
+                "conference": team.conference,
+                "wins": round(team.wins, 1),
+                "losses": round(team.losses, 1),
+                "seed_distribution": {
+                    str(k): v for k, v in team.seed_distribution.items()
+                },
+            }
+        )
+
+    conferences: Dict[str, Dict] = {}
+    for conference, members in enriched.items():
+        seeds = assign_projected_seeds(members)
+        conferences[conference] = {
+            "seeds": [
+                {
+                    "seed": entry["seed"],
+                    "p_seed": round(entry["p_seed"], 4),
+                    "team_id": entry["team"]["team_id"],
+                    "name": entry["team"]["name"],
+                    "abbreviation": entry["team"]["abbreviation"],
+                    "logo": entry["team"]["logo"],
+                    "wins": entry["team"]["wins"],
+                    "losses": entry["team"]["losses"],
+                }
+                for entry in seeds
+            ],
+            "first_round": project_first_round(
+                seeds,
+                game_probability=simulator.game_probability,
+                elo=elo,
+            ),
+        }
+
+    rounds = [
+        {
+            "team_id": t.team_id,
+            "name": t.name,
+            "abbreviation": franchises.get(t.team_id, {}).get("abbreviation"),
+            "logo": franchises.get(t.team_id, {}).get("logo"),
+            "conference": t.conference,
+            "p_playoffs": round(t.p_playoffs, 4),
+            "p_conf_semis": round(t.p_conf_semis, 4),
+            "p_conf_finals": round(t.p_conf_finals, 4),
+            "p_finals": round(t.p_conference_title, 4),
+            "p_title": round(t.p_championship, 4),
+        }
+        for t in sorted(result.teams, key=lambda t: -t.p_championship)
+    ]
+
+    return {
+        "season": result.season,
+        "generated_at": generated_at,
+        "model_version": version,
+        "simulations": result.simulations,
+        "games_played": result.games_played,
+        "basis": "projection",
+        "conferences": conferences,
+        "rounds": rounds,
+        "note": (
+            "The drawn bracket is the MODAL first round: the most likely "
+            "occupant of each seed, with the probability it actually lands "
+            "there printed beside it. Series odds are exact enumerations over "
+            "a best-of-seven, not simulated estimates. Everything past round "
+            "one is reported as a marginal probability from the simulation, "
+            "which integrates over every seeding — reading a fixed bracket "
+            "four rounds forward would compound one seeding assumption into a "
+            "championship number."
+        ),
+    }
 
 
 def _measured_block() -> Dict:

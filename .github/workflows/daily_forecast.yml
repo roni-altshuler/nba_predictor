@@ -95,6 +95,13 @@ jobs:
           python -m backend.scripts.forecast_season \
             --sims ${{ github.event.inputs.sims || '20000' }}
 
+      - name: Append today's point to the title race
+        # The chart on /season is built one day at a time and cannot be
+        # backfilled — a point missed is a point that never existed. It is
+        # idempotent per Eastern day, so a re-run replaces today rather than
+        # doubling it, and it must run AFTER the forecast it reads.
+        run: python -m backend.scripts.title_race --track
+
       - name: Refresh the current season's archive
         # Only the season in progress. Past seasons never change — rewriting
         # all 23 files daily would put 14MB of identical JSON through git

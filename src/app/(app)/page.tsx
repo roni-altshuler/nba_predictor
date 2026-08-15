@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
 import { GameCard } from '@/components/forecast/GameCard'
+import { TeamLogo } from '@/components/primitives/TeamLogo'
 import {
   getGameForecasts,
   getPowerRatings,
@@ -20,6 +21,11 @@ export default function HomePage() {
 
   const days = forecasts ? groupByDay(forecasts.games) : []
   const nextDay = days[0]
+
+  // Projections carry a team_id but no mark; the ratings artifact carries
+  // both. Joined here rather than duplicating the logo URL into a second
+  // artifact, which would be one more thing to keep in step.
+  const brand = new Map((ratings?.teams ?? []).map((t) => [t.team_id, t]))
 
   return (
     <div>
@@ -90,7 +96,19 @@ export default function HomePage() {
               <tbody>
                 {projections.teams.slice(0, 8).map((team) => (
                   <tr key={team.team_id}>
-                    <td className="text-[var(--text-primary)]">{team.name}</td>
+                    <td>
+                      <span className="inline-flex items-center gap-2.5">
+                        <TeamLogo
+                          logo={brand.get(team.team_id)?.logo}
+                          abbreviation={brand.get(team.team_id)?.abbreviation}
+                          name={team.name}
+                          size={26}
+                        />
+                        <span className="font-numeric text-[var(--text-primary)]">
+                          {brand.get(team.team_id)?.abbreviation ?? team.name}
+                        </span>
+                      </span>
+                    </td>
                     <td className="numeric text-right">{team.wins.toFixed(1)}</td>
                     <td className="numeric text-right">{pct(team.p_playoffs, 0)}</td>
                     <td className="numeric text-right text-[var(--text-primary)]">
@@ -117,14 +135,22 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
             {ratings.teams.slice(0, 5).map((team) => (
-              <div key={team.team_id} className="card p-3">
-                <p className="eyebrow">#{team.rank}</p>
-                <p className="mt-1 truncate text-xs text-[var(--text-primary)]">
-                  {team.abbreviation}
-                </p>
-                <p className="numeric text-sm text-[var(--text-secondary)]">
-                  {Math.round(team.elo)}
-                </p>
+              <div key={team.team_id} className="card flex items-center gap-3 p-3">
+                <TeamLogo
+                  logo={team.logo}
+                  abbreviation={team.abbreviation}
+                  name={team.name}
+                  size={34}
+                />
+                <div className="min-w-0">
+                  <p className="eyebrow">#{team.rank}</p>
+                  <p className="numeric truncate text-xs text-[var(--text-primary)]">
+                    {team.abbreviation}
+                  </p>
+                  <p className="numeric text-sm text-[var(--text-secondary)]">
+                    {Math.round(team.elo)}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

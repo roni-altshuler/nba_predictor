@@ -9,12 +9,14 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 1. **Game prediction** — win probability, expected margin, expected total
 2. **Season projection** — record, seed distribution, play-in, playoff, conference and championship odds
 3. **A value surface** — model probability vs no-vig market price, with EV and Kelly staking
-4. **Playoff series** — best-of-seven advance probabilities and a computed bracket
+4. **Playoff bracket** — the projected postseason, with every first-round series priced by exact enumeration
+5. **The title race** — each conference's contenders as a line that moves as the season is played
 
-Plus a **23-season archive**: final standings, every game with quarters and
-box score, the playoff bracket, and what the model would have said — labelled
-a backtest everywhere it appears, because a reconstructed forecast is not a
-published one.
+Plus a **23-season archive**: final standings, every game with quarters, the
+team and player box scores, the playoff bracket, the title race replayed at
+ten-day checkpoints, and what the model would have said — labelled a backtest
+everywhere it appears, because a reconstructed forecast is not a published
+one.
 
 Also: per-team pages with rating history against the league band, and a
 head-to-head surface over all 870 ordered matchups.
@@ -54,6 +56,9 @@ python3 -m backend.scripts.validate_warehouse_integrity
 python3 -m backend.scripts.benchmark_market
 python3 -m backend.scripts.forecast_season --sims 20000
 
+python3 -m backend.scripts.build_history
+python3 -m backend.scripts.title_race --track
+
 # Frontend
 npm install
 npm run dev
@@ -71,15 +76,15 @@ backend/
     ratings/      Elo, swept not chosen
     prediction/   margin model, market maths, feature builder
     simulation/   Monte Carlo season projection
-    playoffs/     best-of-seven enumeration and brackets
+    playoffs/     best-of-seven enumeration, historical and projected brackets
     forecast/     model versioning
-  scripts/        ingest, benchmark, tune, publish
-  tests/          123 tests
+  scripts/        ingest, benchmark, tune, publish, title-race tracking
+  tests/          138 tests
   main.py         FastAPI
 src/
-  app/            Next.js App Router — 6 pages, 5 API routes
-  components/     shell, forecast cards, evidence panel
-  lib/            artifact readers, formatters
+  app/            Next.js App Router — 12 routes, 5 API routes
+  components/     shell, forecast cards, charts, brackets, evidence panel
+  lib/            artifact readers, bracket geometry, ESPN box scores, formatters
 ```
 
 ## Design notes
@@ -92,8 +97,8 @@ src/
 ## Testing
 
 ```bash
-python3 -m pytest backend/tests/   # 123 tests
-npm test                            # 21 tests
+python3 -m pytest backend/tests/   # 138 tests
+npm test                            # 49 tests
 npx next lint && npm run typecheck
 ```
 

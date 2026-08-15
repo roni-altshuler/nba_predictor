@@ -74,6 +74,8 @@ class TeamProjection:
     p_playoffs: float
     p_play_in: float
     p_top_seed: float
+    p_conf_semis: float
+    p_conf_finals: float
     p_conference_title: float
     p_championship: float
     seed_distribution: Dict[int, float]
@@ -94,6 +96,8 @@ class TeamProjection:
             "p_playoffs": round(self.p_playoffs, 4),
             "p_play_in": round(self.p_play_in, 4),
             "p_top_seed": round(self.p_top_seed, 4),
+            "p_conf_semis": round(self.p_conf_semis, 4),
+            "p_conf_finals": round(self.p_conf_finals, 4),
             "p_conference_title": round(self.p_conference_title, 4),
             "p_championship": round(self.p_championship, 4),
             "seed_distribution": {
@@ -160,6 +164,18 @@ class SeasonSimulator:
         # same matchup.
         return 1.0 - _normal_cdf((0.5 - margin) / self.margin_sd)
 
+    def game_probability(
+        self, home_elo: float, away_elo: float, *, neutral: bool = False
+    ) -> float:
+        """P(home wins one game) — the same function the simulation uses.
+
+        Public so the projected bracket can price its series with THIS
+        implementation rather than a second copy. Two copies of the same
+        maths drift, and the drift is small enough to look like rounding
+        rather than like a bug.
+        """
+        return self._win_probability(home_elo, away_elo, neutral=neutral)
+
     def simulate(
         self,
         *,
@@ -208,6 +224,11 @@ class SeasonSimulator:
         playoff_counts = np.zeros(n_teams)
         play_in_counts = np.zeros(n_teams)
         top_seed_counts = np.zeros(n_teams)
+        # Reaching a round means WINNING the previous one, so these are the
+        # survivors after round 1 and round 2 — not the entrants. A reader
+        # asking "how far does this team get" is asking about survival.
+        conf_semis_counts = np.zeros(n_teams)
+        conf_finals_counts = np.zeros(n_teams)
         conf_title_counts = np.zeros(n_teams)
         title_counts = np.zeros(n_teams)
 
@@ -256,7 +277,13 @@ class SeasonSimulator:
                 bracket_seeds = self._resolve_play_in(order, elo, rng)
                 for team in bracket_seeds[DIRECT_PLAYOFF_SEEDS:]:
                     playoff_counts[team] += 1
-                winner = self._simulate_bracket(bracket_seeds, elo, rng)
+                winner, survivors = self._simulate_bracket(bracket_seeds, elo, rng)
+                if len(survivors) > 0:
+                    for team in survivors[0]:
+                        conf_semis_counts[team] += 1
+                if len(survivors) > 1:
+                    for team in survivors[1]:
+                        conf_finals_counts[team] += 1
                 conf_title_counts[winner] += 1
                 conf_winners.append(winner)
 
@@ -293,6 +320,8 @@ class SeasonSimulator:
                     p_playoffs=float(playoff_counts[i] / sims),
                     p_play_in=float(play_in_counts[i] / sims),
                     p_top_seed=float(top_seed_counts[i] / sims),
+                    p_conf_semis=float(conf_semis_counts[i] / sims),
+                    p_conf_finals=float(conf_finals_counts[i] / sims),
                     p_conference_title=float(conf_title_counts[i] / sims),
                     p_championship=float(title_counts[i] / sims),
                     seed_distribution=distribution,
@@ -383,21 +412,25 @@ class SeasonSimulator:
 
     def _simulate_bracket(
         self, seeds: Sequence[int], elo: np.ndarray, rng: np.random.Generator
-    ) -> int:
-        """One conference's four rounds. 1v8, 2v7, 3v6, 4v5, then re-pair.
+    ) -> Tuple[int, List[List[int]]]:
+        """One conference's three rounds. 1v8, 2v7, 3v6, 4v5, then re-pair.
 
         The NBA re-seeds nothing: the bracket is fixed at the first round,
         so the 1 seed does not automatically meet the lowest survivor.
         Modelled as a fixed bracket, which is what the league actually runs.
+
+        Returns the conference winner and the survivors after each round, so
+        a caller can count how far a team got without re-running anything.
         """
         if len(seeds) < PLAYOFF_SEEDS:
-            return seeds[0]
+            return seeds[0], []
         # Bracket order pairs 1-8, 4-5 | 3-6, 2-7 so that 1 and 2 can only
         # meet in the conference finals.
         bracket = [
             seeds[0], seeds[7], seeds[3], seeds[4],
             seeds[2], seeds[5], seeds[1], seeds[6],
         ]
+        survivors: List[List[int]] = []
         while len(bracket) > 1:
             nxt = []
             for i in range(0, len(bracket), 2):
@@ -407,7 +440,8 @@ class SeasonSimulator:
                 higher, lower = (a, b) if rank_a < rank_b else (b, a)
                 nxt.append(self._simulate_series(higher, lower, elo, rng))
             bracket = nxt
-        return bracket[0]
+            survivors.append(list(bracket))
+        return bracket[0], survivors
 
 
 def _is_east(conference: Optional[str]) -> bool:
