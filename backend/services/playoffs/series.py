@@ -280,6 +280,17 @@ def series_length_distribution(
     Exact, by the same enumeration. This is what makes a series card say
     something a single number cannot — "in 6" is the modal outcome of most
     real series and a reader recognises it.
+
+    **Returned unrounded, and that is the fix for a real bug.** This used to
+    round each bucket to six places, which is a serialisation concern that
+    was quietly breaking the function's own invariant: sixteen buckets each
+    off by up to 5e-7 put the total as much as 1e-6 from one. The test that
+    asserts the distribution sums to one uses `pytest.approx`, whose default
+    tolerance is RELATIVE 1e-6 — so the sum landed exactly on the knife
+    edge, passed on Python 3.11 and failed on 3.12 in CI. A probability
+    distribution must not lose mass on the way out of the function that
+    computed it; rounding belongs at the JSON boundary, where the callers
+    now do it.
     """
     needed = best_of // 2 + 1
     out: Dict[str, float] = defaultdict(float)
@@ -298,7 +309,7 @@ def series_length_distribution(
         recurse(wins, losses + 1, probability * (1.0 - p_win))
 
     recurse(0, 0, 1.0)
-    return {k: round(v, 6) for k, v in sorted(out.items())}
+    return dict(sorted(out.items()))
 
 
 def conditional_series_probability(

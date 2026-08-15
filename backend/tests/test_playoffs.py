@@ -73,8 +73,30 @@ class TestSeriesProbability:
 
 class TestSeriesLength:
     def test_distribution_sums_to_one(self):
+        """Every path leads somewhere, so the mass has to be there.
+
+        This test caught a real bug rather than a tolerance problem. The
+        function used to round each bucket to six places on the way out;
+        sixteen buckets each off by up to 5e-7 left the total as much as
+        1e-6 from one, which is EXACTLY `pytest.approx`'s default relative
+        tolerance. It passed on Python 3.11 and failed on 3.12 in CI. The
+        rounding moved to the JSON boundary, where it belongs — so this now
+        holds to float precision, and the tight default tolerance is the
+        point of the test.
+        """
         dist = series_length_distribution(0.65, 0.55)
         assert sum(dist.values()) == pytest.approx(1.0)
+
+    def test_it_sums_to_one_across_the_whole_parameter_grid(self):
+        """Not just at one lucky pair of inputs.
+
+        The knife-edge above was invisible for exactly this reason: a single
+        sample sat one ULP inside the tolerance.
+        """
+        for home in (i / 20 for i in range(1, 20)):
+            for away in (j / 20 for j in range(1, 20)):
+                total = sum(series_length_distribution(home, away).values())
+                assert total == pytest.approx(1.0, abs=1e-12)
 
     def test_only_valid_lengths_appear(self):
         dist = series_length_distribution(0.65, 0.55)

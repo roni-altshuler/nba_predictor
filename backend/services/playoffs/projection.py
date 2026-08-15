@@ -161,7 +161,11 @@ def project_first_round(
                 "p_high_series": round(p_series, 4),
                 "p_low_series": round(1.0 - p_series, 4),
                 "modal_length": _modal_length(lengths),
-                "lengths": lengths,
+                # Rounded HERE, at the JSON boundary, not inside the model.
+                # Rounding sixteen buckets inside the enumeration cost the
+                # distribution up to 1e-6 of its total mass and broke its
+                # own sums-to-one invariant.
+                "lengths": {k: round(v, 6) for k, v in lengths.items()},
             }
         )
     return out
