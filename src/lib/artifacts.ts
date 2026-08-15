@@ -119,6 +119,8 @@ export interface GameForecast {
 
 export interface GameForecasts {
   season: number
+  /** First regular-season tip-off, played or scheduled. Anchors week 1. */
+  season_start?: string | null
   generated_at: string
   model_version: string
   n_games: number
@@ -249,6 +251,87 @@ export function getSeriesModel(): Record<string, unknown> | null {
 
 export function getEloSweep(): Record<string, unknown> | null {
   return readJson(DIAGNOSTICS_DIR, 'elo_sweep.json')
+}
+
+/**
+ * Games grouped into NBA weeks, each week holding its days.
+ *
+ * **A week runs Monday to Sunday and week 1 is the week containing the
+ * season opener.** That is the league's own scheduling unit — the NBA
+ * publishes its calendar as "Week 1", "Week 2" and so on, and every
+ * back-to-back, rest-day and travel argument is framed in it. A day is a
+ * slate; a week is a schedule.
+ *
+ * The anchor is the SEASON's first game, published in the artifact — not
+ * the first game still to be played. Anchoring on the remaining fixtures
+ * would renumber week 1 onto whatever is next every morning, which looks
+ * correct in October and is nonsense by December.
+ *
+ * With no anchor published, weeks are counted from the earliest game we
+ * hold and the caller is told, rather than the page inventing a number.
+ */
+export interface GameWeek {
+  week: number
+  start: string
+  end: string
+  days: Array<[string, GameForecast[]]>
+  games: number
+  anchored: boolean
+}
+
+/** The Monday on or before a date, as a YYYY-MM-DD string. */
+function mondayOf(day: string): string {
+  const date = new Date(`${day}T00:00:00Z`)
+  // getUTCDay: 0 = Sunday. Monday-start weeks put Sunday six days in.
+  const offset = (date.getUTCDay() + 6) % 7
+  date.setUTCDate(date.getUTCDate() - offset)
+  return date.toISOString().slice(0, 10)
+}
+
+function daysBetween(from: string, to: string): number {
+  const a = Date.parse(`${from}T00:00:00Z`)
+  const b = Date.parse(`${to}T00:00:00Z`)
+  return Math.round((b - a) / 86_400_000)
+}
+
+function addDays(day: string, count: number): string {
+  const date = new Date(`${day}T00:00:00Z`)
+  date.setUTCDate(date.getUTCDate() + count)
+  return date.toISOString().slice(0, 10)
+}
+
+export function groupByWeek(
+  games: GameForecast[],
+  seasonStart?: string | null,
+): GameWeek[] {
+  const days = groupByDay(games)
+  if (!days.length) return []
+
+  const anchored = Boolean(seasonStart)
+  const anchor = mondayOf(
+    seasonStart ? String(seasonStart).slice(0, 10) : days[0][0],
+  )
+
+  const weeks = new Map<number, GameWeek>()
+  for (const [day, slate] of days) {
+    const index = Math.floor(daysBetween(anchor, mondayOf(day)) / 7) + 1
+    const existing = weeks.get(index)
+    if (existing) {
+      existing.days.push([day, slate])
+      existing.games += slate.length
+    } else {
+      const start = addDays(anchor, (index - 1) * 7)
+      weeks.set(index, {
+        week: index,
+        start,
+        end: addDays(start, 6),
+        days: [[day, slate]],
+        games: slate.length,
+        anchored,
+      })
+    }
+  }
+  return Array.from(weeks.values()).sort((a, b) => a.week - b.week)
 }
 
 /** Games grouped by their Eastern calendar date, in schedule order. */

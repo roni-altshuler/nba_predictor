@@ -185,10 +185,10 @@ model changes.
 | route | what it is |
 |---|---|
 | `/` | today's slate, title odds, power ratings — all named by team mark |
-| `/season` | projected standings, seeds, playoff/title odds, the LIVE title race |
+| `/season` | projected standings, the projected-finish chart, the title race |
 | `/bracket` | the projected postseason, priced by exact enumeration |
-| `/games` | upcoming forecasts with the value surface |
-| `/games/[id]` | one game — works for upcoming AND archived; player box score from ESPN |
+| `/games` | the schedule **by NBA week**, every card a link |
+| `/games/[id]` | one game — upcoming OR archived; series history, both sides' form, player box score from ESPN |
 | `/seasons` | the 23-season archive index |
 | `/seasons/[season]` | standings, playoff bracket, the title race replayed, the model's five biggest misses |
 | `/seasons/[season]/games` | every game that season, by month |
@@ -209,6 +209,30 @@ board.
 **The first round has 2^(rounds-1) series, not 2^rounds.** Eight teams per
 conference meet in FOUR series. The first version got this off by one and
 rendered four empty placeholder cards under every real one.
+
+**Every matchup card is a link, and the destination has to earn it.** A card
+that shows a fixture and does nothing when clicked is the most common
+complaint any schedule gets, and it was this one's. A game page therefore
+carries what a card cannot: the last six meetings, both sides' last ten
+results, the records, and after tip-off the full player box score. All of it
+comes from `history/game_context.json`, published by `build_history` over the
+whole corpus.
+
+**`--from-season` limits which season FILES are rewritten and nothing else.**
+`seasons.json` and `game_index.json` are always rebuilt over every season.
+The first version filtered the index too — and the daily job runs
+`--from-season <current>`, so one scheduled run cut the archive index to a
+single season and `game_index` to 1,322 of 29,653 games, turning every other
+archived game URL into a 404 while 22 intact season files sat beside it.
+Nothing failed; the pages simply stopped existing. `seasons_lost()` now
+refuses to publish an index smaller than the live one, the same guard
+`forecast_season` applies to franchises.
+
+**Weeks run Monday to Sunday, anchored on `season_start`.** That field is
+published in `game_forecasts.json` from the whole season, played and
+scheduled — anchoring week 1 on the earliest REMAINING fixture renumbers it
+onto whatever is next every morning, which looks right in October and is
+nonsense by December.
 
 **A projected bracket is not a bracket with the results missing.** Only the
 first round is drawn as matchups, from the modal seeding, with each seed
@@ -294,6 +318,7 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 | Playoff series backtest | `python3 -m backend.scripts.benchmark_series` |
 | Publish the forecast | `python3 -m backend.scripts.forecast_season --sims 20000` |
 | Export the season archive | `python3 -m backend.scripts.build_history` |
+| Refresh only the current season's file | `python3 -m backend.scripts.build_history --from-season 2027` |
 | Append today's title-race point | `python3 -m backend.scripts.title_race --track` |
 | Replay a season's title race | `python3 -m backend.scripts.title_race --replay 2026 --every 10 --sims 4000` |
 | Regenerate icons | `npm run icons` |

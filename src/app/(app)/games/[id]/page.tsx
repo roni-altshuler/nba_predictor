@@ -7,9 +7,13 @@ import { getEspnBoxScore, type GameBoxScore, type TeamBoxScore } from '@/lib/esp
 import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
 import {
   SEASON_TYPE_LABEL,
+  formFor,
   getArchivedGame,
+  getGameContext,
+  meetingsBetween,
   teamMetaFromStandings,
   type ArchiveGame,
+  type Meeting,
 } from '@/lib/history'
 import { cn } from '@/lib/utils'
 
@@ -208,9 +212,11 @@ function PlayedGame({
       )}
 
       {game.box_home && game.box_away ? (
-        <BoxScore game={game} />
+        <div className="mb-6">
+          <BoxScore game={game} />
+        </div>
       ) : (
-        <section className="card p-4">
+        <section className="card mb-6 p-4">
           <h2 className="text-sm">No team box score</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             The source carried no team statistics for this game. Shown as
@@ -218,6 +224,8 @@ function PlayedGame({
           </p>
         </section>
       )}
+
+      <SeriesHistory away={game.away} home={game.home} excludeId={game.id} />
     </div>
   )
 }
@@ -513,6 +521,7 @@ function UpcomingGame({
             team={game.away.abbreviation}
             meta={game.away}
             probability={game.p_away}
+            record={recordLine(game.away.abbreviation)}
           />
           <span
             className="font-numeric text-xs text-[var(--text-tertiary)]"
@@ -524,6 +533,7 @@ function UpcomingGame({
             team={game.home.abbreviation}
             meta={game.home}
             probability={game.p_home}
+            record={recordLine(game.home.abbreviation)}
             align="right"
           />
         </div>
@@ -550,7 +560,7 @@ function UpcomingGame({
       </section>
 
       {game.value ? (
-        <section className="card p-4">
+        <section className="card mb-6 p-4">
           <h2 className="mb-3 text-sm">Value surface</h2>
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <Stat
@@ -563,7 +573,7 @@ function UpcomingGame({
           </dl>
         </section>
       ) : (
-        <section className="card p-4">
+        <section className="card mb-6 p-4">
           <h2 className="text-sm">No market line</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             No sportsbook has published a price for this game yet, so there is
@@ -571,11 +581,201 @@ function UpcomingGame({
           </p>
         </section>
       )}
+
+      <SeriesHistory
+        away={game.away.abbreviation}
+        home={game.home.abbreviation}
+      />
+
+      <div className="mb-6 grid gap-4 md:grid-cols-2">
+        <FormPanel abbreviation={game.away.abbreviation} name={game.away.name} />
+        <FormPanel abbreviation={game.home.abbreviation} name={game.home.name} />
+      </div>
     </div>
   )
 }
 
+/* -------------------------------------------------------------- context */
+
+/**
+ * When these two last met, and what happened.
+ *
+ * The first thing anybody looking up a fixture wants, and the thing a
+ * probability on its own cannot give them. Every row is a link into the
+ * full game page, so the history is browsable rather than decorative.
+ *
+ * **Absent history is stated, not hidden.** Two clubs with no meeting in the
+ * corpus is a real fact — an expansion side, a relocation, a gap in the
+ * ingest — and an empty section that silently disappears looks the same as
+ * one that failed to load.
+ */
+function SeriesHistory({
+  away,
+  home,
+  excludeId,
+}: {
+  away: string
+  home: string
+  excludeId?: string
+}) {
+  const meetings = meetingsBetween(away, home).filter((m) => m.id !== excludeId)
+  const depth = getGameContext()?.h2h_depth ?? 6
+
+  if (!meetings.length) {
+    return (
+      <section className="card mb-6 p-4">
+        <h2 className="text-sm">No previous meeting</h2>
+        <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+          These two have not met inside the 2004-onward corpus.
+        </p>
+      </section>
+    )
+  }
+
+  const awayWins = meetings.filter((m) =>
+    m.home === away ? m.home_score > m.away_score : m.away_score > m.home_score,
+  ).length
+
+  return (
+    <section className="mb-6">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-sm">Last {meetings.length} meetings</h2>
+        <span className="font-numeric text-[11px] text-[var(--text-tertiary)]">
+          {away} {awayWins} — {meetings.length - awayWins} {home}
+        </span>
+      </div>
+      <div className="card divide-y divide-[var(--border-color)]">
+        {meetings.map((meeting) => (
+          <MeetingRow key={meeting.id} meeting={meeting} />
+        ))}
+      </div>
+      <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+        The {depth} most recent meetings in the corpus, regular season and
+        postseason alike. Every one opens its own page.
+      </p>
+    </section>
+  )
+}
+
+function MeetingRow({ meeting }: { meeting: Meeting }) {
+  const homeWon = meeting.home_score > meeting.away_score
+  return (
+    <Link
+      href={`/games/${meeting.id}`}
+      className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2 transition-colors hover:bg-[var(--card-hover)]"
+    >
+      <span className="w-20 shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)]">
+        {new Date(meeting.date).toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: '2-digit',
+          timeZone: 'America/New_York',
+        })}
+      </span>
+      <span className="min-w-0 flex-1 font-numeric text-xs">
+        <span
+          className={
+            homeWon ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'
+          }
+        >
+          {meeting.away} {meeting.away_score}
+        </span>
+        <span className="mx-1.5 text-[var(--text-tertiary)]">@</span>
+        <span
+          className={
+            homeWon ? 'text-[var(--text-primary)]' : 'text-[var(--text-tertiary)]'
+          }
+        >
+          {meeting.home} {meeting.home_score}
+        </span>
+      </span>
+      {meeting.type !== 2 ? (
+        <span className="font-numeric text-[10px] text-[var(--accent-warn)]">
+          {SEASON_TYPE_LABEL[meeting.type]}
+        </span>
+      ) : null}
+    </Link>
+  )
+}
+
+/**
+ * A club's last ten results as a strip of W/L pills.
+ *
+ * **The pills carry a letter, not just a colour.** A green square and a red
+ * square are the same square to a red-green colour-blind reader, which is
+ * roughly one man in twelve — and this is the densest colour-coded surface
+ * on the site.
+ */
+function FormPanel({
+  abbreviation,
+  name,
+}: {
+  abbreviation: string
+  name: string
+}) {
+  const games = formFor(abbreviation)
+  const record = getGameContext()?.records[abbreviation]
+
+  if (!games.length) {
+    return (
+      <section className="card p-4">
+        <h2 className="text-sm">{name}</h2>
+        <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+          No results recorded for this club in the corpus.
+        </p>
+      </section>
+    )
+  }
+
+  const won = games.filter((g) => g.won).length
+
+  return (
+    <section className="card p-4">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-sm">
+          <Link href={`/teams/${abbreviation}`} className="hover:underline">
+            {name}
+          </Link>
+        </h2>
+        <span className="font-numeric text-[11px] text-[var(--text-tertiary)]">
+          {record
+            ? `${record.wins}–${record.losses} in ${record.season - 1}-${String(record.season).slice(2)}`
+            : ''}
+        </span>
+      </div>
+
+      <div className="mb-3 flex flex-wrap gap-1">
+        {games.map((game) => (
+          <Link
+            key={game.id}
+            href={`/games/${game.id}`}
+            title={`${game.home ? 'vs' : 'at'} ${game.opponent} · ${game.scored}-${game.allowed}`}
+            className={cn(
+              'flex h-6 w-6 items-center justify-center rounded-sm font-numeric text-[10px] transition-opacity hover:opacity-80',
+              game.won
+                ? 'bg-[var(--accent-primary)] text-black'
+                : 'bg-[var(--muted-bg)] text-[var(--text-secondary)]',
+            )}
+          >
+            {game.won ? 'W' : 'L'}
+          </Link>
+        ))}
+      </div>
+
+      <p className="text-[11px] text-[var(--text-tertiary)]">
+        {won}–{games.length - won} in the last {games.length}, oldest on the
+        right. Each one opens its game page.
+      </p>
+    </section>
+  )
+}
+
 /* --------------------------------------------------------------- shared */
+
+/** The most recent completed regular-season record, as a caption. */
+function recordLine(abbreviation: string): string | undefined {
+  const record = getGameContext()?.records[abbreviation]
+  if (!record) return undefined
+  return `${record.wins}–${record.losses} · ${record.season - 1}-${String(record.season).slice(2)}`
+}
 
 function ScoreSide({
   team,
@@ -583,6 +783,7 @@ function ScoreSide({
   score,
   probability,
   won,
+  record,
   align = 'left',
 }: {
   team: string
@@ -590,6 +791,7 @@ function ScoreSide({
   score?: number
   probability?: number
   won?: boolean
+  record?: string
   align?: 'left' | 'right'
 }) {
   return (
@@ -617,6 +819,11 @@ function ScoreSide({
         {probability !== undefined ? (
           <p className="numeric text-lg text-[var(--text-secondary)]">
             {pct(probability)}
+          </p>
+        ) : null}
+        {record ? (
+          <p className="font-numeric text-[10px] text-[var(--text-tertiary)]">
+            {record}
           </p>
         ) : null}
       </div>

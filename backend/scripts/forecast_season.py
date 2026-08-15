@@ -194,6 +194,30 @@ def _parse_utc(iso: str) -> datetime:
     return datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
 
 
+def season_start(warehouse, season: int) -> Optional[str]:
+    """The first regular-season tip-off of the season, played or scheduled.
+
+    Published so the games page can number NBA weeks. **It must come from
+    the whole season, not from the remaining fixtures** — anchoring week 1
+    on the earliest game still to be played would reset the numbering to 1
+    every morning once the season is under way, which is the sort of bug
+    that looks right in October and is nonsense by December.
+    """
+    row = warehouse.conn.execute(
+        """
+        SELECT MIN(date_utc) AS start FROM (
+            SELECT date_utc FROM games
+             WHERE season = ? AND season_type = ?
+            UNION ALL
+            SELECT date_utc FROM scheduled_games
+             WHERE season = ? AND season_type = ?
+        )
+        """,
+        (season, SEASON_TYPE_REGULAR, season, SEASON_TYPE_REGULAR),
+    ).fetchone()
+    return row["start"] if row and row["start"] else None
+
+
 def forecast_games(
     model: MarginModel,
     builder: FeatureBuilder,
@@ -433,6 +457,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         out_dir / "game_forecasts.json",
         {
             "season": season,
+            "season_start": season_start(warehouse, season),
             "generated_at": generated_at,
             "model_version": version,
             "n_games": len(games),

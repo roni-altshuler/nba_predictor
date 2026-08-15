@@ -1,11 +1,17 @@
 'use client'
 
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import { ProbabilityBar } from '@/components/forecast/ProbabilityBar'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
-import { num, pct, signed } from '@/lib/format'
+import { gameTime, num, pct, signed } from '@/lib/format'
 import type { Matchups } from '@/lib/history'
+
+export interface ScheduledMeeting {
+  id: string
+  date: string
+}
 
 /**
  * Head-to-head: pick any two franchises, get the forecast.
@@ -21,7 +27,13 @@ import type { Matchups } from '@/lib/history'
  * non-rating term in the model, and swapping it is what makes the surface
  * honest about a neutral-court question having no answer here.
  */
-export function MatchupPicker({ data }: { data: Matchups }) {
+export function MatchupPicker({
+  data,
+  scheduled = {},
+}: {
+  data: Matchups
+  scheduled?: Record<string, ScheduledMeeting>
+}) {
   const teams = [...data.teams].sort((a, b) => a.name.localeCompare(b.name))
   const [homeKey, setHome] = useState(teams[0]?.abbreviation ?? '')
   const [awayKey, setAway] = useState(teams[1]?.abbreviation ?? '')
@@ -35,6 +47,7 @@ export function MatchupPicker({ data }: { data: Matchups }) {
   const home = teams.find((t) => t.abbreviation === homeKey)
   const away = teams.find((t) => t.abbreviation === awayKey)
   const result = lookup.get(`${homeKey}|${awayKey}`)
+  const fixture = scheduled[`${homeKey}|${awayKey}`]
 
   const swap = () => {
     setHome(awayKey)
@@ -111,6 +124,29 @@ export function MatchupPicker({ data }: { data: Matchups }) {
             era — press <em>Swap</em> and watch the number move, because that
             difference is the whole of it.
           </p>
+
+          {/* When the hypothetical is also a real fixture, hand the reader
+              the real one. This surface is a lookup at current ratings; the
+              game page carries the schedule, the series history and both
+              sides' form. */}
+          {fixture ? (
+            <Link
+              href={`/games/${fixture.id}`}
+              className="mt-3 inline-flex items-center gap-1.5 font-numeric text-[11px] text-[var(--accent-info)] hover:underline"
+            >
+              They meet {gameTime(fixture.date)} — full match detail
+              <svg
+                width="10" height="10" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5" aria-hidden="true"
+              >
+                <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          ) : (
+            <p className="mt-3 font-numeric text-[11px] text-[var(--text-tertiary)]">
+              No scheduled meeting with these two in this venue order.
+            </p>
+          )}
         </div>
       ) : (
         <p className="card mt-4 p-4 text-xs text-[var(--text-tertiary)]">

@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
+from backend.scripts.build_history import build_context, seasons_lost
 from backend.scripts.title_race import _checkpoint_dates, _eastern_day
 from backend.services.playoffs.projection import (
     FIRST_ROUND_PAIRS,
@@ -200,6 +203,129 @@ class TestRoundReachMonotonicity:
             assert team.p_conf_semis >= team.p_conf_finals - 1e-9
             assert team.p_conf_finals >= team.p_conference_title - 1e-9
             assert team.p_conference_title >= team.p_championship - 1e-9
+
+
+class TestFixtureContext:
+    """The series history and form a fixture page shows before tip-off."""
+
+    def _rows(self):
+        def row(gid, date, home, away, hs, as_, season=2026, stype=2, phase=None):
+            return {
+                "game_id": gid, "date_utc": date, "season": season,
+                "season_type": stype, "home_team_id": home, "away_team_id": away,
+                "home_score": hs, "away_score": as_, "phase": phase,
+            }
+
+        # Chronological, as Warehouse.iter_games guarantees.
+        return [
+            row("1", "2025-11-01T00:00:00+00:00", 1, 2, 100, 90),
+            row("2", "2025-12-01T00:00:00+00:00", 2, 1, 110, 95),
+            row("3", "2026-01-01T00:00:00+00:00", 1, 2, 105, 108),
+            row("4", "2026-02-01T00:00:00+00:00", 1, 2, 99, 88,
+                phase="NBA Cup Championship"),
+            row("5", "2026-05-01T00:00:00+00:00", 1, 2, 101, 97, stype=3),
+        ]
+
+    def _franchises(self):
+        return {
+            1: {"abbreviation": "AAA", "display_name": "Team A"},
+            2: {"abbreviation": "BBB", "display_name": "Team B"},
+        }
+
+    def test_head_to_head_is_keyed_on_the_sorted_pair(self):
+        """A lookup must not have to know which side is at home."""
+        out = build_context(self._rows(), self._franchises())
+        assert set(out["head_to_head"]) == {"AAA|BBB"}
+        assert len(out["head_to_head"]["AAA|BBB"]) == 5
+
+    def test_meetings_stay_in_chronological_order(self):
+        # The last N entries ARE the most recent N — there is no sort here to
+        # get subtly wrong, which is only true if order is preserved.
+        out = build_context(self._rows(), self._franchises())
+        dates = [m["date"] for m in out["head_to_head"]["AAA|BBB"]]
+        assert dates == sorted(dates)
+
+    def test_form_records_both_sides_of_every_game(self):
+        out = build_context(self._rows(), self._franchises())
+        assert len(out["form"]["AAA"]) == 5
+        assert len(out["form"]["BBB"]) == 5
+        first = out["form"]["AAA"][0]
+        assert first["opponent"] == "BBB"
+        assert first["home"] is True
+        assert first["won"] is True
+        assert out["form"]["BBB"][0]["won"] is False
+
+    def test_the_record_excludes_the_cup_final_and_the_postseason(self):
+        """Two different exclusions, both real.
+
+        ESPN files the NBA Cup Championship as a regular-season game and the
+        league does not count it; including it put New York on 83 games and
+        54-29 against 53-29 on the standings page. The postseason is a
+        different population and folding it in flatters everyone who made it.
+        """
+        out = build_context(self._rows(), self._franchises())
+        # Three regular-season meetings count: AAA wins one and loses two.
+        # Counting the Cup final and the playoff game as well would read
+        # 3-2, and both of those extra wins belong to AAA — exactly the
+        # direction that flatters a team.
+        assert out["records"]["AAA"] == {"season": 2026, "wins": 1, "losses": 2}
+        assert out["records"]["BBB"] == {"season": 2026, "wins": 2, "losses": 1}
+
+    def test_a_new_season_resets_the_record_rather_than_accumulating(self):
+        rows = [
+            {"game_id": "a", "date_utc": "2025-11-01T00:00:00+00:00", "season": 2025,
+             "season_type": 2, "home_team_id": 1, "away_team_id": 2,
+             "home_score": 100, "away_score": 90, "phase": None},
+            {"game_id": "b", "date_utc": "2026-11-01T00:00:00+00:00", "season": 2026,
+             "season_type": 2, "home_team_id": 1, "away_team_id": 2,
+             "home_score": 100, "away_score": 90, "phase": None},
+        ]
+        out = build_context(rows, self._franchises())
+        assert out["records"]["AAA"] == {"season": 2026, "wins": 1, "losses": 0}
+
+    def test_it_keeps_only_the_published_depth(self):
+        rows = [
+            {"game_id": str(i), "date_utc": f"2026-01-{i:02d}T00:00:00+00:00",
+             "season": 2026, "season_type": 2, "home_team_id": 1,
+             "away_team_id": 2, "home_score": 100 + i, "away_score": 90,
+             "phase": None}
+            for i in range(1, 21)
+        ]
+        out = build_context(rows, self._franchises())
+        assert len(out["head_to_head"]["AAA|BBB"]) == out["h2h_depth"]
+        assert len(out["form"]["AAA"]) == out["form_depth"]
+        # The kept ones are the LATEST, not the first.
+        assert out["head_to_head"]["AAA|BBB"][-1]["id"] == "20"
+
+
+class TestArchiveIndexGuard:
+    """`--from-season` must never shrink the archive index.
+
+    The bug this guards shipped: the flag filtered the index as well as the
+    files, so a daily `--from-season <current>` run cut `seasons.json` to one
+    season and `game_index.json` to 1,322 of 29,653 games — turning every
+    other archived game URL into a 404 while 22 perfectly good season files
+    sat on disk beside it. Nothing failed; the pages simply stopped existing.
+    """
+
+    def test_it_names_the_seasons_that_would_disappear(self, tmp_path):
+        path = tmp_path / "seasons.json"
+        path.write_text(json.dumps({"seasons": [{"season": s} for s in range(2004, 2027)]}))
+        assert seasons_lost(path, {2026}) == list(range(2004, 2026))
+
+    def test_a_complete_republish_loses_nothing(self, tmp_path):
+        path = tmp_path / "seasons.json"
+        path.write_text(json.dumps({"seasons": [{"season": s} for s in (2025, 2026)]}))
+        assert seasons_lost(path, {2025, 2026, 2027}) == []
+
+    def test_a_first_run_with_no_live_index_is_not_a_loss(self, tmp_path):
+        assert seasons_lost(tmp_path / "absent.json", {2026}) == []
+
+    def test_an_unreadable_index_does_not_block_a_republish(self, tmp_path):
+        # A corrupt file is a reason to rewrite it, not a reason to refuse.
+        path = tmp_path / "seasons.json"
+        path.write_text("{ truncated")
+        assert seasons_lost(path, {2026}) == []
 
 
 class TestTitleRaceHelpers:

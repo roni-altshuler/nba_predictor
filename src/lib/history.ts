@@ -227,6 +227,68 @@ export function getSeasonTitleRace(season: number | string): TitleRace | null {
   return readJson<TitleRace>(`title_race_${value}.json`)
 }
 
+/**
+ * The context a fixture page needs before anyone has played it.
+ *
+ * A page carrying only a probability asserts a number and offers nothing to
+ * weigh it against. This is the same material a search result gives you:
+ * when these two last met and what happened, and how each side has been
+ * playing. Published by `build_history.py`; nothing is computed here.
+ */
+export interface Meeting {
+  id: string
+  date: string
+  season: number
+  type: number
+  home: string
+  away: string
+  home_score: number
+  away_score: number
+}
+
+export interface FormGame {
+  id: string
+  date: string
+  season: number
+  opponent: string
+  home: boolean
+  scored: number
+  allowed: number
+  won: boolean
+}
+
+export interface GameContext {
+  generated_at: string
+  basis: string
+  h2h_depth: number
+  form_depth: number
+  head_to_head: Record<string, Meeting[]>
+  form: Record<string, FormGame[]>
+  records: Record<string, { season: number; wins: number; losses: number }>
+}
+
+let contextCache: GameContext | null | undefined
+
+export function getGameContext(): GameContext | null {
+  if (contextCache === undefined) {
+    contextCache = readJson<GameContext>('game_context.json')
+  }
+  return contextCache
+}
+
+/** Recent meetings between two clubs, most recent first. Order-independent. */
+export function meetingsBetween(a: string, b: string): Meeting[] {
+  const key = [a, b].sort().join('|')
+  const found = getGameContext()?.head_to_head[key] ?? []
+  return [...found].reverse()
+}
+
+/** A club's last games, most recent first. */
+export function formFor(abbreviation: string): FormGame[] {
+  const found = getGameContext()?.form[abbreviation] ?? []
+  return [...found].reverse()
+}
+
 export interface RatingHistory {
   seasons: number[]
   teams: Record<string, Array<number | null>>

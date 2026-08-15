@@ -28,6 +28,17 @@ const BASE: GameForecast = {
 }
 
 describe('GameCard', () => {
+  it('is a link to the game, because it looks like one', () => {
+    // A card that shows a matchup and does nothing when clicked is the most
+    // common complaint any fixture list gets, and it was this one's. The
+    // destination carries what a card cannot: the series history, both
+    // sides' form, and after tip-off the box score.
+    render(<GameCard game={BASE} />)
+    const card = screen.getByRole('link')
+    expect(card).toHaveAttribute('href', '/games/1')
+    expect(card).toHaveAccessibleName(/Detroit Pistons at Boston Celtics/i)
+  })
+
   it('renders both probabilities as text, not only as a bar', () => {
     // Colour alone never carries a number on this site: a reader cannot read
     // 57% off a bar and a colour-blind reader cannot read it off a hue.

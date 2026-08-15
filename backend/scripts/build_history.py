@@ -22,6 +22,16 @@ the UI cannot lose it.
 The walk-forward here is the SAME code path as `benchmark_market`, not a
 reimplementation of it. Two forecasters that are supposed to be the same
 model and are written twice will drift, and the drift is invisible.
+
+**`--from-season` limits which season FILES are rewritten, and nothing
+else.** `seasons.json` and `game_index.json` are always rebuilt over the
+whole corpus. This is not a detail: the daily job runs
+`--from-season <current>` to avoid pushing 14MB of identical JSON through
+git every morning, and an earlier version also filtered the index by it —
+which cut the archive to a single season and left every one of the other
+30,000 game URLs resolving to a 404, with 22 perfectly good season files
+still sitting on disk. A guard below refuses to publish an index smaller
+than the one already there.
 """
 
 from __future__ import annotations
@@ -386,6 +396,97 @@ def build_matchups(
     }
 
 
+H2H_DEPTH = 6
+FORM_DEPTH = 10
+
+
+def build_context(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
+    """The context a fixture page needs: the series history and recent form.
+
+    **This exists so an UNPLAYED game has something to show.** Before tip-off
+    there is no box score and no result, and a page carrying only a
+    probability is a page that asserts a number and offers nothing to weigh
+    it against. What a reader actually wants is the same thing a search
+    result gives them: when these two last met and what happened, and how
+    each side has been playing.
+
+    Both are read straight off the corpus rather than recomputed per page.
+    `rows` arrives in chronological order — `Warehouse.iter_games` sorts on
+    `(date_utc, game_id)` — so the last N entries of each list ARE the most
+    recent N, with no sort here to get subtly wrong.
+
+    Head-to-head is keyed on the SORTED abbreviation pair, so a lookup does
+    not have to know which side is at home. Six meetings is roughly two
+    seasons of a divisional rivalry; ten games of form is a fortnight in a
+    league that plays every other night.
+    """
+    meetings: Dict[str, List[Dict]] = defaultdict(list)
+    form: Dict[str, List[Dict]] = defaultdict(list)
+    records: Dict[str, Dict] = {}
+
+    for row in rows:
+        home_id, away_id = int(row["home_team_id"]), int(row["away_team_id"])
+        home = franchises[home_id]["abbreviation"]
+        away = franchises[away_id]["abbreviation"]
+        home_score, away_score = int(row["home_score"]), int(row["away_score"])
+        entry = {
+            "id": row["game_id"],
+            "date": row["date_utc"],
+            "season": int(row["season"]),
+            "type": int(row["season_type"]),
+            "home": home,
+            "away": away,
+            "home_score": home_score,
+            "away_score": away_score,
+        }
+        meetings["|".join(sorted((home, away)))].append(entry)
+
+        for side, opponent, scored, allowed, at_home in (
+            (home, away, home_score, away_score, True),
+            (away, home, away_score, home_score, False),
+        ):
+            form[side].append(
+                {
+                    "id": row["game_id"],
+                    "date": row["date_utc"],
+                    "season": int(row["season"]),
+                    "opponent": opponent,
+                    "home": at_home,
+                    "scored": scored,
+                    "allowed": allowed,
+                    "won": scored > allowed,
+                }
+            )
+
+        # Regular-season record only. The postseason is a different
+        # population and folding it in would flatter every team that made it.
+        #
+        # The NBA Cup Championship is excluded for the same reason it is
+        # excluded from the standings: ESPN files it as a regular-season game
+        # and the league does not count it, so including it puts one
+        # franchise on 83 games. It did, on the first run — New York read
+        # 54-29 here against 53-29 on the standings page.
+        if (
+            int(row["season_type"]) == SEASON_TYPE_REGULAR
+            and "cup championship" not in str(row["phase"] or "").lower()
+        ):
+            for side, won in ((home, home_score > away_score), (away, away_score > home_score)):
+                bucket = records.setdefault(side, {"season": 0, "wins": 0, "losses": 0})
+                if int(row["season"]) != bucket["season"]:
+                    bucket.update(season=int(row["season"]), wins=0, losses=0)
+                bucket["wins" if won else "losses"] += 1
+
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "basis": "results",
+        "h2h_depth": H2H_DEPTH,
+        "form_depth": FORM_DEPTH,
+        "head_to_head": {k: v[-H2H_DEPTH:] for k, v in meetings.items()},
+        "form": {k: v[-FORM_DEPTH:] for k, v in form.items()},
+        "records": records,
+    }
+
+
 def build_rating_history(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
     """End-of-season Elo per franchise, for the ratings chart."""
     from backend.services.ratings.elo import EloRatingSystem
@@ -409,12 +510,33 @@ def build_rating_history(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
     }
 
 
+def seasons_lost(path: Path, publishing: set) -> List[int]:
+    """Seasons the live index carries that this run would drop.
+
+    The same guard `forecast_season` applies to franchises, for the same
+    reason: comparing against what is actually on disk rather than against a
+    constant, so a season genuinely leaving the corpus is a decision someone
+    makes rather than something a flag does silently.
+    """
+    if not path.exists():
+        return []
+    try:
+        previous = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return []
+    served = {int(s["season"]) for s in previous.get("seasons", [])}
+    return sorted(served - publishing)
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--from-season", type=int, default=None,
-                        help="earliest season to export (default: all)")
+                        help="earliest season whose FILE is rewritten "
+                             "(the index always covers every season)")
     parser.add_argument("--out-dir", default=str(OUT_DIR))
     parser.add_argument("--skip-matchups", action="store_true")
+    parser.add_argument("--allow-missing-seasons", action="store_true",
+                        help="publish an index smaller than the live one")
     args = parser.parse_args(argv)
 
     warehouse = get_warehouse()
@@ -439,15 +561,28 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for row in rows:
         by_season[int(row["season"])].append(row)
 
+    # EVERY season is built. `--from-season` decides only which files get
+    # rewritten — the index and the game→season map are always complete, or
+    # the archive loses the seasons whose files were left alone.
     seasons = sorted(by_season)
+    rewrite = (
+        {s for s in seasons if s >= args.from_season}
+        if args.from_season
+        else set(seasons)
+    )
     if args.from_season:
-        seasons = [s for s in seasons if s >= args.from_season]
+        logger.info(
+            "rewriting %d of %d season files (--from-season %s); the index "
+            "still covers all of them",
+            len(rewrite), len(seasons), args.from_season,
+        )
 
     index = []
     game_index: Dict[str, int] = {}
     for season in seasons:
         payload = build_season_file(season, by_season[season], retro, franchises)
-        _publish(out_dir / f"season_{season}.json", payload)
+        if season in rewrite:
+            _publish(out_dir / f"season_{season}.json", payload)
 
         for game in payload["games"]:
             game_index[game["id"]] = season
@@ -474,6 +609,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         logger.info("season %s: %d games, champion %s",
                     season, len(payload["games"]), payload["champion"])
 
+    lost = seasons_lost(out_dir / "seasons.json", {s["season"] for s in index})
+    if lost and not args.allow_missing_seasons:
+        logger.error(
+            "refusing to publish: the live index carries %d season(s) this "
+            "run would drop (%s). The archive on disk is left as it is. This "
+            "is the guard for the --from-season bug: a filtered index turns "
+            "30,000 game URLs into 404s while their season files sit there "
+            "intact. Pass --allow-missing-seasons only when a season is "
+            "genuinely leaving the corpus.",
+            len(lost), ", ".join(str(s) for s in lost[:5]),
+        )
+        return 1
+
     _publish(out_dir / "seasons.json", {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "basis": "backtest",
@@ -483,6 +631,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     _publish(out_dir / "game_index.json", game_index)
     _publish(out_dir / "rating_history.json",
              build_rating_history(rows, franchises))
+    # Always over the WHOLE corpus, never `--from-season`: the series history
+    # a fixture page shows is the last six meetings wherever they fall, and
+    # rebuilding it from the current season alone would silently empty it
+    # every morning the daily job runs.
+    _publish(out_dir / "game_context.json", build_context(rows, franchises))
 
     if not args.skip_matchups:
         _publish(out_dir / "matchups.json", build_matchups(warehouse, franchises))

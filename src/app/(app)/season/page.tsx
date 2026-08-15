@@ -1,11 +1,16 @@
 import Link from 'next/link'
 
+import { ProjectedFinishChart } from '@/components/charts/ProjectedFinishChart'
 import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
 import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { getPowerRatings, getSeasonProjections, type TeamProjection } from '@/lib/artifacts'
 import { num, pct, stamp } from '@/lib/format'
-import { getLiveTitleRace, getSeasonsIndex } from '@/lib/history'
+import {
+  getLiveTitleRace,
+  getSeasonTitleRace,
+  getSeasonsIndex,
+} from '@/lib/history'
 
 export const metadata = { title: 'Season projection' }
 export const dynamic = 'force-static'
@@ -19,12 +24,16 @@ export default function SeasonPage() {
   const meta = new Map(
     (ratings?.teams ?? []).map((t) => [t.team_id, t]),
   )
-  // The most recent season the archive can replay, offered while the live
-  // line is still a single point. A worked example of what this chart
-  // becomes beats an explanation of it.
+  // A live line needs two points, and before opening night there is one.
+  // Rather than print an explanation of a chart that is not there, the page
+  // shows the most recent completed race, drawn by the same component and
+  // labelled a backtest — a worked example beats a description of one.
   const replayable = (getSeasonsIndex()?.seasons ?? [])
     .map((s) => s.season)
-    .sort((a, b) => b - a)[0]
+    .sort((a, b) => b - a)
+    .map((season) => getSeasonTitleRace(season))
+    .find(Boolean)
+  const liveRace = race && race.checkpoints.length >= 2 ? race : null
 
   if (!projections) {
     return (
@@ -64,7 +73,39 @@ export default function SeasonPage() {
         </p>
       </div>
 
-      {race ? (
+      <section className="mb-8">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-sm">Where the season finishes</h2>
+          <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--text-tertiary)]">
+            {projections.simulations.toLocaleString()} simulations
+          </span>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {CONFERENCES.map((conference) => {
+            const rows = projections.teams
+              .filter((t) => t.conference === conference)
+              .map((t) => ({
+                abbreviation: meta.get(t.team_id)?.abbreviation ?? t.name,
+                name: t.name,
+                wins: t.wins,
+                low: t.wins_p10,
+                high: t.wins_p90,
+                p_playoffs: t.p_playoffs,
+              }))
+            if (rows.length < 2) return null
+            return (
+              <div key={conference} className="card p-4">
+                <h3 className="mb-3 text-xs text-[var(--text-secondary)]">
+                  {conference}
+                </h3>
+                <ProjectedFinishChart rows={rows} label={conference} />
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {liveRace ? (
         <section className="mb-8">
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="text-sm">The title race</h2>
@@ -78,23 +119,49 @@ export default function SeasonPage() {
                 <h3 className="mb-3 text-xs text-[var(--text-secondary)]">
                   {conference}
                 </h3>
-                <TitleRaceChart race={race} conference={conference} />
+                <TitleRaceChart race={liveRace} conference={conference} />
               </div>
             ))}
           </div>
-          {race.checkpoints.length < 2 && replayable ? (
-            <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-              To see what this becomes over a full season, the archive replays
-              a completed one the same way —{' '}
-              <Link
-                href={`/seasons/${replayable}`}
-                className="text-[var(--accent-info)] hover:underline"
-              >
-                the {replayable - 1}-{String(replayable).slice(2)} race
-              </Link>
-              , reconstructed at ten-day checkpoints.
-            </p>
-          ) : null}
+        </section>
+      ) : replayable ? (
+        <section className="mb-8">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-sm">
+              How the title race moves · {replayable.season - 1}-
+              {String(replayable.season).slice(2)}
+            </h2>
+            <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--accent-warn)]">
+              Backtest
+            </span>
+          </div>
+          <p className="mb-3 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+            This season&apos;s live line starts on opening night and gains a
+            point every day the forecast runs. Until it has two, the most
+            recent completed season is drawn here instead — same chart, same
+            model, re-simulated at ten-day checkpoints from ratings that never
+            saw the future. It is what this panel becomes.
+          </p>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {CONFERENCES.map((conference) => (
+              <div key={conference} className="card p-4">
+                <h3 className="mb-3 text-xs text-[var(--text-secondary)]">
+                  {conference}
+                </h3>
+                <TitleRaceChart race={replayable} conference={conference} />
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 text-[11px] text-[var(--text-tertiary)]">
+            <Link
+              href={`/seasons/${replayable.season}`}
+              className="text-[var(--accent-info)] hover:underline"
+            >
+              The full {replayable.season - 1}-
+              {String(replayable.season).slice(2)} season
+            </Link>{' '}
+            — standings, bracket and every result.
+          </p>
         </section>
       ) : null}
 

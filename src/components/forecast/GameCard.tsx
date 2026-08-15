@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import type { GameForecast } from '@/lib/artifacts'
 import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
@@ -17,13 +19,24 @@ import { ProbabilityBar } from './ProbabilityBar'
  * 3. **The value flag is gated on the edge clearing our own measured
  *    calibration error.** Below that threshold, "value" is indistinguishable
  *    from the model being slightly miscalibrated, and the card says so.
+ *
+ * **The whole card is a link.** It looks like a thing you can open, so it
+ * has to be one — a card that shows a matchup and does nothing when clicked
+ * is the most common complaint any fixture list gets, and it was this one's.
+ * The destination carries what a card cannot: the series history, both
+ * sides' recent form, the score distribution, and after tip-off the box
+ * score.
  */
 export function GameCard({ game }: { game: GameForecast }) {
   const value = game.value
   const favoured = game.p_home >= 0.5 ? game.home : game.away
 
   return (
-    <article className="card p-4">
+    <Link
+      href={`/games/${game.game_id}`}
+      className="card group block p-4 transition-colors hover:bg-[var(--card-hover)]"
+      aria-label={`${game.away.name} at ${game.home.name}, ${gameTime(game.date_utc)} — full forecast and match detail`}
+    >
       <div className="mb-3 flex items-baseline justify-between gap-2">
         <span className="eyebrow">{gameTime(game.date_utc)}</span>
         {value?.flagged ? (
@@ -97,7 +110,22 @@ export function GameCard({ game }: { game: GameForecast }) {
           to compare the forecast against.
         </p>
       )}
-    </article>
+
+      <span className="mt-3 inline-flex items-center gap-1 font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] transition-colors group-hover:text-[var(--accent-info)]">
+        Match detail
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden="true"
+        >
+          <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+    </Link>
   )
 }
 

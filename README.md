@@ -12,6 +12,10 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 4. **Playoff bracket** — the projected postseason, with every first-round series priced by exact enumeration
 5. **The title race** — each conference's contenders as a line that moves as the season is played
 
+The schedule is organised by **NBA week**, and every matchup card opens a
+match detail page: the last six meetings, both sides' recent form, the
+forecast, and — once the game is played — the full player box score.
+
 Plus a **23-season archive**: final standings, every game with quarters, the
 team and player box scores, the playoff bracket, the title race replayed at
 ten-day checkpoints, and what the model would have said — labelled a backtest
