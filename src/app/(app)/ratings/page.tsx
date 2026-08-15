@@ -1,3 +1,6 @@
+import Link from 'next/link'
+
+import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { getPowerRatings } from '@/lib/artifacts'
 import { stamp } from '@/lib/format'
 
@@ -57,7 +60,18 @@ export default function RatingsPage() {
             {ratings.teams.map((team) => (
               <tr key={team.team_id}>
                 <td className="numeric text-[var(--text-tertiary)]">{team.rank}</td>
-                <td className="text-[var(--text-primary)]">{team.name}</td>
+                <td>
+                  <Link
+                    href={`/teams/${team.abbreviation}`}
+                    className="text-[var(--text-primary)] hover:underline"
+                  >
+                    <TeamLabel
+                      logo={team.logo}
+                      abbreviation={team.abbreviation}
+                      name={team.name}
+                    />
+                  </Link>
+                </td>
                 <td className="text-[var(--text-tertiary)]">
                   {team.conference?.replace(' Conference', '') ?? '—'}
                 </td>

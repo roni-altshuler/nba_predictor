@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none" role="img" aria-label="Hardwood">
+  <title>Hardwood — Calibrated NBA forecasting</title>
+  <defs>
+    <linearGradient id="og-mark" x1="72" y1="72" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0913a"/>
+      <stop offset="1" stop-color="#c1443c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#000000"/>
+  <!-- Hairlines carry the structure. No gradient wash, no glow: the card has
+       to look like the product it links to. -->
+  <rect x="0.5" y="0.5" width="1199" height="629" fill="none" stroke="#262626"/>
+  <line x1="72" y1="196" x2="1128" y2="196" stroke="#262626" stroke-width="1"/>
+  <line x1="72" y1="482" x2="1128" y2="482" stroke="#262626" stroke-width="1"/>
+
+  <rect x="72" y="80" width="88" height="88" rx="22" fill="url(#og-mark)"/>
+  <g transform="translate(116 124) scale(1.52) translate(-24 -24)"
+     stroke="#1a0d06" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <circle cx="24" cy="24" r="13.5"/>
+    <path d="M24 10.5v27"/><path d="M10.5 24h27"/>
+    <path d="M14.4 14.4c5.4 5.4 5.4 14.2 0 19.2"/>
+    <path d="M33.6 14.4c-5.4 5.4-5.4 14.2 0 19.2"/>
+  </g>
+
+  <text x="188" y="118" font-family="Inter, sans-serif" font-size="30" font-weight="600"
+        letter-spacing="7" fill="#ffffff">HARDWOOD</text>
+  <text x="188" y="154" font-family="ui-monospace, monospace" font-size="21"
+        letter-spacing="1.5" fill="#999999">Calibrated NBA forecasting</text>
+
+  <text x="72" y="290" font-family="Inter, sans-serif" font-size="62" font-weight="600"
+        letter-spacing="-1" fill="#ffffff">Scored against the closing line.</text>
+  <text x="72" y="360" font-family="Inter, sans-serif" font-size="30" fill="#cccccc">
+    31,844 games since 2004 · 14,600 with a market price
+  </text>
+
+  <g font-family="ui-monospace, monospace" font-size="20" fill="#999999">
+    <text x="72" y="552">MARKET .2070</text>
+    <text x="340" y="552">MODEL .2141</text>
+    <text x="608" y="552">GAP +.0071</text>
+    <text x="876" y="552" fill="#5fa657">ECE .0095</text>
+  </g>
+</svg>

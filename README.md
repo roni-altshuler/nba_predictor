@@ -9,7 +9,15 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 1. **Game prediction** — win probability, expected margin, expected total
 2. **Season projection** — record, seed distribution, play-in, playoff, conference and championship odds
 3. **A value surface** — model probability vs no-vig market price, with EV and Kelly staking
-4. **Playoff series** — best-of-seven advance probabilities and the bracket over them
+4. **Playoff series** — best-of-seven advance probabilities and a computed bracket
+
+Plus a **23-season archive**: final standings, every game with quarters and
+box score, the playoff bracket, and what the model would have said — labelled
+a backtest everywhere it appears, because a reconstructed forecast is not a
+published one.
+
+Also: per-team pages with rating history against the league band, and a
+head-to-head surface over all 870 ordered matchups.
 
 ## Measured state
 

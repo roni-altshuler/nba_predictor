@@ -95,11 +95,21 @@ jobs:
           python -m backend.scripts.forecast_season \
             --sims ${{ github.event.inputs.sims || '20000' }}
 
+      - name: Refresh the current season's archive
+        # Only the season in progress. Past seasons never change — rewriting
+        # all 23 files daily would put 14MB of identical JSON through git
+        # every morning for no reason. The full rebuild is weekly.
+        run: |
+          python -m backend.scripts.build_history \
+            --from-season $(python -c "from backend.services.espn.client import current_season; print(current_season())") \
+            --skip-matchups
+
       - name: Commit refreshed artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add backend/data/predictions/ backend/data/diagnostics/ || true
+          git add backend/data/predictions/ backend/data/diagnostics/ \
+                  backend/data/history/ || true
           # Artifacts stamp generated_at every run, so ignore a diff that is
           # only a timestamp — otherwise this job commits daily noise.
           if git diff --cached --quiet -I'"generated_at":'; then

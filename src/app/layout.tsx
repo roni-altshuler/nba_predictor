@@ -28,6 +28,19 @@ export const metadata: Metadata = {
   },
   description:
     'Calibrated NBA game and season forecasting, scored against the closing line on 14,600 priced games.',
+  manifest: '/manifest.json',
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Hardwood' },
+  // Chrome probes /favicon.ico before it reads these tags, so the .ico is
+  // generated as well as the SVG — without it every cold load takes a 404.
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     siteName: 'Hardwood',
@@ -35,6 +48,13 @@ export const metadata: Metadata = {
     description:
       'Calibrated NBA game and season forecasting, scored against the closing line.',
     url: siteUrl,
+    images: [{ url: '/brand/og-default.png', width: 1200, height: 630, alt: 'Hardwood' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hardwood — Calibrated NBA forecasting',
+    description: 'Calibrated NBA forecasting, scored against the closing line.',
+    images: ['/brand/og-default.png'],
   },
 }
 

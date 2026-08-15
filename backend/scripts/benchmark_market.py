@@ -236,6 +236,15 @@ def evaluate(records: Sequence[Dict], devig_method: str = "shin") -> Dict:
             "model": mkt.summarise(model_pairs),
             "elo_only": mkt.summarise(elo_pairs),
             "constant_base_rate": mkt.summarise(base_pairs),
+            # The reliability table is what the site's calibration chart
+            # renders. Emitted from the SAME pairs that produced the ECE
+            # above, so the chart and the headline number cannot disagree.
+            "reliability": [
+                b.as_dict() for b in mkt.reliability_table(model_pairs, bins=10)
+            ],
+            "reliability_elo": [
+                b.as_dict() for b in mkt.reliability_table(elo_pairs, bins=10)
+            ],
         },
         "paired_vs_market": {
             "n": len(paired_market),
@@ -245,6 +254,12 @@ def evaluate(records: Sequence[Dict], devig_method: str = "shin") -> Dict:
             "model": mkt.summarise(paired_model),
             "elo_only": mkt.summarise(paired_elo),
             "constant_base_rate": mkt.summarise(paired_base),
+            "reliability_model": [
+                b.as_dict() for b in mkt.reliability_table(paired_model, bins=10)
+            ],
+            "reliability_market": [
+                b.as_dict() for b in mkt.reliability_table(paired_market, bins=10)
+            ],
         },
     }
 

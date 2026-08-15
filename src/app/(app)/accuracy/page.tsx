@@ -1,3 +1,5 @@
+import { CalibrationChart } from '@/components/charts/CalibrationChart'
+import { SeasonBrierChart } from '@/components/charts/SeasonBrierChart'
 import { getMarketBenchmark, getSeriesModel } from '@/lib/artifacts'
 import { num, pct, stamp } from '@/lib/format'
 
@@ -102,6 +104,20 @@ export default function AccuracyPage() {
       </section>
 
       <section className="mb-8">
+        <h2 className="mb-3 text-sm">Does it mean what it says</h2>
+        <div className="card p-4">
+          <CalibrationChart buckets={(full.reliability ?? []) as any} />
+        </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+          Calibration is the property that makes a probability usable.
+          Accuracy is partly a fact about the schedule — a season of
+          lopsided matchups is easier to call — but a forecaster that says
+          70% and is right 70% of the time is telling the truth regardless.
+          Measured error here is {num(full.model?.ece, 4)}.
+        </p>
+      </section>
+
+      <section className="mb-8">
         <h2 className="mb-3 text-sm">On every game, priced or not</h2>
         <div className="card overflow-x-auto">
           <table>
@@ -129,7 +145,16 @@ export default function AccuracyPage() {
 
       {Object.keys(bySeason).length ? (
         <section className="mb-8">
-          <h2 className="mb-3 text-sm">Per season</h2>
+          <h2 className="mb-3 text-sm">Season by season</h2>
+          <div className="card mb-4 p-4">
+            <SeasonBrierChart
+              rows={Object.entries(bySeason).map(([season, row]: [string, any]) => ({
+                season: Number(season),
+                model: row.paired_model?.brier ?? row.model?.brier ?? null,
+                market: row.market?.brier ?? null,
+              }))}
+            />
+          </div>
           <div className="card overflow-x-auto">
             <table>
               <thead>

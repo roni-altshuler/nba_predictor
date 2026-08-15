@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="Hardwood">
+  <title>Hardwood</title>
+  <defs>
+    <linearGradient id="hw-mask-grad" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0913a"/>
+      <stop offset="0.55" stop-color="#e2682a"/>
+      <stop offset="1" stop-color="#c1443c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed fill so the platform mask (circle / squircle / rounded
+       square) never clips a transparent corner. The glyph sits inside the
+       maskable safe zone, the central ~80%. -->
+  <rect width="512" height="512" fill="url(#hw-mask-grad)"/>
+
+  <g transform="translate(256 256) scale(8.2) translate(-24 -24)"
+     stroke="#1a0d06" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <circle cx="24" cy="24" r="13.5"/>
+    <path d="M24 10.5v27"/>
+    <path d="M10.5 24h27"/>
+    <path d="M14.4 14.4c5.4 5.4 5.4 14.2 0 19.2"/>
+    <path d="M33.6 14.4c-5.4 5.4-5.4 14.2 0 19.2"/>
+  </g>
+</svg>

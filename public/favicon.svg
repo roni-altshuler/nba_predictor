@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Hardwood">
+  <title>Hardwood</title>
+  <defs>
+    <linearGradient id="hw-grad" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0913a"/>
+      <stop offset="0.55" stop-color="#e2682a"/>
+      <stop offset="1" stop-color="#c1443c"/>
+    </linearGradient>
+    <linearGradient id="hw-stroke" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffb066"/>
+      <stop offset="1" stop-color="#d4655e"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded plate in the ball's own colour. The glyph is a basketball's
+       seam geometry, not a photographic ball: at 16px a realistic ball is a
+       brown circle and reads as nothing. -->
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="url(#hw-grad)"/>
+  <g stroke="#1a0d06" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <circle cx="24" cy="24" r="13.5"/>
+    <path d="M24 10.5v27"/>
+    <path d="M10.5 24h27"/>
+    <path d="M14.4 14.4c5.4 5.4 5.4 14.2 0 19.2"/>
+    <path d="M33.6 14.4c-5.4 5.4-5.4 14.2 0 19.2"/>
+  </g>
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="none" stroke="url(#hw-stroke)" stroke-opacity="0.45" stroke-width="0.8"/>
+</svg>

@@ -1,5 +1,8 @@
+import Link from 'next/link'
+
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
-import { getSeasonProjections, type TeamProjection } from '@/lib/artifacts'
+import { TeamLabel } from '@/components/primitives/TeamLogo'
+import { getPowerRatings, getSeasonProjections, type TeamProjection } from '@/lib/artifacts'
 import { num, pct, stamp } from '@/lib/format'
 
 export const metadata = { title: 'Season projection' }
@@ -9,6 +12,10 @@ const CONFERENCES = ['Eastern Conference', 'Western Conference'] as const
 
 export default function SeasonPage() {
   const projections = getSeasonProjections()
+  const ratings = getPowerRatings()
+  const meta = new Map(
+    (ratings?.teams ?? []).map((t) => [t.team_id, t]),
+  )
 
   if (!projections) {
     return (
@@ -72,7 +79,13 @@ export default function SeasonPage() {
                 </thead>
                 <tbody>
                   {members.map((team, index) => (
-                    <Row key={team.team_id} team={team} rank={index + 1} />
+                    <Row
+                      key={team.team_id}
+                      team={team}
+                      rank={index + 1}
+                      logo={meta.get(team.team_id)?.logo}
+                      abbreviation={meta.get(team.team_id)?.abbreviation}
+                    />
                   ))}
                 </tbody>
               </table>
@@ -90,7 +103,17 @@ export default function SeasonPage() {
   )
 }
 
-function Row({ team, rank }: { team: TeamProjection; rank: number }) {
+function Row({
+  team,
+  rank,
+  logo,
+  abbreviation,
+}: {
+  team: TeamProjection
+  rank: number
+  logo?: string | null
+  abbreviation?: string
+}) {
   // Colour carries meaning only: the direct-playoff cut at 6 and the play-in
   // band at 10 are the two lines that decide a team's season.
   const tone =
@@ -103,7 +126,18 @@ function Row({ team, rank }: { team: TeamProjection; rank: number }) {
   return (
     <tr>
       <td className={`numeric ${tone}`}>{rank}</td>
-      <td className="text-[var(--text-primary)]">{team.name}</td>
+      <td>
+        {abbreviation ? (
+          <Link
+            href={`/teams/${abbreviation}`}
+            className="text-[var(--text-primary)] hover:underline"
+          >
+            <TeamLabel logo={logo} abbreviation={abbreviation} name={team.name} />
+          </Link>
+        ) : (
+          <span className="text-[var(--text-primary)]">{team.name}</span>
+        )}
+      </td>
       <td className="numeric text-right">
         {team.wins.toFixed(1)}–{team.losses.toFixed(1)}
       </td>

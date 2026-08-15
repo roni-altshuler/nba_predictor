@@ -8,10 +8,10 @@ import { cn } from '@/lib/utils'
 /**
  * The app chrome: a fixed sidebar on desktop, a bottom tab bar on mobile.
  *
- * **There is no global search.** The site has six destinations, all one tap
- * away, and a search field printed in the chrome advertises a product bigger
- * than this one. The sibling soccer project removed its palette for exactly
- * this reason and the mobile bar's spare slot went to the evidence page
+ * **There is no global search.** Every destination is one tap from here, and
+ * a search field printed in the chrome advertises a product bigger than this
+ * one. The sibling soccer project removed its command palette for exactly
+ * this reason, and the mobile bar's spare slot went to the evidence page
  * instead — the same choice is made here.
  */
 
@@ -19,6 +19,8 @@ const NAV = [
   { href: '/', label: 'Today', short: 'Today' },
   { href: '/season', label: 'Season', short: 'Season' },
   { href: '/games', label: 'Games', short: 'Games' },
+  { href: '/seasons', label: 'Archive', short: 'Archive' },
+  { href: '/predict', label: 'Head to head', short: 'H2H' },
   { href: '/ratings', label: 'Ratings', short: 'Ratings' },
   { href: '/accuracy', label: 'Accuracy', short: 'Record' },
   { href: '/about', label: 'How it works', short: 'About' },
@@ -28,7 +30,7 @@ const NAV = [
 // central claim of this product is that its probabilities are calibrated,
 // and the page that shows whether that is true should not be two taps down.
 const MOBILE_NAV = NAV.filter((item) =>
-  ['/', '/season', '/games', '/accuracy'].includes(item.href),
+  ['/', '/season', '/seasons', '/accuracy'].includes(item.href),
 )
 
 function isActive(pathname: string, href: string): boolean {
@@ -50,7 +52,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           href="/"
           className="flex h-[var(--shell-topbar-h)] items-center border-b border-[var(--border-color)] px-5"
         >
-          <span className="font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/favicon.svg" alt="" width={20} height={20} aria-hidden="true" />
+          <span className="ml-2.5 font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]">
             Hardwood
           </span>
         </Link>
@@ -81,11 +85,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Mobile top bar */}
       <header className="sticky top-0 z-30 flex h-[var(--shell-topbar-h)] items-center border-b border-[var(--border-color)] bg-[var(--nav-bg)] px-4 md:hidden">
-        <Link
-          href="/"
-          className="font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]"
-        >
-          Hardwood
+        <Link href="/" className="flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/favicon.svg" alt="" width={20} height={20} aria-hidden="true" />
+          <span className="font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]">
+            Hardwood
+          </span>
         </Link>
       </header>
 

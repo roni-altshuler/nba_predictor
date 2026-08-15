@@ -57,11 +57,17 @@ jobs:
       - name: Playoff series backtest
         run: python -m backend.scripts.benchmark_series
 
+      - name: Rebuild the full historical archive
+        # Every season, including the retrodicted forecasts — those DO move
+        # when the model changes, so a weekly full rebuild keeps the archive
+        # consistent with the model currently serving.
+        run: python -m backend.scripts.build_history
+
       - name: Commit refreshed diagnostics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add backend/data/diagnostics/ || true
+          git add backend/data/diagnostics/ backend/data/history/ || true
           if git diff --cached --quiet -I'"generated_at":'; then
             echo "diagnostics unchanged"
           else

@@ -63,6 +63,42 @@
   --shell-topbar-h: 56px;
   --shell-content-max: 1160px;
 
+  /* ────────────────────────────────────────────────────────────
+     Chart tokens.
+
+     VALIDATED, not chosen. `scripts/validate_palette.js` from the dataviz
+     skill was run against the dark chart surface (#0d0d0d) and these two
+     categorical slots pass all six checks:
+
+       lightness band   both inside L 0.48-0.67
+       chroma floor     both >= 0.1 (neither reads gray)
+       CVD separation   worst adjacent dE 24.2 (protan)
+       normal vision    worst adjacent dE 24.9
+       contrast         both >= 3:1 on the surface
+
+     The first attempt used --accent-info (#c3d9f3) for the market series and
+     FAILED two checks: L 0.877 is far outside the band and chroma 0.043
+     reads as gray. That colour is a link and caption colour; a chart mark is
+     a different job and needs its own step.
+
+     Tritan separation for this green/blue pair is 5.7, inside the band that
+     is only legal WITH secondary encoding — so both series are always
+     direct-labelled as well as coloured. That is not optional styling.
+     ──────────────────────────────────────────────────────────── */
+  --viz-model: #5fa657;      /* categorical slot 1 — this model */
+  --viz-market: #3987e5;     /* categorical slot 2 — the closing line */
+  --viz-reference: #4d4d4d;  /* de-emphasis: baselines, the ideal diagonal */
+  --viz-grid: #1f1f1f;       /* recessive gridlines */
+  --viz-axis: #333333;
+  --viz-surface: var(--card-bg);
+  /* Sequential ramp, one hue, light->dark. For magnitude (seed likelihood,
+     schedule density). Never a rainbow. */
+  --viz-seq-1: #2c1a0e;
+  --viz-seq-2: #5a3418;
+  --viz-seq-3: #8a4e20;
+  --viz-seq-4: #b96b28;
+  --viz-seq-5: #e2882f;
+
   /* Team logos are authored for light backgrounds — several NBA marks go
      invisible on pure black. Every product of this class (ESPN, FotMob)
      seats them on a light tile for exactly this reason. */

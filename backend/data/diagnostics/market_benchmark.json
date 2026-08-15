@@ -28,7 +28,151 @@
       "ece": 2.744471316873387e-13,
       "mean_predicted": 0.5807992543396999,
       "base_rate": 0.5807992543399744
-    }
+    },
+    "reliability": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 15,
+        "mean_predicted": 0.0806,
+        "observed": 0.1333
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 297,
+        "mean_predicted": 0.1673,
+        "observed": 0.1414
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 1231,
+        "mean_predicted": 0.2576,
+        "observed": 0.2348
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 2623,
+        "mean_predicted": 0.3541,
+        "observed": 0.3336
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 4017,
+        "mean_predicted": 0.4529,
+        "observed": 0.4496
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 5461,
+        "mean_predicted": 0.5517,
+        "observed": 0.5517
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 5548,
+        "mean_predicted": 0.6487,
+        "observed": 0.6539
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 4189,
+        "mean_predicted": 0.7463,
+        "observed": 0.7739
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 2076,
+        "mean_predicted": 0.8406,
+        "observed": 0.8603
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 292,
+        "mean_predicted": 0.9198,
+        "observed": 0.9315
+      }
+    ],
+    "reliability_elo": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 7,
+        "mean_predicted": 0.0905,
+        "observed": 0.1429
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 299,
+        "mean_predicted": 0.171,
+        "observed": 0.1672
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 1455,
+        "mean_predicted": 0.2599,
+        "observed": 0.2405
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 3170,
+        "mean_predicted": 0.3541,
+        "observed": 0.359
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 5178,
+        "mean_predicted": 0.4522,
+        "observed": 0.4799
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 6424,
+        "mean_predicted": 0.5499,
+        "observed": 0.5987
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 5073,
+        "mean_predicted": 0.6468,
+        "observed": 0.7163
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 3058,
+        "mean_predicted": 0.7435,
+        "observed": 0.811
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 1028,
+        "mean_predicted": 0.8349,
+        "observed": 0.8901
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 57,
+        "mean_predicted": 0.917,
+        "observed": 0.9825
+      }
+    ]
   },
   "paired_vs_market": {
     "n": 14600,
@@ -70,6 +214,150 @@
       "mean_predicted": 0.5807992543397905,
       "base_rate": 0.575068493150685
     },
+    "reliability_model": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 7,
+        "mean_predicted": 0.0765,
+        "observed": 0.2857
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 171,
+        "mean_predicted": 0.1675,
+        "observed": 0.1462
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 674,
+        "mean_predicted": 0.2586,
+        "observed": 0.2552
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 1475,
+        "mean_predicted": 0.3548,
+        "observed": 0.3322
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 2306,
+        "mean_predicted": 0.4531,
+        "observed": 0.4449
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 3271,
+        "mean_predicted": 0.5519,
+        "observed": 0.5491
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 3160,
+        "mean_predicted": 0.6488,
+        "observed": 0.6576
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 2314,
+        "mean_predicted": 0.7461,
+        "observed": 0.7554
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 1071,
+        "mean_predicted": 0.8399,
+        "observed": 0.859
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 151,
+        "mean_predicted": 0.9197,
+        "observed": 0.9205
+      }
+    ],
+    "reliability_market": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "count": 52,
+        "mean_predicted": 0.0846,
+        "observed": 0.0577
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "count": 364,
+        "mean_predicted": 0.1607,
+        "observed": 0.1566
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "count": 992,
+        "mean_predicted": 0.2573,
+        "observed": 0.2591
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "count": 1772,
+        "mean_predicted": 0.3557,
+        "observed": 0.3657
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "count": 1794,
+        "mean_predicted": 0.446,
+        "observed": 0.4404
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "count": 2358,
+        "mean_predicted": 0.5523,
+        "observed": 0.5454
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "count": 2939,
+        "mean_predicted": 0.6477,
+        "observed": 0.6478
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "count": 2612,
+        "mean_predicted": 0.7453,
+        "observed": 0.7588
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "count": 1458,
+        "mean_predicted": 0.8452,
+        "observed": 0.8484
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "count": 259,
+        "mean_predicted": 0.9222,
+        "observed": 0.8958
+      }
+    ],
     "model_gap_to_market": 0.00712,
     "elo_gap_to_market": 0.00947,
     "bootstrap": {
@@ -560,5 +848,5 @@
       "gap": 0.01002
     }
   },
-  "generated_at": "2026-08-15T13:19:52+00:00"
+  "generated_at": "2026-08-15T14:48:23+00:00"
 }

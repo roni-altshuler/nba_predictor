@@ -156,6 +156,72 @@ Measured: **zero duplicate fixtures across 23 seasons.** ESPN's event id is a ge
 
 - **Vercel escalates ESLint warnings to errors.** Run `npx next lint` before pushing; `npm run build` is not enough.
 
+## The archive, and why every number in it is labelled a backtest
+
+`build_history.py` exports 23 seasons into `backend/data/history/` — final
+standings, every game with quarters and box score, the playoff bracket, and
+**what the model would have said about each game**.
+
+That last part is the dangerous one. The retrodiction uses the same rolling
+walk-forward as `benchmark_market` (refit monthly on games strictly earlier),
+so the model never saw the game it scores — but **nobody read those numbers
+before those tip-offs either**. `basis: "backtest"` rides on every record,
+the UI prints it in the warn colour everywhere it appears, and the game page
+says in words that it is a reconstruction rather than a published call. The
+sibling soccer project's rule applies verbatim: a reconstructed forecast must
+never blur into "published in advance".
+
+The first three seasons carry no forecast at all — they are the warm-up the
+model was fitted on, and the game page says so rather than showing a number
+that had seen the answer.
+
+**The daily job rebuilds only the season in progress.** Past seasons do not
+change, and rewriting 14MB of identical JSON through git every morning is
+noise. The full rebuild is weekly, because the retrodictions DO move when the
+model changes.
+
+## Frontend surfaces
+
+| route | what it is |
+|---|---|
+| `/` | today's slate, title odds, power ratings |
+| `/season` | projected standings, seeds, playoff/title odds |
+| `/games` | upcoming forecasts with the value surface |
+| `/games/[id]` | one game — works for upcoming AND archived |
+| `/seasons` | the 23-season archive index |
+| `/seasons/[season]` | standings, playoff bracket, the model's five biggest misses |
+| `/seasons/[season]/games` | every game that season, by month |
+| `/teams/[abbr]` | rating history, seed distribution, next games |
+| `/predict` | head-to-head for any two franchises |
+| `/ratings` | all 30 power ratings |
+| `/accuracy` | the record, with the calibration chart |
+| `/about` | how it works |
+
+**The playoff bracket is COMPUTED, not laid out.** `src/lib/bracketLayout.ts`
+returns every card position and connector path as arithmetic; the component
+absolutely positions from it and draws one `<svg>` underneath. Built from
+nested flexbox, whether a card sits on the centre line between the two
+feeding it is an emergent property of the box model — it looks about right
+and nothing can check it. Here it is a test, on both halves of a mirrored
+board.
+
+**The first round has 2^(rounds-1) series, not 2^rounds.** Eight teams per
+conference meet in FOUR series. The first version got this off by one and
+rendered four empty placeholder cards under every real one.
+
+**Charts are validated, not styled.** The dataviz validator was run against
+the `#0d0d0d` chart surface; `--viz-model` / `--viz-market` pass all six
+checks. The first attempt used `--accent-info` for the market series and
+failed two of them — L 0.877 is far outside the band and chroma 0.043 reads
+as grey. Tritan separation for the surviving pair is ΔE 5.7, legal only WITH
+secondary encoding, so both series are always direct-labelled. See
+[docs/DESIGN.md](docs/DESIGN.md).
+
+**Team marks sit on a light plate.** NBA logos are authored for light
+backgrounds and several — Brooklyn, San Antonio, Memphis — go invisible on
+this site's black canvas. A missing logo falls back to the abbreviation,
+never to a broken image.
+
 ## Architecture
 
 ### Backend (`backend/`)
@@ -195,6 +261,9 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 | Elo sweep | `python3 -m backend.scripts.tune_elo` |
 | Playoff series backtest | `python3 -m backend.scripts.benchmark_series` |
 | Publish the forecast | `python3 -m backend.scripts.forecast_season --sims 20000` |
+| Export the season archive | `python3 -m backend.scripts.build_history` |
+| Regenerate icons | `npm run icons` |
+| Screenshot every route | `node scripts/shoot.mjs` |
 | Backend tests | `python3 -m pytest backend/tests/` |
 | Frontend tests | `npm test` |
 | Lint (Vercel hard gate) | `npx next lint` |
