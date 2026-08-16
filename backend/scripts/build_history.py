@@ -649,6 +649,129 @@ def build_rating_history(rows: Sequence, franchises: Dict[int, Dict]) -> Dict:
     }
 
 
+def build_upsets(
+    seasons: Dict[int, Dict], *, limit: int = 100
+) -> Dict:
+    """The corpus, ranked by how wrong somebody was.
+
+    **This is already computed and has never been visible.** Every archived
+    game carries a retrodicted probability and, where a line existed, the
+    market's. That means the biggest upsets in twenty-three NBA seasons — by
+    the model's reckoning and by the market's, which are different lists —
+    are a sort away, and the only reason nobody could see them is that the
+    archive is entered one season at a time.
+
+    Three boards, because "upset" is three different questions:
+
+    * **Upsets** — the lowest probability the model gave a team that then
+      won. This is the model's own worst days, published deliberately: a
+      record that only shows the calls it got right is an advertisement.
+    * **Disagreements** — the games where model and market were furthest
+      apart, with the result attached. These are the only games where the
+      two are distinguishable at all, and the page prints the running
+      scoreline between them.
+    * **Margin misses** — where the expected margin was furthest from the
+      real one. A 55-point game the model called at +2 is a different
+      failure from a coin-flip that went the wrong way, and averaging them
+      into one Brier hides it.
+
+    Everything here is **backtest** and carries the label. The first three
+    seasons are the warm-up the model was fitted on and carry no forecast at
+    all; they contribute to no board rather than contributing a number that
+    had seen the answer.
+    """
+    upsets: List[Dict] = []
+    disagreements: List[Dict] = []
+    misses: List[Dict] = []
+
+    for season, payload in seasons.items():
+        for game in payload["games"]:
+            p_model = game.get("p_model")
+            if p_model is None:
+                continue  # warm-up season: no forecast was reconstructed
+
+            home_won = game["home_score"] > game["away_score"]
+            p_winner = p_model if home_won else 1.0 - p_model
+            entry = _upset_entry(game, season, home_won)
+
+            upsets.append({**entry, "p_winner": round(p_winner, 4)})
+
+            p_market = game.get("p_market")
+            if p_market is not None:
+                market_winner = p_market if home_won else 1.0 - p_market
+                disagreements.append({
+                    **entry,
+                    "p_winner": round(p_winner, 4),
+                    "p_winner_market": round(market_winner, 4),
+                    "disagreement": round(abs(p_model - p_market), 4),
+                    # Who was closer on THIS game. One game decides nothing
+                    # and the page says so; the aggregate over the board is
+                    # what carries any information at all.
+                    "closer": "model" if p_winner > market_winner else "market",
+                })
+
+            expected = game.get("exp_margin")
+            if expected is not None:
+                actual = game["home_score"] - game["away_score"]
+                misses.append({
+                    **entry,
+                    "exp_margin": round(float(expected), 2),
+                    "actual_margin": actual,
+                    "error": round(abs(actual - float(expected)), 2),
+                })
+
+    upsets.sort(key=lambda g: (g["p_winner"], g["date"]))
+    disagreements.sort(key=lambda g: (-g["disagreement"], g["date"]))
+    misses.sort(key=lambda g: (-g["error"], g["date"]))
+
+    model_closer = sum(1 for g in disagreements if g["closer"] == "model")
+    top = disagreements[:limit]
+
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "basis": "backtest",
+        "warmup_seasons": WARMUP_SEASONS,
+        "n_scored": len(upsets),
+        "seasons": sorted(seasons),
+        "note": (
+            "Reconstructed forecasts, refitted monthly on games strictly "
+            "earlier than each one scored. Nobody read these numbers before "
+            "these tip-offs."
+        ),
+        "upsets": upsets[:limit],
+        "disagreements": top,
+        "disagreement_record": {
+            "n": len(disagreements),
+            "model_closer": model_closer,
+            "market_closer": len(disagreements) - model_closer,
+            "top_n": len(top),
+            "model_closer_in_top": sum(
+                1 for g in top if g["closer"] == "model"
+            ),
+        },
+        "margin_misses": misses[:limit],
+    }
+
+
+def _upset_entry(game: Dict, season: int, home_won: bool) -> Dict:
+    """The shared shell of every board row: who, when, and the score."""
+    return {
+        "id": game["id"],
+        "season": season,
+        "date": game["date"],
+        "phase": game.get("phase"),
+        "winner": game["home"] if home_won else game["away"],
+        "loser": game["away"] if home_won else game["home"],
+        "winner_home": home_won,
+        "home": game["home"],
+        "away": game["away"],
+        "home_score": game["home_score"],
+        "away_score": game["away_score"],
+        "p_model": game["p_model"],
+        "p_market": game.get("p_market"),
+    }
+
+
 def seasons_lost(path: Path, publishing: set) -> List[int]:
     """Seasons the live index carries that this run would drop.
 
@@ -718,11 +841,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     index = []
     game_index: Dict[str, int] = {}
+    # Games are kept by reference for the upset boards, which rank across
+    # every season at once. Same rule as the index: `--from-season` decides
+    # what is rewritten, never what is considered — a leaderboard built from
+    # the current season alone would be a leaderboard of October.
+    scored_games: Dict[int, Dict] = {}
     for season in seasons:
         payload = build_season_file(season, by_season[season], retro, franchises)
         if season in rewrite:
             _publish(out_dir / f"season_{season}.json", payload)
 
+        scored_games[season] = {"games": payload["games"]}
         for game in payload["games"]:
             game_index[game["id"]] = season
 
@@ -776,6 +905,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # every morning the daily job runs.
     _publish(out_dir / "game_context.json", build_context(rows, franchises))
     _publish(out_dir / "allstar.json", build_allstar(warehouse))
+    _publish(out_dir / "upsets.json", build_upsets(scored_games))
 
     if not args.skip_matchups:
         _publish(out_dir / "matchups.json", build_matchups(warehouse, franchises))

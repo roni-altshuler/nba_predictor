@@ -11,15 +11,21 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 3. **A value surface** — model probability vs no-vig market price, with EV and Kelly staking
 4. **Playoff bracket** — the projected postseason, with every first-round series priced by exact enumeration
 5. **The title race** — each conference's contenders as a line that moves as the season is played
+6. **A live record** — what was published before each tip-off, scored separately from the backtest and never merged with it
 
 The schedule is a **calendar, one NBA week at a time**, and every game opens
-a match detail page: the last six meetings, both sides' recent form, the
-forecast, and — once it is played — the scoring by period, the team totals
-and the full player box score. Completed playoff series get their own pages,
-reachable from any card on the bracket.
+a match detail page: the last six meetings, both sides' recent form, who is
+unavailable, the forecast, and — once it is played — the scoring by period,
+ESPN's in-game win probability curve, the team totals and the full player box
+score. Completed playoff series get their own pages, reachable from any card
+on the bracket.
 
 Plus **All-Star weekend**: 31 games over 23 seasons, through every format the
 league has tried. Nothing there is forecast, and the page says why.
+
+Plus **`/upsets`**: twenty-three seasons ranked by how wrong somebody was —
+the lowest probability given to a team that won, the widest disagreements with
+the closing line, and the largest margin misses.
 
 Plus a **23-season archive**: final standings, every game with quarters, the
 team and player box scores, the playoff bracket, the title race replayed at
@@ -54,6 +60,17 @@ The market wins, significantly (95% CI [+.00573, +.00849]). **That is the intend
 
 The playoff-series layer does **not** significantly beat "the higher seed advances" on 300 series, and the site says so.
 
+The expected margin and total are scored too, against the spread and the posted total:
+
+| | model MAE | market MAE | gap |
+|---|---|---|---|
+| margin | 10.04 | 9.88 | +0.31 |
+| total | 14.86 | 14.45 | +0.76 |
+
+And the *shape* of the distribution they come from, which matters more — the win probability is the area under that same normal, so its width sets the confidence of every percentage on the site. Realised coverage of the model's own intervals: margin **49.0 / 78.1 / 93.0** against nominal 50/80/95 (slightly narrow, mostly in the tails), total **52.0 / 81.5 / 95.6** (slightly wide).
+
+**The live record is empty**: the season has not started. Every forecast is stamped before its tip-off — to the warehouse and to a committed `forecast_log.json` that survives a warehouse rebuild — and scored from zero, in its own table, never merged with the walk-forward above.
+
 ## Quick start
 
 ```bash
@@ -67,6 +84,7 @@ python3 -m backend.scripts.forecast_season --sims 20000
 
 python3 -m backend.scripts.build_history
 python3 -m backend.scripts.title_race --track
+python3 -m backend.scripts.score_live
 
 # Frontend
 npm install
@@ -88,10 +106,10 @@ backend/
     playoffs/     best-of-seven enumeration, historical and projected brackets
     forecast/     model versioning
   scripts/        ingest, benchmark, tune, publish, title-race tracking
-  tests/          138 tests
+  tests/          224 tests
   main.py         FastAPI
 src/
-  app/            Next.js App Router — 12 routes, 5 API routes
+  app/            Next.js App Router — 17 routes, 5 API routes
   components/     shell, forecast cards, charts, brackets, evidence panel
   lib/            artifact readers, bracket geometry, ESPN box scores, formatters
 ```
@@ -106,8 +124,8 @@ src/
 ## Testing
 
 ```bash
-python3 -m pytest backend/tests/   # 138 tests
-npm test                            # 49 tests
+python3 -m pytest backend/tests/   # 224 tests
+npm test                            # 94 tests
 npx next lint && npm run typecheck
 ```
 

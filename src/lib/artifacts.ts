@@ -253,6 +253,101 @@ export function getEloSweep(): Record<string, unknown> | null {
   return readJson(DIAGNOSTICS_DIR, 'elo_sweep.json')
 }
 
+/* ---------------------------------------------------------- live record */
+
+export interface ContinuousScore {
+  n: number
+  mae?: number
+  rmse?: number
+  bias?: number
+  median_ae?: number
+  mean_actual?: number
+  mean_predicted?: number
+}
+
+export interface CoverageRow {
+  nominal: number
+  n: number
+  covered: number
+  coverage: number
+  gap: number
+}
+
+export interface PitBucket {
+  lower: number
+  upper: number
+  count: number
+  share: number
+  expected: number
+}
+
+export interface ClvBlock {
+  n: number
+  mean_clv?: number
+  median_clv?: number
+  beat_close_rate?: number
+  record?: string
+  roi?: number
+}
+
+export interface LiveRecord {
+  season: number
+  generated_at: string
+  n: number
+  basis: 'live'
+  note: string
+  first_tipoff: string | null
+  last_tipoff: string | null
+  median_lead_hours: number | null
+  model: {
+    n: number
+    brier: number
+    log_loss: number
+    accuracy: number
+    ece: number
+  }
+  margin: ContinuousScore
+  total: ContinuousScore
+  paired_vs_market: {
+    n: number
+    devig?: string
+    model?: { brier: number; accuracy: number; ece: number }
+    market?: { brier: number; accuracy: number; ece: number }
+    gap_to_market?: number
+    bootstrap?: { mean_diff: number; ci_low: number; ci_high: number }
+    verdict: string
+    reason?: string
+  }
+  clv: { flagged: ClvBlock; all_priced: ClvBlock; note: string }
+  games: Array<{
+    game_id: string
+    tipoff_utc: string
+    home_team: string | null
+    away_team: string | null
+    p_home: number
+    home_won: boolean
+    exp_margin: number | null
+    margin: number
+    exp_total: number | null
+    total: number
+    lead_hours: number | null
+    clv: { side: string; edge: number; flagged: boolean; clv: number; won: boolean } | null
+  }>
+}
+
+/**
+ * The live published record.
+ *
+ * **Returns null until `score_live` has run, and returns `n: 0` until a game
+ * with a stored pre-tipoff forecast has actually been played.** Those two
+ * states are different and the page distinguishes them: the first means the
+ * scorer has not run, the second means the season has not started. Neither
+ * is rendered as an empty table, which would read as a record of nothing.
+ */
+export function getLiveRecord(): LiveRecord | null {
+  return readJson<LiveRecord>(DIAGNOSTICS_DIR, 'live_record.json')
+}
+
 /**
  * Games grouped into NBA weeks, each week holding its days.
  *

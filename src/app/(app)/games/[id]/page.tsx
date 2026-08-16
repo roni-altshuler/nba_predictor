@@ -1,9 +1,18 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { WinProbabilityChart } from '@/components/charts/WinProbabilityChart'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts } from '@/lib/artifacts'
-import { getEspnBoxScore, type GameBoxScore, type TeamBoxScore } from '@/lib/espn'
+import {
+  getEspnBoxScore,
+  getEspnInjuries,
+  getEspnWinProbability,
+  type GameBoxScore,
+  type TeamBoxScore,
+  type TeamInjuries,
+  type WinProbability,
+} from '@/lib/espn'
 import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
 import {
   SEASON_TYPE_LABEL,
@@ -64,15 +73,21 @@ export default async function GamePage({
 
   const archived = getArchivedGame(id)
   if (archived) {
-    // Only played games have player lines, so the network call is scoped to
-    // the branch that can use it — an upcoming fixture would spend a request
-    // to learn that nobody has played yet.
-    const box = await getEspnBoxScore(id)
+    // Only played games have player lines or a win-probability curve, so
+    // the network calls are scoped to the branch that can use them — an
+    // upcoming fixture would spend two requests to learn nobody has played
+    // yet. Both read the same ESPN summary document and Next dedupes them
+    // into one request within the render pass.
+    const [box, winProbability] = await Promise.all([
+      getEspnBoxScore(id),
+      getEspnWinProbability(id),
+    ])
     return (
       <PlayedGame
         game={archived.game}
         standings={archived.season.standings}
         box={box}
+        winProbability={winProbability}
       />
     )
   }
@@ -87,7 +102,16 @@ export default async function GamePage({
   }
 
   const upcoming = getGameForecasts()?.games.find((g) => g.game_id === id)
-  if (upcoming) return <UpcomingGame game={upcoming} />
+  if (upcoming) {
+    // Availability, for the branch where it can still change the game. On an
+    // archived fixture it would be today's report about a game played years
+    // ago, which is worse than nothing.
+    const injuries = await getEspnInjuries([
+      upcoming.home.abbreviation,
+      upcoming.away.abbreviation,
+    ])
+    return <UpcomingGame game={upcoming} injuries={injuries} />
+  }
 
   notFound()
 }
@@ -204,10 +228,12 @@ function PlayedGame({
   game,
   standings,
   box,
+  winProbability,
 }: {
   game: ArchiveGame
   standings: Parameters<typeof teamMetaFromStandings>[0]
   box: GameBoxScore | null
+  winProbability?: WinProbability | null
 }) {
   const teams = teamMetaFromStandings(standings)
   const homeWon = game.home_score > game.away_score
@@ -269,7 +295,23 @@ function PlayedGame({
             homeTotal={game.home_score}
           />
         </div>
-      ) : (
+      ) : null}
+
+      {/* The curve goes directly beneath the running score it explains: the
+          quarters say who won the third, and this says when it stopped being
+          in doubt. */}
+      {winProbability ? (
+        <section className="card mb-6 p-4">
+          <h2 className="mb-3 text-sm">How it swung</h2>
+          <WinProbabilityChart
+            probability={winProbability}
+            homeLabel={game.home}
+            awayLabel={game.away}
+          />
+        </section>
+      ) : null}
+
+      {!game.q_home || !game.q_away ? (
         <section className="card mb-6 p-4">
           <h2 className="text-sm">No period breakdown</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
@@ -277,7 +319,7 @@ function PlayedGame({
             absent rather than as four zeros.
           </p>
         </section>
-      )}
+      ) : null}
 
       {game.p_model !== undefined ? (
         <RecordedForecast game={game} homeWon={homeWon} margin={margin} />
@@ -687,8 +729,10 @@ function BoxScore({ game }: { game: ArchiveGame }) {
 
 function UpcomingGame({
   game,
+  injuries = [],
 }: {
   game: NonNullable<ReturnType<typeof getGameForecasts>>['games'][number]
+  injuries?: TeamInjuries[]
 }) {
   return (
     <div>
@@ -766,6 +810,12 @@ function UpcomingGame({
         </section>
       )}
 
+      <InjuryReport
+        injuries={injuries}
+        away={game.away.abbreviation}
+        home={game.home.abbreviation}
+      />
+
       <SeriesHistory
         away={game.away.abbreviation}
         home={game.home.abbreviation}
@@ -776,6 +826,109 @@ function UpcomingGame({
         <FormPanel abbreviation={game.home.abbreviation} name={game.home.name} />
       </div>
     </div>
+  )
+}
+
+/**
+ * Who is unavailable — and an explicit statement that the forecast above has
+ * not read it.
+ *
+ * **This is the largest known gap in the model and it is labelled rather
+ * than quietly filled.** The obvious move on seeing an injury list beside a
+ * win probability is to adjust the probability, and it is refused here for a
+ * concrete reason rather than a cautious one: ESPN publishes injuries as a
+ * snapshot of today with no historical archive, so an availability-adjusted
+ * rating cannot be walk-forward tested against this corpus at all. It could
+ * only ever be validated forward, from zero. This project does not publish a
+ * number it cannot benchmark.
+ *
+ * So the report is descriptive and the caption says what it is not. That is
+ * more useful than it sounds: a reader deciding whether to trust a 62% wants
+ * to know that the favourite's starting centre is out, and they want to know
+ * that the 62% does not.
+ */
+function InjuryReport({
+  injuries,
+  away,
+  home,
+}: {
+  injuries: TeamInjuries[]
+  away: string
+  home: string
+}) {
+  const ordered = [away, home]
+    .map((abbreviation) =>
+      injuries.find(
+        (team) => team.abbreviation?.toUpperCase() === abbreviation.toUpperCase(),
+      ),
+    )
+    .filter(Boolean) as TeamInjuries[]
+
+  if (!ordered.length) {
+    return (
+      <section className="card mb-6 p-4">
+        <h2 className="text-sm">No injury report</h2>
+        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+          ESPN lists nobody as unavailable for either side, or the request
+          failed. Shown as absent rather than as an empty clean bill of
+          health.
+        </p>
+      </section>
+    )
+  }
+
+  return (
+    <section className="card mb-6 p-4">
+      <h2 className="mb-3 text-sm">Availability</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        {ordered.map((team) => (
+          <div key={team.teamId}>
+            <h3 className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
+              {team.abbreviation}
+            </h3>
+            <ul className="mt-2 space-y-1.5">
+              {team.entries.map((entry) => (
+                <li
+                  key={`${entry.player}-${entry.status}`}
+                  className="flex items-baseline justify-between gap-3 text-[11px]"
+                >
+                  <span className="text-[var(--text-primary)]">
+                    {entry.player}
+                    {entry.position ? (
+                      <span className="ml-1.5 text-[var(--text-tertiary)]">
+                        {entry.position}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span
+                    className={cn(
+                      'font-numeric whitespace-nowrap text-[10px] uppercase tracking-[0.08em]',
+                      entry.status.toLowerCase() === 'out'
+                        ? 'text-[var(--accent-warn)]'
+                        : 'text-[var(--text-tertiary)]',
+                    )}
+                  >
+                    {entry.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        <strong className="text-[var(--text-secondary)]">
+          The forecast above has not read this.
+        </strong>{' '}
+        The model knows results, ratings, rest and pace — it has never seen a
+        roster. Availability is shown here because it changes how much weight
+        a reader should give that probability, and it is not folded into the
+        probability because ESPN keeps no history of these reports, so an
+        adjustment built on them could never be tested against the twenty-three
+        seasons everything else here is measured on. From ESPN, as of the last
+        time this page was built.
+      </p>
+    </section>
   )
 }
 

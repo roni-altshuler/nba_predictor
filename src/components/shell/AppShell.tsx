@@ -30,11 +30,13 @@ export interface SeasonLink {
 
 const NAV = [
   { href: '/', label: 'Today', short: 'Today' },
+  { href: '/preview', label: 'Season preview', short: 'Preview' },
   { href: '/season', label: 'Current season', short: 'Season' },
   { href: '/games', label: 'Games', short: 'Games' },
   { href: '/seasons', label: 'Seasons', short: 'Seasons', menu: true },
   { href: '/bracket', label: 'Bracket', short: 'Bracket' },
   { href: '/allstar', label: 'All-Star', short: 'All-Star' },
+  { href: '/upsets', label: 'Upsets', short: 'Upsets' },
   { href: '/predict', label: 'Head to head', short: 'H2H' },
   { href: '/ratings', label: 'Ratings', short: 'Ratings' },
   { href: '/accuracy', label: 'Accuracy', short: 'Record' },

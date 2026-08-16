@@ -408,6 +408,197 @@ def _normal_cdf(z: float) -> float:
     return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
 
 
+def _normal_ppf(p: float) -> float:
+    """Inverse normal CDF, by bisection on `_normal_cdf`.
+
+    Bisection rather than a rational approximation because this is called
+    once per interval level — three times per benchmark, not once per game —
+    and a closed-form approximation would be a second place for a numerical
+    bug to live for the sake of microseconds nobody is waiting on.
+    """
+    if not 0.0 < p < 1.0:
+        raise ValueError(f"{p!r} is not a probability strictly inside (0, 1)")
+    lo, hi = -12.0, 12.0
+    for _ in range(200):
+        mid = (lo + hi) / 2.0
+        if _normal_cdf(mid) < p:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2.0
+
+
+# ------------------------------------------------- continuous forecasts
+#
+# Margin and total are PUBLISHED on every game card and were, for the whole
+# life of this project, scored nowhere. The standing rule is that an accuracy
+# claim is stated as a paired measurement on named games or it is not stated,
+# and an expected total printed beside a win probability is exactly such a
+# claim. Everything below exists to make those two numbers falsifiable on the
+# same footing as the moneyline.
+#
+# The interval work is the part that matters most. `margin_sd` is not
+# decoration: the win probability, the score grid and every series price are
+# all read off the same fitted normal, so if its stated spread is too narrow
+# then every probability downstream is overconfident by a knowable amount.
+# CLAUDE.md justifies the normal on the UNCONDITIONAL margin distribution
+# (skew -0.019, excess kurtosis +0.304). That is not the same claim: what has
+# to hold is that the FORECAST residual, standardised by the sd the model
+# published for that specific game, is standard normal. Coverage and the PIT
+# histogram test that directly.
+
+
+def signed_errors(
+    pairs: Sequence[Tuple[float, float]]
+) -> List[float]:
+    """`predicted - actual` for each pair. Sign kept: bias is a finding."""
+    return [float(p) - float(a) for p, a in pairs]
+
+
+def summarise_continuous(
+    pairs: Sequence[Tuple[float, float]]
+) -> Dict[str, float]:
+    """MAE, RMSE and bias for (predicted, actual) pairs.
+
+    Bias is reported separately from MAE and is the more diagnostic of the
+    two: a forecaster that is 3 points long on every total has an MAE that
+    looks like noise and a bias that names the bug.
+    """
+    if not pairs:
+        return {"n": 0}
+    errors = signed_errors(pairs)
+    n = len(errors)
+    absolute = sorted(abs(e) for e in errors)
+    mid = n // 2
+    median = (
+        absolute[mid] if n % 2 else (absolute[mid - 1] + absolute[mid]) / 2.0
+    )
+    return {
+        "n": n,
+        "mae": sum(absolute) / n,
+        "rmse": math.sqrt(sum(e * e for e in errors) / n),
+        "bias": sum(errors) / n,
+        "median_ae": median,
+        "mean_actual": sum(float(a) for _, a in pairs) / n,
+        "mean_predicted": sum(float(p) for p, _ in pairs) / n,
+    }
+
+
+def pit_values(
+    triples: Sequence[Tuple[float, float, float]]
+) -> List[float]:
+    """Probability integral transform of (predicted, actual, sd) triples.
+
+    `PIT = Φ((actual - predicted) / sd)`. If the published distribution is
+    right, these are uniform on [0, 1] — that is the whole test, and it is
+    strictly stronger than any single coverage number because it catches the
+    shape as well as the width.
+
+    A non-positive sd is dropped rather than clamped. It means the model
+    published a point forecast as a distribution, which is a bug to find,
+    not a value to repair on the way past.
+    """
+    out: List[float] = []
+    for predicted, actual, sd in triples:
+        spread = float(sd)
+        if not math.isfinite(spread) or spread <= 0:
+            continue
+        out.append(_normal_cdf((float(actual) - float(predicted)) / spread))
+    return out
+
+
+def interval_coverage(
+    triples: Sequence[Tuple[float, float, float]],
+    levels: Sequence[float] = (0.5, 0.8, 0.95),
+) -> List[Dict[str, float]]:
+    """Realised coverage of central prediction intervals.
+
+    For each nominal level, the share of actual outcomes that fell inside the
+    model's own interval. Under-coverage means the published sd is too
+    narrow, and every probability derived from it is overconfident in the
+    same direction.
+    """
+    usable = [
+        (float(p), float(a), float(s))
+        for p, a, s in triples
+        if math.isfinite(float(s)) and float(s) > 0
+    ]
+    out: List[Dict[str, float]] = []
+    for level in levels:
+        z = _normal_ppf(0.5 + level / 2.0)
+        inside = sum(
+            1 for p, a, s in usable if abs(a - p) <= z * s
+        )
+        n = len(usable)
+        out.append(
+            {
+                "nominal": round(level, 4),
+                "n": n,
+                "covered": inside,
+                "coverage": round(inside / n, 4) if n else 0.0,
+                "gap": round(inside / n - level, 4) if n else 0.0,
+                "half_width_z": round(z, 4),
+            }
+        )
+    return out
+
+
+def pit_histogram(values: Sequence[float], *, bins: int = 10) -> List[Dict[str, float]]:
+    """Bucketed PIT values, with the uniform expectation beside each bar.
+
+    Emitted with `expected` on every row so the chart never has to know how
+    many bins produced it, and an empty bin is emitted as zero rather than
+    omitted — unlike the reliability table, where an empty bin means "nothing
+    was predicted there" and here it means "nothing landed there", which is a
+    finding.
+    """
+    if not values:
+        return []
+    counts = [0] * bins
+    for value in values:
+        index = min(int(value * bins), bins - 1)
+        counts[index] += 1
+    total = len(values)
+    return [
+        {
+            "lower": round(i / bins, 4),
+            "upper": round((i + 1) / bins, 4),
+            "count": counts[i],
+            "share": round(counts[i] / total, 4),
+            "expected": round(1.0 / bins, 4),
+        }
+        for i in range(bins)
+    ]
+
+
+def pit_uniformity(values: Sequence[float], *, bins: int = 10) -> Dict[str, float]:
+    """A chi-square statistic on the PIT histogram against uniform.
+
+    Reported as a statistic and its degrees of freedom, deliberately without
+    a p-value. At n in the tens of thousands any real model fails a
+    goodness-of-fit test on some decimal place, and printing `p < .001`
+    beside a histogram that is visibly close to flat would be technically
+    true and completely misleading. The statistic per degree of freedom is
+    the number worth reading.
+    """
+    table = pit_histogram(values, bins=bins)
+    if not table:
+        return {"n": 0}
+    total = len(values)
+    expected = total / bins
+    chi2 = sum((row["count"] - expected) ** 2 / expected for row in table)
+    return {
+        "n": total,
+        "bins": bins,
+        "chi_square": round(chi2, 3),
+        "dof": bins - 1,
+        "chi_square_per_dof": round(chi2 / (bins - 1), 3),
+        "max_abs_deviation": round(
+            max(abs(row["share"] - row["expected"]) for row in table), 4
+        ),
+    }
+
+
 def summarise(
     pairs: Sequence[Tuple[float, bool]]
 ) -> Dict[str, float]:

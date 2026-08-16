@@ -385,6 +385,63 @@ export function getRatingHistory(): RatingHistory | null {
   return readJson<RatingHistory>('rating_history.json')
 }
 
+/* ------------------------------------------------------------- upsets */
+
+export interface UpsetRow {
+  id: string
+  season: number
+  date: string
+  phase: string | null
+  winner: string
+  loser: string
+  winner_home: boolean
+  home: string
+  away: string
+  home_score: number
+  away_score: number
+  p_model: number
+  p_market: number | null
+  /** Probability the model gave the team that actually won. */
+  p_winner?: number
+  /** Same, from the closing line. Only on the disagreements board. */
+  p_winner_market?: number
+  disagreement?: number
+  closer?: 'model' | 'market'
+  exp_margin?: number
+  actual_margin?: number
+  error?: number
+}
+
+export interface Upsets {
+  generated_at: string
+  basis: 'backtest'
+  warmup_seasons: number
+  n_scored: number
+  seasons: number[]
+  note: string
+  upsets: UpsetRow[]
+  disagreements: UpsetRow[]
+  disagreement_record: {
+    n: number
+    model_closer: number
+    market_closer: number
+    top_n: number
+    model_closer_in_top: number
+  }
+  margin_misses: UpsetRow[]
+}
+
+/**
+ * The three leaderboards over every retrodicted game in the archive.
+ *
+ * Built by `build_history`, over all 23 seasons at once, from numbers that
+ * were already being computed and stored per season and could not be seen
+ * across them.
+ */
+export function getUpsets(): Upsets | null {
+  return readJson<Upsets>('upsets.json')
+}
+
 /** Team metadata keyed by abbreviation, for logos and names. */
 export function teamMetaFromStandings(
   standings: StandingRow[],

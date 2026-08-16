@@ -95,6 +95,14 @@ jobs:
           python -m backend.scripts.forecast_season \
             --sims ${{ github.event.inputs.sims || '20000' }}
 
+      - name: Score the live record
+        # Reads back the forecasts stamped BEFORE their tip-offs and scores
+        # the ones whose games have now been played. It must run AFTER the
+        # forecast publish (which stamps today's) and after the results
+        # refresh (which settles last night's), and it is the only surface on
+        # the site that can claim a number existed before its result did.
+        run: python -m backend.scripts.score_live
+
       - name: Append today's point to the title race
         # The chart on /season is built one day at a time and cannot be
         # backfilled — a point missed is a point that never existed. It is
@@ -115,6 +123,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # `forecast_log.json` lives under predictions/ and is the durable
+          # copy of the live record: the warehouse is gitignored and gets
+          # rebuilt from ESPN on a failed restore, and a forecast made before
+          # a game is the one thing a rebuild cannot recover.
           git add backend/data/predictions/ backend/data/diagnostics/ \
                   backend/data/history/ || true
           # Artifacts stamp generated_at every run, so ignore a diff that is

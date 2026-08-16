@@ -58,6 +58,9 @@ jobs:
         run: python -m backend.scripts.benchmark_series
 
       - name: Rebuild the full historical archive
+        # Also republishes the cross-season upset boards, which rank every
+        # retrodiction against every other and therefore move whenever the
+        # model does.
         # Every season, including the retrodicted forecasts — those DO move
         # when the model changes, so a weekly full rebuild keeps the archive
         # consistent with the model currently serving.

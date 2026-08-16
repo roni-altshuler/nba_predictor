@@ -368,6 +368,287 @@
       "iterations": 2000
     }
   },
+  "continuous": {
+    "note": "The expected margin and expected total are published on every game card. This block is what makes them falsifiable. Interval coverage is the load-bearing part: the win probability and the score grid are read off the same fitted normal, so an sd that is too narrow makes every probability on the site overconfident.",
+    "margin": {
+      "model": {
+        "n": 25749,
+        "mae": 10.036098438273322,
+        "rmse": 12.818739155504762,
+        "bias": 0.430477014683847,
+        "median_ae": 8.236490627083707,
+        "mean_actual": 2.6248009631442,
+        "mean_predicted": 3.055277977828034
+      },
+      "vs_market": {
+        "n": 14600,
+        "model": {
+          "n": 14600,
+          "mae": 10.189787169511487,
+          "rmse": 13.01866413367973,
+          "bias": 0.5711434521773184,
+          "median_ae": 8.378322838784541,
+          "mean_actual": 2.4056849315068494,
+          "mean_predicted": 2.976828383684188
+        },
+        "market": {
+          "n": 14600,
+          "mae": 9.883527397260274,
+          "rmse": 12.678151711583114,
+          "bias": 0.1440068493150685,
+          "median_ae": 8.0,
+          "mean_actual": 2.4056849315068494,
+          "mean_predicted": 2.549691780821918
+        },
+        "mae_gap": 0.3063
+      },
+      "coverage": [
+        {
+          "nominal": 0.5,
+          "n": 25749,
+          "covered": 12620,
+          "coverage": 0.4901,
+          "gap": -0.0099,
+          "half_width_z": 0.6745
+        },
+        {
+          "nominal": 0.8,
+          "n": 25749,
+          "covered": 20121,
+          "coverage": 0.7814,
+          "gap": -0.0186,
+          "half_width_z": 1.2816
+        },
+        {
+          "nominal": 0.95,
+          "n": 25749,
+          "covered": 23953,
+          "coverage": 0.9302,
+          "gap": -0.0198,
+          "half_width_z": 1.96
+        }
+      ],
+      "pit": [
+        {
+          "lower": 0.0,
+          "upper": 0.1,
+          "count": 2953,
+          "share": 0.1147,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "count": 2694,
+          "share": 0.1046,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "count": 2543,
+          "share": 0.0988,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "count": 2524,
+          "share": 0.098,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "count": 2437,
+          "share": 0.0946,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "count": 2578,
+          "share": 0.1001,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "count": 2577,
+          "share": 0.1001,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "count": 2425,
+          "share": 0.0942,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "count": 2343,
+          "share": 0.091,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "count": 2675,
+          "share": 0.1039,
+          "expected": 0.1
+        }
+      ],
+      "pit_uniformity": {
+        "n": 25749,
+        "bins": 10,
+        "chi_square": 103.325,
+        "dof": 9,
+        "chi_square_per_dof": 11.481,
+        "max_abs_deviation": 0.0147
+      }
+    },
+    "total": {
+      "model": {
+        "n": 25749,
+        "mae": 14.859649438437875,
+        "rmse": 18.874946443445047,
+        "bias": -1.528028048148302,
+        "median_ae": 12.384710240370964,
+        "mean_actual": 210.83878985591673,
+        "mean_predicted": 209.31076180776864
+      },
+      "vs_market": {
+        "n": 8218,
+        "model": {
+          "n": 8218,
+          "mae": 15.214711904070102,
+          "rmse": 19.27016084930818,
+          "bias": -1.8569573980673733,
+          "median_ae": 12.768236913399704,
+          "mean_actual": 222.7091749817474,
+          "mean_predicted": 220.85221758368039
+        },
+        "market": {
+          "n": 8218,
+          "mae": 14.454490143587247,
+          "rmse": 18.31386367818302,
+          "bias": -0.3432708688245315,
+          "median_ae": 12.0,
+          "mean_actual": 222.7091749817474,
+          "mean_predicted": 222.36590411292286
+        },
+        "mae_gap": 0.7602
+      },
+      "coverage": [
+        {
+          "nominal": 0.5,
+          "n": 25749,
+          "covered": 13386,
+          "coverage": 0.5199,
+          "gap": 0.0199,
+          "half_width_z": 0.6745
+        },
+        {
+          "nominal": 0.8,
+          "n": 25749,
+          "covered": 20990,
+          "coverage": 0.8152,
+          "gap": 0.0152,
+          "half_width_z": 1.2816
+        },
+        {
+          "nominal": 0.95,
+          "n": 25749,
+          "covered": 24612,
+          "coverage": 0.9558,
+          "gap": 0.0058,
+          "half_width_z": 1.96
+        }
+      ],
+      "pit": [
+        {
+          "lower": 0.0,
+          "upper": 0.1,
+          "count": 1931,
+          "share": 0.075,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "count": 2435,
+          "share": 0.0946,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "count": 2663,
+          "share": 0.1034,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "count": 2645,
+          "share": 0.1027,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "count": 2701,
+          "share": 0.1049,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "count": 2683,
+          "share": 0.1042,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "count": 2719,
+          "share": 0.1056,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "count": 2570,
+          "share": 0.0998,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "count": 2574,
+          "share": 0.1,
+          "expected": 0.1
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "count": 2828,
+          "share": 0.1098,
+          "expected": 0.1
+        }
+      ],
+      "pit_uniformity": {
+        "n": 25749,
+        "bins": 10,
+        "chi_square": 217.209,
+        "dof": 9,
+        "chi_square_per_dof": 24.134,
+        "max_abs_deviation": 0.025
+      }
+    }
+  },
   "harness": {
     "n_feature_rows": 29653,
     "n_scored": 25749,
@@ -848,5 +1129,5 @@
       "gap": 0.01002
     }
   },
-  "generated_at": "2026-08-15T14:48:23+00:00"
+  "generated_at": "2026-08-16T14:55:13+00:00"
 }

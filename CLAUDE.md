@@ -185,11 +185,13 @@ model changes.
 | route | what it is |
 |---|---|
 | `/` | today's slate, title odds, power ratings — all named by team mark |
+| `/preview` | the preseason projection, plus last season's opening-day one against what happened |
 | `/season` | projected standings, the projected-finish chart, the title race |
 | `/bracket` | the projected postseason, priced by exact enumeration |
 | `/games` | the schedule **by NBA week, as a calendar** |
 | `/games/[id]` | one game — upcoming, archived OR All-Star; series history, form, period breakdown, team totals, player box score |
 | `/allstar` | All-Star weekend, 31 games over 23 seasons, archive-only |
+| `/upsets` | three cross-season boards: biggest upsets, widest disagreements with the market, largest margin misses |
 | `/seasons` | the 23-season archive index |
 | `/seasons/[season]` | standings, playoff bracket, the title race replayed, the model's five biggest misses |
 | `/seasons/[season]/series/[slug]` | one playoff series, game by game |
@@ -197,7 +199,7 @@ model changes.
 | `/teams/[abbr]` | rating history, seed distribution, next games |
 | `/predict` | head-to-head for any two franchises |
 | `/ratings` | all 30 power ratings |
-| `/accuracy` | the record, with the calibration chart |
+| `/accuracy` | the LIVE record first, then the backtest: Brier, calibration, margin/total accuracy, interval coverage and PIT |
 | `/about` | how it works |
 
 **The playoff bracket is COMPUTED, not laid out.** `src/lib/bracketLayout.ts`
@@ -306,6 +308,125 @@ backgrounds and several — Brooklyn, San Antonio, Memphis — go invisible on
 this site's black canvas. A missing logo falls back to the abbreviation,
 never to a broken image.
 
+## Provenance: how a live record becomes possible
+
+**`game_forecasts.json` is a view, not a record.** It is overwritten every
+morning, so without something append-only the only evidence of yesterday's
+call is that it agrees with today's. A record rebuilt from the corpus after
+the fact is a **backtest** by this project's own definition, however careful
+the walk-forward is, and no amount of methodology converts one into the
+other.
+
+`forecast_season` therefore writes every forecast twice before its tip-off:
+
+1. **`prediction_snapshots`** in the warehouse — every run, so the drift of a
+   forecast as tip-off approaches is recoverable. Keyed
+   `(fixture_uid, generated_at, model_version)`, so re-running inside one
+   second is idempotent and a run an hour later adds an observation.
+2. **`backend/data/predictions/forecast_log.json`**, committed to git — the
+   FIRST forecast per fixture, never revised.
+
+**The second one exists because the first is not safe.** The warehouse is
+gitignored derived data, restored each morning from a release asset, and the
+daily job falls back to `build_warehouse --seasons 2004-2027` if that
+download fails. Results, prices and ratings all survive that: ESPN still has
+them. **A forecast made before a game does not survive anything.** One
+transient network failure would otherwise destroy the live record
+permanently, the rebuild would succeed, the site would look correct, and
+nothing would report the loss.
+
+`score_live` reads both and takes whichever is genuinely earlier — not the
+log unconditionally, because taking the later of two pre-tipoff forecasts
+weakens the claim silently.
+
+**The earliest pre-tipoff forecast is scored, not the latest.** It is the
+hardest version of the claim: furthest from the game, least information, and
+impossible to accuse of having crept toward the closing line as it moved.
+`generated_at < tipoff_utc` is strict, and a snapshot with no tipoff is
+dropped — an unknown tipoff cannot be shown to precede anything.
+
+**The verdict is in the artifact, not in the page.** `score_live` publishes
+one of `insufficient` / `market_better` / `indistinguishable` /
+`model_better_suspect_the_harness`, and the site prints it. The last one is
+not a celebration: a model carrying no market features cannot out-predict the
+closing line, so that result is evidence of a harness bug first. It stays
+`insufficient` below 30 paired games whatever the numbers look like.
+
+**CLV is the headline on the value surface, not profit.** At a few hundred
+bets, realised return is variance with a number attached; whether the price
+moved toward us converges in weeks. The price a call was made against is
+stored beside the forecast under provider `publish` — not a claim about what
+a book showed at that instant, but about what this pipeline read, which is
+the only thing it can attest to.
+
+## Margin and total are scored now, and the coverage check is the important one
+
+Every game card publishes an expected margin and an expected total. Until
+`evaluate_continuous`, **neither was measured anywhere** — which the standing
+rule does not permit: an accuracy claim is stated as a paired measurement on
+named games or it is not stated.
+
+Measured over the same 25,749-game walk-forward:
+
+| | model MAE | market MAE | gap | bias |
+|---|---|---|---|---|
+| margin | 10.04 | 9.88 (spread, n=14,600) | +0.306 | +0.43 |
+| total | 14.86 | 14.45 (posted, n=8,218) | +0.760 | −1.53 |
+
+The market wins on both, which is the same story the Brier table tells and
+for the same reason.
+
+**Interval coverage is the part with consequences beyond its own table.** The
+win probability is not fitted separately — it is the area under the same
+fitted normal above zero, and the score grid and every playoff series price
+come from it too. So an sd that is too narrow makes *every percentage on the
+site* overconfident, by an amount the moneyline ECE only partly reveals.
+
+| nominal | margin | total |
+|---|---|---|
+| 50% | 49.0% | 52.0% |
+| 80% | 78.1% | 81.5% |
+| 95% | 93.0% | 95.6% |
+
+**Margin runs narrow; total runs wide.** Both inside two points of nominal,
+which is why neither puts a visible bend in the reliability curve — exactly
+why they are worth measuring separately. The margin gap is largest in the
+tails (93.0% against 95%), which is what the documented excess kurtosis of
++0.304 predicts: a known limit of fitting a normal here, not a surprise.
+
+Note the claim this tests is **not** the one in *Where basketball diverges*
+§4. That justifies the normal on the UNCONDITIONAL margin distribution. What
+has to hold for the published probabilities is that the FORECAST residual,
+standardised by the sd published for that specific game, is standard normal.
+The PIT histogram tests its shape; `pit_uniformity` reports chi-square per
+degree of freedom and deliberately **no p-value** — at n in the tens of
+thousands any real model fails a goodness-of-fit test on some decimal place,
+and `p < .001` beside a visibly flat histogram would be true and completely
+misleading.
+
+## The upset boards are a sort, not a computation
+
+`build_upsets` ranks 25,749 already-stored retrodictions three ways. Nothing
+new is computed; the archive simply had no way to look across seasons, so the
+biggest upsets in twenty-three years were computed and invisible.
+
+**`p_model` is a HOME probability and orienting it is the whole trap.** An
+away upset is a low probability for the away side, which is a *high*
+`p_model` — sorting on it directly puts every home favourite's loss at the
+top and every away favourite's loss at the bottom, and the board looks
+entirely plausible. There is a test on it, and the fixtures for a *different*
+test in the same file were written backwards on the first attempt.
+
+The disagreement board leads with the **full-corpus** split (model closer on
+6,282 of 14,600, or 43.0%), not with the top-100 slice. A board sorted by
+disagreement is selected on exactly the games where one side was furthest out
+on a limb, which is not a fair test of either — both numbers are published so
+the page can say which is which.
+
+Warm-up seasons carry no forecast and appear on no board. A missing
+`p_model` treated as zero would make every warm-up game the biggest upset in
+history.
+
 ## Architecture
 
 ### Backend (`backend/`)
@@ -346,6 +467,7 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 | Elo sweep | `python3 -m backend.scripts.tune_elo` |
 | Playoff series backtest | `python3 -m backend.scripts.benchmark_series` |
 | Publish the forecast | `python3 -m backend.scripts.forecast_season --sims 20000` |
+| **Score the live record** | `python3 -m backend.scripts.score_live` |
 | Export the season archive | `python3 -m backend.scripts.build_history` |
 | Refresh only the current season's file | `python3 -m backend.scripts.build_history --from-season 2027` |
 | Append today's title-race point | `python3 -m backend.scripts.title_race --track` |
@@ -361,9 +483,9 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 
 Recorded rather than papered over:
 
-- **No injury or roster data.** The model knows nothing about trades, the draft, or who is playing. This is the largest single gap and it is why preseason title odds stay more concentrated than a real futures market.
-- **No live win probability.** ESPN serves `winprobability` per game; it is not ingested.
+- **No injury or roster data IN THE MODEL.** The model knows nothing about trades, the draft, or who is playing. This is still the largest single gap and it is why preseason title odds stay more concentrated than a real futures market. Availability is now *shown* on an upcoming game page from ESPN's injuries endpoint, with an explicit statement that the forecast beside it has not read it. It is deliberately not folded into a rating: **ESPN publishes injuries as a snapshot of today with no historical archive**, so an availability-adjusted model cannot be walk-forward tested against this corpus at all — it could only be validated forward, from zero, over years. This project does not publish a number it cannot benchmark.
+- **No live win probability of our own.** ESPN's `winprobability` curve is now rendered on an archived game page, labelled as ESPN's — a different model reading time, score and possession, none of which this forecaster has. Computing our own is a separate project and must not be confused with displaying theirs.
 - **No player-level anything in the MODEL.** `/games/[id]` renders full player box scores, but they are fetched from ESPN at request time and cached for a day — deliberately not in the warehouse, which holds only what the model consumes. 31,844 games of player lines is hundreds of megabytes of JSON that no forecast reads. Nothing player-level feeds a probability.
 - **Title-race replays exist for 2024, 2025 and 2026 only.** Each is ~2 minutes of compute and past seasons never change, so they are generated on demand rather than in a workflow. Add one with `title_race --replay <season>`.
 - **Odds coverage is uneven by era** — see the provider table above. 2019 has no market at all.
-- **The live published record is empty** because the season has not started. It will grow from zero and be reported at whatever n it reaches, never merged with the historical walk-forward.
+- **The live published record is empty** because the season has not started. It will grow from zero and be reported at whatever n it reaches, never merged with the historical walk-forward. The machinery is in place and tested — see *Provenance* below.

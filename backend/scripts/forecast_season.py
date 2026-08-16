@@ -15,6 +15,13 @@ Writes into `backend/data/predictions/`:
   of each seed, the four first-round series priced by exact enumeration, and
   every franchise's marginal probability of reaching each round
 
+It also writes the append-only half into the warehouse: one
+`prediction_snapshots` row per fixture and one `odds_snapshots` row per
+priced fixture, both stamped `generated_at`. **The JSON above is a view; those
+rows are the record.** Every artifact here is overwritten by the next run, so
+without them the only evidence of what was claimed in advance is that it
+agrees with what is claimed now. `score_live` reads them back.
+
 **It re-syncs every run, by construction.** Nothing here is a preseason
 snapshot: each run rebuilds ratings from every game played to date, so the
 projection tightens as the season runs and games already played leave the
@@ -50,6 +57,7 @@ from backend.services.data.warehouse import (
     SEASON_TYPE_REGULAR,
     get_warehouse,
 )
+from backend.services.data.espn_loader import NBA_COMPETITION_ID
 from backend.services.espn.client import current_season
 from backend.services.forecast.version import model_version
 from backend.services.playoffs.projection import (
@@ -338,6 +346,156 @@ def _value_surface(forecast, game: Dict) -> Optional[Dict]:
     }
 
 
+def record_provenance(
+    warehouse,
+    games: Sequence[Dict],
+    *,
+    season: int,
+    generated_at: str,
+    version: str,
+) -> Tuple[int, int]:
+    """Write what was said, and the price it was said against, to the warehouse.
+
+    **The published artifact is not a record.** `game_forecasts.json` is
+    overwritten every morning by the next run, so on any given day the only
+    evidence of yesterday's call is that it agrees with today's. These two
+    tables are the append-only half: what the model claimed, at a stamped
+    moment, under a named model version, against the price then available.
+
+    Without them a live record cannot be built at all. It could only be
+    *recomputed* from the corpus after the fact — which is a backtest, and
+    this project draws a hard line between the two on every surface it has.
+    `/accuracy` promises a live record that grows from zero; this function is
+    what makes that promise keepable.
+
+    The price goes in under the provider name `publish` rather than the
+    book's own name. It is not a claim about what DraftKings showed at that
+    instant — it is a claim about what this pipeline read, which is the only
+    thing it can honestly attest to, and closing line value has to measure
+    from a price somebody could actually have taken.
+    """
+    stamped = [
+        {
+            "fixture_uid": game["game_id"],
+            "generated_at": generated_at,
+            "model_version": version,
+            "competition_id": NBA_COMPETITION_ID,
+            "season": season,
+            "tipoff_utc": game["date_utc"],
+            "home_team": game["home"]["abbreviation"],
+            "away_team": game["away"]["abbreviation"],
+            "p_home": game.get("p_home"),
+            "p_away": game.get("p_away"),
+            "exp_margin": game.get("exp_margin"),
+            "exp_total": game.get("exp_total"),
+        }
+        for game in games
+    ]
+
+    # Only games that carry a real two-sided price. A one-legged line is not
+    # a market (see `market.has_complete_odds`) and storing it would put a
+    # number in the CLV denominator that never existed as a tradeable price.
+    priced = [
+        {
+            "game_id": game["game_id"],
+            "provider": "publish",
+            "captured_at": generated_at,
+            "ml_home": (game.get("value") or {}).get("ml_home"),
+            "ml_away": (game.get("value") or {}).get("ml_away"),
+            "spread_home": (game.get("value") or {}).get("spread_home"),
+            "total_points": (game.get("value") or {}).get("total_points"),
+            "before_tipoff": True,
+        }
+        for game in games
+        if game.get("value")
+    ]
+
+    return (
+        warehouse.record_predictions(stamped),
+        warehouse.record_odds(priced),
+    )
+
+
+def append_forecast_log(
+    path: Path, games: Sequence[Dict], *, season: int, generated_at: str, version: str
+) -> int:
+    """The durable copy of the live record. First write per fixture wins.
+
+    **The warehouse is not a safe home for this on its own.** It is gitignored
+    derived data, restored each morning from a release asset, and the daily
+    job falls back to `build_warehouse --seasons 2004-2027` if that download
+    ever fails. Every other table survives that: results, prices and ratings
+    can all be fetched from ESPN again. **A record of what was forecast before
+    a game cannot be.** One transient network failure would otherwise destroy
+    the live record permanently and nothing would report it — the rebuild
+    would succeed, the site would look right, and the only evidence anything
+    had been claimed in advance would be gone.
+
+    So the first forecast per fixture is also written here, into a file that
+    is committed to git. It is small by construction: one row per fixture for
+    the whole season, roughly 1,200 lines, not one per fixture per run.
+
+    **First write wins and is never revised.** A later run producing a better
+    number for the same game does not get to replace the one that was
+    actually published, which is the entire point of the file. The warehouse
+    keeps every later snapshot; this keeps the one that counts.
+    """
+    payload = _read_log(path)
+    forecasts: Dict[str, Dict] = payload.setdefault("forecasts", {})
+
+    added = 0
+    for game in games:
+        game_id = str(game["game_id"])
+        if game_id in forecasts:
+            continue
+        # A forecast stamped after tip-off is not a forecast. It cannot be
+        # scored as one later, so it is not written as one now.
+        if str(generated_at) >= str(game["date_utc"]):
+            continue
+        value = game.get("value") or {}
+        forecasts[game_id] = {
+            "generated_at": generated_at,
+            "model_version": version,
+            "season": season,
+            "tipoff_utc": game["date_utc"],
+            "home_team": game["home"]["abbreviation"],
+            "away_team": game["away"]["abbreviation"],
+            "p_home": game.get("p_home"),
+            "exp_margin": game.get("exp_margin"),
+            "exp_total": game.get("exp_total"),
+            "ml_home": value.get("ml_home"),
+            "ml_away": value.get("ml_away"),
+        }
+        added += 1
+
+    # Nothing new means nothing to write. Once a season's fixtures are all
+    # logged this runs every morning and touches no bytes, so the daily job
+    # is not committing a re-serialised copy of an append-only file for the
+    # sake of a changed timestamp.
+    if not added:
+        return 0
+
+    payload["note"] = (
+        "The first forecast published for each fixture, before its tip-off. "
+        "Append-only: an entry is never revised, because the point of the "
+        "file is what was actually claimed rather than the best number "
+        "available afterwards. This is the durable copy of the live record; "
+        "the warehouse holds every later snapshot and is not committed."
+    )
+    payload["updated_at"] = generated_at
+    payload["n"] = len(forecasts)
+    _publish(path, payload)
+    return added
+
+
+def _read_log(path: Path) -> Dict:
+    try:
+        payload = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
 def _publish(path: Path, payload: Dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -466,6 +624,32 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "min_edge": MIN_EDGE,
             "games": games,
         },
+    )
+
+    # The append-only half. Everything above is overwritten next run; this is
+    # what survives to be scored as a LIVE record rather than reconstructed
+    # as a backtest. See `record_provenance`.
+    n_pred, n_odds = record_provenance(
+        warehouse,
+        games,
+        season=season,
+        generated_at=generated_at,
+        version=version,
+    )
+    new_to_log = append_forecast_log(
+        out_dir / "forecast_log.json",
+        games,
+        season=season,
+        generated_at=generated_at,
+        version=version,
+    )
+    logger.info(
+        "provenance: %d forecasts and %d prices stamped at %s; %d fixtures "
+        "newly entered in the committed forecast log",
+        n_pred,
+        n_odds,
+        generated_at,
+        new_to_log,
     )
 
     ratings = sorted(

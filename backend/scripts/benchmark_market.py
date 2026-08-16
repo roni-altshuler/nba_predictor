@@ -175,6 +175,7 @@ def walk_forward(
         record["exp_margin"] = forecast.exp_margin
         record["exp_total"] = forecast.exp_total
         record["margin_sd"] = forecast.margin_sd
+        record["total_sd"] = forecast.total_sd
 
         # Elo-only baseline, from the same pre-game ratings the features saw.
         elo_forecast = model.predict_from_elo(
@@ -263,6 +264,8 @@ def evaluate(records: Sequence[Dict], devig_method: str = "shin") -> Dict:
         },
     }
 
+    out["continuous"] = evaluate_continuous(records)
+
     if paired_market:
         gap = out["paired_vs_market"]["model"]["brier"] - out["paired_vs_market"]["market"]["brier"]
         out["paired_vs_market"]["model_gap_to_market"] = round(gap, 5)
@@ -282,6 +285,132 @@ def evaluate(records: Sequence[Dict], devig_method: str = "shin") -> Dict:
                 -gap,
             )
     return out
+
+
+def evaluate_continuous(records: Sequence[Dict]) -> Dict:
+    """Score the two numbers this site prints and never checked: margin, total.
+
+    **Every game card publishes an expected margin and an expected total, and
+    until now nothing measured either of them.** The standing rule is that an
+    accuracy claim is stated as a paired measurement on named games or it is
+    not stated; a number printed beside a win probability is such a claim.
+
+    Three things are measured, in increasing order of how much they matter:
+
+    1. **Point accuracy** — MAE and RMSE against the realised margin and
+       total, with the market's own number (the spread, negated; the posted
+       total) as the paired baseline on the games that carry one. The
+       expectation is the same as everywhere else on this site: the market
+       wins, and a model that beat it here without market features would be a
+       bug announcing itself.
+
+    2. **Bias** — reported separately, because it is the more diagnostic of
+       the two. A forecaster three points long on every total has an MAE that
+       reads as noise and a bias that names the fault.
+
+    3. **Interval coverage and PIT** — and this is the one with consequences
+       beyond its own table. The win probability, the score grid on
+       `/predict` and every playoff series price are read off the SAME fitted
+       normal, so `margin_sd` is not decoration: if the published spread is
+       too narrow then every probability derived from it is overconfident by
+       a knowable amount, and the ECE on the moneyline would only show part
+       of it. CLAUDE.md justifies the normal on the unconditional margin
+       distribution, which is a different and weaker claim than the one that
+       has to hold — that the residual, standardised by the sd published for
+       that specific game, is standard normal. Coverage tests that directly
+       and the PIT histogram tests its shape.
+    """
+    margin_pairs: List[Tuple[float, float]] = []
+    total_pairs: List[Tuple[float, float]] = []
+    margin_triples: List[Tuple[float, float, float]] = []
+    total_triples: List[Tuple[float, float, float]] = []
+
+    paired_margin_model: List[Tuple[float, float]] = []
+    paired_margin_market: List[Tuple[float, float]] = []
+    paired_total_model: List[Tuple[float, float]] = []
+    paired_total_market: List[Tuple[float, float]] = []
+
+    for record in records:
+        actual_margin = record["home_score"] - record["away_score"]
+        actual_total = record["home_score"] + record["away_score"]
+
+        predicted_margin = record.get("exp_margin")
+        if predicted_margin is not None:
+            margin_pairs.append((predicted_margin, actual_margin))
+            sd = record.get("margin_sd")
+            if sd:
+                margin_triples.append((predicted_margin, actual_margin, sd))
+            spread = record.get("spread_home")
+            if spread is not None:
+                # A spread is quoted from the home side and negative when the
+                # home team is favoured, so the market's expected home margin
+                # is its negation. Getting this sign wrong would produce a
+                # market baseline roughly twice as bad as the model, which is
+                # exactly the kind of "win" this project treats as a bug.
+                paired_margin_model.append((predicted_margin, actual_margin))
+                paired_margin_market.append((-float(spread), actual_margin))
+
+        predicted_total = record.get("exp_total")
+        if predicted_total is not None:
+            total_pairs.append((predicted_total, actual_total))
+            sd = record.get("total_sd")
+            if sd:
+                total_triples.append((predicted_total, actual_total, sd))
+            posted = record.get("total_points")
+            if posted is not None:
+                paired_total_model.append((predicted_total, actual_total))
+                paired_total_market.append((float(posted), actual_total))
+
+    margin_pit = mkt.pit_values(margin_triples)
+    total_pit = mkt.pit_values(total_triples)
+
+    return {
+        "note": (
+            "The expected margin and expected total are published on every "
+            "game card. This block is what makes them falsifiable. Interval "
+            "coverage is the load-bearing part: the win probability and the "
+            "score grid are read off the same fitted normal, so an sd that "
+            "is too narrow makes every probability on the site overconfident."
+        ),
+        "margin": {
+            "model": mkt.summarise_continuous(margin_pairs),
+            "vs_market": {
+                "n": len(paired_margin_market),
+                "model": mkt.summarise_continuous(paired_margin_model),
+                "market": mkt.summarise_continuous(paired_margin_market),
+                "mae_gap": _mae_gap(paired_margin_model, paired_margin_market),
+            },
+            "coverage": mkt.interval_coverage(margin_triples),
+            "pit": mkt.pit_histogram(margin_pit),
+            "pit_uniformity": mkt.pit_uniformity(margin_pit),
+        },
+        "total": {
+            "model": mkt.summarise_continuous(total_pairs),
+            "vs_market": {
+                "n": len(paired_total_market),
+                "model": mkt.summarise_continuous(paired_total_model),
+                "market": mkt.summarise_continuous(paired_total_market),
+                "mae_gap": _mae_gap(paired_total_model, paired_total_market),
+            },
+            "coverage": mkt.interval_coverage(total_triples),
+            "pit": mkt.pit_histogram(total_pit),
+            "pit_uniformity": mkt.pit_uniformity(total_pit),
+        },
+    }
+
+
+def _mae_gap(
+    model: Sequence[Tuple[float, float]],
+    market: Sequence[Tuple[float, float]],
+) -> Optional[float]:
+    """Model MAE minus market MAE. Positive means the market is better."""
+    if not model or not market:
+        return None
+    return round(
+        mkt.summarise_continuous(model)["mae"]
+        - mkt.summarise_continuous(market)["mae"],
+        4,
+    )
 
 
 def _market_probability(record: Dict, method: str) -> Optional[float]:
@@ -432,6 +561,18 @@ def _print_table(report: Dict) -> None:
     print()
     print(f"PAIRED vs MARKET  n={paired['n']}  ({paired['unpriced_games']} unpriced)"
           f"  de-vig={paired['devig']}")
+    # An era with no published lines is a real state, not an error: ESPN
+    # carries no `pickcenter` at all before 2013 and none in 2019. Printing
+    # "no market" is the honest render; indexing into an empty summary
+    # crashes the whole run after the artifact has already been written,
+    # which is how this surfaced.
+    if not paired.get("n"):
+        print("  no game in this window carries a price — nothing to pair against")
+        continuous = report.get("continuous")
+        if continuous:
+            _print_continuous(continuous)
+        print()
+        return
     print(f"{'forecaster':<24}{'Brier':>9}{'log loss':>11}{'acc':>9}{'ECE':>9}{'gap':>9}")
     market_brier = paired["market"]["brier"]
     for label, key in (
@@ -450,7 +591,40 @@ def _print_table(report: Dict) -> None:
         print(f"\npaired bootstrap (model - market): {boot['mean_diff']:+.5f} "
               f"95% CI [{boot['ci_low']:+.5f}, {boot['ci_high']:+.5f}]  "
               f"p(model better) = {boot['p_a_better']:.3f}")
+
+    continuous = report.get("continuous")
+    if continuous:
+        _print_continuous(continuous)
     print()
+
+
+def _print_continuous(block: Dict) -> None:
+    for name, unit in (("margin", "pts"), ("total", "pts")):
+        section = block[name]
+        model = section["model"]
+        if not model.get("n"):
+            continue
+        versus = section["vs_market"]
+        print()
+        print(f"{name.upper()}  n={model['n']}  ({unit})")
+        print(f"  model   MAE {model['mae']:.2f}   RMSE {model['rmse']:.2f}   "
+              f"bias {model['bias']:+.2f}")
+        if versus.get("n"):
+            print(f"  market  MAE {versus['market']['mae']:.2f}   "
+                  f"RMSE {versus['market']['rmse']:.2f}   "
+                  f"bias {versus['market']['bias']:+.2f}   "
+                  f"(paired n={versus['n']}, model−market MAE "
+                  f"{versus['mae_gap']:+.3f})")
+        covered = "  ".join(
+            f"{row['nominal']:.0%} → {row['coverage']:.1%}"
+            for row in section["coverage"]
+        )
+        if covered:
+            print(f"  coverage  {covered}")
+        uniformity = section.get("pit_uniformity") or {}
+        if uniformity.get("n"):
+            print(f"  PIT  chi2/dof {uniformity['chi_square_per_dof']:.1f}   "
+                  f"max bin deviation {uniformity['max_abs_deviation']:.4f}")
 
 
 if __name__ == "__main__":

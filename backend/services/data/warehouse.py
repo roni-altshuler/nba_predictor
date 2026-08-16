@@ -697,6 +697,146 @@ class Warehouse:
             ).fetchone()
         return float(row["elo"]) if row else None
 
+    # ------------------------------------------------- forecast provenance
+
+    def record_predictions(self, rows: Iterable[Dict[str, Any]]) -> int:
+        """Append what the model said, before the game was played.
+
+        **This is the only thing on disk that can distinguish a published
+        forecast from a backtest.** `game_forecasts.json` is overwritten
+        every morning, so without these rows the record of what was claimed
+        in advance survives exactly one day. Everything else could be
+        recomputed later from the corpus — and a recomputed forecast is a
+        backtest by this project's own definition, however carefully it is
+        done.
+
+        Append-only and idempotent: the primary key is
+        `(fixture_uid, generated_at, model_version)`, so re-running the
+        publisher within the same second overwrites its own row and a run an
+        hour later adds a second observation of the same fixture. That is
+        wanted — the drift between them is how a forecast is seen to move as
+        tip-off approaches, and `earliest_predictions` takes the first.
+        """
+        prepared = [
+            (
+                str(row["fixture_uid"]),
+                str(row["generated_at"]),
+                str(row["model_version"]),
+                row.get("competition_id"),
+                row.get("season"),
+                row.get("tipoff_utc"),
+                row.get("home_team"),
+                row.get("away_team"),
+                _as_float(row.get("p_home")),
+                _as_float(row.get("p_away")),
+                _as_float(row.get("exp_margin")),
+                _as_float(row.get("exp_total")),
+            )
+            for row in rows
+        ]
+        if not prepared:
+            return 0
+        with self.transaction() as conn:
+            conn.executemany(
+                "INSERT OR REPLACE INTO prediction_snapshots ("
+                "fixture_uid, generated_at, model_version, competition_id, "
+                "season, tipoff_utc, home_team, away_team, p_home, p_away, "
+                "exp_margin, exp_total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                prepared,
+            )
+        return len(prepared)
+
+    def earliest_predictions(
+        self, season: Optional[int] = None
+    ) -> List[sqlite3.Row]:
+        """The FIRST forecast published for each fixture, strictly pre-tipoff.
+
+        Strictly: `generated_at < tipoff_utc`. A snapshot written after the
+        ball went up is not a forecast, and on a day when the publisher runs
+        late that distinction is the whole difference between a live record
+        and a fraud. Rows with no tipoff recorded are dropped for the same
+        reason — an unknown tipoff cannot be shown to precede anything.
+
+        The earliest is taken rather than the latest because it is the
+        hardest number to be right about: it is the one published furthest
+        from the game, with the least information, and it is the one nobody
+        can accuse of having crept toward the market as the line moved.
+        """
+        where = ["tipoff_utc IS NOT NULL", "generated_at < tipoff_utc"]
+        params: List[Any] = []
+        if season is not None:
+            where.append("season = ?")
+            params.append(season)
+        return list(
+            self.conn.execute(
+                f"""
+                SELECT s.* FROM prediction_snapshots AS s
+                JOIN (
+                    SELECT fixture_uid, MIN(generated_at) AS first_at
+                      FROM prediction_snapshots
+                     WHERE {' AND '.join(where)}
+                     GROUP BY fixture_uid
+                ) AS f
+                  ON f.fixture_uid = s.fixture_uid
+                 AND f.first_at = s.generated_at
+                ORDER BY s.tipoff_utc, s.fixture_uid
+                """,
+                params,
+            )
+        )
+
+    def record_odds(self, rows: Iterable[Dict[str, Any]]) -> int:
+        """A price, as it stood at a named moment.
+
+        Written by the publisher alongside every forecast so that closing
+        line value has something to measure FROM. CLV compares the price
+        available when the call was made against the price at the close; with
+        only the closing price stored there is nothing to compare and the
+        value surface can never be scored at all.
+        """
+        prepared = [
+            (
+                str(row["game_id"]),
+                str(row["provider"]),
+                str(row["captured_at"]),
+                _as_float(row.get("ml_home")),
+                _as_float(row.get("ml_away")),
+                _as_float(row.get("spread_home")),
+                _as_float(row.get("total_points")),
+                1 if row.get("before_tipoff", True) else 0,
+            )
+            for row in rows
+        ]
+        if not prepared:
+            return 0
+        with self.transaction() as conn:
+            conn.executemany(
+                "INSERT OR REPLACE INTO odds_snapshots ("
+                "game_id, provider, captured_at, ml_home, ml_away, "
+                "spread_home, total_points, before_tipoff) "
+                "VALUES (?,?,?,?,?,?,?,?)",
+                prepared,
+            )
+        return len(prepared)
+
+    def earliest_odds(self, provider: str = "publish") -> Dict[str, sqlite3.Row]:
+        """The first captured price per game, keyed by game id."""
+        rows = self.conn.execute(
+            """
+            SELECT o.* FROM odds_snapshots AS o
+            JOIN (
+                SELECT game_id, MIN(captured_at) AS first_at
+                  FROM odds_snapshots
+                 WHERE provider = ? AND before_tipoff = 1
+                 GROUP BY game_id
+            ) AS f
+              ON f.game_id = o.game_id AND f.first_at = o.captured_at
+            WHERE o.provider = ?
+            """,
+            (provider, provider),
+        )
+        return {str(row["game_id"]): row for row in rows}
+
     # ------------------------------------------------------------- counts
 
     def counts(self) -> Dict[str, int]:
@@ -725,6 +865,22 @@ class Warehouse:
                 """
             )
         )
+
+
+def _as_float(value: Any) -> Optional[float]:
+    """Coerce to float, or None. **Never to zero.**
+
+    A missing price and a price of zero are different facts, and the second
+    one is not a price at all. Every consumer downstream reads NULL as
+    "absent" and would read 0.0 as "even money".
+    """
+    if value is None:
+        return None
+    try:
+        out = float(value)
+    except (TypeError, ValueError):
+        return None
+    return out if out == out and abs(out) != float("inf") else None
 
 
 def _norm(name: str) -> str:
