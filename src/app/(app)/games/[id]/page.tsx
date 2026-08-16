@@ -106,9 +106,11 @@ export default async function GamePage({
     // Availability, for the branch where it can still change the game. On an
     // archived fixture it would be today's report about a game played years
     // ago, which is worse than nothing.
+    // Full display names: ESPN's injuries endpoint publishes `displayName`
+    // and no abbreviation, so an abbreviation here matches nothing.
     const injuries = await getEspnInjuries([
-      upcoming.home.abbreviation,
-      upcoming.away.abbreviation,
+      upcoming.home.name,
+      upcoming.away.name,
     ])
     return <UpcomingGame game={upcoming} injuries={injuries} />
   }
@@ -812,8 +814,8 @@ function UpcomingGame({
 
       <InjuryReport
         injuries={injuries}
-        away={game.away.abbreviation}
-        home={game.home.abbreviation}
+        away={game.away}
+        home={game.home}
       />
 
       <SeriesHistory
@@ -853,16 +855,18 @@ function InjuryReport({
   home,
 }: {
   injuries: TeamInjuries[]
-  away: string
-  home: string
+  away: { name: string; abbreviation: string }
+  home: { name: string; abbreviation: string }
 }) {
   const ordered = [away, home]
-    .map((abbreviation) =>
-      injuries.find(
-        (team) => team.abbreviation?.toUpperCase() === abbreviation.toUpperCase(),
-      ),
-    )
-    .filter(Boolean) as TeamInjuries[]
+    .map((side) => {
+      const team = injuries.find(
+        (row) =>
+          row.displayName?.trim().toLowerCase() === side.name.trim().toLowerCase(),
+      )
+      return team ? { team, side } : null
+    })
+    .filter(Boolean) as Array<{ team: TeamInjuries; side: { abbreviation: string } }>
 
   if (!ordered.length) {
     return (
@@ -881,10 +885,10 @@ function InjuryReport({
     <section className="card mb-6 p-4">
       <h2 className="mb-3 text-sm">Availability</h2>
       <div className="grid gap-4 md:grid-cols-2">
-        {ordered.map((team) => (
+        {ordered.map(({ team, side }) => (
           <div key={team.teamId}>
             <h3 className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
-              {team.abbreviation}
+              {side.abbreviation}
             </h3>
             <ul className="mt-2 space-y-1.5">
               {team.entries.map((entry) => (
@@ -897,6 +901,11 @@ function InjuryReport({
                     {entry.position ? (
                       <span className="ml-1.5 text-[var(--text-tertiary)]">
                         {entry.position}
+                      </span>
+                    ) : null}
+                    {entry.detail ? (
+                      <span className="ml-1.5 text-[var(--text-tertiary)]">
+                        {entry.detail}
                       </span>
                     ) : null}
                   </span>

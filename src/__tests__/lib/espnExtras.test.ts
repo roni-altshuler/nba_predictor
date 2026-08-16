@@ -98,36 +98,42 @@ describe('getEspnWinProbability', () => {
 
 /* -------------------------------------------------------------- injuries */
 
+/**
+ * The real shape of `/basketball/nba/injuries`.
+ *
+ * Team blocks carry `id` and `displayName` and **no abbreviation** — the
+ * first version of this reader filtered on one, matched nothing, and failed
+ * soft into "No injury report" on every game. These fixtures are copied from
+ * an actual response for that reason.
+ */
 const INJURY_PAYLOAD = {
   injuries: [
     {
       id: '2',
-      abbreviation: 'BOS',
       displayName: 'Boston Celtics',
       injuries: [
         {
           athlete: { displayName: 'Player Q', position: { abbreviation: 'G' } },
           status: 'Questionable',
-          details: { type: 'Ankle' },
+          date: '2026-08-01T00:00Z',
+          details: { side: 'Left', type: 'Ankle', detail: 'Sprain' },
         },
         {
           athlete: { displayName: 'Player O', position: { abbreviation: 'C' } },
           status: 'Out',
-          details: { type: 'Knee' },
+          details: { type: 'Knee', detail: 'Surgery', returnDate: '2026-11-01' },
         },
       ],
     },
     {
-      id: '9',
-      abbreviation: 'LAL',
+      id: '13',
       displayName: 'Los Angeles Lakers',
       injuries: [
         { athlete: { displayName: 'Player D' }, status: 'Day-To-Day' },
       ],
     },
     {
-      id: '5',
-      abbreviation: 'MIA',
+      id: '14',
       displayName: 'Miami Heat',
       injuries: [{ athlete: { displayName: 'Nobody' }, status: 'Out' }],
     },
@@ -137,21 +143,61 @@ const INJURY_PAYLOAD = {
 describe('getEspnInjuries', () => {
   it('returns an empty list when the request fails', async () => {
     fetchMock.mockResolvedValue({ ok: false })
-    expect(await getEspnInjuries(['BOS'])).toEqual([])
+    expect(await getEspnInjuries(['Boston Celtics'])).toEqual([])
   })
 
-  it('keeps only the two teams in the game', async () => {
+  it('calls /injuries, not /teams/injuries', async () => {
+    // `/teams/injuries` answers 400 for every request. Because every reader
+    // here fails soft, the wrong URL produced "No injury report" forever
+    // rather than an error, and shipped.
     fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
-    const result = await getEspnInjuries(['BOS', 'LAL'])
-    expect(result.map((t) => t.abbreviation)).toEqual(['BOS', 'LAL'])
+    await getEspnInjuries(['Boston Celtics'])
+    const url = String(fetchMock.mock.calls[0][0])
+    expect(url).toMatch(/\/basketball\/nba\/injuries$/)
+    expect(url).not.toContain('/teams/')
+  })
+
+  it('matches teams on display name, since the payload has no abbreviation', async () => {
+    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
+    const result = await getEspnInjuries(['Boston Celtics', 'Los Angeles Lakers'])
+    expect(result.map((t) => t.displayName)).toEqual([
+      'Boston Celtics',
+      'Los Angeles Lakers',
+    ])
+  })
+
+  it('matches names case- and whitespace-insensitively', async () => {
+    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
+    expect(await getEspnInjuries(['  boston celtics '])).toHaveLength(1)
   })
 
   it('orders Out above Questionable', async () => {
     // A reader scanning this is looking for who is definitely missing;
     // alphabetical order buries that under whoever has an early surname.
     fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
-    const [boston] = await getEspnInjuries(['BOS'])
+    const [boston] = await getEspnInjuries(['Boston Celtics'])
     expect(boston.entries.map((e) => e.status)).toEqual(['Out', 'Questionable'])
+  })
+
+  it('assembles a readable detail from ESPN’s separate fields', async () => {
+    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
+    const [boston] = await getEspnInjuries(['Boston Celtics'])
+    const questionable = boston.entries.find((e) => e.status === 'Questionable')
+    expect(questionable?.detail).toBe('Left ankle sprain')
+  })
+
+  it('carries the expected return date when ESPN publishes one', async () => {
+    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
+    const [boston] = await getEspnInjuries(['Boston Celtics'])
+    const out = boston.entries.find((e) => e.status === 'Out')
+    expect(out?.returnDate).toBe('2026-11-01')
+  })
+
+  it('reports no detail rather than an empty string', async () => {
+    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
+    const [lakers] = await getEspnInjuries(['Los Angeles Lakers'])
+    expect(lakers.entries[0].detail).toBeNull()
+    expect(lakers.entries[0].returnDate).toBeNull()
   })
 
   it('drops an entry with no player or no status rather than rendering blanks', async () => {
@@ -160,7 +206,7 @@ describe('getEspnInjuries', () => {
         injuries: [
           {
             id: '2',
-            abbreviation: 'BOS',
+            displayName: 'Boston Celtics',
             injuries: [
               { athlete: { displayName: 'Real' }, status: 'Out' },
               { athlete: {}, status: 'Out' },
@@ -170,19 +216,19 @@ describe('getEspnInjuries', () => {
         ],
       }),
     )
-    const [boston] = await getEspnInjuries(['BOS'])
+    const [boston] = await getEspnInjuries(['Boston Celtics'])
     expect(boston.entries.map((e) => e.player)).toEqual(['Real'])
   })
 
   it('omits a team with nobody listed rather than showing an empty column', async () => {
     fetchMock.mockReturnValue(
-      ok({ injuries: [{ id: '2', abbreviation: 'BOS', injuries: [] }] }),
+      ok({ injuries: [{ id: '2', displayName: 'Boston Celtics', injuries: [] }] }),
     )
-    expect(await getEspnInjuries(['BOS'])).toEqual([])
+    expect(await getEspnInjuries(['Boston Celtics'])).toEqual([])
   })
 
-  it('matches abbreviations case-insensitively', async () => {
-    fetchMock.mockReturnValue(ok(INJURY_PAYLOAD))
-    expect(await getEspnInjuries(['bos'])).toHaveLength(1)
+  it('returns an empty list when the payload has no injuries array', async () => {
+    fetchMock.mockReturnValue(ok({ code: 400, message: 'Failed' }))
+    expect(await getEspnInjuries(['Boston Celtics'])).toEqual([])
   })
 })

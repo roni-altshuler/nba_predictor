@@ -22,8 +22,13 @@
 
 const SUMMARY =
   'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/summary'
-const TEAMS =
-  'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/teams'
+/* `/injuries`, NOT `/teams/injuries` — the latter answers 400 "Failed to get
+   league teams summary" for every request, and because every reader here
+   fails soft, the page said "No injury report" forever instead of erroring.
+   A wrong URL that degrades gracefully is harder to notice than one that
+   crashes; this one shipped and was caught only by querying ESPN directly. */
+const INJURIES =
+  'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries'
 
 /** A day. Box scores are final within minutes of a game and never change. */
 const REVALIDATE_SECONDS = 86_400
@@ -295,13 +300,15 @@ export interface InjuryEntry {
   player: string
   position: string | null
   status: string
+  /** "Left foot fracture", assembled from ESPN's parts. */
   detail: string | null
+  /** ESPN's own expected return, when it publishes one. */
+  returnDate: string | null
   date: string | null
 }
 
 export interface TeamInjuries {
   teamId: string
-  abbreviation: string | null
   displayName: string | null
   entries: InjuryEntry[]
 }
@@ -324,21 +331,19 @@ export interface TeamInjuries {
  * forecast that explicitly has not read it. That is the honest version, and
  * it is also the thing a reader actually wants before an 8pm tip.
  *
- * Cached for an hour rather than a day — an injury report changes on the
- * afternoon of the game, which is exactly when it is worth reading. Note
- * that the game route sets its own `revalidate`, so a page already built
- * will not be fresher than that; the caption on the page says the report is
- * as of the last rebuild rather than claiming a frequency this cannot
- * guarantee.
+ * **Matched on display name, because ESPN's team blocks here carry only
+ * `id` and `displayName`.** There is no abbreviation on this endpoint, and
+ * filtering on one silently matched nothing. The names come from the same
+ * ESPN `displayName` the warehouse stored, so the comparison is exact.
  */
 const INJURIES_REVALIDATE_SECONDS = 3_600
 
 export async function getEspnInjuries(
-  teamAbbreviations: string[],
+  teamNames: string[],
 ): Promise<TeamInjuries[]> {
   let payload: any
   try {
-    const response = await fetch(`${TEAMS}/injuries`, {
+    const response = await fetch(INJURIES, {
       next: { revalidate: INJURIES_REVALIDATE_SECONDS },
       headers: { Accept: 'application/json' },
       signal: AbortSignal.timeout(TIMEOUT_MS),
@@ -348,13 +353,19 @@ export async function getEspnInjuries(
   } catch {
     return []
   }
+  if (!payload || !Array.isArray(payload.injuries)) return []
 
-  const wanted = new Set(teamAbbreviations.filter(Boolean).map((a) => a.toUpperCase()))
+  const wanted = new Set(
+    teamNames.filter(Boolean).map((name) => name.trim().toLowerCase()),
+  )
   const out: TeamInjuries[] = []
 
-  for (const block of payload?.injuries ?? []) {
-    const abbreviation: string | null = block?.abbreviation ?? null
-    if (wanted.size && (!abbreviation || !wanted.has(abbreviation.toUpperCase()))) {
+  for (const block of payload.injuries) {
+    const displayName: string | null = block?.displayName ?? null
+    if (
+      wanted.size &&
+      (!displayName || !wanted.has(displayName.trim().toLowerCase()))
+    ) {
       continue
     }
     const entries: InjuryEntry[] = []
@@ -366,23 +377,37 @@ export async function getEspnInjuries(
         player,
         position: entry?.athlete?.position?.abbreviation ?? null,
         status: String(status),
-        detail:
-          entry?.details?.type ??
-          entry?.shortComment ??
-          entry?.type?.description ??
-          null,
+        detail: describeInjury(entry?.details),
+        returnDate: entry?.details?.returnDate ?? null,
         date: entry?.date ?? null,
       })
     }
     if (!entries.length) continue
     out.push({
       teamId: String(block?.id ?? ''),
-      abbreviation,
-      displayName: block?.displayName ?? null,
+      displayName,
       entries: entries.sort(byStatusSeverity),
     })
   }
   return out
+}
+
+/**
+ * "Left foot fracture" from ESPN's four separate fields.
+ *
+ * Returns null rather than an empty string when nothing is known, so the
+ * caller renders nothing instead of a stray separator.
+ */
+function describeInjury(details: any): string | null {
+  if (!details) return null
+  const parts = [details.side, details.type, details.detail]
+    .filter((part) => typeof part === 'string' && part.trim())
+    .map((part: string) => part.trim())
+  if (!parts.length) return null
+  // Side and body part read as proper nouns from ESPN ("Left", "Foot"); only
+  // the first word of the phrase should be capitalised.
+  const phrase = parts.join(' ')
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1).toLowerCase()
 }
 
 /* Out before Doubtful before Questionable before Day-To-Day. A reader
