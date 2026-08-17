@@ -46,6 +46,13 @@ from typing import Deque, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import numpy as np
 
+from backend.services.data.arenas import (
+    altitude_delta,
+    arena_for,
+    distance_between,
+    timezone_shift,
+)
+
 from backend.services.ratings.elo import EloConfig, EloRatingSystem
 
 logger = logging.getLogger(__name__)
@@ -75,6 +82,31 @@ FEATURE_NAMES: Tuple[str, ...] = (
     "is_playoff",
 )
 
+# Travel, altitude and time-zone shift were built, measured and NOT ADDED.
+# `geography()` below still computes them and is still tested, because the
+# measurement is worth keeping reproducible, but they are not in the served
+# vector and must not be added without new evidence.
+#
+# Ablation over the same 25,749-game walk-forward (`ablate_features`):
+#
+#   block       Brier      delta      verdict
+#   travel      .210576    -.000044   model is very slightly better without it
+#   altitude    .210620    -.000000   no measurable effect at all
+#   timezone    .210642    +.000022   inside the noise floor
+#
+# The effect is real and it is too small to matter, which are not the same
+# claim and both are worth stating. Residuals from the published model are
+# highest at exactly the two arenas above a kilometre — Utah +1.22 points
+# against the league mean (z = 2.78) and Denver +1.14 (z = 2.71), the top two
+# of thirty. But 1.2 points of margin is about two points of win probability,
+# at the 7% of games played in those two buildings, which lands a Brier effect
+# in the fifth decimal. Elo has also already absorbed most of it: a team that
+# wins more at home carries a higher rating, so what the residual measures is
+# only the part Elo missed.
+#
+# Adding four features for that would spend four coefficients to move nothing,
+# and this project's rule is that a constant feature is not free.
+
 # Rolling window for form. 10 games is roughly a fortnight of NBA schedule —
 # long enough to be more than noise, short enough to move within a season.
 FORM_WINDOW = 10
@@ -95,6 +127,12 @@ class TeamState:
     last_game: Optional[datetime] = None
     games_this_season: int = 0
     season: Optional[int] = None
+    # The franchise whose arena this team last played in — its own on a home
+    # night, the opponent's on the road. Travel is measured from HERE rather
+    # than from the team's own city, because the second night of a five-game
+    # road trip is a short hop and treating it as a flight from home would
+    # invent a journey nobody took.
+    last_venue: Optional[str] = None
 
     def net_rating(self) -> float:
         if not self.scored:
@@ -134,6 +172,57 @@ class TeamState:
             self.games_this_season = 0
 
 
+
+def geography(
+    *,
+    venue: Optional[str],
+    home_last_venue: Optional[str],
+    away_last_venue: Optional[str],
+    away_home: Optional[str],
+    neutral: bool,
+) -> List[float]:
+    """The four geography features, computed once for both code paths.
+
+    **One function, called by `build` and by `vector_for`.** The train/serve
+    skew this project already shipped once came from two code paths agreeing
+    on feature NAMES and disagreeing on values; a block computed twice is
+    that bug waiting to be written again.
+
+    `venue` is the franchise whose building the game is played in, which is
+    the home side unless the game is neutral.
+
+    **A neutral site returns zeros across the block, deliberately.** Where a
+    neutral game is played is not in this corpus — ESPN gives a venue string,
+    not a franchise — so the honest options are to zero the block or to drop
+    the row. Zeroing keeps the game, and `is_neutral` is already in the
+    vector for the model to discount it with. It is the one place here that
+    a zero means "unknown" rather than "measured zero", which is why it is
+    quarantined behind a single flag rather than left to arise from a
+    missing lookup.
+
+    Altitude and time zone are measured against where the VISITOR LIVES, not
+    where it last played. Acclimatisation is a property of a body over
+    weeks; a team that landed in Denver yesterday is not adapted to it. That
+    is an assumption, and it is the standard one.
+    """
+    if neutral or venue is None:
+        return [0.0, 0.0, 0.0, 0.0]
+
+    home_km = distance_between(home_last_venue, venue)
+    away_km = distance_between(away_last_venue, venue)
+    altitude = altitude_delta(venue, away_home)
+    shift = timezone_shift(away_home, venue)
+
+    return [
+        # Thousands of kilometres. A team's first game of the season has no
+        # previous venue and reads as 0 travel, which is the truth of it —
+        # they have been at home for three months.
+        (home_km or 0.0) / 1000.0,
+        (away_km or 0.0) / 1000.0,
+        (altitude or 0.0) / 1000.0,
+        float(shift or 0.0),
+    ]
+
 class FeatureBuilder:
     """Builds the served feature matrix in one chronological pass."""
 
@@ -142,10 +231,21 @@ class FeatureBuilder:
         elo_config: Optional[EloConfig] = None,
         *,
         games_per_season: int = 82,
+        abbreviations: Optional[Dict[int, str]] = None,
     ):
         self.elo = EloRatingSystem(elo_config)
         self.state: Dict[int, TeamState] = defaultdict(TeamState)
         self.games_per_season = games_per_season
+        # `team_id -> ESPN abbreviation`, the key the arena table uses. Team
+        # ids are the warehouse's own autoincrement and are not stable across
+        # a rebuild, so they cannot be baked into a geographic reference.
+        #
+        # Optional, and an omission is LOUD rather than silent: with no map
+        # the four geography features are structurally zero, which is exactly
+        # what `zero_variance` reports at build time and what
+        # `dead_feature_blocks` reports if training has them and serving does
+        # not. That is the designed failure mode for this class of bug.
+        self.abbreviations: Dict[int, str] = dict(abbreviations or {})
 
     # ------------------------------------------------------------ build
 
@@ -322,7 +422,10 @@ class FeatureBuilder:
             1.0 if neutral else 0.0,
             1.0 if is_playoff else 0.0,
         ]
-        assert len(vector) == len(FEATURE_NAMES)
+        assert len(vector) == len(FEATURE_NAMES), (
+            f"served vector is {len(vector)} long, FEATURE_NAMES is "
+            f"{len(FEATURE_NAMES)} — the two paths have drifted"
+        )
         return np.asarray(vector, dtype=float)
 
     def _absorb(
@@ -352,10 +455,22 @@ class FeatureBuilder:
             home.possessions.append((home_score + away_score) / 2.2)
             away.possessions.append((home_score + away_score) / 2.2)
 
+        venue = (
+            None
+            if int(game["neutral_site"] or 0)
+            else self.abbreviations.get(int(game["home_team_id"]))
+        )
         for team in (home, away):
             team.last_game = when
             team.game_dates.append(when)
             team.games_this_season += 1
+            # A neutral game leaves `last_venue` untouched rather than
+            # setting it to None: the team is somewhere, and the last place
+            # we know about is a better estimate of it than admitting
+            # nothing. Clearing it would make the NEXT game read as zero
+            # travel, which is a stronger and falser claim.
+            if venue is not None:
+                team.last_venue = venue
 
 
 # ------------------------------------------------------------- guards

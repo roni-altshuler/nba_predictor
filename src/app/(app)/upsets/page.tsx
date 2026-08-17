@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUpsets, type UpsetRow } from '@/lib/history'
+import { getComebacks, getUpsets, type UpsetRow } from '@/lib/history'
 import { gameDate, num, pct, stamp } from '@/lib/format'
 
 export const metadata = { title: 'Upsets' }
@@ -31,6 +31,7 @@ export const dynamic = 'force-static'
  */
 export default function UpsetsPage() {
   const upsets = getUpsets()
+  const comebacks = getComebacks()
 
   if (!upsets) {
     return (
@@ -146,6 +147,57 @@ export default function UpsetsPage() {
           ]}
         />
       </section>
+
+      {comebacks?.comebacks.length ? (
+        <section className="mb-10">
+          <h2 className="mb-1 text-sm">Biggest comebacks</h2>
+          <p className="mb-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">
+            The largest deficit at a quarter break that a team came back from,
+            over all {comebacks.n_games_examined.toLocaleString()} games in the
+            archive — the only board here that owes nothing to the model.
+          </p>
+          <div className="card mb-4 p-4">
+            <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+              <strong className="text-[var(--text-secondary)]">
+                Every figure here is a lower bound.
+              </strong>{' '}
+              The archive holds the score at each quarter break, not at every
+              moment, so a team shown as 30 down at half-time was almost
+              certainly further behind at some point during it. The real
+              number lives in play-by-play; this one is derived entirely from
+              scores the archive actually has, and understates rather than
+              guesses.
+            </p>
+          </div>
+          <BoardTable
+            rows={comebacks.comebacks}
+            columns={[
+              {
+                head: 'Down by',
+                render: (row) => (
+                  <span className="text-[var(--accent-warn)]">
+                    {(row as { deficit?: number }).deficit}
+                  </span>
+                ),
+              },
+              {
+                head: 'At the end of',
+                render: (row) => {
+                  const period = (row as { after_period?: number }).after_period
+                  return period ? `Q${period}` : '—'
+                },
+              },
+              {
+                head: 'OT',
+                render: (row) => {
+                  const ot = (row as { ot?: number }).ot
+                  return ot ? (ot === 1 ? 'OT' : `${ot}OT`) : '—'
+                },
+              },
+            ]}
+          />
+        </section>
+      ) : null}
 
       <Board
         title="Biggest margin misses"

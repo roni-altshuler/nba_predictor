@@ -101,6 +101,15 @@ def load_franchises(warehouse) -> Dict[int, Dict]:
     }
 
 
+def _abbreviations(franchises: Dict[int, Dict]) -> Dict[int, str]:
+    """The id-to-abbreviation map the geography features are keyed on."""
+    return {
+        tid: info["abbreviation"]
+        for tid, info in franchises.items()
+        if info.get("abbreviation")
+    }
+
+
 def walk_forward(rows: Sequence, franchises: Dict[int, Dict]) -> List[Dict]:
     """Retrodict every game with a model that never saw it.
 
@@ -108,7 +117,7 @@ def walk_forward(rows: Sequence, franchises: Dict[int, Dict]) -> List[Dict]:
     each feature row so a record and its result cannot come apart, and the
     model refits on a rolling clock rather than once at a split.
     """
-    builder = FeatureBuilder()
+    builder = FeatureBuilder(abbreviations=_abbreviations(franchises))
     X, margins, totals, meta = builder.build(rows)
     logger.info("built %d feature rows", len(X))
 
@@ -360,7 +369,7 @@ def build_matchups(
         for r in warehouse.iter_games(season_types=SCORED_TYPES)
         if int(r["home_team_id"]) in franchises and int(r["away_team_id"]) in franchises
     ]
-    builder = FeatureBuilder()
+    builder = FeatureBuilder(abbreviations=_abbreviations(franchises))
     X, margins, totals, meta = builder.build(rows)
     model = MarginModel()
     model.fit(X, margins, totals, FEATURE_NAMES,
@@ -753,6 +762,82 @@ def build_upsets(
     }
 
 
+def build_comebacks(seasons: Dict[int, Dict], *, limit: int = 100) -> Dict:
+    """The largest deficits overturned, from quarter scores alone.
+
+    **This is a weaker measure than the one everybody quotes, and saying so
+    is the point.** "Down 30 in the third" is a statement about the largest
+    deficit at any MOMENT, which lives in play-by-play. What the warehouse
+    holds is the score at the end of each quarter, so what can be computed
+    honestly is the largest deficit **at a quarter break** that a team came
+    back from. That is a strict lower bound on the real number: a team down
+    18 at the half was almost certainly down more than 18 at some point in
+    it.
+
+    The bound is what makes the board legitimate rather than approximate. It
+    never overstates, every row is derived from a number the archive
+    actually has, and the page says which quantity it is showing. Publishing
+    a within-quarter figure would mean inventing the in-game path from four
+    checkpoints.
+
+    A deficit is only counted from the END of a quarter, never the start, and
+    the final period is excluded from the measurement for the obvious reason:
+    the score at the end of the fourth is the result.
+    """
+    rows: List[Dict] = []
+
+    for season, payload in seasons.items():
+        for game in payload["games"]:
+            q_home, q_away = game.get("q_home"), game.get("q_away")
+            if not q_home or not q_away:
+                continue
+            home_won = game["home_score"] > game["away_score"]
+
+            running_home = running_away = 0
+            worst = 0
+            worst_period = None
+            # Every quarter break EXCEPT the last: after the final period the
+            # deficit is the result, not something anyone came back from.
+            for period in range(min(len(q_home), len(q_away))):
+                running_home += int(q_home[period] or 0)
+                running_away += int(q_away[period] or 0)
+                if period == min(len(q_home), len(q_away)) - 1:
+                    break
+                deficit = (
+                    running_away - running_home
+                    if home_won
+                    else running_home - running_away
+                )
+                if deficit > worst:
+                    worst = deficit
+                    worst_period = period + 1
+
+            if worst <= 0:
+                continue
+            rows.append({
+                **_upset_entry(game, season, home_won),
+                "deficit": worst,
+                "after_period": worst_period,
+                "ot": game.get("ot", 0),
+            })
+
+    rows.sort(key=lambda g: (-g["deficit"], g["date"]))
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "measure": "largest deficit at a quarter break that was overturned",
+        "note": (
+            "A LOWER BOUND on the real comeback. The archive holds the score "
+            "at each quarter break, not the score at every moment, so a team "
+            "shown as down 18 at half-time was probably down more than 18 at "
+            "some point during it. Nothing here is inferred from a path the "
+            "data does not contain."
+        ),
+        "n_games_examined": sum(len(p["games"]) for p in seasons.values()),
+        "n_comebacks": len(rows),
+        "comebacks": rows[:limit],
+    }
+
+
 def _upset_entry(game: Dict, season: int, home_won: bool) -> Dict:
     """The shared shell of every board row: who, when, and the score."""
     return {
@@ -767,7 +852,12 @@ def _upset_entry(game: Dict, season: int, home_won: bool) -> Dict:
         "away": game["away"],
         "home_score": game["home_score"],
         "away_score": game["away_score"],
-        "p_model": game["p_model"],
+        # `.get`, because the comeback board includes the three warm-up
+        # seasons that carry no forecast at all: a team coming back from 20
+        # down is a fact about the game, not about the model, and excluding
+        # those seasons would silently trim the archive by three years on a
+        # board that has nothing to do with forecasting.
+        "p_model": game.get("p_model"),
         "p_market": game.get("p_market"),
     }
 
@@ -906,6 +996,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     _publish(out_dir / "game_context.json", build_context(rows, franchises))
     _publish(out_dir / "allstar.json", build_allstar(warehouse))
     _publish(out_dir / "upsets.json", build_upsets(scored_games))
+    _publish(out_dir / "comebacks.json", build_comebacks(scored_games))
 
     if not args.skip_matchups:
         _publish(out_dir / "matchups.json", build_matchups(warehouse, franchises))

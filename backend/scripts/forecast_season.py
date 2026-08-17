@@ -109,20 +109,34 @@ def load_franchises(warehouse) -> Dict[int, Dict]:
 
 
 def train_through(
-    warehouse, franchises: Dict[int, Dict]
+    warehouse, franchises: Dict[int, Dict], as_of: Optional[str] = None
 ) -> Tuple[MarginModel, FeatureBuilder, np.ndarray]:
-    """Fit the served model on every game ever played, in order."""
+    """Fit the served model on every game played before `as_of`, in order.
+
+    `as_of` defaults to None, meaning everything — which is what a real
+    publish does. It exists so `rehearse` can stand the pipeline at a date in
+    a completed season and run the ACTUAL publishing code against it, rather
+    than a second implementation that agrees with it today. See that script
+    for why a dress rehearsal is worth the parameter.
+    """
     rows = [
         r
         for r in warehouse.iter_games(season_types=TRAIN_TYPES)
         if int(r["home_team_id"]) in franchises
         and int(r["away_team_id"]) in franchises
+        and (as_of is None or str(r["date_utc"]) < as_of)
     ]
     if len(rows) < 5000:
         raise SystemExit(
             f"refusing to forecast from {len(rows)} games — run build_warehouse"
         )
-    builder = FeatureBuilder()
+    builder = FeatureBuilder(
+        abbreviations={
+            tid: info["abbreviation"]
+            for tid, info in franchises.items()
+            if info.get("abbreviation")
+        }
+    )
     X, margins, totals, meta = builder.build(rows)
     model = MarginModel()
     model.fit(
@@ -143,7 +157,8 @@ def train_through(
 
 
 def current_standings(
-    warehouse, season: int, franchises: Dict[int, Dict]
+    warehouse, season: int, franchises: Dict[int, Dict],
+    as_of: Optional[str] = None,
 ) -> Dict[int, Tuple[int, int]]:
     """Wins and losses already banked this season.
 
@@ -155,6 +170,8 @@ def current_standings(
     for row in warehouse.iter_games(
         seasons=[season], season_types=(SEASON_TYPE_REGULAR,)
     ):
+        if as_of is not None and str(row["date_utc"]) >= as_of:
+            continue
         phase = (row["phase"] or "").lower()
         if "cup championship" in phase:
             continue
@@ -171,13 +188,32 @@ def current_standings(
 
 
 def remaining_schedule(
-    warehouse, season: int, franchises: Dict[int, Dict]
+    warehouse, season: int, franchises: Dict[int, Dict],
+    as_of: Optional[str] = None,
 ) -> List[Dict]:
-    """Scheduled regular-season games still to be played."""
+    """Games still to be played.
+
+    Normally that means `scheduled_games`. **Under `as_of` it means the
+    RESULTS table instead**, filtered to games that had not happened yet at
+    that moment — because in a completed season every fixture has long since
+    moved out of `scheduled_games` and into `games`. That substitution is the
+    whole trick that lets a rehearsal replay a real season, and it is also
+    the one place where a bug would silently hand the model the answers, so
+    the result columns are dropped rather than carried through: what comes
+    back here is a fixture, with no score attached, exactly as the live path
+    sees one.
+    """
     out = []
-    for row in warehouse.iter_scheduled(
-        seasons=[season], season_types=(SEASON_TYPE_REGULAR,)
-    ):
+    source = (
+        warehouse.iter_games(seasons=[season], season_types=(SEASON_TYPE_REGULAR,))
+        if as_of is not None
+        else warehouse.iter_scheduled(
+            seasons=[season], season_types=(SEASON_TYPE_REGULAR,)
+        )
+    )
+    for row in source:
+        if as_of is not None and str(row["date_utc"]) < as_of:
+            continue
         home, away = int(row["home_team_id"]), int(row["away_team_id"])
         if home not in franchises or away not in franchises:
             continue

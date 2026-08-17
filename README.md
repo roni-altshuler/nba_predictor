@@ -12,6 +12,7 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 4. **Playoff bracket** — the projected postseason, with every first-round series priced by exact enumeration
 5. **The title race** — each conference's contenders as a line that moves as the season is played
 6. **A live record** — what was published before each tip-off, scored separately from the backtest and never merged with it
+7. **In-game win probability** — a second forecaster, scored against ESPN's own curve rather than against the market
 
 The schedule is a **calendar, one NBA week at a time**, and every game opens
 a match detail page: the last six meetings, both sides' recent form, who is
@@ -23,9 +24,9 @@ on the bracket.
 Plus **All-Star weekend**: 31 games over 23 seasons, through every format the
 league has tried. Nothing there is forecast, and the page says why.
 
-Plus **`/upsets`**: twenty-three seasons ranked by how wrong somebody was —
-the lowest probability given to a team that won, the widest disagreements with
-the closing line, and the largest margin misses.
+Plus **`/upsets`**: twenty-three seasons ranked four ways — the lowest
+probability given to a team that won, the widest disagreements with the
+closing line, the largest comebacks, and the largest margin misses.
 
 Plus a **23-season archive**: final standings, every game with quarters, the
 team and player box scores, the playoff bracket, the title race replayed at
@@ -60,6 +61,17 @@ The market wins, significantly (95% CI [+.00573, +.00849]). **That is the intend
 
 The playoff-series layer does **not** significantly beat "the higher seed advances" on 300 series, and the site says so.
 
+**Travel, altitude and time-zone shift were built, measured and not shipped.** The altitude effect is real — model residuals are highest at exactly the two arenas above a kilometre, Utah +1.22 points (z = 2.78) and Denver +1.14 (z = 2.71), the top two of thirty — and far too small to move a binary Brier. `ablate_features` puts the whole block inside the noise floor, and a constant feature is not free.
+
+**In-game win probability** is a second forecaster, fitted on 2025 and scored on 2026:
+
+| forecaster | Brier | accuracy |
+|---|---|---|
+| ESPN's own curve | **.1589** | .7569 |
+| This model | .1816 | .7060 |
+
+ESPN wins by .0227 on 250 matched games, and unlike the closing line that is *not* the wanted result — it reads possession and fouls, this reads the clock and the score. Against the two baselines over the full test season it scores .1665, against .2470 for the home base rate and .2071 for the pre-game forecast held flat. Watching the game beats not watching it.
+
 The expected margin and total are scored too, against the spread and the posted total:
 
 | | model MAE | market MAE | gap |
@@ -85,6 +97,11 @@ python3 -m backend.scripts.forecast_season --sims 20000
 python3 -m backend.scripts.build_history
 python3 -m backend.scripts.title_race --track
 python3 -m backend.scripts.score_live
+python3 -m backend.scripts.track_injuries
+
+# Before a season starts, and after any change to the publishing path
+python3 -m backend.scripts.rehearse
+python3 -m backend.scripts.ablate_features
 
 # Frontend
 npm install
@@ -106,10 +123,10 @@ backend/
     playoffs/     best-of-seven enumeration, historical and projected brackets
     forecast/     model versioning
   scripts/        ingest, benchmark, tune, publish, title-race tracking
-  tests/          224 tests
+  tests/          275 tests
   main.py         FastAPI
 src/
-  app/            Next.js App Router — 17 routes, 5 API routes
+  app/            Next.js App Router — 17 routes, 5 API routes, per-game social cards
   components/     shell, forecast cards, charts, brackets, evidence panel
   lib/            artifact readers, bracket geometry, ESPN box scores, formatters
 ```
@@ -124,8 +141,8 @@ src/
 ## Testing
 
 ```bash
-python3 -m pytest backend/tests/   # 224 tests
-npm test                            # 94 tests
+python3 -m pytest backend/tests/   # 275 tests
+npm test                            # 102 tests
 npx next lint && npm run typecheck
 ```
 

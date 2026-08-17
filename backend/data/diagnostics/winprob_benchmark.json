@@ -1,0 +1,194 @@
+{
+  "generated_at": "2026-08-17T16:59:04+00:00",
+  "train_seasons": [
+    2025
+  ],
+  "test_seasons": [
+    2026
+  ],
+  "n_train_states": 432635,
+  "n_test_states": 438822,
+  "n_test_games": 1326,
+  "coefficients": {
+    "regulation": {
+      "intercept": 0.039328,
+      "lead_over_sqrt_f": 0.093074,
+      "lead": -0.00797,
+      "fraction_left": 0.14075
+    },
+    "overtime": {
+      "intercept": 0.135637,
+      "lead_over_sqrt_f": 0.040032,
+      "lead": 0.399874
+    },
+    "n_regulation": 430747,
+    "n_overtime": 1888,
+    "seasons": [
+      2025
+    ],
+    "features": [
+      "intercept",
+      "lead_over_sqrt_f",
+      "lead",
+      "fraction_left"
+    ]
+  },
+  "note": "Split by whole SEASON. Splitting states at random would put the third quarter of a game in training and its fourth in test \u2014 same game, same result, a direct leak.",
+  "ladder": {
+    "live_model": {
+      "n": 438822,
+      "brier": 0.166527830194044,
+      "log_loss": 0.4893857779458193,
+      "accuracy": 0.7382287123252709,
+      "ece": 0.013683917325604353,
+      "mean_predicted": 0.5423303225906381,
+      "base_rate": 0.5554484506246269
+    },
+    "home_base_rate": {
+      "n": 438822,
+      "brier": 0.24704230823650594,
+      "log_loss": 0.6872213332067333,
+      "accuracy": 0.5554484506246269,
+      "ece": 0.010809205074285289,
+      "mean_predicted": 0.5446392455503416,
+      "base_rate": 0.5554484506246269
+    }
+  },
+  "vs_pregame": {
+    "n_states": 438426,
+    "n_games": 1322,
+    "note": "The pre-game forecast held flat for the whole game, against the live model on exactly the same states. This is the baseline that asks whether watching the game beats not watching it.",
+    "live_model": {
+      "n": 438426,
+      "brier": 0.16652077162031242,
+      "log_loss": 0.489348697880153,
+      "accuracy": 0.7381610579664527,
+      "ece": 0.013464069349626163,
+      "mean_predicted": 0.5423795183676288,
+      "base_rate": 0.5552772873871531
+    },
+    "pregame_held_flat": {
+      "n": 438426,
+      "brier": 0.20706547099224898,
+      "log_loss": 0.6013345478571293,
+      "accuracy": 0.6809495787202401,
+      "ece": 0.028752085483049538,
+      "mean_predicted": 0.5523146517087075,
+      "base_rate": 0.5552772873871531
+    }
+  },
+  "by_time": {
+    "live_model": [
+      {
+        "bucket": "Q1",
+        "n": 109316,
+        "brier": 0.2315348235035242,
+        "accuracy": 0.612051300815983,
+        "ece": 0.013096280313417091
+      },
+      {
+        "bucket": "Q2",
+        "n": 110640,
+        "brier": 0.19415206392543335,
+        "accuracy": 0.6952548806941432,
+        "ece": 0.01666709810007039
+      },
+      {
+        "bucket": "Q3",
+        "n": 109792,
+        "brier": 0.14992288477771318,
+        "accuracy": 0.776559312153891,
+        "ece": 0.020350198967485893
+      },
+      {
+        "bucket": "Q4",
+        "n": 96591,
+        "brier": 0.09281069575897301,
+        "accuracy": 0.8658777732915075,
+        "ece": 0.015618238037451609
+      },
+      {
+        "bucket": "last 2 min",
+        "n": 10561,
+        "brier": 0.047540033968077273,
+        "accuracy": 0.9308777577880882,
+        "ece": 0.013681954853969707
+      },
+      {
+        "bucket": "overtime",
+        "n": 1922,
+        "brier": 0.18602955477815628,
+        "accuracy": 0.7252861602497399,
+        "ece": 0.058999158455052186
+      }
+    ],
+    "home_base_rate": [
+      {
+        "bucket": "Q1",
+        "n": 109316,
+        "brier": 0.24690298134942779,
+        "accuracy": 0.5570090380182224,
+        "ece": 0.012369792463820084
+      },
+      {
+        "bucket": "Q2",
+        "n": 110640,
+        "brier": 0.24713011535765983,
+        "accuracy": 0.5544649313087491,
+        "ece": 0.009825685754327296
+      },
+      {
+        "bucket": "Q3",
+        "n": 109792,
+        "brier": 0.2471649297881283,
+        "accuracy": 0.5540749781404838,
+        "ece": 0.009435732586074441
+      },
+      {
+        "bucket": "Q4",
+        "n": 96591,
+        "brier": 0.2470768040892238,
+        "accuracy": 0.555062065823938,
+        "ece": 0.010422820269749722
+      },
+      {
+        "bucket": "last 2 min",
+        "n": 10561,
+        "brier": 0.24641751170056503,
+        "accuracy": 0.5624467379982956,
+        "ece": 0.017807492444976702
+      },
+      {
+        "bucket": "overtime",
+        "n": 1922,
+        "brier": 0.24460698061715963,
+        "accuracy": 0.5827263267429761,
+        "ece": 0.03808708118956616
+      }
+    ]
+  },
+  "vs_espn": {
+    "n_games": 250,
+    "n_states": 84362,
+    "matching": "by fraction through each sequence, not by play index",
+    "live_model": {
+      "n": 84362,
+      "brier": 0.18159174908923795,
+      "log_loss": 0.5257584955748759,
+      "accuracy": 0.705969512339679,
+      "ece": 0.03637440225654559,
+      "mean_predicted": 0.5433690988069766,
+      "base_rate": 0.5637135203053507
+    },
+    "espn": {
+      "n": 84362,
+      "brier": 0.15888945636661872,
+      "log_loss": 0.47231636792085757,
+      "accuracy": 0.7569106943884687,
+      "ece": 0.02954223465540186,
+      "mean_predicted": 0.5496837201583835,
+      "base_rate": 0.5637135203053507
+    },
+    "gap_to_espn": 0.0227
+  }
+}

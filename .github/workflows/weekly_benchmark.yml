@@ -17,6 +17,8 @@ concurrency:
 
 permissions:
   contents: write
+  # The failure step opens or comments on an issue.
+  issues: write
 
 jobs:
   benchmark:
@@ -77,4 +79,32 @@ jobs:
             git commit -m "chore: refresh benchmarks [automated]"
             git pull --rebase --autostash origin main || true
             git push
+          fi
+
+      - name: Open an issue if this run failed
+        # **The live record depends on this job running before each tip-off.**
+        # A forecast that was never published cannot be scored as one later,
+        # and neither can an injury observation that was never taken — both
+        # are permanently lost, not merely late. Until now a failure here was
+        # silent: the site kept serving yesterday's artifacts and looked
+        # entirely correct.
+        #
+        # One open issue at a time, reused rather than reopened, so a week of
+        # failures is one thread instead of seven notifications nobody reads.
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          TITLE="Weekly benchmark failed"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" \
+            --json number --jq '.[0].number' || true)
+          BODY="Run failed: $RUN_URL
+
+          The measured numbers on /accuracy are now older than they claim to be. Nothing is lost permanently — this job is a recomputation — but the site is quoting a stale benchmark until it runs."
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label automated || \
+              gh issue create --title "$TITLE" --body "$BODY"
           fi

@@ -31,6 +31,8 @@ concurrency:
 
 permissions:
   contents: write
+  # The failure step opens or comments on an issue.
+  issues: write
 
 jobs:
   forecast:
@@ -110,6 +112,13 @@ jobs:
         # doubling it, and it must run AFTER the forecast it reads.
         run: python -m backend.scripts.title_race --track
 
+      - name: Record today's injury report
+        # ESPN keeps NO injury history, so this is the only record of it that
+        # will ever exist. It exits 0 on an ESPN failure by design — a thin
+        # day in the log must not stop the forecast — and writes nothing at
+        # all rather than inventing an observation.
+        run: python -m backend.scripts.track_injuries
+
       - name: Refresh the current season's archive
         # Only the season in progress. Past seasons never change — rewriting
         # all 23 files daily would put 14MB of identical JSON through git
@@ -148,3 +157,31 @@ jobs:
             gh release create warehouse-latest --title 'Warehouse (latest)' \
               --notes 'Derived NBA game warehouse. Rebuilt daily.'
           gh release upload warehouse-latest /tmp/warehouse.sqlite.gz --clobber
+
+      - name: Open an issue if this run failed
+        # **The live record depends on this job running before each tip-off.**
+        # A forecast that was never published cannot be scored as one later,
+        # and neither can an injury observation that was never taken — both
+        # are permanently lost, not merely late. Until now a failure here was
+        # silent: the site kept serving yesterday's artifacts and looked
+        # entirely correct.
+        #
+        # One open issue at a time, reused rather than reopened, so a week of
+        # failures is one thread instead of seven notifications nobody reads.
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          TITLE="Daily forecast failed"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" \
+            --json number --jq '.[0].number' || true)
+          BODY="Run failed: $RUN_URL
+
+          The forecast, the live-record stamp and the injury observation for today may all be missing. The first two cannot be backfilled: a forecast not published before tip-off can never be scored as a live one, and ESPN keeps no injury history."
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label automated || \
+              gh issue create --title "$TITLE" --body "$BODY"
+          fi

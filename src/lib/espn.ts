@@ -393,15 +393,23 @@ export async function getEspnInjuries(
 }
 
 /**
- * "Left foot fracture" from ESPN's four separate fields.
+ * "Left foot fracture" from ESPN's separate fields.
  *
- * Returns null rather than an empty string when nothing is known, so the
- * caller renders nothing instead of a stray separator.
+ * ESPN fills unknown parts with the literal "Not Specified", which
+ * concatenates into "Right achilles not specified" — worse than saying
+ * nothing, because it reads as a diagnosis. Those tokens are dropped, and
+ * null comes back when nothing informative survives, so the caller renders
+ * no detail rather than a stray separator.
  */
+const UNINFORMATIVE = new Set(['', 'not specified', 'unspecified', 'n/a', 'none'])
+
 function describeInjury(details: any): string | null {
   if (!details) return null
   const parts = [details.side, details.type, details.detail]
-    .filter((part) => typeof part === 'string' && part.trim())
+    .filter(
+      (part) =>
+        typeof part === 'string' && !UNINFORMATIVE.has(part.trim().toLowerCase()),
+    )
     .map((part: string) => part.trim())
   if (!parts.length) return null
   // Side and body part read as proper nouns from ESPN ("Left", "Foot"); only

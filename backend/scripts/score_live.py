@@ -405,24 +405,29 @@ def _clv_summary(records: Sequence[Dict]) -> Dict:
 
     def block(rows: Sequence[Dict]) -> Dict:
         if not rows:
-            return {"n": 0}
+            return {"n": 0, "verdict": "insufficient"}
         values = [row["clv"] for row in rows]
         n = len(values)
         wins = sum(1 for row in rows if row["won"])
+        interval = _bootstrap_mean(values)
         return {
             "n": n,
             "mean_clv": round(sum(values) / n, 5),
             "median_clv": round(_median(values) or 0.0, 5),
+            "ci_low": interval[0],
+            "ci_high": interval[1],
             "beat_close_rate": round(
                 sum(1 for row in rows if row["beat_close"]) / n, 4
             ),
             "record": f"{wins}-{n - wins}",
             "roi": round(sum(row["profit"] for row in rows) / n, 5),
+            "verdict": _clv_verdict(n, interval),
         }
 
     return {
         "flagged": block(flagged),
         "all_priced": block(priced),
+        "min_n": CLV_MIN_N,
         "note": (
             "CLV, not profit, is the headline. At this sample size realised "
             "return is dominated by variance and says close to nothing about "
@@ -431,6 +436,56 @@ def _clv_summary(records: Sequence[Dict]) -> Dict:
             "not be read as a result."
         ),
     }
+
+
+# Below this the value surface is not being graded, in either direction.
+# CLV converges far faster than realised profit but it is still a mean of a
+# noisy quantity, and a hundred calls is where the interval starts to be
+# narrower than the effect anyone would act on.
+CLV_MIN_N = 100
+
+
+def _clv_verdict(n: int, interval: Tuple[Optional[float], Optional[float]]) -> str:
+    """Whether the value surface has earned the right to keep flagging.
+
+    **This is the one number on the site that grades the site.** Every other
+    measurement asks whether a forecast was accurate; this asks whether the
+    edges it published were real enough to have been worth acting on, and it
+    is allowed to come back negative.
+
+    `negative_stop_flagging` is a genuine verdict, not a decoration: if the
+    interval on mean CLV sits entirely below zero over a hundred flagged
+    calls, the market moved AWAY from us on the games we claimed an edge, and
+    `MIN_EDGE` is not protecting anybody. The page says so in those words
+    rather than continuing to publish flags beside a quiet failure.
+    """
+    low, high = interval
+    if n < CLV_MIN_N or low is None or high is None:
+        return "insufficient"
+    if high < 0:
+        return "negative_stop_flagging"
+    if low > 0:
+        return "positive"
+    return "indistinguishable"
+
+
+def _bootstrap_mean(
+    values: Sequence[float], *, iterations: int = 4000, seed: int = 23
+) -> Tuple[Optional[float], Optional[float]]:
+    """A 95% interval on the mean, resampled. Fixed seed, so it does not
+    wander when nothing about the data did."""
+    if len(values) < 2:
+        return (None, None)
+    rng = random.Random(seed)
+    n = len(values)
+    means = sorted(
+        sum(values[rng.randrange(n)] for _ in range(n)) / n
+        for _ in range(iterations)
+    )
+    return (
+        round(means[int(0.025 * iterations)], 5),
+        round(means[int(0.975 * iterations) - 1], 5),
+    )
 
 
 def _market_probability(record: Dict, method: str) -> Optional[float]:

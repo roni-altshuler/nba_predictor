@@ -5,6 +5,7 @@ import {
   getLiveRecord,
   getMarketBenchmark,
   getSeriesModel,
+  type ClvBlock,
   type CoverageRow,
   type LiveRecord,
 } from '@/lib/artifacts'
@@ -348,11 +349,87 @@ function LiveSection({ live }: { live: LiveRecord | null }) {
                 bets won takes years, and at this sample size it is variance
                 with a number attached.
               </p>
+              <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+                <ClvVerdict block={flagged} minimum={live.clv?.min_n} />
+              </p>
             </div>
           ) : null}
         </>
       )}
     </section>
+  )
+}
+
+/**
+ * Whether the value surface has earned the right to keep flagging edges.
+ *
+ * **This is the only measurement on the site that grades the site.**
+ * Everything else asks whether a forecast was accurate; this asks whether
+ * the edges published beside those forecasts were worth acting on, and it is
+ * allowed to come back negative and say so in plain words.
+ *
+ * The verdict is computed in `score_live` and printed here. The frontend
+ * does not decide what is significant.
+ */
+function ClvVerdict({
+  block,
+  minimum,
+}: {
+  block?: ClvBlock & { verdict?: string; ci_low?: number; ci_high?: number }
+  minimum?: number
+}) {
+  if (!block?.n) return null
+  const interval =
+    block.ci_low !== undefined && block.ci_high !== undefined ? (
+      <>
+        {' '}
+        95% CI [{num(block.ci_low, 4)}, {num(block.ci_high, 4)}].
+      </>
+    ) : null
+
+  if (block.verdict === 'negative_stop_flagging') {
+    return (
+      <>
+        <strong className="text-[var(--accent-warn)]">
+          The flagged edges are not real.
+        </strong>{' '}
+        Mean CLV is negative and the interval excludes zero{interval} The
+        market moved away from us on the games where we claimed an edge, which
+        is what a value surface looks like when it is not working.{' '}
+        <code className="font-numeric">MIN_EDGE</code> is not protecting
+        anyone at its current level and should be raised or the flags
+        withdrawn.
+      </>
+    )
+  }
+  if (block.verdict === 'positive') {
+    return (
+      <>
+        Mean CLV is positive and the interval excludes zero{interval} The
+        price moved toward the flagged side more often than not. That is the
+        weakest claim worth making here and it is the only one this sample
+        supports — it is evidence the edges were real, not evidence they were
+        profitable.
+      </>
+    )
+  }
+  if (block.verdict === 'indistinguishable') {
+    return (
+      <>
+        Mean CLV is indistinguishable from zero{interval} The flags are
+        neither earning nor losing against the close.
+      </>
+    )
+  }
+  return (
+    <>
+      <strong className="text-[var(--text-secondary)]">
+        Not enough flagged calls to grade the value surface.
+      </strong>{' '}
+      {block.n} of the {minimum ?? 100} needed. Until then the edges below are
+      published without evidence that they are worth acting on, which is
+      stated here rather than left to be assumed.
+    </>
   )
 }
 

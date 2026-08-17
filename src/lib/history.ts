@@ -431,6 +431,35 @@ export interface Upsets {
   margin_misses: UpsetRow[]
 }
 
+export interface Comeback extends UpsetRow {
+  /** Points down at a quarter break, before winning. A LOWER bound. */
+  deficit: number
+  /** Which quarter break the worst deficit was measured at. */
+  after_period: number
+  ot: number
+}
+
+export interface Comebacks {
+  generated_at: string
+  measure: string
+  note: string
+  n_games_examined: number
+  n_comebacks: number
+  comebacks: Comeback[]
+}
+
+/**
+ * The largest overturned deficits, measured at quarter breaks.
+ *
+ * **A lower bound, and the page says so.** The archive holds the score at
+ * each quarter break, not at every moment, so a team shown as down 30 at
+ * half-time was down more than that at some point. Publishing the real
+ * figure would mean inventing an in-game path from four checkpoints.
+ */
+export function getComebacks(): Comebacks | null {
+  return readJson<Comebacks>('comebacks.json')
+}
+
 /**
  * The three leaderboards over every retrodicted game in the archive.
  *

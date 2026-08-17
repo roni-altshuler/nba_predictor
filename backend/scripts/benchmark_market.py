@@ -70,6 +70,23 @@ DIAGNOSTICS = ROOT / "backend" / "data" / "diagnostics"
 SCORED_TYPES = (SEASON_TYPE_REGULAR, SEASON_TYPE_POSTSEASON, SEASON_TYPE_PLAY_IN)
 
 
+def team_abbreviations(warehouse=None) -> Dict[int, str]:
+    """`team_id -> ESPN abbreviation`, the key the arena table uses.
+
+    Loaded here rather than derived inside the feature builder because team
+    ids are the warehouse's own autoincrement and mean nothing outside it.
+    Without this the four geography features are structurally zero and
+    `zero_variance` says so at the top of every run.
+    """
+    warehouse = warehouse or get_warehouse()
+    return {
+        int(r["team_id"]): r["abbreviation"]
+        for r in warehouse.conn.execute(
+            "SELECT team_id, abbreviation FROM teams WHERE abbreviation IS NOT NULL"
+        )
+    }
+
+
 def load_corpus(from_season: int, to_season: Optional[int] = None):
     warehouse = get_warehouse()
     seasons = None
@@ -111,13 +128,30 @@ def walk_forward(
     train_seasons: int,
     refit_months: int,
     ridge: float,
+    abbreviations: Optional[Dict[int, str]] = None,
+    drop: Sequence[str] = (),
 ) -> Tuple[List[Dict], Dict]:
     """Rolling-origin evaluation over the corpus.
 
     Returns per-game records and a summary of what was and was not scored.
+
+    `drop` removes named features from the matrix before any fitting, which
+    is how `ablate_features` asks whether a feature earns its place. Columns
+    are genuinely removed rather than zeroed: a zeroed column still consumes
+    a coefficient and still shifts the ridge penalty, so "zero it out" and
+    "never had it" are not the same experiment.
     """
-    builder = FeatureBuilder()
+    builder = FeatureBuilder(abbreviations=abbreviations)
     X, margins, totals, meta = builder.build(rows)
+    names: Tuple[str, ...] = FEATURE_NAMES
+    if drop:
+        unknown = sorted(set(drop) - set(FEATURE_NAMES))
+        if unknown:
+            raise SystemExit(f"cannot drop unknown features: {unknown}")
+        keep = [i for i, n in enumerate(FEATURE_NAMES) if n not in set(drop)]
+        X = X[:, keep]
+        names = tuple(FEATURE_NAMES[i] for i in keep)
+        logger.info("dropped %d features: %s", len(drop), ", ".join(sorted(drop)))
     logger.info("built %d feature rows x %d features", len(X), X.shape[1])
 
     constant = zero_variance(X)
@@ -158,7 +192,7 @@ def walk_forward(
                 X[train_mask],
                 margins[train_mask],
                 totals[train_mask],
-                FEATURE_NAMES,
+                names,
                 ridge=ridge,
                 trained_through=dates[i],
             )
@@ -518,6 +552,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         train_seasons=args.train_seasons,
         refit_months=args.refit_months,
         ridge=args.ridge,
+        abbreviations=team_abbreviations(),
     )
     if not records:
         logger.error("nothing scored — widen the window")

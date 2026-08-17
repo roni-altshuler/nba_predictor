@@ -285,9 +285,18 @@ export interface ClvBlock {
   n: number
   mean_clv?: number
   median_clv?: number
+  /** Bootstrapped 95% interval on mean CLV. */
+  ci_low?: number
+  ci_high?: number
   beat_close_rate?: number
   record?: string
   roi?: number
+  /**
+   * `insufficient` | `positive` | `indistinguishable` |
+   * `negative_stop_flagging`. Decided in `score_live`, printed by the page —
+   * the frontend does not judge significance.
+   */
+  verdict?: string
 }
 
 export interface LiveRecord {
@@ -318,7 +327,12 @@ export interface LiveRecord {
     verdict: string
     reason?: string
   }
-  clv: { flagged: ClvBlock; all_priced: ClvBlock; note: string }
+  clv: {
+    flagged: ClvBlock
+    all_priced: ClvBlock
+    min_n?: number
+    note: string
+  }
   games: Array<{
     game_id: string
     tipoff_utc: string

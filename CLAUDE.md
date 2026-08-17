@@ -427,6 +427,110 @@ Warm-up seasons carry no forecast and appear on no board. A missing
 `p_model` treated as zero would make every warm-up game the biggest upset in
 history.
 
+## Measured and NOT shipped: travel, altitude, time zone
+
+`teams.venue_lat`, `venue_lon` and `venue_altitude_m` had been in the schema
+and NULL for all thirty franchises since the day it was written. They are
+populated now — from `services/data/arenas.py`, a reference table, because
+ESPN publishes a venue name and a city and no coordinates.
+
+Four features were built on them and **measured out of the served vector**.
+`ablate_features` over the same 25,749-game walk-forward:
+
+| block | Brier | delta | verdict |
+|---|---|---|---|
+| rest | .211040 | **+.000421** | earns its place |
+| form | .210677 | +.000057 | no measurable effect |
+| timezone | .210642 | +.000022 | no measurable effect |
+| elo_levels | .210641 | +.000021 | no measurable effect |
+| altitude | .210620 | ±.000000 | no measurable effect |
+| pace | .210620 | ±.000000 | no measurable effect |
+| travel | .210576 | −.000044 | slightly better without it |
+
+Delta is *ablated minus full*, so positive means removing it hurt. The noise
+floor is about ±.0004 at this n.
+
+**The altitude effect is real and too small to matter, which are different
+claims and both are true.** Residuals from the published model are highest at
+exactly the two arenas above a kilometre — Utah +1.22 points against the
+league mean (z = 2.78) and Denver +1.14 (z = 2.71), the top two of thirty.
+But 1.2 points of margin is about two points of win probability, at the 7% of
+games played in those two buildings, which lands in the fifth decimal of a
+binary Brier. Elo has already absorbed most of it besides: a team that wins
+more at home carries a higher rating.
+
+**The uncomfortable half of that table is that almost nothing else earns its
+place either.** Rest is the only block above the noise floor; form spends
+seven features for +.00006. That is a finding about the whole feature set and
+it is recorded rather than acted on — "no evidence of help" is not "evidence
+of harm", and dropping seven live features on one ablation would be exactly
+the unmeasured change this table exists to prevent.
+
+## The rehearsal found the rest features are dead at serve time
+
+`rehearse` stands the real publishing code at seven points in a completed
+season and checks 15 invariants at each. All 105 pass — and the run surfaced
+something no unit test could:
+
+**`home_b2b`, `away_b2b` and the rest block are constant in the served
+vector for every game except the imminent ones.** `vector_for` computes rest
+from `TeamState.last_game`, which is the last game a team actually PLAYED. For
+a fixture three weeks out that gap is enormous, rest clips to `MAX_REST_DAYS`
+for both sides, and every back-to-back flag reads 0.
+
+So the one feature block the ablation says earns its place is **not being
+served** for most of the season's forecasts. `dead_feature_blocks` has been
+reporting it correctly on every run; it was read as the known preseason case
+(nobody has played, so of course rest is constant) and it is not only that.
+
+The fix is that the serving path must compute rest from the SCHEDULE rather
+than from results, which means `vector_for` needs to know the fixture list.
+Not done here. It is the highest-value known improvement in the repo, it is
+measured, and it should be taken as a piece of work on its own.
+
+## In-game win probability
+
+A second forecaster, and the first one here whose baseline is not the market.
+Fitted on 2025, scored on 2026, split by whole season — splitting states at
+random would put a game's third quarter in training and its fourth in test.
+
+    logit P(home) = b0 + b1·(lead/√f) + b2·lead + b3·f
+
+`f` is the fraction of regulation left. `lead/√f` is a **standardised lead**:
+the same diffusion the pre-game model already assumes, since a margin that is
+normal at full time is normal at any fraction of it with sd scaling as √f.
+This is not an analogy to `margin_sd`; it is the same object at `f = 1`.
+
+Overtime is fitted separately. Clamping `f` to a small positive number would
+tell the model that a two-point lead in overtime is as decisive as a
+two-point lead with four seconds left in regulation.
+
+| forecaster | Brier | accuracy | ECE |
+|---|---|---|---|
+| ESPN's own curve | **.1589** | .7569 | .0295 |
+| This model | .1816 | .7060 | .0364 |
+
+on 250 matched test games. **ESPN wins by .0227**, and unlike the closing
+line that is not the wanted result — ESPN reads possession, fouls and
+timeouts, and this reads the clock and the score. It is a gap worth closing
+rather than a gap that should exist.
+
+Against the two baselines on the full test season (1,326 games, 438,822
+states): the live model scores .1665, the home base rate .2470, and the
+pre-game forecast held flat for the whole game .2071. **Watching the game
+beats not watching it**, which is the only claim this layer has actually
+earned so far.
+
+Brier by period: Q1 .2315, Q2 .1942, Q3 .1499, Q4 .0928, last two minutes
+.0475. A pooled number hides all of that — almost every state in a game is in
+the easy middle.
+
+**Matching to ESPN is approximate and says so.** ESPN publishes one row per
+play; the ingest stores one row per distinct (clock, score) state, having
+deduplicated the rebound that shares a timestamp with the shot before it. The
+two sequences are matched on fraction-through, not by index — an index join
+would compare our 200th state to ESPN's 240th play and look perfectly fine.
+
 ## Architecture
 
 ### Backend (`backend/`)
@@ -468,6 +572,11 @@ Design language is **Bugatti**, ported from the sibling projects: pure black `#0
 | Playoff series backtest | `python3 -m backend.scripts.benchmark_series` |
 | Publish the forecast | `python3 -m backend.scripts.forecast_season --sims 20000` |
 | **Score the live record** | `python3 -m backend.scripts.score_live` |
+| **Record today's injuries** | `python3 -m backend.scripts.track_injuries` |
+| **Dress-rehearse the daily job** | `python3 -m backend.scripts.rehearse` |
+| **Does a feature earn its place** | `python3 -m backend.scripts.ablate_features` |
+| Ingest play-by-play states | `python3 -m backend.scripts.build_winprob --seasons 2025-2026` |
+| Score the live win probability | `python3 -m backend.scripts.benchmark_winprob --espn-sample 250` |
 | Export the season archive | `python3 -m backend.scripts.build_history` |
 | Refresh only the current season's file | `python3 -m backend.scripts.build_history --from-season 2027` |
 | Append today's title-race point | `python3 -m backend.scripts.title_race --track` |
