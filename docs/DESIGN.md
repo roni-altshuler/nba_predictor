@@ -196,12 +196,13 @@ ease-out curve, two springs) and the full inventory is:
 - **The chalk game** (`CourtField.tsx`) — a perpetual dim five-on-five on
   one full chalk court: O's in white, X's in amber, the ball in the brand
   orange, possessions flowing end to end with cuts, swings, drives,
-  steals, fast breaks, boards and buckets, framed by a virtual broadcast
-  camera that tracks the ball and pushes in on the action.
+  steals, fast breaks, boards and buckets. The whole court, both rims,
+  is always in frame and centred on every device (portrait rotates it
+  upright); the camera only breathes toward the action.
   Owner-requested (2026-08-25) as the layer's animated half; its
   full rules are §6a. The short version: no digits ever, chalk-dust
-  alphas, drama via camera not ink, ~30fps, `requestAnimationFrame` only
-  while the tab is visible, and a framed still under reduced motion.
+  alphas, the frame never chases the play, ~30fps, `requestAnimationFrame`
+  only while the tab is visible, and a framed still under reduced motion.
 - Hover transitions on border colour at `0.18s` — and hover fires **only on
   things that navigate** (`a.card`, `.card-link`, rows containing links).
   A static card that brightens promises a click it cannot honour.
@@ -224,21 +225,21 @@ from the NFL sibling's `ChalkboardField` and rebuilt as a game at the
 owner's request (2026-08-25): a fixed canvas at z-index −1 drawing one
 full chalk court — both keys, both arcs, half-court line — and on it a
 perpetual dim five-on-five. The O team is white chalk, the X team amber,
-the ball the brand orange. The court lives in world coordinates and a
-**virtual broadcast camera** does the framing (owner: "more dramatic,
-more zoomed in"): it tracks the ball up the floor, pushes in on
-half-court possessions, rides drives to the rim, holds tight on a made
-bucket, and whips back out when possession flips. A possession runs
-five to twelve seconds: advance, spread to the corners/wings/top while
-the defense drops between its marks and the rim, swings (sometimes the
-passer cuts through the lane), a drive with its man in tow — finishing
-at the rim or kicking out for a catch-and-shoot — then the shot: a make
-blooms a soft ring off the rim with the swish flicks, a miss comes off
-the iron and the board turns the game the other way, sometimes at a
-dead run. Passes can be stolen out of the lane; steals and some boards
-ignite fast breaks (sprint speeds, compressed clocks, wide camera). A
-flying ball leaves a fading chalk trail. Rules that keep it a
-background and not a broadcast:
+the ball the brand orange. **The whole court — both rims — is always in
+frame, centred, on every device** (owner-directed): the floor is sized
+to fit the viewport with margin, centred in the region beside the
+desktop sidebar (a viewport-centred court hides its left rim behind the
+opaque nav — measured), and portrait viewports draw it rotated upright
+along the device's long axis. A possession runs five to twelve seconds:
+advance, spread to the corners/wings/top while the defense drops
+between its marks and the rim, swings (sometimes the passer cuts
+through the lane), a drive with its man in tow — finishing at the rim
+or kicking out for a catch-and-shoot — then the shot: a make blooms a
+soft ring off the rim with the swish flicks, a miss comes off the iron
+and the board turns the game the other way, sometimes at a dead run.
+Passes can be stolen out of the lane; steals and some boards ignite
+fast breaks. A flying ball leaves a fading chalk trail. Rules that
+keep it a background and not a broadcast:
 
 - **No digits, ever.** A score in the background is a number, and every
   number on this site is a claim. The bucket itself is the payoff.
@@ -247,11 +248,14 @@ background and not a broadcast:
 - Chalk-dust alphas only (court ≤ 0.30, players ≤ 0.45, ball and pulse
   ≤ 0.60; the ball's flight trail fades from half the ball's alpha). If
   a value wants to be higher than these, the answer is no.
-- **The camera is where the drama lives; the ink never gets louder.**
-  Zoom stays inside roughly 0.94×–1.7× and both position and zoom ease
-  exponentially (pull-out faster than push-in), so every move is a
-  glide, never a cut. Escalating drama means camera work, not brighter
-  or thicker chalk.
+- **The frame never chases the play.** The first cut had a broadcast
+  camera that tracked the ball and pushed in to ~1.7× — the whole
+  background moving is exactly the kind of motion that pulls a reader
+  off the data, and the owner flagged it. The camera is now a breath:
+  zoom ≤ ~1.05×, a lean of a few percent toward the ball, both eased
+  slowly and clamped so the full floor never leaves view. The drama
+  lives in the play (drives, steals, fast breaks, the trail, the
+  swish), never in the framing, and never in brighter or thicker chalk.
 - Slow and cheap: rendering is capped near 30fps, `requestAnimationFrame`
   runs only while the tab is visible, and reduced motion gets a single
   framed mid-possession still that never moves.

@@ -8,15 +8,19 @@ import { useEffect, useRef } from 'react'
  * A fixed canvas at z-index -1 — behind every in-flow element, above the
  * body's walnut. It draws one full chalk court and, on it, a perpetual
  * dim five-on-five: the O team in white chalk, the X team in amber, the
- * ball in the brand orange. Since 2026-08-25 (owner request: "more
- * dramatic, more zoomed in") the court lives in WORLD coordinates and a
- * virtual broadcast camera does the framing: it tracks the ball up the
- * floor, pushes in on half-court possessions, rides a drive all the way
- * to the rim, holds tight on a made bucket, and whips back out wide when
- * a steal or a defensive board sends the other team running. The
- * playbook grew with it — drives and kick-outs, catch-and-shoot swings,
- * passing-lane steals, sprinting fast breaks — so no two possessions
- * read alike.
+ * ball in the brand orange. The playbook is real — drives and kick-outs,
+ * catch-and-shoot swings, passing-lane steals, sprinting fast breaks —
+ * so no two possessions read alike.
+ *
+ * Framing (owner-directed, 2026-08-25): **the whole court, both rims,
+ * always in frame, centred in the viewport, on every device.** The
+ * background must never make a reader look away from the data, so the
+ * broadcast-style tracking camera of the first cut was demoted to a
+ * breath: the virtual camera only leans a few percent toward the ball
+ * (zoom ≤ ~1.05×, eased slowly), clamped so the full floor never leaves
+ * view. Portrait viewports rotate the court upright so it fits the
+ * device appropriately instead of shrinking to a sliver. The drama
+ * lives in the play, not the framing.
  *
  * What keeps it a background and not a broadcast:
  * - **No digits, ever.** A score in the background is a number, and every
@@ -24,9 +28,6 @@ import { useEffect, useRef } from 'react'
  * - Chalk-dust alphas only (court ≤ 0.30, players ≤ 0.45, ball ≤ 0.60 —
  *   the ball's fading flight trail stays under the ball's own cap), and
  *   every surface that carries a number is opaque and paints over it.
- * - The camera is where the drama lives; the ink never gets louder. Zoom
- *   stays inside roughly 0.94×–1.7× and eases exponentially, so motion is
- *   glide, not cut.
  * - Rendering is capped near 30fps; `requestAnimationFrame` only runs
  *   while the tab is visible; reduced motion gets a single framed
  *   mid-possession still and no motion at all.
@@ -192,8 +193,11 @@ export function CourtField() {
       // Court frame in WORLD coordinates, centred on the origin.
       halfW: 0, // half the court length
       halfH: 0, // half the court width
-      // Where the camera's eye lands on the screen — below centre, per
-      // the seated-low lesson: the card stack owns the upper band.
+      // Portrait viewports draw the court rotated 90° so it uses the
+      // device's long axis instead of shrinking to fit the short one.
+      portrait: false,
+      // Where the camera's eye lands on the screen — the centre of the
+      // viewport (owner-directed: the court is centred, whole, always).
       viewCx: 0,
       viewCy: 0,
       cam: { x: 0, y: 0, z: 1, tx: 0, ty: 0, tz: 1 } as Camera,
@@ -213,13 +217,30 @@ export function CourtField() {
       canvas.width = Math.floor(w * state.dpr)
       canvas.height = Math.floor(h * state.dpr)
       ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0)
-      // A big floor: the camera crops it, so the court can exceed the
-      // viewport — a full-court frame at zoom ~1 clips a little at the
-      // sidelines, which is exactly the broadcast feel.
-      state.halfW = Math.min(w * 0.62, 860)
-      state.halfH = Math.min(state.halfW / 1.88, h * 0.24)
-      state.viewCx = w / 2
-      state.viewCy = h * 0.64
+      // The whole floor fits with margin to spare — even at the camera's
+      // maximum lean (~1.05× zoom plus a small offset) both rims stay
+      // inside the viewport. Portrait devices get the court upright.
+      // The desktop sidebar is opaque and fixed, so "centred" means
+      // centred in the region beside it — a viewport-centred court hides
+      // its left rim behind the nav (measured on /accuracy).
+      const sidebarW = window.matchMedia('(min-width: 768px)').matches
+        ? parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              '--shell-sidebar-w',
+            ),
+          ) || 0
+        : 0
+      const availW = w - sidebarW
+      state.portrait = h > w
+      if (state.portrait) {
+        state.halfW = Math.min(h * 0.34, 620)
+        state.halfH = Math.min(state.halfW / 1.88, availW * 0.42)
+      } else {
+        state.halfW = Math.min(availW * 0.44, 620)
+        state.halfH = Math.min(state.halfW / 1.88, h * 0.3)
+      }
+      state.viewCx = sidebarW + availW / 2
+      state.viewCy = h * 0.55
       state.game = buildGame(performance.now())
       snapCamera(state.game)
     }
@@ -566,62 +587,49 @@ export function CourtField() {
       state.cam.z = state.cam.tz
     }
 
-    /** Where the camera wants to be, given what the game is doing. */
+    /**
+     * Where the camera wants to be, given what the game is doing. This
+     * is deliberately a breath, not a broadcast: the lean toward the
+     * ball and the zoom are both clamped so tightly that the whole
+     * court — both rims — never leaves the viewport. The reader must
+     * never be pulled away from the data by the background moving.
+     */
     const updateCameraTargets = (g: Game) => {
-      const d = attackDir(g)
-      const rim: Point = { x: rimX(d), y: 0 }
       const cam = state.cam
-      let tx = g.ball.x
-      let ty = g.ball.y * 0.5
-      let tz = 1.05
+      let tz = 1
       switch (g.phase) {
-        case 'advance':
-          tx = g.ball.x + d * state.halfW * 0.16
-          tz = g.fast ? 0.94 : 1.06
-          break
-        case 'settle':
-          tx = g.ball.x + (rim.x - g.ball.x) * 0.45
-          tz = 1.3
-          break
         case 'possession':
-          tx = g.ball.x + (rim.x - g.ball.x) * 0.4
-          tz = g.fast ? 1.5 : 1.42
+          tz = 1.02
           break
         case 'drive':
-          tx = g.ball.x + (rim.x - g.ball.x) * 0.55
-          tz = 1.56
+          tz = 1.04
           break
-        case 'flight': {
-          const kind = g.flight?.kind
-          if (kind === 'shot') {
-            tx = g.ball.x + (rim.x - g.ball.x) * 0.75
-            tz = 1.6
-          } else if (kind === 'rebound') {
-            tx = rim.x - d * state.halfH * 0.3
-            tz = 1.34
-          } else {
-            tx = g.ball.x + (rim.x - g.ball.x) * 0.4
-            tz = 1.4
-          }
+        case 'flight':
+          tz = g.flight?.kind === 'shot' ? 1.045 : 1.02
           break
-        }
         case 'resolve':
-          tx = rim.x
-          ty = 0
-          tz = 1.66
+          tz = 1.05
           break
+        default:
+          tz = 1
       }
-      cam.tx = Math.max(-state.halfW * 0.82, Math.min(state.halfW * 0.82, tx))
-      cam.ty = Math.max(-state.halfH * 0.7, Math.min(state.halfH * 0.7, ty))
+      cam.tx = Math.max(
+        -state.halfW * 0.05,
+        Math.min(state.halfW * 0.05, g.ball.x * 0.06),
+      )
+      cam.ty = Math.max(
+        -state.halfH * 0.08,
+        Math.min(state.halfH * 0.08, g.ball.y * 0.06),
+      )
       cam.tz = tz
     }
 
-    /** Ease toward the targets — pull out faster than we push in. */
+    /** Ease toward the targets slowly — a breath, never a cut. */
     const stepCamera = (g: Game, dt: number) => {
       updateCameraTargets(g)
       const cam = state.cam
-      const kPos = g.fast ? 3.0 : 2.3
-      const kZoom = cam.tz < cam.z ? 3.2 : 1.7
+      const kPos = 1.0
+      const kZoom = cam.tz < cam.z ? 1.3 : 0.8
       const easeP = 1 - Math.exp(-dt * kPos)
       const easeZ = 1 - Math.exp(-dt * kZoom)
       cam.x += (cam.tx - cam.x) * easeP
@@ -765,6 +773,8 @@ export function CourtField() {
       ctx.save()
       ctx.translate(state.viewCx, state.viewCy)
       ctx.scale(cam.z, cam.z)
+      // Portrait: the court stands upright along the device's long axis.
+      if (state.portrait) ctx.rotate(Math.PI / 2)
       ctx.translate(-cam.x, -cam.y)
       drawCourt()
       drawPlayers(g)
