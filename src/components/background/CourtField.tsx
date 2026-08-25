@@ -30,10 +30,14 @@ import { useEffect, useRef } from 'react'
 const DPR_CAP = 2
 const BASELINE_GAP = 180 // px between the static court baselines
 
-const LINE_ALPHA = 0.07 // static baselines — the static layer stays ≤ 0.09
-const ARC_ALPHA = 0.05 // the tiny centre circles on some of them
-const PLAY_ALPHA = 0.3 // court sketch, O's and X's at peak
-const ROUTE_ALPHA = 0.45 // the one cut, in the accent
+// Arena re-theme (2026-08-25): the owner asked for the theme to be SEEN,
+// so the caps rose with DESIGN.md §6a — static layer now stays ≤ 0.12,
+// play figures ≤ 0.45 at peak. Contrast is untouched: every surface that
+// carries a number is opaque and paints over this canvas.
+const LINE_ALPHA = 0.11 // static baselines
+const ARC_ALPHA = 0.08 // the tiny centre circles on some of them
+const PLAY_ALPHA = 0.42 // court sketch, O's and X's at peak
+const ROUTE_ALPHA = 0.6 // the one cut, in the accent
 
 // Phase lengths, ms. One play runs ~6s and then the board rests.
 const FADE_IN = 600

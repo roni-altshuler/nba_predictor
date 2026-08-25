@@ -5,16 +5,21 @@ spacing, the components, and **the reasoning behind them**. Written in the
 [getdesign.md](https://getdesign.md/) format so an agent picking up a new
 page produces something that belongs here rather than a generic layout.
 
-The visual language is **Bugatti** — ported from the sibling Pitchverse
-(football) and RaceIQ (Formula 1) projects. Pure black canvas, hairline
-structure, monospace numerics, and colour that only ever carries meaning.
+The visual language is **Bugatti, Arena variant** — structure ported from
+the sibling Pitchverse (football) and RaceIQ (Formula 1) projects, material
+this sport's own. On 2026-08-25 the owner directed the canvas away from
+neutral black: the ground is a warm hardwood dark — walnut canvas, plank
+seams, a visible court — an arena at night, not a void. Hairline
+structure, monospace numerics, and colour ON DATA that only ever carries
+meaning are unchanged.
 
 ---
 
 ## 1. The one-sentence brief
 
-> A precision instrument, not a scoreboard: black, quiet, hairline-ruled,
-> where every number is monospaced and every colour means something.
+> A precision instrument on an arena floor: walnut-dark, quiet,
+> hairline-ruled, where every number is monospaced and every colour on
+> data means something.
 
 If a change makes the page louder without making a number clearer, it is
 wrong.
@@ -27,12 +32,12 @@ wrong.
 
 | Token | Value | Used for |
 |---|---|---|
-| `--background` | `#000000` | the page |
-| `--card-bg` | `#0d0d0d` | every card and table surface |
-| `--card-hover` | `#141414` | row and card hover |
-| `--muted-bg` | `#1f1f1f` | bar tracks, inert fills |
-| `--border-color` | `#262626` | **the hairline — this carries all structure** |
-| `--border-hover` | `#3a3a3a` | hover only |
+| `--background` | `#0c0705` | the page — deep walnut, not neutral black |
+| `--card-bg` | `#17100a` | every card and table surface |
+| `--card-hover` | `#211711` | row and card hover |
+| `--muted-bg` | `#2c2015` | bar tracks, inert fills |
+| `--border-color` | `#362718` | **the warm hairline — this carries all structure** |
+| `--border-hover` | `#4d3a25` | hover only |
 
 **Depth comes from hairlines, never from shadow.** `--shadow-*` are all
 `none` and that is deliberate. No gradients, no glassmorphism, no glow.
@@ -41,11 +46,16 @@ wrong.
 
 | Token | Value | Used for |
 |---|---|---|
-| `--text-primary` | `#ffffff` | headings, the number that matters |
-| `--text-secondary` | `#cccccc` | body copy |
-| `--text-tertiary` | `#999999` | captions, labels, absent values |
+| `--text-primary` | `#fdf6ee` | headings, the number that matters |
+| `--text-secondary` | `#d9cec2` | body copy |
+| `--text-tertiary` | `#a2937f` | captions, labels, absent values |
 
-### Accents — four signals, and nothing else
+### Accents — four signals, one brand hue, and nothing else
+
+`--accent-brand` (`#e2682a`, the favicon's basketball orange) is **chrome
+only**: the wordmark, the active-nav rail, the mobile tab underline, the
+focus ring. It never colours a probability, a result, or a chart series —
+the four semantic signals below own the data.
 
 | Token | Value | Means |
 |---|---|---|
@@ -72,8 +82,11 @@ from a link or a caption:
 | `--viz-cat-1..3` | `#5fa657`, `#3987e5`, `#c25ba6` | categorical, for team identity |
 | `--viz-cat-field` | `#57575a` | the aggregated tail, deliberately recessive |
 
-These passed all six checks of the dataviz validator against the `#0d0d0d`
-chart surface. **The first attempt used `--accent-info` for the market
+These passed all six checks of the dataviz validator against the then
+`#0d0d0d` chart surface. The Arena re-theme moved that surface to
+`#17100a` — a warmer hue at near-identical lightness, so the contrast and
+lightness-band conclusions carry; re-run the validator before changing any
+series hex. **The first attempt used `--accent-info` for the market
 series and failed two of them** — L 0.877 is far outside the 0.48–0.67 band
 and chroma 0.043 reads as grey.
 
@@ -177,7 +190,7 @@ ease-out curve, two springs) and the full inventory is:
   of continuous ambient motion, sanctioned 2026-08-25 at the owner's
   request: a faint half-court line drawing plus two ember glows in the
   chart ramp's wood tones, drifting on 52s/68s alternating periods —
-  weather, not animation. Its guardrails: everything in it stays near 7%
+  weather, not animation. Its guardrails: everything in it stays near 16%
   opacity, it animates transform only, it sits at negative z-index with
   pointer-events off (opaque cards paint over it by painting order alone),
   and under `prefers-reduced-motion` it is explicitly `animation: none` —
@@ -218,8 +231,10 @@ not a mood:
 
 - **It never sits under a number.** Cards, tables, and chrome are opaque
   by system rule; the board lives in the page's margins and gaps.
-- Chalk-dust alphas only (static baselines ≤ 0.09, play figures ≤ 0.30 at
-  peak, the route ≤ 0.45). If a value wants to be higher, the answer is no.
+- Chalk-dust alphas only (static baselines ≤ 0.12, play figures ≤ 0.45 at
+  peak, the route ≤ 0.60 — raised with the 2026-08-25 Arena re-theme, when
+  the owner asked for the court to be seen). If a value wants to be higher
+  than these, the answer is no.
 - One play at a time, then rest. `requestAnimationFrame` runs only while
   the board is live — a hidden tab stops it; reduced motion gets a single
   static frame with a finished play and never moves.

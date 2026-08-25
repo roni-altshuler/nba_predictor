@@ -3,31 +3,43 @@
 @tailwind utilities;
 
 /* ────────────────────────────────────────────────────────────
-   Design tokens — Bugatti, dark only.
+   Design tokens — Bugatti, ARENA variant. Dark only.
 
-   Ported from the sibling Pitchverse (soccer) and RaceIQ (F1) projects.
-   Pure black canvas, hairline borders, no gradients, no shadows, no chrome.
-   Colour carries MEANING only — win/loss, value, live state — never
-   decoration.
+   Structure ported from the sibling Pitchverse (soccer) and RaceIQ (F1)
+   projects; the MATERIAL is this sport's own. On 2026-08-25 the owner
+   directed the canvas away from neutral black: the ground is now a warm
+   hardwood dark — deep walnut canvas, wood-toned surfaces, warm hairlines,
+   plank seams and a visible court under everything — an arena at night,
+   not a void. The discipline is unchanged: hairline structure, monospace
+   numerics, no shadows, and colour ON DATA still carries meaning only.
+   `--accent-brand` (basketball orange, the favicon's own hue) is chrome
+   and brand ONLY — wordmark, active nav, focus — never a data signal.
 
    Dark-only by design. `<html class="dark">` is hardcoded and there is no
    theme provider; :root is the single source of truth and `.dark` below is
    intentionally empty so the hardcoded class stays harmless.
    ──────────────────────────────────────────────────────────── */
 :root {
-  --background: #000000;
-  --background-secondary: #0d0d0d;
-  --background-tertiary: #141414;
-  --card-bg: #0d0d0d;
-  --card-hover: #141414;
-  --input-bg: #141414;
-  --muted-bg: #1f1f1f;
-  --nav-bg: #000000;
-  --nav-border: #262626;
+  --background: #0c0705;
+  --background-secondary: #17100a;
+  --background-tertiary: #211711;
+  --card-bg: #17100a;
+  --card-hover: #211711;
+  --input-bg: #211711;
+  --muted-bg: #2c2015;
+  --nav-bg: #0c0705;
+  --nav-border: #362718;
 
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --text-tertiary: #999999;
+  --text-primary: #fdf6ee;
+  --text-secondary: #d9cec2;
+  --text-tertiary: #a2937f;
+
+  /* Brand, not signal: the basketball orange the favicon and PWA manifest
+     already carry. Chrome only — wordmark, active nav, tab underline,
+     focus ring. It must never colour a probability, a result or a chart
+     series; the four semantic accents below own the data. */
+  --accent-brand: #e2682a;
+  --accent-brand-soft: #f08a4f;
 
   /* Four signals, muted. Anything that is not one of these is not carrying
      meaning and should be a hairline or a shade of grey instead. */
@@ -41,8 +53,8 @@
   --accent-info-soft: #d6e5f7;
   --accent-market: var(--accent-info);
 
-  --border-color: #262626;
-  --border-hover: #3a3a3a;
+  --border-color: #362718;
+  --border-hover: #4d3a25;
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
@@ -55,7 +67,7 @@
   --live-text: #d4655e;
 
   --accent-on-primary: #000000;
-  --overlay-bg: rgba(0, 0, 0, 0.72);
+  --overlay-bg: rgba(12, 7, 5, 0.78);
 
   --radius: 0.75rem;
 
@@ -88,8 +100,8 @@
   --viz-model: #5fa657;      /* categorical slot 1 — this model */
   --viz-market: #3987e5;     /* categorical slot 2 — the closing line */
   --viz-reference: #4d4d4d;  /* de-emphasis: baselines, the ideal diagonal */
-  --viz-grid: #1f1f1f;       /* recessive gridlines */
-  --viz-axis: #333333;
+  --viz-grid: #241a12;       /* recessive gridlines, warm */
+  --viz-axis: #3b2c1d;
   --viz-surface: var(--card-bg);
   /* Sequential ramp, one hue, light->dark. For magnitude (seed likelihood,
      schedule density). Never a rainbow. */
@@ -146,11 +158,13 @@
      The ambient hardwood layer (AmbientBackground.tsx) — the sanctioned
      exception to "no gradients", added 2026-08-25 at the owner's request.
      Court lines and two ember glows in the same amber family as the
-     sequential chart ramp above, all capped near 7% opacity so text
-     contrast on the black canvas is unchanged. Cards are opaque and paint
-     over it; it reads only in the gutters, which is the point.
+     sequential chart ramp above. Arena re-theme (owner-directed,
+     2026-08-25) raised the caps from ~7% to ~16% so the court reads as a
+     place rather than a rumour — text contrast is still untouched because
+     every card surface is opaque and paints over this layer; it lives in
+     the canvas and the gutters.
      ──────────────────────────────────────────────────────────── */
-  --court-line: rgba(226, 136, 47, 0.055);
+  --court-line: rgba(226, 136, 47, 0.16);
   --ambient-ember-a: #b96b28;
   --ambient-ember-b: #5a3418;
 }
@@ -213,7 +227,7 @@ nav, button, .caption, th, [role='tab'] {
 ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
 *:focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--accent-brand);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -315,6 +329,20 @@ a.card:hover,
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  /* Plank seams: what makes the warm canvas read as a FLOOR rather than a
+     brown void. Two repeating gradients at co-prime widths so the seams
+     never settle into a visible super-pattern. */
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 158px,
+      rgba(240, 180, 110, 0.05) 158px 159px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 53px,
+      rgba(226, 136, 47, 0.016) 53px 54px
+    );
 }
 .ambient-lines {
   position: absolute;
@@ -327,7 +355,7 @@ a.card:hover,
   width: 75vmax;
   height: 75vmax;
   border-radius: 50%;
-  opacity: 0.07;
+  opacity: 0.14;
 }
 .ambient-glow-a {
   background: radial-gradient(circle, var(--ambient-ember-a) 0%, transparent 62%);

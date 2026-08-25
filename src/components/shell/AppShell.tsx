@@ -112,7 +112,7 @@ export function AppShell({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/favicon.svg" alt="" width={20} height={20} aria-hidden="true" />
-          <span className="ml-2.5 font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]">
+          <span className="ml-2.5 font-numeric text-sm uppercase tracking-[0.22em] text-[var(--accent-brand)]">
             Hardwood
           </span>
         </Link>
@@ -133,7 +133,7 @@ export function AppShell({
                 className={cn(
                   'px-3 py-2.5 text-xs uppercase tracking-[0.12em] transition-colors',
                   isActive(pathname, item.href)
-                    ? 'bg-[var(--card-hover)] text-[var(--text-primary)]'
+                    ? 'border-l-2 border-[var(--accent-brand)] bg-[var(--card-hover)] pl-[10px] text-[var(--text-primary)]'
                     : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]',
                 )}
               >
@@ -149,7 +149,7 @@ export function AppShell({
         <Link href="/" className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/favicon.svg" alt="" width={20} height={20} aria-hidden="true" />
-          <span className="font-numeric text-sm uppercase tracking-[0.22em] text-[var(--text-primary)]">
+          <span className="font-numeric text-sm uppercase tracking-[0.22em] text-[var(--accent-brand)]">
             Hardwood
           </span>
         </Link>
@@ -248,7 +248,7 @@ function TabIndicator({ reduced }: { reduced: boolean }) {
     return (
       <span
         aria-hidden="true"
-        className="absolute left-3 right-3 top-0 h-[2px] bg-[var(--accent-primary)]"
+        className="absolute left-3 right-3 top-0 h-[2px] bg-[var(--accent-brand)]"
       />
     )
   }
@@ -257,7 +257,7 @@ function TabIndicator({ reduced }: { reduced: boolean }) {
       layoutId="bottomnav-active"
       aria-hidden="true"
       transition={{ duration: 0.3, ease: EASE_OUT }}
-      className="absolute left-3 right-3 top-0 h-[2px] bg-[var(--accent-primary)]"
+      className="absolute left-3 right-3 top-0 h-[2px] bg-[var(--accent-brand)]"
     />
   )
 }
@@ -393,7 +393,7 @@ function SeasonsMenu({
       <div
         className={cn(
           'flex items-center transition-colors',
-          inside ? 'bg-[var(--card-hover)]' : '',
+          inside ? 'border-l-2 border-[var(--accent-brand)] bg-[var(--card-hover)]' : '',
         )}
       >
         <Link
@@ -402,7 +402,7 @@ function SeasonsMenu({
           className={cn(
             'flex-1 px-3 py-2.5 text-xs uppercase tracking-[0.12em] transition-colors',
             inside
-              ? 'text-[var(--text-primary)]'
+              ? 'pl-[10px] text-[var(--text-primary)]'
               : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]',
           )}
         >

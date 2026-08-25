@@ -30,7 +30,7 @@ export const contentType = 'image/png'
 
 const INK = '#f5f5f5'
 const MUTED = '#8a8a8a'
-const LINE = '#262626'
+const LINE = '#362718'
 
 export default async function Image({
   params,
@@ -49,7 +49,7 @@ export default async function Image({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#000',
+          background: '#0c0705',
           padding: '64px 72px',
           fontFamily: 'sans-serif',
         }}
