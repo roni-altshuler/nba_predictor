@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import type { ProjectedBracket as BracketArtifact, RoundReach } from '@/lib/artifacts'
 import { pct } from '@/lib/format'
@@ -248,16 +250,30 @@ function SeriesCell({
             name={row.name}
             size={14}
           />
-          <span
-            className={cn(
-              'flex-1 truncate font-numeric text-[11px]',
-              row.lead
-                ? 'text-[var(--text-primary)]'
-                : 'text-[var(--text-secondary)]',
-            )}
-          >
-            {row.abbreviation ?? '—'}
-          </span>
+          {row.abbreviation ? (
+            <Link
+              href={`/teams/${row.abbreviation}`}
+              className={cn(
+                'flex-1 truncate font-numeric text-[11px] hover:underline',
+                row.lead
+                  ? 'text-[var(--text-primary)]'
+                  : 'text-[var(--text-secondary)]',
+              )}
+            >
+              {row.abbreviation}
+            </Link>
+          ) : (
+            <span
+              className={cn(
+                'flex-1 truncate font-numeric text-[11px]',
+                row.lead
+                  ? 'text-[var(--text-primary)]'
+                  : 'text-[var(--text-secondary)]',
+              )}
+            >
+              —
+            </span>
+          )}
           <span
             className={cn(
               'numeric text-[11px]',
@@ -292,9 +308,18 @@ function ReachCell({
             name={team.name}
             size={14}
           />
-          <span className="flex-1 truncate font-numeric text-[11px] text-[var(--text-secondary)]">
-            {team.abbreviation ?? team.name}
-          </span>
+          {team.abbreviation ? (
+            <Link
+              href={`/teams/${team.abbreviation}`}
+              className="flex-1 truncate font-numeric text-[11px] text-[var(--text-secondary)] hover:underline"
+            >
+              {team.abbreviation}
+            </Link>
+          ) : (
+            <span className="flex-1 truncate font-numeric text-[11px] text-[var(--text-secondary)]">
+              {team.name}
+            </span>
+          )}
           <span
             className={cn(
               'numeric text-[11px]',

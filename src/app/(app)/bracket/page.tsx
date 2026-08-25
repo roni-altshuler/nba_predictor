@@ -75,6 +75,12 @@ export default function BracketPage() {
         )
       })}
 
+      <p className="-mt-5 mb-8 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        Per-game and series odds differ on every card because a series is not
+        a coin weighted once: the higher seed hosts four of the seven, and the
+        format stretches a per-game edge into a wider series one.
+      </p>
+
       <section className="mb-8">
         <h2 className="mb-3 text-sm">How far each team gets</h2>
         <div className="card overflow-x-auto">
@@ -95,17 +101,34 @@ export default function BracketPage() {
                 .map((team) => (
                   <tr key={team.team_id}>
                     <td>
-                      <span className="inline-flex items-center gap-2.5">
-                        <TeamLogo
-                          logo={team.logo}
-                          abbreviation={team.abbreviation}
-                          name={team.name}
-                          size={22}
-                        />
-                        <span className="text-[var(--text-primary)]">
-                          {team.name}
+                      {team.abbreviation ? (
+                        <Link
+                          href={`/teams/${team.abbreviation}`}
+                          className="inline-flex items-center gap-2.5 hover:underline"
+                        >
+                          <TeamLogo
+                            logo={team.logo}
+                            abbreviation={team.abbreviation}
+                            name={team.name}
+                            size={22}
+                          />
+                          <span className="text-[var(--text-primary)]">
+                            {team.name}
+                          </span>
+                        </Link>
+                      ) : (
+                        <span className="inline-flex items-center gap-2.5">
+                          <TeamLogo
+                            logo={team.logo}
+                            abbreviation={team.abbreviation}
+                            name={team.name}
+                            size={22}
+                          />
+                          <span className="text-[var(--text-primary)]">
+                            {team.name}
+                          </span>
                         </span>
-                      </span>
+                      )}
                     </td>
                     <td className="numeric text-right">{pct(team.p_playoffs, 0)}</td>
                     <td className="numeric text-right">{pct(team.p_conf_semis, 0)}</td>
@@ -222,12 +245,6 @@ function SeriesCard({ series }: { series: ProjectedSeries }) {
           </dd>
         </div>
       </dl>
-      <p className="mt-2 text-[10px] leading-relaxed text-[var(--text-tertiary)]">
-        Two different numbers for the same matchup, which is why a series is
-        not a coin weighted once: the higher seed hosts four of the seven, and
-        the format turns {pct(series.p_high_game_home, 0)} at home into{' '}
-        {pct(series.p_high_series, 0)} over the series.
-      </p>
     </article>
   )
 }
@@ -255,15 +272,28 @@ function SeriesSide({
         size={26}
       />
       <div className="min-w-0 flex-1">
-        <p
-          className={
-            favoured
-              ? 'truncate text-sm text-[var(--text-primary)]'
-              : 'truncate text-sm text-[var(--text-secondary)]'
-          }
-        >
-          {side.name}
-        </p>
+        {side.abbreviation ? (
+          <Link
+            href={`/teams/${side.abbreviation}`}
+            className={
+              favoured
+                ? 'block truncate text-sm text-[var(--text-primary)] hover:underline'
+                : 'block truncate text-sm text-[var(--text-secondary)] hover:underline'
+            }
+          >
+            {side.name}
+          </Link>
+        ) : (
+          <p
+            className={
+              favoured
+                ? 'truncate text-sm text-[var(--text-primary)]'
+                : 'truncate text-sm text-[var(--text-secondary)]'
+            }
+          >
+            {side.name}
+          </p>
+        )}
         <p className="font-numeric text-[10px] text-[var(--text-tertiary)]">
           {num(side.wins ?? 0, 1)}–{num(side.losses ?? 0, 1)} projected ·{' '}
           {pct(side.p_seed, 0)} to land this seed

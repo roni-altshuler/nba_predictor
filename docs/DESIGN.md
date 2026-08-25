@@ -157,12 +157,34 @@ Two families, and the split is functional:
 
 ## 6. Motion
 
-Almost none. Hover transitions on border colour at `0.18s`. No entrance
-animation, no parallax, no scroll-jacking. `prefers-reduced-motion: reduce`
-collapses every duration to `0.01ms` globally in `globals.css`.
+Bounded, and every piece of it is feedback rather than decoration. The
+vocabulary is one file (`src/lib/motion.ts`, ported from Pitchverse — one
+ease-out curve, two springs) and the full inventory is:
 
-The reason is the product: a page of probabilities that animates on arrival
-looks like it is performing rather than reporting.
+- **Route transition** (`<PageTransition>`, mounted once in the shell):
+  enter-only fade-and-rise, 350ms. No exit animation — an exit blocks the
+  navigation the reader just asked for.
+- **The mobile tab underline** slides between tabs via a shared
+  framer-motion `layoutId`.
+- **Probability bars glide** (`.prob-fill` / `.prob-segment`, 800ms) when a
+  value changes — the predictor's Swap, a refreshed number.
+- **Numbers count** (`<AnimatedNumber>`): the motion value writes straight
+  to `textContent`, so no re-renders, and the server markup carries the
+  final value so no reader ever sees 0 counting up.
+- **`.skeleton-shimmer`** is the one moving gradient in the product, because
+  a shimmer IS a moving gradient and it marks loading, never decoration.
+- Hover transitions on border colour at `0.18s` — and hover fires **only on
+  things that navigate** (`a.card`, `.card-link`, rows containing links).
+  A static card that brightens promises a click it cannot honour.
+
+No parallax, no scroll-jacking, no continuous ambient motion. Every motion
+component renders static markup under `useReducedMotion()`, and
+`prefers-reduced-motion: reduce` additionally collapses every CSS duration
+to `0.01ms` globally in `globals.css`.
+
+The reason is the product: a page of probabilities that performs on arrival
+looks like it is performing rather than reporting. Motion here confirms what
+the reader did (navigated, swapped, loaded) — it never happens by itself.
 
 ---
 

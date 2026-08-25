@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import { PlayoffBracket } from '@/components/playoffs/PlayoffBracket'
+import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { num, pct } from '@/lib/format'
 import {
@@ -63,12 +64,7 @@ export default async function SeasonPage({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href="/seasons"
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← All seasons
-        </Link>
+        <BackLink href="/seasons" label="All seasons" />
         <h1 className="mt-2 text-2xl">{label} season</h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           {file.games.length.toLocaleString()} games

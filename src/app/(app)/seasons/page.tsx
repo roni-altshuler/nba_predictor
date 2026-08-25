@@ -26,25 +26,23 @@ export default function SeasonsPage() {
         <p className="eyebrow">Archive</p>
         <h1 className="mt-1 text-2xl">Every season since 2004</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          {index.seasons.length} seasons, final standings, full results and the
-          playoff bracket. Each game also carries what the model{' '}
-          <em>would</em> have said — refit monthly on games strictly earlier,
-          so it never saw the game it scores.
+          {index.seasons.length} seasons — final standings, full results, the
+          playoff bracket, and what the model <em>would</em> have said about
+          every game.
         </p>
       </header>
 
-      <div className="card mb-6 p-4">
-        <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          <strong className="text-[var(--text-secondary)]">
-            Every forecast in this archive is a backtest.
-          </strong>{' '}
-          The model never saw the game it scores — but nobody saw these
-          numbers before those tip-offs either. A reconstructed forecast is
-          not a published one, and this site does not let the two blur. The
-          first {index.warmup_seasons} seasons carry no forecast at all: they
-          are the warm-up the model was fitted on.
-        </p>
-      </div>
+      <p className="mb-6 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        <strong className="text-[var(--accent-warn)]">Backtest.</strong> Every
+        forecast here is a reconstruction, and the first {index.warmup_seasons}{' '}
+        seasons carry none at all — they are the model&rsquo;s warm-up.{' '}
+        <Link
+          href="/about#backtest"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          Why a backtest is never a live record
+        </Link>
+      </p>
 
       <div className="card overflow-x-auto">
         <table>
@@ -69,8 +67,17 @@ export default function SeasonsPage() {
                     {season.label}
                   </Link>
                 </td>
-                <td className="text-[var(--text-primary)]">
-                  {season.champion ?? '—'}
+                <td>
+                  {season.champion ? (
+                    <Link
+                      href={`/teams/${season.champion}`}
+                      className="text-[var(--text-primary)] hover:underline"
+                    >
+                      {season.champion}
+                    </Link>
+                  ) : (
+                    '—'
+                  )}
                 </td>
                 <td className="text-[var(--text-secondary)]">
                   {season.best_record

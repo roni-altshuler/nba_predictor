@@ -34,16 +34,16 @@ export default function RatingsPage() {
         </p>
       </header>
 
-      <div className="card mb-6 p-4">
-        <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Ratings regress 40% toward the mean between seasons. That setting was
-          measured, not assumed — carrying ratings forward untouched was the
-          worst of the six levels tested. It is also the opposite of what the
-          sibling soccer project found, and the reason is institutional: the
-          NBA drafts in reverse order of finish and caps payrolls, European
-          football does neither.
-        </p>
-      </div>
+      <p className="mb-6 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        Ratings regress 40% toward the mean between seasons — measured, not
+        assumed.{' '}
+        <Link
+          href="/about#regression"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          Why ratings regress
+        </Link>
+      </p>
 
       <div className="card overflow-x-auto">
         <table>

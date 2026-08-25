@@ -136,12 +136,24 @@ export default function AboutPage() {
               Basketball scores average around 110 with a variance far below
               their mean. So this model is parameterised on margin and total,
               which are close to jointly normal, and the two team scores are
-              recovered from them.
+              recovered from them. The win probability is the area under that
+              same fitted normal above zero, and the score grid and every
+              playoff-series price read off it too — one distribution drives
+              every percentage on the site, so a spread that runs narrow makes
+              all of them overconfident at once, which is why interval
+              coverage is measured on{' '}
+              <Link href="/accuracy" className="text-[var(--accent-info)] hover:underline">
+                the record page
+              </Link>
+              .
             </p>
             <Measured>
               Over 27,690 regular-season games, margin has mean +2.6 and
               standard deviation 13.8, with skewness −0.02 and excess kurtosis
               +0.30. Normal is a genuinely good fit here, not a convenience.
+              The one place it bends is the extreme tails: the margin
+              forecast&rsquo;s 95% interval catches about 93%, which is what
+              that kurtosis predicts — a documented limit, not a surprise.
               And there is no draw to allocate: overtime resolves every game,
               so <strong className="text-[var(--text-secondary)]">zero</strong>{' '}
               of those 27,690 finished level.

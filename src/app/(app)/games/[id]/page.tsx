@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { WinProbabilityChart } from '@/components/charts/WinProbabilityChart'
+import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts } from '@/lib/artifacts'
 import {
@@ -32,10 +33,17 @@ export const dynamic = 'force-static'
 // 31,844 archived games is far too many to prerender, and prerendering only
 // some would 404 the rest. The route renders on demand and caches.
 export const dynamicParams = true
-// Player lines come from ESPN at request time rather than from the
-// warehouse; a day is long enough that a box score is final and short
-// enough that a game finishing tonight is complete tomorrow.
-export const revalidate = 86_400
+// Cached UNTIL THE NEXT DEPLOY, not on a timer. The revalidate used to be a
+// day, and that was a billing bug, not a freshness feature — the same bug
+// the NFL sibling found and fixed: an archived game never changes between
+// deploys, but every crawler visit after expiry re-rendered and re-cached
+// the page (an ISR write) across ~31k archive URLs, every day, which is how
+// a free Vercel team burns its 200k-write allowance on a site with no
+// traffic. The forecast deploy already resets this cache several times a
+// day, which is exactly the cadence the underlying artifacts change at.
+// The ESPN fetches inside are pinned to matching cache modes in lib/espn.ts
+// so no fetch drags the route back onto a timer.
+export const revalidate = false
 
 export function generateStaticParams() {
   // Prerender only the upcoming slate — the pages anyone is actually
@@ -136,12 +144,7 @@ function AllStarGame({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href="/allstar"
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← All-Star weekend
-        </Link>
+        <BackLink href="/allstar" label="All-Star weekend" />
         <p className="eyebrow mt-3">
           {event.label} · {event.season - 1}-{String(event.season).slice(2)}
         </p>
@@ -190,9 +193,8 @@ function AllStarGame({
         <section className="card mb-6 p-4">
           <h2 className="text-sm">No period breakdown</h2>
           <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            This format was not played in quarters — since 2024 the All-Star
-            Game has been an untimed race to a target score — so the source
-            publishes no period scores. Shown as absent rather than as four
+            Since 2024 the All-Star Game has been an untimed race to a target
+            score, so the source publishes no period scores — absent, not four
             zeros.
           </p>
         </section>
@@ -201,11 +203,9 @@ function AllStarGame({
       <section className="card mb-6 p-4">
         <h2 className="text-sm">No forecast</h2>
         <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Deliberately. The sides were drafted the week before and exist for
-          one night, and the ratings this model carries describe 82-game
-          franchises. A probability here would be a number with nothing behind
-          it. The raw source label was{' '}
-          <code className="font-numeric">{event.phase}</code>.
+          Deliberately: these sides exist for one night, and a rating fitted
+          on 82-game franchises has nothing to say about them (source label{' '}
+          <code className="font-numeric">{event.phase}</code>).
         </p>
       </section>
 
@@ -244,12 +244,10 @@ function PlayedGame({
   return (
     <div>
       <header className="mb-6">
-        <Link
+        <BackLink
           href={`/seasons/${game.season}`}
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← {game.season - 1}-{String(game.season).slice(2)} season
-        </Link>
+          label={`${game.season - 1}-${String(game.season).slice(2)} season`}
+        />
         <p className="eyebrow mt-3">
           {SEASON_TYPE_LABEL[game.type] ?? ''}
           {game.phase ? ` · ${game.phase}` : ''}
@@ -329,9 +327,9 @@ function PlayedGame({
         <section className="card mb-6 p-4">
           <h2 className="text-sm">No forecast for this game</h2>
           <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            It falls inside the warm-up seasons the model was fitted on, so
-            there is no out-of-sample forecast to show. Reconstructing one now
-            would be a model that had seen the answer.
+            It falls inside the warm-up seasons the model was fitted on —
+            reconstructing a forecast now would be a model that had seen the
+            answer.
           </p>
         </section>
       )}
@@ -346,9 +344,9 @@ function PlayedGame({
           <section className="card mb-6 p-4">
             <h2 className="text-sm">No player box score</h2>
             <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-              Player lines are read from ESPN when this page is built, not
-              stored here, and the request did not come back. The result,
-              periods and forecast above are ours and are unaffected.
+              Player lines are read from ESPN when this page is built and the
+              request did not come back — the result, periods and forecast
+              above are unaffected.
             </p>
           </section>
           {game.box_home && game.box_away ? (
@@ -575,11 +573,9 @@ function RecordedForecast({
         <strong className="text-[var(--text-secondary)]">
           This is a reconstruction, not a published call.
         </strong>{' '}
-        The model was refit on games strictly earlier than this one, so it
-        never saw the result — but nobody read this number before tip-off
-        either. And one game is one game: a single confident hit is no more
-        evidence than a single confident miss. The record that means
-        something is on{' '}
+        Refit only on earlier games, the model never saw the result — but
+        nobody read this number before tip-off either, one game is no
+        evidence either way, and the record that means something is on{' '}
         <Link href="/accuracy" className="text-[var(--accent-info)] hover:underline">
           the accuracy page
         </Link>
@@ -719,9 +715,9 @@ function BoxScore({ game }: { game: ArchiveGame }) {
         </table>
       </div>
       <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
-        Read from the stored warehouse columns, which the scoreboard fills
-        only partly. The complete set comes from ESPN and is shown above when
-        that request succeeds.
+        From the stored warehouse columns, which the scoreboard fills only
+        partly — the complete set arrives from ESPN when that request
+        succeeds.
       </p>
     </section>
   )
@@ -739,12 +735,7 @@ function UpcomingGame({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href="/games"
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← Upcoming games
-        </Link>
+        <BackLink href="/games" label="Upcoming games" />
         <p className="eyebrow mt-3">{gameTime(game.date_utc)}</p>
         <div className="mt-3 flex items-center justify-between gap-4">
           <ScoreSide
@@ -927,16 +918,24 @@ function InjuryReport({
       </div>
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         <strong className="text-[var(--text-secondary)]">
-          The forecast above has not read this.
+          The forecast above has not read this
         </strong>{' '}
-        The model knows results, ratings, rest and pace — it has never seen a
-        roster. Availability is shown here because it changes how much weight
-        a reader should give that probability, and it is not folded into the
-        probability because ESPN keeps no history of these reports, so an
-        adjustment built on them could never be tested against the twenty-three
-        seasons everything else here is measured on. From ESPN, as of the last
-        time this page was built.
+        — the model has never seen a roster.
       </p>
+      <details className="mt-2">
+        <summary className="cursor-pointer font-numeric text-[10px] uppercase tracking-[0.1em] text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)]">
+          Why availability is shown but not priced in
+        </summary>
+        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+          Shown, because who is out changes how much weight a reader should
+          give that probability. Not priced in, because ESPN publishes
+          injuries as a snapshot of today with no historical archive — an
+          adjustment built on them could never be tested against the
+          twenty-three seasons everything else here is measured on, and this
+          project does not publish a number it cannot benchmark. From ESPN,
+          as of the last time this page was built.
+        </p>
+      </details>
     </section>
   )
 }

@@ -1,5 +1,7 @@
+import Link from 'next/link'
+
 import type { MeasuredBlock } from '@/lib/artifacts'
-import { num, pct, stamp } from '@/lib/format'
+import { num, stamp } from '@/lib/format'
 
 /**
  * The evidence panel.
@@ -72,21 +74,24 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
         <Item label="Calibration error" value={num(measured.walk_forward_ece, 4)} />
       </dl>
 
-      {boot ? (
-        <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Paired bootstrap on the Brier difference: {num(boot.mean_diff, 5)}, 95%
-          CI [{num(boot.ci_low, 5)}, {num(boot.ci_high, 5)}]. The closing line
-          is better, and significantly so. That is the expected result — this
-          model carries no market features, and a model with none that beat
-          the market would be a harness bug rather than an edge.
-        </p>
-      ) : null}
-
-      <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+      <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         {measured.basis ??
           'historical walk-forward; not a live published record'}
-        . Historical and live records are computed separately and never merged
-        — nobody saw these numbers before those tip-offs.
+        {' — the closing line is better'}
+        {boot
+          ? ` (paired bootstrap ${num(boot.mean_diff, 5)}, 95% CI [${num(
+              boot.ci_low,
+              5,
+            )}, ${num(boot.ci_high, 5)}])`
+          : ''}
+        , which is the expected result for a model that carries no market
+        features.{' '}
+        <Link
+          href="/about#benchmark"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          Why the market is the benchmark
+        </Link>
       </p>
     </section>
   )

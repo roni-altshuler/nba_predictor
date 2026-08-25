@@ -94,20 +94,36 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {projections.teams.slice(0, 8).map((team) => (
+                {projections.teams.slice(0, 8).map((team) => {
+                  const mark = brand.get(team.team_id)
+                  const cell = (
+                    <>
+                      <TeamLogo
+                        logo={mark?.logo}
+                        abbreviation={mark?.abbreviation}
+                        name={team.name}
+                        size={26}
+                      />
+                      <span className="font-numeric text-[var(--text-primary)]">
+                        {mark?.abbreviation ?? team.name}
+                      </span>
+                    </>
+                  )
+                  return (
                   <tr key={team.team_id}>
                     <td>
-                      <span className="inline-flex items-center gap-2.5">
-                        <TeamLogo
-                          logo={brand.get(team.team_id)?.logo}
-                          abbreviation={brand.get(team.team_id)?.abbreviation}
-                          name={team.name}
-                          size={26}
-                        />
-                        <span className="font-numeric text-[var(--text-primary)]">
-                          {brand.get(team.team_id)?.abbreviation ?? team.name}
+                      {mark ? (
+                        <Link
+                          href={`/teams/${mark.abbreviation}`}
+                          className="inline-flex items-center gap-2.5 hover:underline"
+                        >
+                          {cell}
+                        </Link>
+                      ) : (
+                        <span className="inline-flex items-center gap-2.5">
+                          {cell}
                         </span>
-                      </span>
+                      )}
                     </td>
                     <td className="numeric text-right">{team.wins.toFixed(1)}</td>
                     <td className="numeric text-right">{pct(team.p_playoffs, 0)}</td>
@@ -115,7 +131,8 @@ export default function HomePage() {
                       {pct(team.p_championship)}
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </div>
@@ -135,7 +152,11 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
             {ratings.teams.slice(0, 5).map((team) => (
-              <div key={team.team_id} className="card flex items-center gap-3 p-3">
+              <Link
+                key={team.team_id}
+                href={`/teams/${team.abbreviation}`}
+                className="card flex items-center gap-3 p-3"
+              >
                 <TeamLogo
                   logo={team.logo}
                   abbreviation={team.abbreviation}
@@ -151,7 +172,7 @@ export default function HomePage() {
                     {Math.round(team.elo)}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>

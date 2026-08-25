@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { CalibrationChart } from '@/components/charts/CalibrationChart'
 import { PitHistogram } from '@/components/charts/PitHistogram'
 import { SeasonBrierChart } from '@/components/charts/SeasonBrierChart'
@@ -64,11 +66,9 @@ export default function AccuracyPage() {
         <p className="eyebrow">Record</p>
         <h1 className="mt-1 text-2xl">How right has it been</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Two records, kept apart on purpose. The live one below was published
-          before the games it scores. Everything after it is a walk-forward:
-          the model is refitted monthly on games strictly earlier than the one
-          it is scored on, so it never sees the answer — but nobody read those
-          numbers before those tip-offs either.
+          Two records, kept apart on purpose: the live one was published
+          before the games it scores, and everything after it is a
+          reconstruction.
         </p>
       </header>
 
@@ -78,10 +78,15 @@ export default function AccuracyPage() {
         <p className="eyebrow">Reconstructed</p>
         <h2 className="mt-1 text-lg">Everything below is a backtest</h2>
         <p className="mt-2 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">
-          Twenty-three seasons, scored after the fact under a walk-forward
-          that never lets the model see the game it is predicting. It is the
-          right way to measure a forecaster and it is still not a published
-          record, which is why it is on this side of the line.
+          Twenty-three seasons scored under a walk-forward that never lets the
+          model see the game it predicts — the right way to measure, and still
+          not a published record.{' '}
+          <Link
+            href="/about#backtest"
+            className="text-[var(--accent-info)] hover:underline"
+          >
+            Why a backtest is never a live record
+          </Link>
         </p>
       </div>
 
@@ -115,14 +120,14 @@ export default function AccuracyPage() {
         </p>
         {boot.mean_diff !== undefined ? (
           <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            Paired bootstrap on the difference: {num(boot.mean_diff, 5)}, 95% CI
-            [{num(boot.ci_low, 5)}, {num(boot.ci_high, 5)}]. The market is
+            Paired bootstrap: {num(boot.mean_diff, 5)}, 95% CI
+            [{num(boot.ci_low, 5)}, {num(boot.ci_high, 5)}] — the market is
             better and the interval excludes zero.{' '}
             <strong className="text-[var(--text-secondary)]">
-              That is the result we expect and want.
+              That is the expected and wanted result:
             </strong>{' '}
-            This model carries no market features; one that beat the closing
-            line would be evidence of a bug in the harness, not of an edge.
+            this model carries no market features, so beating the close would
+            mean a bug in the harness, not an edge.
           </p>
         ) : null}
       </section>
@@ -133,11 +138,9 @@ export default function AccuracyPage() {
           <CalibrationChart buckets={(full.reliability ?? []) as any} />
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Calibration is the property that makes a probability usable.
-          Accuracy is partly a fact about the schedule — a season of
-          lopsided matchups is easier to call — but a forecaster that says
-          70% and is right 70% of the time is telling the truth regardless.
-          Measured error here is {num(full.model?.ece, 4)}.
+          A forecaster that says 70% and is right 70% of the time is telling
+          the truth whatever the schedule looks like. Measured error here is{' '}
+          {num(full.model?.ece, 4)}.
         </p>
       </section>
 
@@ -195,7 +198,14 @@ export default function AccuracyPage() {
               <tbody>
                 {Object.entries(bySeason).map(([season, row]: [string, any]) => (
                   <tr key={season}>
-                    <td className="numeric text-[var(--text-primary)]">{season}</td>
+                    <td className="numeric whitespace-nowrap">
+                      <Link
+                        href={`/seasons/${season}`}
+                        className="text-[var(--text-primary)] hover:underline"
+                      >
+                        {Number(season) - 1}&ndash;{String(season).slice(2)}
+                      </Link>
+                    </td>
                     <td className="numeric text-right">{row.n?.toLocaleString()}</td>
                     <td className="numeric text-right">{num(row.model?.brier, 4)}</td>
                     <td className="numeric text-right">
@@ -573,12 +583,14 @@ function ContinuousSection({ continuous }: { continuous?: Record<string, any> })
         ))}
       </div>
       <p className="mt-3 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-        This is the check with the widest blast radius on the site. The win
-        probability is not fitted separately — it is the area under this same
-        normal above zero, and the score grid and every playoff series price
-        come from it too. A spread that is too narrow makes every percentage
-        here overconfident, and the moneyline calibration chart above would
-        show only part of it.
+        Every percentage on the site reads off this same fitted normal, so a
+        spread that runs narrow makes all of them overconfident at once.{' '}
+        <Link
+          href="/about#shape"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          Why one normal drives everything
+        </Link>
       </p>
       <p className="mt-2 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         <CoverageVerdict
@@ -625,13 +637,16 @@ function CoverageVerdict({
       As measured:{' '}
       {m ? describe(m, 'margin') : null}
       {m && t ? ', and ' : null}
-      {t ? describe(t, 'total') : null}. Both misses are small enough that
-      they do not put a visible bend in the reliability curve above, which is
-      the point of measuring them here instead: an error this size is real,
-      directional, and invisible to the moneyline calibration chart. The
-      margin gap is largest in the tails, which is what the excess kurtosis in
-      the underlying distribution predicts — a documented limit of fitting a
-      normal here, not a surprise.
+      {t ? describe(t, 'total') : null}. Both misses are real and directional
+      yet too small to bend the reliability curve above, and the margin tails
+      run exactly where the distribution&rsquo;s excess kurtosis says they
+      should.{' '}
+      <Link
+        href="/about#shape"
+        className="text-[var(--accent-info)] hover:underline"
+      >
+        Why a normal, and where it bends
+      </Link>
     </>
   )
 }
@@ -713,11 +728,8 @@ function SeriesSection({ series }: { series: Record<string, any> }) {
         </strong>{' '}
         Paired bootstrap: {num(modelVsSeed.mean_diff, 5)}, 95% CI [
         {num(modelVsSeed.ci_low, 5)}, {num(modelVsSeed.ci_high, 5)}] — the
-        interval straddles zero. Three hundred series is a small corpus and
-        the honest reading is that this layer has not yet earned a claim. It
-        ships because its probabilities are what the bracket simulation
-        consumes, and it is labelled here rather than quietly presented as a
-        win.
+        interval straddles zero, so this layer has not yet earned a claim. It
+        ships only because the bracket simulation consumes its probabilities.
       </p>
     </section>
   )

@@ -54,10 +54,8 @@ export default function UpsetsPage() {
         <h1 className="mt-1 text-2xl">The games nobody saw coming</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
           {upsets.n_scored.toLocaleString()} games across{' '}
-          {upsets.seasons.length} seasons, ranked three ways. Every
-          probability here is a reconstruction — refitted monthly on games
-          strictly earlier than the one it scores, so the model never saw the
-          answer, and nobody read the number before the tip-off either.
+          {upsets.seasons.length} seasons, ranked three ways — every
+          probability a reconstruction that never saw the answer.
         </p>
         <p className="mt-2 font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--accent-warn)]">
           Backtest
@@ -66,7 +64,7 @@ export default function UpsetsPage() {
 
       <Board
         title="Biggest upsets"
-        lead="The lowest probability the model gave a team that then won. Sorted by how badly it was wrong, most wrong first."
+        lead="The lowest probability the model gave a team that then won — most wrong first."
         rows={upsets.upsets}
         columns={[
           {
@@ -93,32 +91,38 @@ export default function UpsetsPage() {
         <h2 className="mb-1 text-sm">Where it disagreed with the market</h2>
         <p className="mb-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">
           The widest gaps between this model and the closing line, with the
-          result attached. These are the only games where the two forecasters
-          are distinguishable at all — everywhere else they say nearly the
-          same thing and any difference in outcome is noise.
+          result attached — the only games where the two forecasters are
+          distinguishable at all.
         </p>
-        <div className="card mb-4 p-4">
-          <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-            Across all{' '}
-            <span className="font-numeric">{record.n.toLocaleString()}</span>{' '}
-            priced games the model was closer{' '}
-            <span className="font-numeric">
-              {pct(record.model_closer / Math.max(record.n, 1), 1)}
-            </span>{' '}
-            of the time. On the {record.top_n} widest disagreements below it
-            was closer {record.model_closer_in_top} times.
-          </p>
-          <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            <strong className="text-[var(--text-secondary)]">
-              Read the first number, not the second.
-            </strong>{' '}
-            A hundred games is a hundred games; the full-corpus figure is the
-            one with any power, and it agrees with the Brier comparison on the
-            record page. A board sorted by disagreement is selected on exactly
-            the games where one side was furthest out on a limb, which is not
-            a fair test of either.
-          </p>
-        </div>
+        <details className="mb-4 max-w-2xl">
+          <summary className="cursor-pointer font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]">
+            How to read this board &middot; model closer on{' '}
+            {pct(record.model_closer / Math.max(record.n, 1), 1)} of all{' '}
+            {record.n.toLocaleString()} priced games
+          </summary>
+          <div className="mt-2 space-y-2 border-l border-[var(--border-color)] pl-3">
+            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+              Across all{' '}
+              <span className="font-numeric">{record.n.toLocaleString()}</span>{' '}
+              priced games the model was closer{' '}
+              <span className="font-numeric">
+                {pct(record.model_closer / Math.max(record.n, 1), 1)}
+              </span>{' '}
+              of the time. On the {record.top_n} widest disagreements below it
+              was closer {record.model_closer_in_top} times.
+            </p>
+            <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+              <strong className="text-[var(--text-secondary)]">
+                Read the first number, not the second.
+              </strong>{' '}
+              A hundred games is a hundred games; the full-corpus figure is the
+              one with any power, and it agrees with the Brier comparison on
+              the record page. A board sorted by disagreement is selected on
+              exactly the games where one side was furthest out on a limb,
+              which is not a fair test of either.
+            </p>
+          </div>
+        </details>
         <BoardTable
           rows={upsets.disagreements}
           columns={[
@@ -156,8 +160,11 @@ export default function UpsetsPage() {
             over all {comebacks.n_games_examined.toLocaleString()} games in the
             archive — the only board here that owes nothing to the model.
           </p>
-          <div className="card mb-4 p-4">
-            <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+          <details className="mb-4 max-w-2xl">
+            <summary className="cursor-pointer font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]">
+              How to read this board &middot; every figure is a lower bound
+            </summary>
+            <p className="mt-2 border-l border-[var(--border-color)] pl-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
               <strong className="text-[var(--text-secondary)]">
                 Every figure here is a lower bound.
               </strong>{' '}
@@ -168,7 +175,7 @@ export default function UpsetsPage() {
               scores the archive actually has, and understates rather than
               guesses.
             </p>
-          </div>
+          </details>
           <BoardTable
             rows={comebacks.comebacks}
             columns={[
@@ -201,7 +208,7 @@ export default function UpsetsPage() {
 
       <Board
         title="Biggest margin misses"
-        lead="Where the expected margin was furthest from the real one. A blowout called as a coin flip is a different kind of error from a close game going the wrong way, and averaging them into one number hides it."
+        lead="Where the expected margin was furthest from the real one — a blowout called as a coin flip is a different error from a close game going the wrong way."
         rows={upsets.margin_misses}
         columns={[
           {

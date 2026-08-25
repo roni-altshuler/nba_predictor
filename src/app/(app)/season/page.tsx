@@ -61,17 +61,17 @@ export default function SeasonPage() {
         </p>
       </header>
 
-      <div className="mb-4 card p-4">
-        <p className="text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Each simulated season draws <strong className="text-[var(--text-secondary)]">one</strong>{' '}
-          strength offset per team and holds it for all 82 games, rather than
-          re-rolling every game. Within-season rating drift measured 36.1
-          points over 689 team-seasons, and that error is correlated across a
-          team&apos;s whole schedule — so no number of simulations averages it
-          away. Without it these title odds would be roughly twice as
-          confident as any market price.
-        </p>
-      </div>
+      <p className="mb-6 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        Each simulated season holds one correlated strength offset per team
+        for all 82 games — without it these odds would be roughly twice as
+        confident as any market price.{' '}
+        <Link
+          href="/about#simulation"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          How the simulation works
+        </Link>
+      </p>
 
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">

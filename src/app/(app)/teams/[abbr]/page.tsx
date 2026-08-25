@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { RatingHistoryChart } from '@/components/charts/RatingHistoryChart'
+import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts, getPowerRatings, getSeasonProjections } from '@/lib/artifacts'
 import { gameDate, num, pct } from '@/lib/format'
@@ -82,12 +83,7 @@ export default async function TeamPage({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href="/ratings"
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← All teams
-        </Link>
+        <BackLink href="/ratings" label="Power ratings" />
         <div className="mt-3 flex items-center gap-4">
           <TeamLogo
             logo={team.logo}

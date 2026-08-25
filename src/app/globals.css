@@ -215,7 +215,12 @@ nav, button, .caption, th, [role='tab'] {
   border-radius: 4px;
   transition: border-color 0.18s;
 }
-.card:hover { border-color: var(--border-hover); }
+/* Hover is an affordance, so only things that GO somewhere get one. A static
+   stat card that brightens on hover promises a click it cannot honour —
+   `a.card` covers whole-card links, `.card-link` marks anything else
+   interactive that carries the card surface. */
+a.card:hover,
+.card-link:hover { border-color: var(--border-hover); }
 
 .hairline { border-color: var(--border-color); }
 
@@ -236,7 +241,50 @@ nav, button, .caption, th, [role='tab'] {
   border-radius: 0;
   overflow: hidden;
 }
-.prob-fill { height: 100%; background: var(--accent-primary); }
+.prob-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  /* When a probability changes (the predictor's Swap, a live refresh) the
+     bar glides rather than jumps — same curve and duration as Pitchverse's
+     .prob-segment. Clamped to nothing under prefers-reduced-motion below. */
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* A segment of a two-sided bar (ProbabilityBar) — same glide, plus the
+   favoured-side colour swap eases instead of flicking. */
+.prob-segment {
+  transition:
+    width 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease;
+}
+
+/* Loading shimmer — the ONE moving gradient in the product, because a
+   shimmer IS a moving gradient and it marks loading, never decoration.
+   Ported from Pitchverse's .skeleton-shimmer. Skeleton boxes must mirror
+   the final layout so nothing jumps when content arrives. */
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--card-hover);
+}
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-hover),
+    transparent
+  );
+  animation: skeleton-sweep 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-sweep {
+  100% { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer::after { animation: none; }
+}
 
 table { border-collapse: collapse; width: 100%; }
 th {
@@ -254,7 +302,10 @@ td {
   border-bottom: 1px solid var(--border-color);
   font-size: 0.8125rem;
 }
-tbody tr:hover { background: var(--card-hover); }
+/* Same rule for table rows: only a row that contains a link highlights.
+   `:has` is progressive enhancement — a browser without it simply shows no
+   row hover, which is the honest default. */
+tbody tr:has(a):hover { background: var(--card-hover); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

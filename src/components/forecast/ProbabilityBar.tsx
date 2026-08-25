@@ -38,7 +38,7 @@ export function ProbabilityBar({
         aria-label={`${awayLabel} ${pct(pAway)}, ${homeLabel} ${pct(pHome)}`}
       >
         <div
-          className="h-full"
+          className="prob-segment h-full"
           style={{
             width: `${pAway * 100}%`,
             background: homeFavoured
@@ -47,7 +47,7 @@ export function ProbabilityBar({
           }}
         />
         <div
-          className="h-full"
+          className="prob-segment h-full"
           style={{
             width: `${pHome * 100}%`,
             background: homeFavoured

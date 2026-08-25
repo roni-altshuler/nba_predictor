@@ -30,8 +30,15 @@ const SUMMARY =
 const INJURIES =
   'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries'
 
-/** A day. Box scores are final within minutes of a game and never change. */
-const REVALIDATE_SECONDS = 86_400
+/* The summary is fetched only for games already in the archive (the page
+   scopes the call to the played branch), and a game reaches the archive via
+   the daily history build — hours after the final buzzer, when ESPN's
+   document is final. So the response is immutable and is cached with NO
+   revalidation timer: a fetch-level `revalidate` here would drag the whole
+   route's ISR period down to it (lowest fetch wins) and re-render every
+   crawled archive URL on that clock, which is the billing bug the route
+   comment in games/[id]/page.tsx describes. Errors are not cached, so a
+   transient ESPN failure retries on the next request. */
 
 /**
  * Hard ceiling on any single ESPN request.
@@ -62,7 +69,7 @@ const TIMEOUT_MS = 8_000
 async function summary(gameId: string): Promise<any | null> {
   try {
     const response = await fetch(`${SUMMARY}?event=${encodeURIComponent(gameId)}`, {
-      next: { revalidate: REVALIDATE_SECONDS },
+      cache: 'force-cache',
       headers: { Accept: 'application/json' },
       signal: AbortSignal.timeout(TIMEOUT_MS),
     })
@@ -336,7 +343,13 @@ export interface TeamInjuries {
  * filtering on one silently matched nothing. The names come from the same
  * ESPN `displayName` the warehouse stored, so the comparison is exact.
  */
-const INJURIES_REVALIDATE_SECONDS = 3_600
+/* Six hours, not one. This fetch runs only on the upcoming branch, but its
+   revalidate sets the ISR clock for all 60 prerendered game pages (lowest
+   fetch wins) — at one hour that was ~1,440 page re-renders a day, a third
+   of the free tier's monthly ISR-write allowance on its own. Injuries are a
+   descriptive block beside a forecast that has not read them; six hours is
+   fresh enough for a day-to-day tag and 24x cheaper than the old clock. */
+const INJURIES_REVALIDATE_SECONDS = 21_600
 
 export async function getEspnInjuries(
   teamNames: string[],

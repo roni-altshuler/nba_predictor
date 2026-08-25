@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { roundName } from '@/lib/bracketLayout'
 import { num, pct } from '@/lib/format'
@@ -82,12 +83,7 @@ export default async function SeriesPage({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href={`/seasons/${value}`}
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← {label} season
-        </Link>
+        <BackLink href={`/seasons/${value}`} label={`${label} season`} />
         <p className="eyebrow mt-3">
           {roundName(series.depth ?? 3)} · {label}
         </p>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getGameForecasts, getSeasonProjections } from '@/lib/artifacts'
+import { getGameForecasts, getPowerRatings, getSeasonProjections } from '@/lib/artifacts'
 import { getSeason, getSeasonTitleRace, getSeasonsIndex } from '@/lib/history'
 import { gameDate, num, pct } from '@/lib/format'
 
@@ -28,6 +28,11 @@ export default function PreviewPage() {
   const projections = getSeasonProjections()
   const forecasts = getGameForecasts()
   const index = getSeasonsIndex()
+  // Abbreviations come from the ratings artifact, joined on ESPN's integer
+  // team id — the same stable key the season page uses. No name matching.
+  const abbr = new Map(
+    (getPowerRatings()?.teams ?? []).map((t) => [t.team_id, t.abbreviation]),
+  )
 
   if (!projections) {
     return (
@@ -89,13 +94,11 @@ export default function PreviewPage() {
         </p>
         <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">
           <strong className="text-[var(--text-secondary)]">
-            The model does not know who is on any of these teams.
+            The model does not know who is on any of these teams
           </strong>{' '}
-          It has never read a trade, a draft or an injury report. In October
-          that is at its most costly — every roster has changed and nothing
-          below reflects it, which is why these title odds are more
-          concentrated than a real futures market&rsquo;s and why the gap
-          narrows as games are actually played.
+          — it has never read a trade, a draft or an injury report. That is
+          why these title odds run more concentrated than a real futures
+          market&rsquo;s, and why the gap narrows once games are played.
         </p>
       </header>
 
@@ -115,7 +118,9 @@ export default function PreviewPage() {
             <tbody>
               {contenders.map((team) => (
                 <tr key={team.team_id}>
-                  <td className="text-[var(--text-primary)]">{team.name}</td>
+                  <td>
+                    <TeamCell name={team.name} abbr={abbr.get(team.team_id)} />
+                  </td>
                   <td className="numeric text-right">
                     {num(team.wins, 1)}&ndash;{num(team.losses, 1)}
                   </td>
@@ -143,9 +148,8 @@ export default function PreviewPage() {
           <h2 className="mb-1 text-sm">Biggest projected swings</h2>
           <p className="mb-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">
             Against what each team actually won in {previous - 1}-
-            {String(previous).slice(2)}. Every one of these is regression to
-            the mean and a different schedule — not an opinion about a signing,
-            because the model has not heard about any signings.
+            {String(previous).slice(2)} — all regression to the mean and
+            schedule, never an opinion about a signing.
           </p>
           <div className="card overflow-x-auto">
             <table>
@@ -160,13 +164,15 @@ export default function PreviewPage() {
               <tbody>
                 {movers.map(({ team, before, delta }) => (
                   <tr key={team.team_id}>
-                    <td className="text-[var(--text-primary)]">{team.name}</td>
+                    <td>
+                      <TeamCell name={team.name} abbr={abbr.get(team.team_id)} />
+                    </td>
                     <td className="numeric text-right">{before}</td>
                     <td className="numeric text-right">{num(team.wins, 1)}</td>
                     <td
                       className={`numeric text-right ${
                         (delta as number) > 0
-                          ? 'text-[var(--accent-good)]'
+                          ? 'text-[var(--accent-primary)]'
                           : 'text-[var(--accent-warn)]'
                       }`}
                     >
@@ -185,6 +191,19 @@ export default function PreviewPage() {
         index?.seasons.find((s) => s.season === previous)?.champion ?? null
       } />
     </div>
+  )
+}
+
+/** A team name that navigates when an abbreviation exists, plain text when not. */
+function TeamCell({ name, abbr }: { name: string; abbr?: string }) {
+  if (!abbr) return <span className="text-[var(--text-primary)]">{name}</span>
+  return (
+    <Link
+      href={`/teams/${abbr}`}
+      className="text-[var(--text-primary)] hover:underline"
+    >
+      {name}
+    </Link>
   )
 }
 
@@ -275,31 +294,29 @@ function LastYear({
             {race.teams[champion]?.name ?? champion} went on to win it, from{' '}
             {pct(championProbability, 1)}
           </strong>{' '}
-          — outside the top three on their own side of the bracket. That is
-          not a defect in the projection so much as a fact about the sport:
-          eight teams a conference reach the postseason and the favourite is
-          rarely above a third. It is worth reading beside the table at the
-          top of this page.
+          — outside the top three on their own side of the bracket. Less a
+          defect than a fact about the sport: eight teams a conference reach
+          the postseason and the favourite is rarely above a third.
         </p>
       ) : null}
 
       <p className="mt-3 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-        <strong className="text-[var(--accent-warn)]">Backtest.</strong> The
-        replay reconstructs what the model would have said from ratings built
-        on games strictly earlier than each checkpoint. Nobody read these
-        numbers on that morning. The live record, which is a different and
-        stronger claim, is on{' '}
-        <Link href="/accuracy" className="underline underline-offset-4">
-          the record page
-        </Link>
-        , and it starts at zero.{' '}
+        <strong className="text-[var(--accent-warn)]">Backtest.</strong>{' '}
+        Reconstructed from ratings that never saw the future — nobody read
+        these numbers on that morning.{' '}
+        <Link
+          href="/about#backtest"
+          className="text-[var(--accent-info)] hover:underline"
+        >
+          Why a backtest is never a live record
+        </Link>{' '}
+        &middot;{' '}
         <Link
           href={`/seasons/${season}`}
-          className="underline underline-offset-4"
+          className="text-[var(--accent-info)] hover:underline"
         >
-          The whole {season - 1}-{String(season).slice(2)} race
-        </Link>{' '}
-        is in the archive.
+          the whole {season - 1}-{String(season).slice(2)} race
+        </Link>
       </p>
     </section>
   )

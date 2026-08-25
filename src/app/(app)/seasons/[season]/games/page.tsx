@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { pct } from '@/lib/format'
 import {
@@ -64,12 +65,7 @@ export default async function SeasonGamesPage({
   return (
     <div>
       <header className="mb-6">
-        <Link
-          href={`/seasons/${value}`}
-          className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-        >
-          ← {label} season
-        </Link>
+        <BackLink href={`/seasons/${value}`} label={`${label} season`} />
         <h1 className="mt-2 text-2xl">{label} results</h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           {file.games.length.toLocaleString()} games. Every one links to its

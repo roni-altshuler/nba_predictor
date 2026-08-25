@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import { ProbabilityBar } from '@/components/forecast/ProbabilityBar'
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
-import { gameTime, num, pct, signed } from '@/lib/format'
+import { gameTime, num, signed } from '@/lib/format'
 import type { Matchups } from '@/lib/history'
 
 export interface ScheduledMeeting {
@@ -100,29 +101,38 @@ export function MatchupPicker({
           />
 
           <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-[var(--border-color)] pt-4 sm:grid-cols-4">
-            <Stat
-              label="Projected margin"
-              value={`${result.exp_margin >= 0 ? home.abbreviation : away.abbreviation} ${signed(Math.abs(result.exp_margin))}`}
-            />
-            <Stat label="Projected total" value={num(result.exp_total, 1)} />
-            <Stat
-              label="Projected score"
-              value={`${Math.round(result.exp_away_score)}–${Math.round(result.exp_home_score)}`}
-            />
-            <Stat
-              label="Rating gap"
-              value={signed(
-                (data.elo[home.abbreviation] ?? 1500) -
-                  (data.elo[away.abbreviation] ?? 1500),
-                0,
-              )}
-            />
+            <Stat label="Projected margin">
+              {result.exp_margin >= 0 ? home.abbreviation : away.abbreviation}{' '}
+              <AnimatedNumber
+                value={Math.abs(result.exp_margin)}
+                format={(v) => signed(v)}
+              />
+            </Stat>
+            <Stat label="Projected total">
+              <AnimatedNumber
+                value={result.exp_total}
+                format={(v) => num(v, 1)}
+              />
+            </Stat>
+            <Stat label="Projected score">
+              <AnimatedNumber value={result.exp_away_score} />
+              {'–'}
+              <AnimatedNumber value={result.exp_home_score} />
+            </Stat>
+            <Stat label="Rating gap">
+              <AnimatedNumber
+                value={
+                  (data.elo[home.abbreviation] ?? 1500) -
+                  (data.elo[away.abbreviation] ?? 1500)
+                }
+                format={(v) => signed(v, 0)}
+              />
+            </Stat>
           </dl>
 
           <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            {data.note} Home court is worth roughly two points in the current
-            era — press <em>Swap</em> and watch the number move, because that
-            difference is the whole of it.
+            {data.note} Home court is worth about two points in the current
+            era — <em>Swap</em> shows exactly how much.
           </p>
 
           {/* When the hypothetical is also a real fixture, hand the reader
@@ -227,11 +237,19 @@ function Side({
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
   return (
     <div>
       <dt className="eyebrow">{label}</dt>
-      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">{value}</dd>
+      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">
+        {children}
+      </dd>
     </div>
   )
 }
