@@ -186,22 +186,20 @@ ease-out curve, two springs) and the full inventory is:
   final value so no reader ever sees 0 counting up.
 - **`.skeleton-shimmer`** marks loading — a shimmer IS a moving gradient,
   and it moves only while something is genuinely loading.
-- **The ambient hardwood layer** (`AmbientBackground.tsx`) is the one piece
-  of continuous ambient motion, sanctioned 2026-08-25 at the owner's
-  request: a faint half-court line drawing plus two ember glows in the
-  chart ramp's wood tones, drifting on 52s/68s alternating periods —
-  weather, not animation. Its guardrails: everything in it stays near 16%
-  opacity, it animates transform only, it sits at negative z-index with
-  pointer-events off (opaque cards paint over it by painting order alone),
-  and under `prefers-reduced-motion` it is explicitly `animation: none` —
-  the global duration clamp alone would make an infinite-alternate
-  animation strobe rather than stop.
-- **The chalk court** (`CourtField.tsx`) is the ambient layer's animated
-  half, ported from the NFL sibling's chalkboard: every few seconds one
-  faint chalk half-court play draws itself in the page's margins and
-  fades. Its full rules are §6a; the short version is chalk-dust alphas,
-  one play at a time, `requestAnimationFrame` only while the board is
-  live, and a single static frame under reduced motion.
+- **The ambient floor** (`AmbientBackground.tsx`) — two ember glows in the
+  chart ramp's wood tones drifting on 52s/68s alternating periods over the
+  plank-seamed walnut, transform-only, at negative z-index with
+  pointer-events off (opaque cards paint over it by painting order alone).
+  Under `prefers-reduced-motion` it is explicitly `animation: none` — the
+  global duration clamp alone would make an infinite-alternate animation
+  strobe rather than stop.
+- **The chalk game** (`CourtField.tsx`) — a perpetual dim five-on-five on
+  one full chalk court: O's in white, X's in amber, the ball in the brand
+  orange, possessions flowing end to end with cuts, swings, boards and
+  buckets. Owner-requested (2026-08-25) as the layer's animated half; its
+  full rules are §6a. The short version: no digits ever, chalk-dust
+  alphas, ~30fps, `requestAnimationFrame` only while the tab is visible,
+  and a single mid-possession still frame under reduced motion.
 - Hover transitions on border colour at `0.18s` — and hover fires **only on
   things that navigate** (`a.card`, `.card-link`, rows containing links).
   A static card that brightens promises a click it cannot honour.
@@ -217,27 +215,29 @@ the reader did (navigated, swapped, loaded) — it never happens by itself.
 
 ---
 
-## 6a. The chalk court
+## 6a. The chalk game
 
-`CourtField` is the animated half of Hardwood's ambient layer, ported from
-the NFL sibling's `ChalkboardField`: a fixed canvas at z-index −1 drawing a
-sparse set of faint hand-ruled court baselines, and — every eight seconds
-or so — one dim chalk half-court play. The sketch (baseline, key,
-free-throw circle, three-point arc) fades in with five O's around the arc
-and five X's guarding inside them; then one O cuts to the basket —
-sometimes off a short dashed give-and-go — with the route drawing itself
-in `--accent-primary`, holding, and fading. Rules that keep it a board and
-not a mood:
+`CourtField` is the animated half of Hardwood's ambient layer, evolved
+from the NFL sibling's `ChalkboardField` and rebuilt as a game at the
+owner's request (2026-08-25): a fixed canvas at z-index −1 drawing one
+full chalk court — both keys, both arcs, half-court line — and on it a
+perpetual dim five-on-five. The O team is white chalk, the X team amber,
+the ball the brand orange. A possession runs eight to twelve seconds:
+advance, spread to the corners/wings/top while the defense drops between
+its marks and the rim, one to three swings (sometimes the passer cuts
+through the lane), then the shot — a make blooms a soft ring off the rim
+with the swish flicks, a miss comes off the iron and the board turns the
+game the other way. Rules that keep it a background and not a broadcast:
 
+- **No digits, ever.** A score in the background is a number, and every
+  number on this site is a claim. The bucket itself is the payoff.
 - **It never sits under a number.** Cards, tables, and chrome are opaque
-  by system rule; the board lives in the page's margins and gaps.
-- Chalk-dust alphas only (static baselines ≤ 0.12, play figures ≤ 0.45 at
-  peak, the route ≤ 0.60 — raised with the 2026-08-25 Arena re-theme, when
-  the owner asked for the court to be seen). If a value wants to be higher
-  than these, the answer is no.
-- One play at a time, then rest. `requestAnimationFrame` runs only while
-  the board is live — a hidden tab stops it; reduced motion gets a single
-  static frame with a finished play and never moves.
+  by system rule; the game lives in the canvas and the gaps.
+- Chalk-dust alphas only (court ≤ 0.30, players ≤ 0.45, ball and pulse
+  ≤ 0.60). If a value wants to be higher than these, the answer is no.
+- Slow and cheap: rendering is capped near 30fps, `requestAnimationFrame`
+  runs only while the tab is visible, and reduced motion gets a single
+  mid-possession still frame that never moves.
 - The shell wrapper deliberately paints **no** background — the body's
   black is the canvas the board draws on. Reintroducing an opaque wrapper
   there silently deletes the board (and the hardwood wash beneath it).

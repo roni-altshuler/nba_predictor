@@ -155,16 +155,14 @@
   --logo-plate-ring: rgba(19, 19, 22, 0.12);
 
   /* ────────────────────────────────────────────────────────────
-     The ambient hardwood layer (AmbientBackground.tsx) — the sanctioned
-     exception to "no gradients", added 2026-08-25 at the owner's request.
-     Court lines and two ember glows in the same amber family as the
-     sequential chart ramp above. Arena re-theme (owner-directed,
-     2026-08-25) raised the caps from ~7% to ~16% so the court reads as a
-     place rather than a rumour — text contrast is still untouched because
-     every card surface is opaque and paints over this layer; it lives in
-     the canvas and the gutters.
+     The ambient hardwood layer — the sanctioned exception to "no
+     gradients", added 2026-08-25 at the owner's request. Two halves:
+     AmbientBackground.tsx (these ember glows over the plank-seamed floor
+     below) and CourtField.tsx (the chalk game, which draws the court and
+     everything on it). Text contrast is untouched because every card
+     surface is opaque and paints over both; the layer lives in the canvas
+     and the gutters.
      ──────────────────────────────────────────────────────────── */
-  --court-line: rgba(226, 136, 47, 0.16);
   --ambient-ember-a: #b96b28;
   --ambient-ember-b: #5a3418;
 }
@@ -343,12 +341,6 @@ a.card:hover,
       transparent 0 53px,
       rgba(226, 136, 47, 0.016) 53px 54px
     );
-}
-.ambient-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
 }
 .ambient-glow {
   position: absolute;
