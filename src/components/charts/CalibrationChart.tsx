@@ -1,4 +1,13 @@
+'use client'
+
 import { pct } from '@/lib/format'
+
+import {
+  ChartEmptyState,
+  ChartTooltip,
+  HighlightRing,
+  useChartHover,
+} from './hover'
 
 /**
  * A reliability diagram: what the model said against what happened.
@@ -28,25 +37,28 @@ export interface Bucket {
   observed: number
 }
 
+/* Sized for the phone rendering: the 460-unit viewBox scales to ~343px at
+   375px width (a 0.75 factor), so axis text is 12 — under that the ticks
+   were landing near 7px effective. */
 const W = 460
 const H = 300
 const PAD = { top: 16, right: 16, bottom: 40, left: 46 }
+const AXIS_FONT = 12
 
-export function CalibrationChart({
-  buckets,
-  caption,
-}: {
+interface CalibrationProps {
   buckets: Bucket[]
   caption?: string
-}) {
-  if (!buckets?.length) {
-    return (
-      <p className="text-xs text-[var(--text-tertiary)]">
-        No calibration data published.
-      </p>
-    )
-  }
+}
 
+export function CalibrationChart({ buckets, caption }: CalibrationProps) {
+  if (!buckets?.length) {
+    return <ChartEmptyState>No calibration data published.</ChartEmptyState>
+  }
+  return <CalibrationFigure buckets={buckets} caption={caption} />
+}
+
+/** The drawn chart — split out so the hover hook sits below the early return. */
+function CalibrationFigure({ buckets, caption }: CalibrationProps) {
   const plotW = W - PAD.left - PAD.right
   const plotH = H - PAD.top - PAD.bottom
   const x = (v: number) => PAD.left + v * plotW
@@ -63,16 +75,54 @@ export function CalibrationChart({
 
   const ticks = [0, 0.25, 0.5, 0.75, 1]
 
+  // Hover: nearest dot by distance, with a generous reach so a fingertip
+  // lands one. The tooltip states the bucket's claim in full: what the model
+  // said, what happened, and on how many games.
+  const { containerRef, active, svgProps } = useChartHover(W, (vx, vy) => {
+    let best = -1
+    let bestDist = Infinity
+    for (let i = 0; i < buckets.length; i += 1) {
+      const dx = x(buckets[i].mean_predicted) - vx
+      const dy = y(buckets[i].observed) - vy
+      const dist = Math.hypot(dx, dy)
+      if (dist < bestDist) {
+        best = i
+        bestDist = dist
+      }
+    }
+    if (best < 0 || bestDist > 60) return null
+    const b = buckets[best]
+    return {
+      x: x(b.mean_predicted),
+      y: y(b.observed),
+      title: `bucket ${pct(b.lower, 0)}–${pct(b.upper, 0)}`,
+      lines: [
+        { label: 'said', value: pct(b.mean_predicted, 1) },
+        { label: 'happened', value: pct(b.observed, 1) },
+        { label: 'games', value: b.count.toLocaleString(), muted: true },
+      ],
+    }
+  })
+  const hoverBucket = active
+    ? buckets.find(
+        (b) =>
+          x(b.mean_predicted) === active.target.x &&
+          y(b.observed) === active.target.y,
+      )
+    : null
+
   return (
     <figure className="m-0">
       {/* Capped so the SVG renders near its natural size. Left to fill a
           1050px container the 460-wide viewBox scales 2.3x and every dot,
           label and stroke scales with it — the chart stops looking designed
           and starts looking zoomed. */}
+      <div ref={containerRef} className="relative max-w-[560px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full max-w-[560px]"
+        className="h-auto w-full"
         role="img"
+        {...svgProps}
         aria-label={
           'Reliability diagram. ' +
           buckets
@@ -112,7 +162,7 @@ export function CalibrationChart({
         <text
           x={x(0.13)} y={y(0.2)}
           fill="var(--text-tertiary)"
-          fontSize="9"
+          fontSize="11"
           fontFamily="var(--font-mono-numeric), monospace"
           transform={`rotate(-45 ${x(0.13)} ${y(0.2)})`}
         >
@@ -131,15 +181,15 @@ export function CalibrationChart({
         {ticks.map((t) => (
           <g key={`lbl-${t}`}>
             <text
-              x={x(t)} y={PAD.top + plotH + 16}
-              fill="var(--text-tertiary)" fontSize="10" textAnchor="middle"
+              x={x(t)} y={PAD.top + plotH + 18}
+              fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="middle"
               fontFamily="var(--font-mono-numeric), monospace"
             >
               {Math.round(t * 100)}%
             </text>
             <text
-              x={PAD.left - 8} y={y(t) + 3}
-              fill="var(--text-tertiary)" fontSize="10" textAnchor="end"
+              x={PAD.left - 8} y={y(t) + 4}
+              fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="end"
               fontFamily="var(--font-mono-numeric), monospace"
             >
               {Math.round(t * 100)}%
@@ -182,20 +232,30 @@ export function CalibrationChart({
 
         <text
           x={PAD.left + plotW / 2} y={H - 4}
-          fill="var(--text-tertiary)" fontSize="10" textAnchor="middle"
+          fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="middle"
           fontFamily="var(--font-mono-numeric), monospace"
         >
           what the model said
         </text>
         <text
           x={12} y={PAD.top + plotH / 2}
-          fill="var(--text-tertiary)" fontSize="10" textAnchor="middle"
+          fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="middle"
           fontFamily="var(--font-mono-numeric), monospace"
           transform={`rotate(-90 12 ${PAD.top + plotH / 2})`}
         >
           what happened
         </text>
+
+        {active && hoverBucket ? (
+          <HighlightRing
+            x={active.target.x}
+            y={active.target.y as number}
+            r={radius(hoverBucket.count) + 3}
+          />
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
 
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         {caption ??

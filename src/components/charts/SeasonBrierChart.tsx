@@ -1,4 +1,15 @@
+'use client'
+
 import { num } from '@/lib/format'
+
+import {
+  ChartEmptyState,
+  ChartTooltip,
+  Crosshair,
+  HighlightDot,
+  nearestIndex,
+  useChartHover,
+} from './hover'
 
 /**
  * Model against the closing line, season by season.
@@ -23,20 +34,26 @@ export interface SeasonRow {
   market?: number | null
 }
 
+/* Sized for the phone rendering: the 620-unit viewBox scales to ~343px at
+   375px width (a 0.55 factor), so axis text is 12 and the direct labels 13. */
 const W = 620
 const H = 300
-const PAD = { top: 18, right: 62, bottom: 40, left: 52 }
+const PAD = { top: 18, right: 66, bottom: 40, left: 52 }
+const AXIS_FONT = 12
+const LABEL_FONT = 13
 
 export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
   const withModel = rows.filter((r) => r.model != null)
   if (withModel.length < 2) {
     return (
-      <p className="text-xs text-[var(--text-tertiary)]">
-        Not enough scored seasons to draw a trend.
-      </p>
+      <ChartEmptyState>Not enough scored seasons to draw a trend.</ChartEmptyState>
     )
   }
+  return <BrierFigure rows={rows} />
+}
 
+/** The drawn chart — split out so the hover hook sits below the early return. */
+function BrierFigure({ rows }: { rows: SeasonRow[] }) {
   const values = rows.flatMap((r) =>
     [r.model, r.market].filter((v): v is number => v != null),
   )
@@ -78,6 +95,36 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
     (_, i) => yMin + ((yMax - yMin) * i) / yTicks,
   )
 
+  // Hover: the crosshair snaps to the nearest season and the tooltip lists
+  // both series there — an absent market year reads as an em-dash, not a zero.
+  const rowXs = rows.map((r) => x(r.season))
+  const { containerRef, active, svgProps } = useChartHover(W, (vx) => {
+    if (vx < PAD.left - 12 || vx > PAD.left + plotW + 12) return null
+    const i = nearestIndex(rowXs, vx)
+    const row = rows[i]
+    return {
+      x: rowXs[i],
+      title: `${row.season - 1}–${String(row.season).slice(2)} season`,
+      lines: [
+        {
+          label: 'model',
+          swatch: 'var(--viz-model)',
+          value: row.model == null ? '—' : num(row.model, 4),
+          muted: row.model == null,
+        },
+        {
+          label: 'market',
+          swatch: 'var(--viz-market)',
+          value: row.market == null ? '—' : num(row.market, 4),
+          muted: row.market == null,
+        },
+      ],
+    }
+  })
+  const hoverRow = active
+    ? rows[nearestIndex(rowXs, active.target.x)]
+    : null
+
   return (
     <figure className="m-0">
       {/* Legend is always present for two or more series. */}
@@ -89,10 +136,12 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
         </span>
       </div>
 
+      <div ref={containerRef} className="relative max-w-[760px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full max-w-[760px]"
+        className="h-auto w-full"
         role="img"
+        {...svgProps}
         aria-label={
           'Brier score by season. ' +
           rows
@@ -113,8 +162,8 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
               stroke="var(--viz-grid)" strokeWidth="1"
             />
             <text
-              x={PAD.left - 8} y={y(t) + 3}
-              fill="var(--text-tertiary)" fontSize="10" textAnchor="end"
+              x={PAD.left - 8} y={y(t) + 4}
+              fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="end"
               fontFamily="var(--font-mono-numeric), monospace"
             >
               {t.toFixed(3)}
@@ -132,8 +181,8 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
           .map((r) => (
             <text
               key={r.season}
-              x={x(r.season)} y={PAD.top + plotH + 16}
-              fill="var(--text-tertiary)" fontSize="10" textAnchor="middle"
+              x={x(r.season)} y={PAD.top + plotH + 18}
+              fill="var(--text-tertiary)" fontSize={AXIS_FONT} textAnchor="middle"
               fontFamily="var(--font-mono-numeric), monospace"
             >
               {String(r.season).slice(2)}
@@ -165,8 +214,8 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
         {/* Direct labels — the secondary encoding the tritan gap requires. */}
         {lastModel?.model != null && (
           <text
-            x={x(lastModel.season) + 8} y={y(lastModel.model) + 3}
-            fill="var(--text-secondary)" fontSize="10"
+            x={x(lastModel.season) + 8} y={y(lastModel.model) + 4}
+            fill="var(--text-secondary)" fontSize={LABEL_FONT}
             fontFamily="var(--font-mono-numeric), monospace"
           >
             model
@@ -174,14 +223,40 @@ export function SeasonBrierChart({ rows }: { rows: SeasonRow[] }) {
         )}
         {lastMarket?.market != null && (
           <text
-            x={x(lastMarket.season) + 8} y={y(lastMarket.market) + 3}
-            fill="var(--text-secondary)" fontSize="10"
+            x={x(lastMarket.season) + 8} y={y(lastMarket.market) + 4}
+            fill="var(--text-secondary)" fontSize={LABEL_FONT}
             fontFamily="var(--font-mono-numeric), monospace"
           >
             market
           </text>
         )}
+
+        {active && hoverRow ? (
+          <g aria-hidden="true">
+            <Crosshair
+              x={active.target.x}
+              top={PAD.top}
+              bottom={PAD.top + plotH}
+            />
+            {hoverRow.market != null ? (
+              <HighlightDot
+                x={active.target.x}
+                y={y(hoverRow.market)}
+                color="var(--viz-market)"
+              />
+            ) : null}
+            {hoverRow.model != null ? (
+              <HighlightDot
+                x={active.target.x}
+                y={y(hoverRow.model)}
+                color="var(--viz-model)"
+              />
+            ) : null}
+          </g>
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
 
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         Seasons with no market line have no blue point — those years carried

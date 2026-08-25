@@ -1,5 +1,15 @@
+'use client'
+
 import type { WinProbability } from '@/lib/espn'
 import { pct } from '@/lib/format'
+
+import {
+  ChartEmptyState,
+  ChartTooltip,
+  Crosshair,
+  HighlightDot,
+  useChartHover,
+} from './hover'
 
 /**
  * The in-game win probability curve, from ESPN.
@@ -21,21 +31,37 @@ import { pct } from '@/lib/format'
  * only say in numbers.
  */
 
+/* The 720-unit viewBox is the widest in the product — it scales to ~343px on
+   a phone, a 0.48 factor, so the 9px labels landed near 4px effective. 12 is
+   the compromise: legible on a phone without turning the desktop rendering
+   into a large-print chart. The tooltip is HTML and immune to the scaling. */
 const W = 720
 const H = 220
-const PAD = { top: 14, right: 14, bottom: 26, left: 40 }
+const PAD = { top: 14, right: 14, bottom: 26, left: 44 }
+const AXIS_FONT_CLASS = 'text-[12px]'
 
-export function WinProbabilityChart({
-  probability,
-  homeLabel,
-  awayLabel,
-}: {
+interface WinProbabilityProps {
   probability: WinProbability
   homeLabel: string
   awayLabel: string
-}) {
+}
+
+export function WinProbabilityChart(props: WinProbabilityProps) {
+  if (props.probability.points.length < 2) {
+    return (
+      <ChartEmptyState>No in-game win probability published.</ChartEmptyState>
+    )
+  }
+  return <WinProbabilityFigure {...props} />
+}
+
+/** The drawn chart — split out so the hover hook sits below the early return. */
+function WinProbabilityFigure({
+  probability,
+  homeLabel,
+  awayLabel,
+}: WinProbabilityProps) {
   const points = probability.points
-  if (points.length < 2) return null
 
   const plotW = W - PAD.left - PAD.right
   const plotH = H - PAD.top - PAD.bottom
@@ -64,12 +90,54 @@ export function WinProbabilityChart({
   const final = points[points.length - 1].homeWinPercentage
   const homeWon = final >= 0.5
 
+  // Hover: the crosshair snaps to the nearest play state; the tooltip names
+  // the moment the way a fan would (period and clock) and both sides' chance,
+  // with the running score beside each when ESPN carried one.
+  const { containerRef, active, svgProps } = useChartHover(W, (vx) => {
+    if (vx < PAD.left - 12 || vx > PAD.left + plotW + 12) return null
+    const i = Math.min(
+      points.length - 1,
+      Math.max(0, Math.round(((vx - PAD.left) / plotW) * (points.length - 1))),
+    )
+    const point = points[i]
+    const p = point.homeWinPercentage
+    const period =
+      point.period == null
+        ? null
+        : point.period > 4
+          ? `OT${point.period - 4}`
+          : `Q${point.period}`
+    const withScore = (score: number | null, probText: string) =>
+      score == null ? probText : `${score} pts · ${probText}`
+    return {
+      x: x(i),
+      y: y(p),
+      title: period
+        ? `${period}${point.clock ? ` · ${point.clock}` : ''}`
+        : `state ${i + 1} of ${points.length}`,
+      lines: [
+        {
+          label: homeLabel,
+          swatch: 'var(--viz-model)',
+          value: withScore(point.homeScore, pct(p, 1)),
+        },
+        {
+          label: awayLabel,
+          muted: true,
+          value: withScore(point.awayScore, pct(1 - p, 1)),
+        },
+      ],
+    }
+  })
+
   return (
     <figure className="m-0">
+      <div ref={containerRef} className="relative">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="h-auto w-full"
         role="img"
+        {...svgProps}
         aria-label={`In-game win probability for ${homeLabel} against ${awayLabel}. ${
           homeWon ? homeLabel : awayLabel
         } won.`}
@@ -88,9 +156,9 @@ export function WinProbabilityChart({
           <text
             key={value}
             x={PAD.left - 8}
-            y={y(value) + 3}
+            y={y(value) + 4}
             textAnchor="end"
-            className="fill-[var(--text-tertiary)] font-numeric text-[9px]"
+            className={`fill-[var(--text-tertiary)] font-numeric ${AXIS_FONT_CLASS}`}
           >
             {value === 0.5 ? '50%' : value === 1 ? `${homeLabel}` : `${awayLabel}`}
           </text>
@@ -108,8 +176,8 @@ export function WinProbabilityChart({
             />
             <text
               x={x(index) + 4}
-              y={H - PAD.bottom + 12}
-              className="fill-[var(--text-tertiary)] font-numeric text-[9px]"
+              y={H - PAD.bottom + 15}
+              className={`fill-[var(--text-tertiary)] font-numeric ${AXIS_FONT_CLASS}`}
             >
               {period > 4 ? `OT${period - 4}` : `Q${period}`}
             </text>
@@ -124,7 +192,26 @@ export function WinProbabilityChart({
           strokeLinejoin="round"
           strokeLinecap="round"
         />
+
+        {active ? (
+          <g aria-hidden="true">
+            <Crosshair
+              x={active.target.x}
+              top={PAD.top}
+              bottom={H - PAD.bottom}
+            />
+            {active.target.y != null ? (
+              <HighlightDot
+                x={active.target.x}
+                y={active.target.y}
+                color="var(--viz-model)"
+              />
+            ) : null}
+          </g>
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
 
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         Win probability for {homeLabel} through the game,{' '}

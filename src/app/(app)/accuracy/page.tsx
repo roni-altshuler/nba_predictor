@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { SeasonTable } from '@/components/accuracy/SeasonTable'
 import { CalibrationChart } from '@/components/charts/CalibrationChart'
 import { PitHistogram } from '@/components/charts/PitHistogram'
 import { SeasonBrierChart } from '@/components/charts/SeasonBrierChart'
@@ -184,41 +185,15 @@ export default function AccuracyPage() {
               }))}
             />
           </div>
-          <div className="card overflow-x-auto">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Season</th>
-                  <th scope="col" className="numeric text-right">Games</th>
-                  <th scope="col" className="numeric text-right">Model Brier</th>
-                  <th scope="col" className="numeric text-right">Market Brier</th>
-                  <th scope="col" className="numeric text-right">Gap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(bySeason).map(([season, row]: [string, any]) => (
-                  <tr key={season}>
-                    <td className="numeric whitespace-nowrap">
-                      <Link
-                        href={`/seasons/${season}`}
-                        className="text-[var(--text-primary)] hover:underline"
-                      >
-                        {Number(season) - 1}&ndash;{String(season).slice(2)}
-                      </Link>
-                    </td>
-                    <td className="numeric text-right">{row.n?.toLocaleString()}</td>
-                    <td className="numeric text-right">{num(row.model?.brier, 4)}</td>
-                    <td className="numeric text-right">
-                      {row.market ? num(row.market.brier, 4) : '—'}
-                    </td>
-                    <td className="numeric text-right">
-                      {row.gap !== undefined ? `+${num(row.gap, 4)}` : '—'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <SeasonTable
+            rows={Object.entries(bySeason).map(([season, row]: [string, any]) => ({
+              season: Number(season),
+              n: row.n ?? null,
+              modelBrier: row.model?.brier ?? null,
+              marketBrier: row.market?.brier ?? null,
+              gap: row.gap ?? null,
+            }))}
+          />
           <p className="mt-3 text-[11px] text-[var(--text-tertiary)]">
             A season with no market column had no published lines in the
             source. It is shown as absent rather than filled in.

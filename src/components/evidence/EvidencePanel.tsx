@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { StatTile } from '@/components/primitives/StatTile'
 import type { MeasuredBlock } from '@/lib/artifacts'
 import { num, stamp } from '@/lib/format'
 
@@ -68,10 +69,18 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
       </div>
 
       <dl className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Item label="Games scored" value={measured.paired_n?.toLocaleString() ?? '—'} />
-        <Item label="Walk-forward n" value={measured.walk_forward_n?.toLocaleString() ?? '—'} />
-        <Item label="Walk-forward Brier" value={num(measured.walk_forward_brier, 4)} />
-        <Item label="Calibration error" value={num(measured.walk_forward_ece, 4)} />
+        <StatTile dl label="Games scored">
+          {measured.paired_n?.toLocaleString() ?? '—'}
+        </StatTile>
+        <StatTile dl label="Walk-forward n">
+          {measured.walk_forward_n?.toLocaleString() ?? '—'}
+        </StatTile>
+        <StatTile dl label="Walk-forward Brier">
+          {num(measured.walk_forward_brier, 4)}
+        </StatTile>
+        <StatTile dl label="Calibration error">
+          {num(measured.walk_forward_ece, 4)}
+        </StatTile>
       </dl>
 
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
@@ -94,14 +103,5 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
         </Link>
       </p>
     </section>
-  )
-}
-
-function Item({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="eyebrow">{label}</dt>
-      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">{value}</dd>
-    </div>
   )
 }

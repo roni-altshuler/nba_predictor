@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { WinProbabilityChart } from '@/components/charts/WinProbabilityChart'
+import { LiveGameStrip } from '@/components/live/LiveGameStrip'
 import { BackLink } from '@/components/primitives/BackLink'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts } from '@/lib/artifacts'
@@ -766,6 +767,17 @@ function UpcomingGame({
           {game.venue ? ` · ${game.venue}` : ''}
         </p>
       </header>
+
+      {/* Client island: silent until this event is actually happening, then
+          score, period, clock and ESPN's own win probability, labelled as
+          ESPN's. Polls only while the game is `in`; the offseason reader
+          costs nothing. */}
+      <LiveGameStrip
+        gameId={game.game_id}
+        dateUtc={game.date_utc}
+        homeAbbr={game.home.abbreviation}
+        awayAbbr={game.away.abbreviation}
+      />
 
       <section className="card mb-6 p-4">
         <h2 className="mb-3 text-sm">Forecast</h2>

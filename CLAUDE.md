@@ -188,6 +188,7 @@ model changes.
 | `/preview` | the preseason projection, plus last season's opening-day one against what happened |
 | `/season` | projected standings, the projected-finish chart, the title race |
 | `/bracket` | the projected postseason, priced by exact enumeration |
+| `/playoffs` | the playoff picture — every team's seed distribution, the play-in band bracketed in amber |
 | `/games` | the schedule **by NBA week, as a calendar** |
 | `/games/[id]` | one game — upcoming, archived OR All-Star; series history, form, period breakdown, team totals, player box score |
 | `/allstar` | All-Star weekend, 31 games over 23 seasons, archive-only |

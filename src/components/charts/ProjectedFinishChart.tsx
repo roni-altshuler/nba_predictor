@@ -1,4 +1,13 @@
+'use client'
+
 import { pct } from '@/lib/format'
+
+import {
+  ChartEmptyState,
+  ChartTooltip,
+  HighlightRing,
+  useChartHover,
+} from './hover'
 
 /**
  * Projected wins with the 10th-to-90th percentile band, one row per club.
@@ -16,9 +25,13 @@ import { pct } from '@/lib/format'
  * rather than as colour on the rows, so nothing is encoded in hue alone.
  */
 
-const ROW_H = 18
-const PAD = { top: 22, right: 52, bottom: 8, left: 46 }
+/* Sized for the phone rendering: the 640-unit viewBox scales to ~343px at
+   375px width, so row and axis text is 12 — the old 9-10px landed near 5px
+   effective. Row height rises with it so the type still has air. */
+const ROW_H = 21
+const PAD = { top: 24, right: 56, bottom: 8, left: 50 }
 const W = 640
+const AXIS_FONT = 12
 
 export interface FinishRow {
   abbreviation: string
@@ -30,15 +43,24 @@ export interface FinishRow {
   p_playoffs: number
 }
 
-export function ProjectedFinishChart({
-  rows,
-  label,
-}: {
+interface ProjectedFinishProps {
   rows: FinishRow[]
   label: string
-}) {
-  if (rows.length < 2) return null
+}
 
+export function ProjectedFinishChart({ rows, label }: ProjectedFinishProps) {
+  if (rows.length < 2) {
+    return (
+      <ChartEmptyState>
+        No projected finish published for the {label}.
+      </ChartEmptyState>
+    )
+  }
+  return <FinishFigure rows={rows} label={label} />
+}
+
+/** The drawn chart — split out so the hover hook sits below the early return. */
+function FinishFigure({ rows, label }: ProjectedFinishProps) {
   const ordered = [...rows].sort((a, b) => b.wins - a.wins)
   const lo = Math.max(0, Math.floor(Math.min(...ordered.map((r) => r.low)) - 2))
   const hi = Math.min(82, Math.ceil(Math.max(...ordered.map((r) => r.high)) + 2))
@@ -51,12 +73,41 @@ export function ProjectedFinishChart({
 
   const ticks = axisTicks(lo, hi)
 
+  // Hover: rows are the marks here, so the pointer snaps to the nearest row
+  // and the tooltip carries the full claim — mean wins, the 10th–90th band,
+  // and the playoff probability that drives the row's emphasis.
+  const { containerRef, active, svgProps } = useChartHover(W, (vx, vy) => {
+    if (vy < PAD.top - 4 || vy > PAD.top + ordered.length * ROW_H + 4) {
+      return null
+    }
+    const index = Math.min(
+      ordered.length - 1,
+      Math.max(0, Math.floor((vy - PAD.top) / ROW_H)),
+    )
+    const row = ordered[index]
+    return {
+      x: x(row.wins),
+      y: y(index),
+      title: row.name,
+      lines: [
+        { label: 'mean wins', value: row.wins.toFixed(1) },
+        {
+          label: '10th–90th',
+          value: `${Math.round(row.low)}–${Math.round(row.high)}`,
+        },
+        { label: 'playoffs', value: pct(row.p_playoffs, 0), muted: true },
+      ],
+    }
+  })
+
   return (
     <figure className="m-0">
+      <div ref={containerRef} className="relative max-w-[720px]">
       <svg
         viewBox={`0 0 ${W} ${height}`}
-        className="h-auto w-full max-w-[720px]"
+        className="h-auto w-full"
         role="img"
+        {...svgProps}
         aria-label={`${label} projected wins. ${ordered
           .map(
             (r) =>
@@ -70,7 +121,7 @@ export function ProjectedFinishChart({
           x={PAD.left - 8}
           y={PAD.top - 11}
           fill="var(--text-tertiary)"
-          fontSize="9"
+          fontSize="11"
           textAnchor="end"
           fontFamily="var(--font-mono-numeric), monospace"
         >
@@ -91,7 +142,7 @@ export function ProjectedFinishChart({
               x={x(wins)}
               y={PAD.top - 11}
               fill="var(--text-tertiary)"
-              fontSize="9"
+              fontSize={AXIS_FONT}
               textAnchor="middle"
               fontFamily="var(--font-mono-numeric), monospace"
             >
@@ -117,9 +168,9 @@ export function ProjectedFinishChart({
           <g key={row.abbreviation}>
             <text
               x={PAD.left - 8}
-              y={y(index) + 3}
+              y={y(index) + 4}
               fill="var(--text-secondary)"
-              fontSize="10"
+              fontSize={AXIS_FONT}
               textAnchor="end"
               fontFamily="var(--font-mono-numeric), monospace"
             >
@@ -156,16 +207,22 @@ export function ProjectedFinishChart({
 
             <text
               x={W - PAD.right + 8}
-              y={y(index) + 3}
+              y={y(index) + 4}
               fill="var(--text-primary)"
-              fontSize="10"
+              fontSize={AXIS_FONT}
               fontFamily="var(--font-mono-numeric), monospace"
             >
               {row.wins.toFixed(1)}
             </text>
           </g>
         ))}
+
+        {active && active.target.y != null ? (
+          <HighlightRing x={active.target.x} y={active.target.y} r={7} />
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
 
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         The dot is the mean projected win total; the bar is the 10th to 90th

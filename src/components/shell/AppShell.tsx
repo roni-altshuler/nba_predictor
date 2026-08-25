@@ -44,6 +44,7 @@ const NAV = [
   { href: '/games', label: 'Games', short: 'Games' },
   { href: '/seasons', label: 'Seasons', short: 'Seasons', menu: true },
   { href: '/bracket', label: 'Bracket', short: 'Bracket' },
+  { href: '/playoffs', label: 'Playoff picture', short: 'Playoffs' },
   { href: '/allstar', label: 'All-Star', short: 'All-Star' },
   { href: '/upsets', label: 'Upsets', short: 'Upsets' },
   { href: '/predict', label: 'Head to head', short: 'H2H' },

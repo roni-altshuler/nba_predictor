@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { StatTile } from '@/components/primitives/StatTile'
 import { getEloSweep, getMarketBenchmark, getSeasonProjections } from '@/lib/artifacts'
 import { num, pct } from '@/lib/format'
 
@@ -62,26 +63,38 @@ export default function AboutPage() {
 
       <section aria-label="Headline figures" className="mb-10">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          <Figure
+          <StatTile
             label="Games scored"
-            value={paired.n?.toLocaleString() ?? '—'}
-            note="priced, paired against the close"
-          />
-          <Figure
+            className="card p-3"
+            valueClassName="mt-1 text-xl"
+            hint="priced, paired against the close"
+          >
+            {paired.n?.toLocaleString() ?? '—'}
+          </StatTile>
+          <StatTile
             label="Gap to the close"
-            value={`+${num(paired.model_gap_to_market, 4)}`}
-            note="Brier, lower is better"
-          />
-          <Figure
+            className="card p-3"
+            valueClassName="mt-1 text-xl"
+            hint="Brier, lower is better"
+          >
+            {`+${num(paired.model_gap_to_market, 4)}`}
+          </StatTile>
+          <StatTile
             label="Calibration error"
-            value={num(full?.model?.ece, 4)}
-            note="expected vs observed"
-          />
-          <Figure
+            className="card p-3"
+            valueClassName="mt-1 text-xl"
+            hint="expected vs observed"
+          >
+            {num(full?.model?.ece, 4)}
+          </StatTile>
+          <StatTile
             label="Walk-forward n"
-            value={full?.n?.toLocaleString() ?? '—'}
-            note="out-of-sample games"
-          />
+            className="card p-3"
+            valueClassName="mt-1 text-xl"
+            hint="out-of-sample games"
+          >
+            {full?.n?.toLocaleString() ?? '—'}
+          </StatTile>
         </div>
       </section>
 
@@ -425,26 +438,6 @@ export default function AboutPage() {
 }
 
 /* ---------------------------------------------------------------- pieces */
-
-function Figure({
-  label,
-  value,
-  note,
-}: {
-  label: string
-  value: string
-  note: string
-}) {
-  return (
-    <div className="card p-3">
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-1 text-xl text-[var(--text-primary)]">{value}</p>
-      <p className="mt-1 text-[10px] leading-snug text-[var(--text-tertiary)]">
-        {note}
-      </p>
-    </div>
-  )
-}
 
 function Part({ title }: { title: string }) {
   return (

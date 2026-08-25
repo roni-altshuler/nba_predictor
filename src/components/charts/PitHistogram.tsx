@@ -1,4 +1,9 @@
+'use client'
+
 import type { PitBucket } from '@/lib/artifacts'
+import { pct } from '@/lib/format'
+
+import { ChartEmptyState, ChartTooltip, useChartHover } from './hover'
 
 /**
  * The probability integral transform, against its uniform expectation.
@@ -26,21 +31,20 @@ const PAD = { top: 14, right: 14, bottom: 30, left: 40 }
 /* 2px of surface between adjacent fills, per the mark spec. */
 const GAP = 2
 
-export function PitHistogram({
-  buckets,
-  label,
-}: {
+interface PitHistogramProps {
   buckets: PitBucket[]
   label: string
-}) {
-  if (!buckets?.length) {
-    return (
-      <p className="text-xs text-[var(--text-tertiary)]">
-        No PIT histogram published.
-      </p>
-    )
-  }
+}
 
+export function PitHistogram({ buckets, label }: PitHistogramProps) {
+  if (!buckets?.length) {
+    return <ChartEmptyState>No PIT histogram published.</ChartEmptyState>
+  }
+  return <PitFigure buckets={buckets} label={label} />
+}
+
+/** The drawn chart — split out so the hover hook sits below the early return. */
+function PitFigure({ buckets, label }: PitHistogramProps) {
   const plotW = W - PAD.left - PAD.right
   const plotH = H - PAD.top - PAD.bottom
   const expected = buckets[0].expected
@@ -49,13 +53,41 @@ export function PitHistogram({
   const max = Math.max(...buckets.map((b) => b.share), expected * 2)
   const barW = plotW / buckets.length
 
+  // Hover: per-bar, with the bar's whole claim in text — the bin, the
+  // observed share, and the uniform reference the bar is judged against.
+  const { containerRef, active, svgProps } = useChartHover(W, (vx) => {
+    if (vx < PAD.left || vx > PAD.left + plotW) return null
+    const i = Math.min(
+      buckets.length - 1,
+      Math.max(0, Math.floor((vx - PAD.left) / barW)),
+    )
+    const b = buckets[i]
+    return {
+      x: PAD.left + (i + 0.5) * barW,
+      title: `decile ${b.lower.toFixed(1)}–${b.upper.toFixed(1)}`,
+      lines: [
+        { label: 'observed', value: pct(b.share, 1) },
+        { label: 'uniform', value: pct(b.expected, 1), muted: true },
+        { label: 'games', value: b.count.toLocaleString(), muted: true },
+      ],
+    }
+  })
+  const hoverIndex = active
+    ? Math.min(
+        buckets.length - 1,
+        Math.max(0, Math.floor((active.target.x - PAD.left) / barW)),
+      )
+    : -1
+
   return (
     <figure className="m-0">
+      <div ref={containerRef} className="relative">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="h-auto w-full"
         role="img"
         aria-label={`Probability integral transform for ${label}. Flat bars mean the published distribution is the right shape.`}
+        {...svgProps}
       >
         {buckets.map((bucket, i) => {
           const height = (bucket.share / max) * plotH
@@ -68,7 +100,17 @@ export function PitHistogram({
               height={Math.max(height, 0)}
               rx="2"
               fill="var(--viz-model)"
-            />
+            >
+              {/* The no-JS fallback the styled tooltip sits on top of. */}
+              <title>
+                {`${bucket.lower.toFixed(1)}–${bucket.upper.toFixed(1)}: ${pct(
+                  bucket.share,
+                  1,
+                )} observed against ${pct(bucket.expected, 1)} uniform (${
+                  bucket.count.toLocaleString()
+                } games)`}
+              </title>
+            </rect>
           )
         })}
 
@@ -86,7 +128,7 @@ export function PitHistogram({
           x={W - PAD.right}
           y={PAD.top + plotH - (expected / max) * plotH - 5}
           textAnchor="end"
-          className="fill-[var(--text-tertiary)] font-numeric text-[9px]"
+          className="fill-[var(--text-tertiary)] font-numeric text-[11px]"
         >
           uniform
         </text>
@@ -103,14 +145,35 @@ export function PitHistogram({
           <text
             key={text}
             x={PAD.left + (i / 2) * plotW}
-            y={H - 10}
+            y={H - 8}
             textAnchor={i === 0 ? 'start' : i === 2 ? 'end' : 'middle'}
-            className="fill-[var(--text-tertiary)] font-numeric text-[9px]"
+            className="fill-[var(--text-tertiary)] font-numeric text-[11px]"
           >
             {text}
           </text>
         ))}
+
+        {active && hoverIndex >= 0 ? (
+          /* A hairline outline on the hovered bar — emphasis, not meaning. */
+          <rect
+            data-highlight
+            x={PAD.left + hoverIndex * barW + GAP / 2}
+            y={
+              PAD.top +
+              plotH -
+              (buckets[hoverIndex].share / max) * plotH
+            }
+            width={Math.max(barW - GAP, 1)}
+            height={Math.max((buckets[hoverIndex].share / max) * plotH, 0)}
+            rx="2"
+            fill="none"
+            stroke="var(--text-primary)"
+            strokeWidth="1"
+          />
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         Where the real {label} fell inside the model&rsquo;s own published
         distribution, in deciles. Flat is correct. Heavy at both ends would

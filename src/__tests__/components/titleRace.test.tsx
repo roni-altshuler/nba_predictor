@@ -1,7 +1,43 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import type { TitleRace } from '@/lib/history'
+
+/* jsdom has neither PointerEvent nor layout: dispatch MouseEvents under the
+   pointer-event names and pin the chart box to its viewBox size so CSS pixels
+   equal viewBox units. (Local copies — a test file must not import another
+   test file, or it re-registers that file's suites.) */
+function mockChartBox(width: number, height: number) {
+  jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+    width,
+    height,
+    top: 0,
+    left: 0,
+    right: width,
+    bottom: height,
+    x: 0,
+    y: 0,
+    toJSON: () => ({}),
+  } as DOMRect)
+}
+
+function firePointer(
+  element: Element | Window,
+  type: 'pointermove' | 'pointerdown' | 'pointerleave',
+  init: { clientX?: number; clientY?: number; pointerType?: string } = {},
+) {
+  const event = new MouseEvent(type === 'pointerleave' ? 'pointerout' : type, {
+    bubbles: true,
+    cancelable: true,
+    clientX: init.clientX ?? 0,
+    clientY: init.clientY ?? 0,
+    relatedTarget: type === 'pointerleave' ? document.body : null,
+  })
+  Object.defineProperty(event, 'pointerType', {
+    value: init.pointerType ?? 'mouse',
+  })
+  fireEvent(element, event)
+}
 
 const TEAMS = {
   BOS: { name: 'Boston Celtics', abbreviation: 'BOS', conference: 'Eastern Conference', logo: null },
@@ -143,5 +179,39 @@ describe('TitleRaceChart', () => {
       'aria-label',
       expect.stringContaining('NY: 10% at the start, 35% at the end.'),
     )
+  })
+
+  it('snaps the crosshair to the nearest checkpoint and lists every series there', () => {
+    // 640-unit viewBox pinned at 640 CSS px; the two checkpoints land at
+    // x = 46 and x = 552, so a move at 500 snaps to the second one.
+    mockChartBox(640, 260)
+    const { container } = render(
+      <TitleRaceChart race={RACE} conference="Eastern Conference" />,
+    )
+    const svg = screen.getByRole('img')
+    firePointer(svg, 'pointermove', { clientX: 500, clientY: 100 })
+
+    expect(container.querySelector('[data-crosshair]')).toBeInTheDocument()
+    // One highlight dot per visible series at the snapped x.
+    expect(container.querySelectorAll('[data-highlight]')).toHaveLength(4)
+
+    const tooltip = container.querySelector('[data-chart-tooltip]') as HTMLElement
+    expect(tooltip).toHaveAttribute('data-active', 'true')
+    // The checkpoint named, and the whole distribution — three named teams
+    // plus the field — with every value as text.
+    expect(within(tooltip).getByText(/2026-04-13/)).toBeInTheDocument()
+    expect(within(tooltip).getByText(/1,230 games/)).toBeInTheDocument()
+    expect(within(tooltip).getByText('NY')).toBeInTheDocument()
+    expect(within(tooltip).getByText('35.0%')).toBeInTheDocument()
+    expect(within(tooltip).getByText('BOS')).toBeInTheDocument()
+    expect(within(tooltip).getByText('30.0%')).toBeInTheDocument()
+    expect(within(tooltip).getByText('DET')).toBeInTheDocument()
+    expect(within(tooltip).getByText('25.0%')).toBeInTheDocument()
+    expect(within(tooltip).getByText('field (2)')).toBeInTheDocument()
+    expect(within(tooltip).getByText('10.0%')).toBeInTheDocument()
+
+    firePointer(svg, 'pointerleave')
+    expect(tooltip).toHaveAttribute('data-active', 'false')
+    jest.restoreAllMocks()
   })
 })

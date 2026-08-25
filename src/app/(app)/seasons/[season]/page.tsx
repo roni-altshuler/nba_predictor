@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { TitleRaceChart } from '@/components/charts/TitleRaceChart'
 import { PlayoffBracket } from '@/components/playoffs/PlayoffBracket'
 import { BackLink } from '@/components/primitives/BackLink'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLabel } from '@/components/primitives/TeamLogo'
 import { num, pct } from '@/lib/format'
 import {
@@ -267,27 +268,34 @@ function AccuracyStrip({ accuracy }: { accuracy: Record<string, any> }) {
   const paired = accuracy.paired_model as Record<string, number> | undefined
   return (
     <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-      <Tile label="Games scored" value={(accuracy.n as number)?.toLocaleString() ?? '—'} />
-      <Tile label="Model Brier" value={num(accuracy.brier as number, 4)} />
-      <Tile
+      <StatTile
+        label="Games scored"
+        className="card p-3"
+        valueClassName="mt-1 text-lg"
+      >
+        {(accuracy.n as number)?.toLocaleString() ?? '—'}
+      </StatTile>
+      <StatTile
+        label="Model Brier"
+        className="card p-3"
+        valueClassName="mt-1 text-lg"
+      >
+        {num(accuracy.brier as number, 4)}
+      </StatTile>
+      <StatTile
         label="Market Brier"
-        value={market ? num(market.brier, 4) : 'no line'}
-      />
-      <Tile
+        className="card p-3"
+        valueClassName="mt-1 text-lg"
+      >
+        {market ? num(market.brier, 4) : 'no line'}
+      </StatTile>
+      <StatTile
         label="Gap to close"
-        value={
-          market && paired ? `+${num(paired.brier - market.brier, 4)}` : '—'
-        }
-      />
-    </div>
-  )
-}
-
-function Tile({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="card p-3">
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-1 text-lg text-[var(--text-primary)]">{value}</p>
+        className="card p-3"
+        valueClassName="mt-1 text-lg"
+      >
+        {market && paired ? `+${num(paired.brier - market.brier, 4)}` : '—'}
+      </StatTile>
     </div>
   )
 }

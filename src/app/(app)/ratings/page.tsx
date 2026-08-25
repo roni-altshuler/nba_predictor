@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { TeamLabel } from '@/components/primitives/TeamLogo'
+import { RatingsTable } from '@/components/ratings/RatingsTable'
 import { getPowerRatings } from '@/lib/artifacts'
 import { stamp } from '@/lib/format'
 
@@ -17,10 +17,6 @@ export default function RatingsPage() {
       </div>
     )
   }
-
-  const best = ratings.teams[0]?.elo ?? 1500
-  const worst = ratings.teams[ratings.teams.length - 1]?.elo ?? 1500
-  const span = Math.max(best - worst, 1)
 
   return (
     <div>
@@ -45,52 +41,7 @@ export default function RatingsPage() {
         </Link>
       </p>
 
-      <div className="card overflow-x-auto">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Team</th>
-              <th scope="col">Conference</th>
-              <th scope="col" className="numeric text-right">Elo</th>
-              <th scope="col" className="w-1/3">Relative</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ratings.teams.map((team) => (
-              <tr key={team.team_id}>
-                <td className="numeric text-[var(--text-tertiary)]">{team.rank}</td>
-                <td>
-                  <Link
-                    href={`/teams/${team.abbreviation}`}
-                    className="text-[var(--text-primary)] hover:underline"
-                  >
-                    <TeamLabel
-                      logo={team.logo}
-                      abbreviation={team.abbreviation}
-                      name={team.name}
-                    />
-                  </Link>
-                </td>
-                <td className="text-[var(--text-tertiary)]">
-                  {team.conference?.replace(' Conference', '') ?? '—'}
-                </td>
-                <td className="numeric text-right text-[var(--text-primary)]">
-                  {Math.round(team.elo)}
-                </td>
-                <td>
-                  <div className="prob-track">
-                    <div
-                      className="prob-fill"
-                      style={{ width: `${((team.elo - worst) / span) * 100}%` }}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <RatingsTable teams={ratings.teams} />
 
       <p className="mt-4 font-numeric text-[10px] text-[var(--text-tertiary)]">
         model {ratings.model_version} · generated {stamp(ratings.generated_at)}

@@ -1,7 +1,9 @@
 import Link from 'next/link'
 
+import { LiveBadge } from '@/components/live/LiveBadge'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import type { GameForecast } from '@/lib/artifacts'
+import { periodLabel, type LiveScore } from '@/lib/espnLive'
 import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
 import { ProbabilityBar } from './ProbabilityBar'
 
@@ -26,10 +28,36 @@ import { ProbabilityBar } from './ProbabilityBar'
  * The destination carries what a card cannot: the series history, both
  * sides' recent form, the score distribution, and after tip-off the box
  * score.
+ *
+ * **The `live` prop overlays reality on the forecast; it never replaces
+ * it.** On game night the home slate hydrates into a client island that
+ * polls ESPN's scoreboard and passes each card its own live row — score in
+ * place of `vs`, period and clock where the tip time was, a LIVE pill, and
+ * FINAL when it is over. The probability bar and projections stay exactly
+ * where they were, because watching the forecast meet reality is the whole
+ * point of the overlay. A `post` row that is not `completed` is a
+ * postponement and renders as if nothing were live — ESPN publishes the
+ * makeup under a new event id, so this card knows nothing about it.
  */
-export function GameCard({ game }: { game: GameForecast }) {
+export function GameCard({
+  game,
+  live,
+}: {
+  game: GameForecast
+  live?: LiveScore
+}) {
   const value = game.value
   const favoured = game.p_home >= 0.5 ? game.home : game.away
+
+  const inPlay = live?.state === 'in'
+  const finished = live?.state === 'post' && live.completed
+  const haveScore =
+    (inPlay || finished) &&
+    live!.homeScore !== null &&
+    live!.awayScore !== null
+  const phase = inPlay
+    ? [periodLabel(live!.period), live!.displayClock].filter(Boolean).join(' · ')
+    : ''
 
   return (
     <Link
@@ -37,8 +65,21 @@ export function GameCard({ game }: { game: GameForecast }) {
       className="card group block p-4 transition-colors hover:bg-[var(--card-hover)]"
       aria-label={`${game.away.name} at ${game.home.name}, ${gameTime(game.date_utc)} — full forecast and match detail`}
     >
-      <div className="mb-3 flex items-baseline justify-between gap-2">
-        <span className="eyebrow">{gameTime(game.date_utc)}</span>
+      <div className="mb-3 flex items-center justify-between gap-2">
+        {inPlay ? (
+          <span className="flex items-center gap-2">
+            <LiveBadge />
+            {phase ? (
+              <span className="font-numeric text-[11px] text-[var(--text-secondary)]">
+                {phase}
+              </span>
+            ) : null}
+          </span>
+        ) : finished ? (
+          <span className="eyebrow text-[var(--text-secondary)]">Final</span>
+        ) : (
+          <span className="eyebrow">{gameTime(game.date_utc)}</span>
+        )}
         {value?.flagged ? (
           <span className="font-numeric text-[10px] uppercase tracking-[0.14em] text-[var(--accent-primary)]">
             Edge {pct(value.edge, 1)}
@@ -48,12 +89,21 @@ export function GameCard({ game }: { game: GameForecast }) {
 
       <div className="mb-3 flex items-center justify-between gap-3">
         <TeamLine team={game.away} />
-        <span
-          className="font-numeric text-xs text-[var(--text-tertiary)]"
-          data-score="pending"
-        >
-          vs
-        </span>
+        {haveScore ? (
+          <span
+            className="numeric shrink-0 text-lg text-[var(--text-primary)]"
+            data-score={finished ? 'final' : 'live'}
+          >
+            {live!.awayScore}–{live!.homeScore}
+          </span>
+        ) : (
+          <span
+            className="font-numeric text-xs text-[var(--text-tertiary)]"
+            data-score="pending"
+          >
+            vs
+          </span>
+        )}
         <TeamLine team={game.home} align="right" />
       </div>
 
@@ -62,6 +112,11 @@ export function GameCard({ game }: { game: GameForecast }) {
         homeLabel={game.home.abbreviation}
         pHome={game.p_home}
       />
+      {inPlay || finished ? (
+        <p className="mt-1.5 text-[10px] text-[var(--text-tertiary)]">
+          Pre-game forecast — made before tip-off, not updated in play.
+        </p>
+      ) : null}
 
       <dl className="mt-4 grid grid-cols-3 gap-3 border-t border-[var(--border-color)] pt-3">
         <Stat label="Proj. margin" value={`${favoured.abbreviation} ${signed(Math.abs(game.exp_margin))}`} />

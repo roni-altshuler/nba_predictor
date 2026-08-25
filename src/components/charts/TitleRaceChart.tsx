@@ -1,5 +1,15 @@
+'use client'
+
 import { pct } from '@/lib/format'
-import type { TitleRace } from '@/lib/history'
+import type { TitleRace, TitleRaceTeam } from '@/lib/history'
+
+import {
+  ChartTooltip,
+  Crosshair,
+  HighlightDot,
+  nearestIndex,
+  useChartHover,
+} from './hover'
 
 /**
  * The conference title race as a line per contender.
@@ -26,9 +36,17 @@ import type { TitleRace } from '@/lib/history'
  * them with the same component makes labelling them the component's job.
  */
 
+/* Font sizes are set for the chart's SMALLEST rendering, not its largest: the
+   640-unit viewBox scales to ~343px on a phone, a 0.54 factor, so a 9px axis
+   label lands under 5px effective. Axis text is 12 and the end labels — the
+   only channel carrying identity for a colour-blind reader — are 13. */
 const W = 640
 const H = 260
-const PAD = { top: 14, right: 68, bottom: 30, left: 40 }
+const PAD = { top: 14, right: 88, bottom: 32, left: 46 }
+const AXIS_FONT = 12
+const LABEL_FONT = 13
+/* De-collision gap: end-label font size plus breathing room. */
+const LABEL_GAP = 15
 const LINE_COLORS = ['var(--viz-cat-1)', 'var(--viz-cat-2)', 'var(--viz-cat-3)']
 const NAMED = 3
 
@@ -56,6 +74,23 @@ export function TitleRaceChart({
     return <NotYetALine race={race} conference={conference} count={checkpoints.length} />
   }
 
+  return <RaceFigure race={race} conference={conference} members={members} />
+}
+
+/**
+ * The drawn chart, split out so the hover hook sits below the empty-state
+ * early return — hooks must be unconditional.
+ */
+function RaceFigure({
+  race,
+  conference,
+  members,
+}: {
+  race: TitleRace
+  conference: string
+  members: TitleRaceTeam[]
+}) {
+  const checkpoints = race.checkpoints
   const latest = checkpoints[checkpoints.length - 1].probabilities ?? {}
   const ranked = [...members].sort(
     (a, b) => (latest[b.abbreviation] ?? 0) - (latest[a.abbreviation] ?? 0),
@@ -116,10 +151,31 @@ export function TitleRaceChart({
       const index = lastPresent(track.values)
       return index < 0 ? null : y(track.values[index] as number)
     }),
-    11,
+    LABEL_GAP,
     PAD.top,
     PAD.top + plotH,
   )
+
+  // The hover layer: crosshair snaps to the nearest checkpoint and the
+  // tooltip lists every visible series' value at that date.
+  const checkpointXs = checkpoints.map((_, i) => x(i))
+  const { containerRef, active, svgProps } = useChartHover(W, (vx) => {
+    if (vx < PAD.left - 12 || vx > PAD.left + plotW + 12) return null
+    const i = nearestIndex(checkpointXs, vx)
+    const c = checkpoints[i]
+    return {
+      x: checkpointXs[i],
+      title: `${c.date} · ${c.games_played.toLocaleString()} games`,
+      lines: tracks.map((track) => ({
+        label: track.isField ? track.label : track.key,
+        swatch: track.color,
+        muted: track.isField,
+        value:
+          track.values[i] == null ? '—' : pct(track.values[i] as number, 1),
+      })),
+    }
+  })
+  const hoverIndex = active ? nearestIndex(checkpointXs, active.target.x) : -1
 
   return (
     <figure className="m-0">
@@ -143,10 +199,12 @@ export function TitleRaceChart({
         ))}
       </div>
 
+      <div ref={containerRef} className="relative max-w-[720px]">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full max-w-[720px]"
+        className="h-auto w-full"
         role="img"
+        {...svgProps}
         aria-label={`${conference} title probability over the ${race.season - 1}-${String(
           race.season,
         ).slice(2)} season. ${tracks
@@ -171,9 +229,9 @@ export function TitleRaceChart({
             />
             <text
               x={PAD.left - 6}
-              y={y(value) + 3}
+              y={y(value) + 4}
               fill="var(--text-tertiary)"
-              fontSize="9"
+              fontSize={AXIS_FONT}
               textAnchor="end"
               fontFamily="var(--font-mono-numeric), monospace"
             >
@@ -234,11 +292,11 @@ export function TitleRaceChart({
                   />
                   <text
                     x={x(lastIndex) + 8}
-                    y={(labelY[trackIndex] as number) + 3}
+                    y={(labelY[trackIndex] as number) + 4}
                     fill={
                       track.isField ? 'var(--text-tertiary)' : 'var(--text-primary)'
                     }
-                    fontSize="10"
+                    fontSize={LABEL_FONT}
                     fontFamily="var(--font-mono-numeric), monospace"
                   >
                     {track.isField ? 'field' : track.label}{' '}
@@ -255,9 +313,9 @@ export function TitleRaceChart({
             <text
               key={`${i}-${n}`}
               x={x(i)}
-              y={PAD.top + plotH + 16}
+              y={PAD.top + plotH + 18}
               fill="var(--text-tertiary)"
-              fontSize="9"
+              fontSize={AXIS_FONT}
               textAnchor={n === 0 ? 'start' : n === 2 ? 'end' : 'middle'}
               fontFamily="var(--font-mono-numeric), monospace"
             >
@@ -265,7 +323,30 @@ export function TitleRaceChart({
             </text>
           ),
         )}
+
+        {active && hoverIndex >= 0 ? (
+          <g aria-hidden="true">
+            <Crosshair
+              x={active.target.x}
+              top={PAD.top}
+              bottom={PAD.top + plotH}
+            />
+            {tracks.map((track) => {
+              const v = track.values[hoverIndex]
+              return v == null ? null : (
+                <HighlightDot
+                  key={track.key}
+                  x={active.target.x}
+                  y={y(v)}
+                  color={track.color}
+                />
+              )
+            })}
+          </g>
+        ) : null}
       </svg>
+      <ChartTooltip active={active} />
+      </div>
 
       <figcaption className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         {race.basis === 'backtest' ? (

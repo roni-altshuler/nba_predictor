@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
-import { GameCard } from '@/components/forecast/GameCard'
+import { LiveSlate } from '@/components/live/LiveSlate'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import {
   getGameForecasts,
@@ -62,11 +62,12 @@ export default function HomePage() {
                   All games
                 </Link>
               </div>
-              <div className="grid gap-3 md:grid-cols-2">
-                {nextDay[1].slice(0, 4).map((game) => (
-                  <GameCard key={game.game_id} game={game} />
-                ))}
-              </div>
+              {/* A client island, so that on game night the cards overlay
+                  the live score ESPN reports — polled in the browser, at
+                  zero function cost, on games this server-picked slate
+                  already renders. Off nights it renders exactly what the
+                  old server-side map did. */}
+              <LiveSlate games={nextDay[1].slice(0, 4)} />
             </section>
           ) : null}
         </>

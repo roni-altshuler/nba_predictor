@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { BackLink } from '@/components/primitives/BackLink'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { roundName } from '@/lib/bracketLayout'
 import { num, pct } from '@/lib/format'
@@ -137,30 +138,36 @@ export default async function SeriesPage({
         <section className="card p-4">
           <h2 className="text-sm">What the model made of it</h2>
           <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            <Stat
+            <StatTile
               label="Games it favoured correctly"
-              value={`${called} of ${scored.length}`}
-            />
-            <Stat
+              valueClassName="mt-0.5 text-lg"
+            >
+              {`${called} of ${scored.length}`}
+            </StatTile>
+            <StatTile
               label="Mean probability on the winner"
-              value={pct(
+              valueClassName="mt-0.5 text-lg"
+            >
+              {pct(
                 scored.reduce((sum, g) => {
                   const homeWon = g.home_score > g.away_score
                   return sum + (homeWon ? g.p_model! : 1 - g.p_model!)
                 }, 0) / scored.length,
                 1,
               )}
-            />
-            <Stat
+            </StatTile>
+            <StatTile
               label="Brier over the series"
-              value={num(
+              valueClassName="mt-0.5 text-lg"
+            >
+              {num(
                 scored.reduce((sum, g) => {
                   const homeWon = g.home_score > g.away_score ? 1 : 0
                   return sum + (g.p_model! - homeWon) ** 2
                 }, 0) / scored.length,
                 4,
               )}
-            />
+            </StatTile>
           </div>
           <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
             <span className="text-[var(--accent-warn)]">A backtest</span>, and
@@ -321,14 +328,5 @@ function SeriesGame({
         {said === null ? '—' : pct(said, 0)}
       </span>
     </Link>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-0.5 text-lg text-[var(--text-primary)]">{value}</p>
-    </div>
   )
 }

@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation'
 
 import { RatingHistoryChart } from '@/components/charts/RatingHistoryChart'
 import { BackLink } from '@/components/primitives/BackLink'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts, getPowerRatings, getSeasonProjections } from '@/lib/artifacts'
-import { gameDate, num, pct } from '@/lib/format'
+import { gameDate, pct } from '@/lib/format'
 import {
   getRatingHistory,
   getSeason,
@@ -101,18 +102,41 @@ export default async function TeamPage({
       </header>
 
       <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Tile label="Elo" value={String(Math.round(team.elo))} />
+        <StatTile label="Elo" className="card p-3" valueClassName="mt-1 text-lg">
+          {String(Math.round(team.elo))}
+        </StatTile>
         {projection ? (
           <>
-            <Tile
+            <StatTile
               label="Projected"
-              value={`${projection.wins.toFixed(1)}–${projection.losses.toFixed(1)}`}
-            />
-            <Tile label="Playoffs" value={pct(projection.p_playoffs, 0)} />
-            <Tile label="Title" value={pct(projection.p_championship)} />
+              className="card p-3"
+              valueClassName="mt-1 text-lg"
+            >
+              {`${projection.wins.toFixed(1)}–${projection.losses.toFixed(1)}`}
+            </StatTile>
+            <StatTile
+              label="Playoffs"
+              className="card p-3"
+              valueClassName="mt-1 text-lg"
+            >
+              {pct(projection.p_playoffs, 0)}
+            </StatTile>
+            <StatTile
+              label="Title"
+              className="card p-3"
+              valueClassName="mt-1 text-lg"
+            >
+              {pct(projection.p_championship)}
+            </StatTile>
           </>
         ) : (
-          <Tile label="Projection" value="—" />
+          <StatTile
+            label="Projection"
+            className="card p-3"
+            valueClassName="mt-1 text-lg"
+          >
+            —
+          </StatTile>
         )}
       </section>
 
@@ -128,17 +152,15 @@ export default async function TeamPage({
             </Link>
           </h2>
           <div className="card grid grid-cols-2 gap-4 p-4 sm:grid-cols-5">
-            <Stat label="Record" value={`${lastRecord.wins}–${lastRecord.losses}`} />
-            <Stat label="Home" value={`${lastRecord.home_wins}–${lastRecord.home_losses}`} />
-            <Stat label="Away" value={`${lastRecord.away_wins}–${lastRecord.away_losses}`} />
-            <Stat
-              label="Net rating"
-              value={`${lastRecord.net_rating > 0 ? '+' : ''}${lastRecord.net_rating.toFixed(1)}`}
-            />
-            <Stat
-              label="Conference"
-              value={`#${lastRecord.conference_rank ?? '—'}`}
-            />
+            <StatTile label="Record">{`${lastRecord.wins}–${lastRecord.losses}`}</StatTile>
+            <StatTile label="Home">{`${lastRecord.home_wins}–${lastRecord.home_losses}`}</StatTile>
+            <StatTile label="Away">{`${lastRecord.away_wins}–${lastRecord.away_losses}`}</StatTile>
+            <StatTile label="Net rating">
+              {`${lastRecord.net_rating > 0 ? '+' : ''}${lastRecord.net_rating.toFixed(1)}`}
+            </StatTile>
+            <StatTile label="Conference">
+              {`#${lastRecord.conference_rank ?? '—'}`}
+            </StatTile>
           </div>
         </section>
       ) : null}
@@ -271,22 +293,4 @@ function rampStep(t: number): string {
   if (t > 0.4) return 'var(--viz-seq-3)'
   if (t > 0.2) return 'var(--viz-seq-2)'
   return 'var(--viz-seq-1)'
-}
-
-function Tile({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="card p-3">
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-1 text-lg text-[var(--text-primary)]">{value}</p>
-    </div>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-0.5 text-sm text-[var(--text-primary)]">{value}</p>
-    </div>
-  )
 }
