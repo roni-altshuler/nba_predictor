@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-08-24T11:23:15+00:00",
+  "generated_at": "2026-08-25T11:22:58+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -979,17 +979,17 @@
     "sims": 20000,
     "season": 2027,
     "margin_sd": 12.628022740045525,
-    "total_sd": 18.984775532197734
+    "total_sd": 18.98477553219773
   },
   "measured": {
     "available": true,
-    "generated_at": "2026-08-17T13:32:44+00:00",
+    "generated_at": "2026-08-24T13:42:15+00:00",
     "walk_forward_n": 25749,
-    "walk_forward_brier": 0.21060396481683405,
-    "walk_forward_ece": 0.011369166013610557,
+    "walk_forward_brier": 0.2106039648168081,
+    "walk_forward_ece": 0.011369166013580206,
     "paired_n": 14600,
     "market_brier": 0.2069878313121994,
-    "model_brier": 0.21410723712652,
+    "model_brier": 0.21410723712651963,
     "gap_to_market": 0.00712,
     "bootstrap": {
       "mean_diff": 0.00712,

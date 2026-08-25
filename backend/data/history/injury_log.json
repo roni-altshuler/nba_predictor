@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-08-21T11:22:20+00:00",
- "n_rows": 84,
+ "last_observed": "2026-08-25T11:23:33+00:00",
+ "n_rows": 85,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -844,6 +844,16 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-08-21T11:22:20+00:00"
+  },
+  {
+   "team": "Portland Trail Blazers",
+   "player": "Shaedon Sharpe",
+   "position": "G",
+   "status": "Out",
+   "detail": "Right knee surgery",
+   "return_date": "2027-03-01",
+   "espn_date": "2026-08-24T20:23Z",
+   "observed_at": "2026-08-25T11:23:33+00:00"
   }
  ]
 }
