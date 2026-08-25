@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { WinProbabilityChart } from '@/components/charts/WinProbabilityChart'
 import { LiveGameStrip } from '@/components/live/LiveGameStrip'
 import { BackLink } from '@/components/primitives/BackLink'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { getGameForecasts } from '@/lib/artifacts'
 import {
@@ -550,24 +551,22 @@ function RecordedForecast({
       </div>
 
       <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-[var(--border-color)] pt-3 sm:grid-cols-4">
-        <Stat label="Proj. margin" value={signed(game.exp_margin ?? 0)} />
-        <Stat
-          label="Actual margin"
-          value={`${homeWon ? '+' : '-'}${margin}`}
-        />
-        <Stat label="Proj. total" value={num(game.exp_total, 1)} />
-        <Stat label="Actual total" value={String(game.home_score + game.away_score)} />
-        <Stat label="Elo, away" value={num(game.elo_away, 0)} />
-        <Stat label="Elo, home" value={num(game.elo_home, 0)} />
-        <Stat label="Spread" value={spread(game.spread_home ?? null)} />
-        <Stat
-          label="Moneyline"
-          value={
-            game.ml_away !== undefined && game.ml_home !== undefined
-              ? `${moneyline(game.ml_away)} / ${moneyline(game.ml_home)}`
-              : '—'
-          }
-        />
+        <StatTile dl label="Proj. margin">{signed(game.exp_margin ?? 0)}</StatTile>
+        <StatTile dl label="Actual margin">
+          {`${homeWon ? '+' : '-'}${margin}`}
+        </StatTile>
+        <StatTile dl label="Proj. total">{num(game.exp_total, 1)}</StatTile>
+        <StatTile dl label="Actual total">
+          {String(game.home_score + game.away_score)}
+        </StatTile>
+        <StatTile dl label="Elo, away">{num(game.elo_away, 0)}</StatTile>
+        <StatTile dl label="Elo, home">{num(game.elo_home, 0)}</StatTile>
+        <StatTile dl label="Spread">{spread(game.spread_home ?? null)}</StatTile>
+        <StatTile dl label="Moneyline">
+          {game.ml_away !== undefined && game.ml_home !== undefined
+            ? `${moneyline(game.ml_away)} / ${moneyline(game.ml_home)}`
+            : '—'}
+        </StatTile>
       </dl>
 
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
@@ -782,13 +781,12 @@ function UpcomingGame({
       <section className="card mb-6 p-4">
         <h2 className="mb-3 text-sm">Forecast</h2>
         <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat label="Home win" value={pct(game.p_home)} />
-          <Stat label="Proj. margin" value={signed(game.exp_margin)} />
-          <Stat label="Proj. total" value={num(game.exp_total, 1)} />
-          <Stat
-            label="Proj. score"
-            value={`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
-          />
+          <StatTile dl label="Home win">{pct(game.p_home)}</StatTile>
+          <StatTile dl label="Proj. margin">{signed(game.exp_margin)}</StatTile>
+          <StatTile dl label="Proj. total">{num(game.exp_total, 1)}</StatTile>
+          <StatTile dl label="Proj. score">
+            {`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
+          </StatTile>
         </dl>
       </section>
 
@@ -796,13 +794,12 @@ function UpcomingGame({
         <section className="card mb-6 p-4">
           <h2 className="mb-3 text-sm">Value surface</h2>
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Stat
-              label="Moneyline"
-              value={`${moneyline(game.value.ml_away)} / ${moneyline(game.value.ml_home)}`}
-            />
-            <Stat label="No-vig home" value={pct(game.value.fair_home)} />
-            <Stat label="Edge" value={pct(game.value.edge, 2)} />
-            <Stat label="Kelly" value={pct(game.value.kelly, 2)} />
+            <StatTile dl label="Moneyline">
+              {`${moneyline(game.value.ml_away)} / ${moneyline(game.value.ml_home)}`}
+            </StatTile>
+            <StatTile dl label="No-vig home">{pct(game.value.fair_home)}</StatTile>
+            <StatTile dl label="Edge">{pct(game.value.edge, 2)}</StatTile>
+            <StatTile dl label="Kelly">{pct(game.value.kelly, 2)}</StatTile>
           </dl>
         </section>
       ) : (
@@ -1293,11 +1290,3 @@ function PeriodTable({
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="eyebrow">{label}</dt>
-      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">{value}</dd>
-    </div>
-  )
-}

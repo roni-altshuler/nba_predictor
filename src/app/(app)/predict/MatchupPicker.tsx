@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react'
 
 import { ProbabilityBar } from '@/components/forecast/ProbabilityBar'
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { gameTime, num, signed } from '@/lib/format'
 import type { Matchups } from '@/lib/history'
@@ -101,25 +102,25 @@ export function MatchupPicker({
           />
 
           <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-[var(--border-color)] pt-4 sm:grid-cols-4">
-            <Stat label="Projected margin">
+            <StatTile dl label="Projected margin">
               {result.exp_margin >= 0 ? home.abbreviation : away.abbreviation}{' '}
               <AnimatedNumber
                 value={Math.abs(result.exp_margin)}
                 format={(v) => signed(v)}
               />
-            </Stat>
-            <Stat label="Projected total">
+            </StatTile>
+            <StatTile dl label="Projected total">
               <AnimatedNumber
                 value={result.exp_total}
                 format={(v) => num(v, 1)}
               />
-            </Stat>
-            <Stat label="Projected score">
+            </StatTile>
+            <StatTile dl label="Projected score">
               <AnimatedNumber value={result.exp_away_score} />
               {'–'}
               <AnimatedNumber value={result.exp_home_score} />
-            </Stat>
-            <Stat label="Rating gap">
+            </StatTile>
+            <StatTile dl label="Rating gap">
               <AnimatedNumber
                 value={
                   (data.elo[home.abbreviation] ?? 1500) -
@@ -127,7 +128,7 @@ export function MatchupPicker({
                 }
                 format={(v) => signed(v, 0)}
               />
-            </Stat>
+            </StatTile>
           </dl>
 
           <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
@@ -237,19 +238,3 @@ function Side({
   )
 }
 
-function Stat({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <div>
-      <dt className="eyebrow">{label}</dt>
-      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">
-        {children}
-      </dd>
-    </div>
-  )
-}

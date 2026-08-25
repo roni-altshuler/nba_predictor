@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { LiveBadge } from '@/components/live/LiveBadge'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import type { GameForecast } from '@/lib/artifacts'
 import { periodLabel, type LiveScore } from '@/lib/espnLive'
@@ -119,12 +120,13 @@ export function GameCard({
       ) : null}
 
       <dl className="mt-4 grid grid-cols-3 gap-3 border-t border-[var(--border-color)] pt-3">
-        <Stat label="Proj. margin" value={`${favoured.abbreviation} ${signed(Math.abs(game.exp_margin))}`} />
-        <Stat label="Proj. total" value={num(game.exp_total, 1)} />
-        <Stat
-          label="Proj. score"
-          value={`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
-        />
+        <StatTile dl label="Proj. margin">
+          {`${favoured.abbreviation} ${signed(Math.abs(game.exp_margin))}`}
+        </StatTile>
+        <StatTile dl label="Proj. total">{num(game.exp_total, 1)}</StatTile>
+        <StatTile dl label="Proj. score">
+          {`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
+        </StatTile>
       </dl>
 
       {value ? (
@@ -136,13 +138,16 @@ export function GameCard({
             </span>
           </div>
           <dl className="grid grid-cols-4 gap-3">
-            <Stat label="ML" value={`${moneyline(value.ml_away)} / ${moneyline(value.ml_home)}`} />
-            <Stat label="Spread" value={spread(value.spread_home)} />
-            <Stat label="Total" value={value.total_points ? num(value.total_points, 1) : '—'} />
-            <Stat
-              label="No-vig"
-              value={`${pct(value.fair_away, 0)} / ${pct(value.fair_home, 0)}`}
-            />
+            <StatTile dl label="ML">
+              {`${moneyline(value.ml_away)} / ${moneyline(value.ml_home)}`}
+            </StatTile>
+            <StatTile dl label="Spread">{spread(value.spread_home)}</StatTile>
+            <StatTile dl label="Total">
+              {value.total_points ? num(value.total_points, 1) : '—'}
+            </StatTile>
+            <StatTile dl label="No-vig">
+              {`${pct(value.fair_away, 0)} / ${pct(value.fair_home, 0)}`}
+            </StatTile>
           </dl>
           <div className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-1">
             <span className="font-numeric text-xs text-[var(--text-secondary)]">
@@ -226,11 +231,3 @@ function TeamLine({
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="eyebrow">{label}</dt>
-      <dd className="numeric mt-0.5 text-sm text-[var(--text-primary)]">{value}</dd>
-    </div>
-  )
-}

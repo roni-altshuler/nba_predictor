@@ -141,6 +141,18 @@
      seats them on a light tile for exactly this reason. */
   --logo-plate: #ffffff;
   --logo-plate-ring: rgba(19, 19, 22, 0.12);
+
+  /* ────────────────────────────────────────────────────────────
+     The ambient hardwood layer (AmbientBackground.tsx) — the sanctioned
+     exception to "no gradients", added 2026-08-25 at the owner's request.
+     Court lines and two ember glows in the same amber family as the
+     sequential chart ramp above, all capped near 7% opacity so text
+     contrast on the black canvas is unchanged. Cards are opaque and paint
+     over it; it reads only in the gutters, which is the point.
+     ──────────────────────────────────────────────────────────── */
+  --court-line: rgba(226, 136, 47, 0.055);
+  --ambient-ember-a: #b96b28;
+  --ambient-ember-b: #5a3418;
 }
 
 .dark {
@@ -284,6 +296,62 @@ a.card:hover,
 }
 @media (prefers-reduced-motion: reduce) {
   .skeleton-shimmer::after { animation: none; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   Ambient hardwood layer. Fixed, behind everything, untouchable.
+
+   Negative z-index puts it below every in-flow block background — an
+   opaque .card covers it by the CSS painting order alone, no per-surface
+   z-index bookkeeping. The glows animate TRANSFORM ONLY (compositor-side,
+   no layout or paint), on 50s+ alternating periods: weather, not
+   animation. Under prefers-reduced-motion they are explicitly
+   `animation: none` rather than relying on the global duration clamp — a
+   0.01ms infinite-alternate animation strobes instead of stopping.
+   ──────────────────────────────────────────────────────────── */
+.ambient-court {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ambient-glow {
+  position: absolute;
+  width: 75vmax;
+  height: 75vmax;
+  border-radius: 50%;
+  opacity: 0.07;
+}
+.ambient-glow-a {
+  background: radial-gradient(circle, var(--ambient-ember-a) 0%, transparent 62%);
+  top: -28vmax;
+  right: -22vmax;
+  animation: ambient-drift-a 52s ease-in-out infinite alternate;
+}
+.ambient-glow-b {
+  background: radial-gradient(circle, var(--ambient-ember-b) 0%, transparent 62%);
+  bottom: -30vmax;
+  left: -24vmax;
+  animation: ambient-drift-b 68s ease-in-out infinite alternate;
+}
+@keyframes ambient-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-9vmax, 7vmax, 0) scale(1.18); }
+}
+@keyframes ambient-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.12); }
+  to { transform: translate3d(8vmax, -6vmax, 0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow-a,
+  .ambient-glow-b { animation: none; }
 }
 
 table { border-collapse: collapse; width: 100%; }

@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
 import { LiveSlate } from '@/components/live/LiveSlate'
+import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import {
   getGameForecasts,
@@ -45,10 +46,18 @@ export default function HomePage() {
       ) : (
         <>
           <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Tile label="Season" value={String(forecasts.season)} />
-            <Tile label="Games forecast" value={forecasts.n_games.toLocaleString()} />
-            <Tile label="With a line" value={forecasts.n_priced.toLocaleString()} />
-            <Tile label="Flagged as value" value={forecasts.n_flagged.toLocaleString()} />
+            <StatTile label="Season" className="card p-3" valueClassName="mt-1 text-lg">
+              {String(forecasts.season)}
+            </StatTile>
+            <StatTile label="Games forecast" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_games.toLocaleString()}
+            </StatTile>
+            <StatTile label="With a line" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_priced.toLocaleString()}
+            </StatTile>
+            <StatTile label="Flagged as value" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_flagged.toLocaleString()}
+            </StatTile>
           </section>
 
           {nextDay ? (
@@ -186,15 +195,6 @@ export default function HomePage() {
           model {projections.model_version} · generated {stamp(projections.generated_at)}
         </p>
       ) : null}
-    </div>
-  )
-}
-
-function Tile({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="card p-3">
-      <p className="eyebrow">{label}</p>
-      <p className="numeric mt-1 text-lg text-[var(--text-primary)]">{value}</p>
     </div>
   )
 }

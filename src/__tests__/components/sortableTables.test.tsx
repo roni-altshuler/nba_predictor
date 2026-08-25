@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import {
   cycleSeasonSort,
+  SeasonTable,
   sortSeasonRows,
   type SeasonRow,
 } from '@/components/accuracy/SeasonTable'
@@ -9,11 +10,13 @@ import { RatingsTable } from '@/components/ratings/RatingsTable'
 import type { PowerRating } from '@/lib/artifacts'
 
 /**
- * The two sortable tables share one contract: the initial render is the
- * PUBLISHED order (sorting is a view, never a recomputation), headers are
- * real buttons so the keyboard gets them for free, the active column carries
- * `aria-sort`, and a third click restores the published order rather than
- * leaving the reader stranded in a sort they cannot undo.
+ * The two sortable tables share one contract: sorting is a view, never a
+ * recomputation, headers are real buttons so the keyboard gets them for
+ * free, the active column carries `aria-sort`, and a third click restores
+ * the default order rather than leaving the reader stranded in a sort they
+ * cannot undo. The ratings table's default IS the published order (rating
+ * descending); the season table's default reverses the published
+ * chronology, newest season first.
  */
 
 const TEAMS: PowerRating[] = [
@@ -161,8 +164,21 @@ describe('Season table sort logic', () => {
     { season: 2026, n: 1322, modelBrier: 0.2069, marketBrier: 0.1991, gap: 0.0092 },
   ]
 
-  it('null means the published order, unchanged and not re-sorted', () => {
-    expect(sortSeasonRows(ROWS, null)).toBe(ROWS)
+  it('null means the default view: season descending, newest first', () => {
+    expect(sortSeasonRows(ROWS, null).map((r) => r.season)).toEqual([
+      2026, 2016, 2007,
+    ])
+  })
+
+  it('renders newest season first and marks the season column on load', () => {
+    const { container } = render(<SeasonTable rows={ROWS} />)
+    const seasons = Array.from(
+      container.querySelectorAll('tbody tr td:first-child'),
+    ).map((cell) => cell.textContent)
+    expect(seasons).toEqual(['2025–26', '2015–16', '2006–07'])
+    expect(
+      screen.getByRole('columnheader', { name: /season/i }),
+    ).toHaveAttribute('aria-sort', 'descending')
   })
 
   it('a season with no market sorts last in BOTH directions', () => {
@@ -182,9 +198,9 @@ describe('Season table sort logic', () => {
     expect(cycleSeasonSort(second, 'modelBrier')).toBeNull()
   })
 
-  it('the season column two-cycles, because the default IS season ascending', () => {
+  it('the season column two-cycles, because the default IS season descending', () => {
     const flipped = cycleSeasonSort(null, 'season')
-    expect(flipped).toEqual({ key: 'season', dir: 'desc' })
+    expect(flipped).toEqual({ key: 'season', dir: 'asc' })
     expect(cycleSeasonSort(flipped, 'season')).toBeNull()
   })
 

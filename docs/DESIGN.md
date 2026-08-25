@@ -171,8 +171,24 @@ ease-out curve, two springs) and the full inventory is:
 - **Numbers count** (`<AnimatedNumber>`): the motion value writes straight
   to `textContent`, so no re-renders, and the server markup carries the
   final value so no reader ever sees 0 counting up.
-- **`.skeleton-shimmer`** is the one moving gradient in the product, because
-  a shimmer IS a moving gradient and it marks loading, never decoration.
+- **`.skeleton-shimmer`** marks loading — a shimmer IS a moving gradient,
+  and it moves only while something is genuinely loading.
+- **The ambient hardwood layer** (`AmbientBackground.tsx`) is the one piece
+  of continuous ambient motion, sanctioned 2026-08-25 at the owner's
+  request: a faint half-court line drawing plus two ember glows in the
+  chart ramp's wood tones, drifting on 52s/68s alternating periods —
+  weather, not animation. Its guardrails: everything in it stays near 7%
+  opacity, it animates transform only, it sits at negative z-index with
+  pointer-events off (opaque cards paint over it by painting order alone),
+  and under `prefers-reduced-motion` it is explicitly `animation: none` —
+  the global duration clamp alone would make an infinite-alternate
+  animation strobe rather than stop.
+- **The chalk court** (`CourtField.tsx`) is the ambient layer's animated
+  half, ported from the NFL sibling's chalkboard: every few seconds one
+  faint chalk half-court play draws itself in the page's margins and
+  fades. Its full rules are §6a; the short version is chalk-dust alphas,
+  one play at a time, `requestAnimationFrame` only while the board is
+  live, and a single static frame under reduced motion.
 - Hover transitions on border colour at `0.18s` — and hover fires **only on
   things that navigate** (`a.card`, `.card-link`, rows containing links).
   A static card that brightens promises a click it cannot honour.
@@ -187,6 +203,29 @@ looks like it is performing rather than reporting. Motion here confirms what
 the reader did (navigated, swapped, loaded) — it never happens by itself.
 
 ---
+
+## 6a. The chalk court
+
+`CourtField` is the animated half of Hardwood's ambient layer, ported from
+the NFL sibling's `ChalkboardField`: a fixed canvas at z-index −1 drawing a
+sparse set of faint hand-ruled court baselines, and — every eight seconds
+or so — one dim chalk half-court play. The sketch (baseline, key,
+free-throw circle, three-point arc) fades in with five O's around the arc
+and five X's guarding inside them; then one O cuts to the basket —
+sometimes off a short dashed give-and-go — with the route drawing itself
+in `--accent-primary`, holding, and fading. Rules that keep it a board and
+not a mood:
+
+- **It never sits under a number.** Cards, tables, and chrome are opaque
+  by system rule; the board lives in the page's margins and gaps.
+- Chalk-dust alphas only (static baselines ≤ 0.09, play figures ≤ 0.30 at
+  peak, the route ≤ 0.45). If a value wants to be higher, the answer is no.
+- One play at a time, then rest. `requestAnimationFrame` runs only while
+  the board is live — a hidden tab stops it; reduced motion gets a single
+  static frame with a finished play and never moves.
+- The shell wrapper deliberately paints **no** background — the body's
+  black is the canvas the board draws on. Reintroducing an opaque wrapper
+  there silently deletes the board (and the hardwood wash beneath it).
 
 ## 7. The honesty rules that are also design rules
 
@@ -211,7 +250,15 @@ These are not editorial preferences — they change what components render:
 
 - **A global search or command palette.** Every destination is one tap from
   the chrome; a shortcut chip advertises a bigger product than this is.
-- **Gradients, shadows, glass, glow.** All four are explicitly out.
+- **Gradients, shadows, glass, glow — on COMPONENTS.** Buttons, cards,
+  text and charts stay flat; colour on them carries meaning only. The
+  standing exceptions live at the page's edges, not in its content: the
+  loading shimmer, and the ambient layer — the hardwood wash (§6) and the
+  chalk court (§6a) — which is capped at chalk-dust alphas and can never
+  sit over content. **One layer, defined once, consumed once** — the same
+  clause the Pitchverse and Gridiron siblings carry for their pitch and
+  chalkboard layers. Its existence licenses nothing else to pick up a
+  gradient. Do not add another.
 - **A light theme.** `<html class="dark">` is hardcoded, `:root` is the only
   source of truth, `.dark` is intentionally empty.
 - **Tailwind palette colours.** `text-gray-400` bypasses the token layer.

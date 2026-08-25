@@ -14,7 +14,10 @@ import { num } from '@/lib/format'
  * in either direction: "no line published" is not a very small Brier.
  *
  * Sorting is a three-state cycle per column: first click sorts, second
- * flips, third restores the published order (chronological, oldest first).
+ * flips, third restores the default order — season DESCENDING, newest
+ * first, because the season a reader arrives asking about is the current
+ * one. (The artifact itself publishes oldest-first; the default view
+ * reverses it and `aria-sort` on the season column says so on load.)
  * Headers are real `<button>`s, so Enter and Space activate them natively,
  * and the active column carries `aria-sort`.
  */
@@ -34,12 +37,12 @@ export interface SeasonSort {
   dir: SortDir
 }
 
-/** The order the artifact publishes: chronological, oldest season first. */
-const DEFAULT_SORT: SeasonSort = { key: 'season', dir: 'asc' }
+/** The default view: season descending, newest first. */
+const DEFAULT_SORT: SeasonSort = { key: 'season', dir: 'desc' }
 
 /** The direction a column sorts on its first click. */
 const FIRST_DIR: Record<SeasonSortKey, SortDir> = {
-  season: 'asc',
+  season: 'desc',
   n: 'desc',
   modelBrier: 'asc',
   marketBrier: 'asc',
@@ -47,8 +50,8 @@ const FIRST_DIR: Record<SeasonSortKey, SortDir> = {
 }
 
 /**
- * Advance the sort state for a header click. `null` means the published
- * order — which IS season ascending, so the season column two-cycles while
+ * Advance the sort state for a header click. `null` means the default
+ * order — which IS season descending, so the season column two-cycles while
  * every other column three-cycles back to it.
  */
 export function cycleSeasonSort(
@@ -62,16 +65,20 @@ export function cycleSeasonSort(
   return null
 }
 
-/** Reorder the published rows. `null` returns them exactly as published. */
+/**
+ * Reorder the published rows. `null` means the default view — season
+ * descending — NOT the artifact's own oldest-first order, so the initial
+ * render puts the newest season on top.
+ */
 export function sortSeasonRows(
   rows: SeasonRow[],
   sort: SeasonSort | null,
 ): SeasonRow[] {
-  if (!sort) return rows
-  const factor = sort.dir === 'asc' ? 1 : -1
+  const active = sort ?? DEFAULT_SORT
+  const factor = active.dir === 'asc' ? 1 : -1
   return [...rows].sort((a, b) => {
-    const av = a[sort.key]
-    const bv = b[sort.key]
+    const av = a[active.key]
+    const bv = b[active.key]
     if (av === null && bv === null) return 0
     if (av === null) return 1
     if (bv === null) return -1
