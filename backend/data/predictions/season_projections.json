@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-08-25T11:22:58+00:00",
+  "generated_at": "2026-08-26T11:25:09+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -979,7 +979,7 @@
     "sims": 20000,
     "season": 2027,
     "margin_sd": 12.628022740045525,
-    "total_sd": 18.98477553219773
+    "total_sd": 18.984775532197734
   },
   "measured": {
     "available": true,
