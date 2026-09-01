@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-08-31T17:49:45+00:00",
+  "generated_at": "2026-09-01T15:22:41+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -983,13 +983,13 @@
   },
   "measured": {
     "available": true,
-    "generated_at": "2026-08-24T13:42:15+00:00",
+    "generated_at": "2026-08-31T19:18:35+00:00",
     "walk_forward_n": 25749,
-    "walk_forward_brier": 0.2106039648168081,
-    "walk_forward_ece": 0.011369166013580206,
+    "walk_forward_brier": 0.21060396481683405,
+    "walk_forward_ece": 0.011369166013610557,
     "paired_n": 14600,
     "market_brier": 0.2069878313121994,
-    "model_brier": 0.21410723712651963,
+    "model_brier": 0.21410723712652,
     "gap_to_market": 0.00712,
     "bootstrap": {
       "mean_diff": 0.00712,
