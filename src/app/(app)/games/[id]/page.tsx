@@ -23,6 +23,7 @@ import {
   getAllStarEvent,
   getArchivedGame,
   getGameContext,
+  getMatchups,
   meetingsBetween,
   teamMetaFromStandings,
   type AllStarEvent,
@@ -242,6 +243,10 @@ function PlayedGame({
   const teams = teamMetaFromStandings(standings)
   const homeWon = game.home_score > game.away_score
   const margin = Math.abs(game.home_score - game.away_score)
+  // The head-to-head surface knows current franchises only, so an archived
+  // game between, say, the SuperSonics and the Nets gets no link into it.
+  const current = new Set((getMatchups()?.teams ?? []).map((t) => t.abbreviation))
+  const priceable = current.has(game.home) && current.has(game.away)
 
   return (
     <div>
@@ -317,14 +322,19 @@ function PlayedGame({
         <section className="card mb-6 p-4">
           <h2 className="text-sm">No period breakdown</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
-            The source published no quarter scores for this game. Shown as
-            absent rather than as four zeros.
+            The source published no quarter scores for this game — shown as
+            absent, not as four zeros.
           </p>
         </section>
       ) : null}
 
       {game.p_model !== undefined ? (
-        <RecordedForecast game={game} homeWon={homeWon} margin={margin} />
+        <RecordedForecast
+          game={game}
+          homeWon={homeWon}
+          margin={margin}
+          priceable={priceable}
+        />
       ) : (
         <section className="card mb-6 p-4">
           <h2 className="text-sm">No forecast for this game</h2>
@@ -498,10 +508,13 @@ function RecordedForecast({
   game,
   homeWon,
   margin,
+  priceable,
 }: {
   game: ArchiveGame
   homeWon: boolean
   margin: number
+  /** Both sides exist in the current matchup grid, so /predict can take them. */
+  priceable: boolean
 }) {
   const pModel = game.p_model!
   const gaveOutcome = homeWon ? pModel : 1 - pModel
@@ -571,16 +584,17 @@ function RecordedForecast({
 
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         <strong className="text-[var(--text-secondary)]">
-          This is a reconstruction, not a published call.
+          A reconstruction, not a published call
         </strong>{' '}
-        Refit only on earlier games, the model never saw the result — but
-        nobody read this number before tip-off either, one game is no
-        evidence either way, and the record that means something is on{' '}
+        — the model never saw the result, but nobody read this number before
+        tip-off either, and one game is no evidence either way; the record is
+        on{' '}
         <Link href="/accuracy" className="text-[var(--accent-info)] hover:underline">
           the accuracy page
         </Link>
         .
       </p>
+      {priceable ? <PredictLinks home={game.home} away={game.away} /> : null}
     </section>
   )
 }
@@ -788,6 +802,7 @@ function UpcomingGame({
             {`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
           </StatTile>
         </dl>
+        <PredictLinks home={game.home.abbreviation} away={game.away.abbreviation} />
       </section>
 
       {game.value ? (
@@ -874,8 +889,7 @@ function InjuryReport({
         <h2 className="text-sm">No injury report</h2>
         <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
           ESPN lists nobody as unavailable for either side, or the request
-          failed. Shown as absent rather than as an empty clean bill of
-          health.
+          failed — shown as absent, not as a clean bill of health.
         </p>
       </section>
     )
@@ -929,22 +943,13 @@ function InjuryReport({
         <strong className="text-[var(--text-secondary)]">
           The forecast above has not read this
         </strong>{' '}
-        — the model has never seen a roster.
+        — the model has never seen a roster, and ESPN keeps no injury archive
+        to test one against (
+        <Link href="/about#missing" className="text-[var(--accent-info)] hover:underline">
+          why
+        </Link>
+        ).
       </p>
-      <details className="mt-2">
-        <summary className="cursor-pointer font-numeric text-[10px] uppercase tracking-[0.1em] text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)]">
-          Why availability is shown but not priced in
-        </summary>
-        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Shown, because who is out changes how much weight a reader should
-          give that probability. Not priced in, because ESPN publishes
-          injuries as a snapshot of today with no historical archive — an
-          adjustment built on them could never be tested against the
-          twenty-three seasons everything else here is measured on, and this
-          project does not publish a number it cannot benchmark. From ESPN,
-          as of the last time this page was built.
-        </p>
-      </details>
     </section>
   )
 }
@@ -1005,7 +1010,7 @@ function SeriesHistory({
       </div>
       <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
         The {depth} most recent meetings in the corpus, regular season and
-        postseason alike. Every one opens its own page.
+        postseason alike, each opening its own page.
       </p>
     </section>
   )
@@ -1116,13 +1121,46 @@ function FormPanel({
 
       <p className="text-[11px] text-[var(--text-tertiary)]">
         {won}–{games.length - won} in the last {games.length}, oldest on the
-        right. Each one opens its game page.
+        right, each opening its game page.
       </p>
     </section>
   )
 }
 
 /* --------------------------------------------------------------- shared */
+
+/**
+ * Into the head-to-head surface with this pairing prefilled — and with the
+ * venue flipped, which is the one question a fixture page cannot answer
+ * about itself. Both are links, not buttons: /predict is a page.
+ */
+function PredictLinks({ home, away }: { home: string; away: string }) {
+  const link =
+    'inline-flex min-h-[32px] items-center gap-1 font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--accent-info)] hover:underline'
+  const arrow = (
+    <svg
+      width="10" height="10" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2.5" aria-hidden="true"
+    >
+      <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+  return (
+    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--border-color)] pt-3">
+      <Link href={{ pathname: '/predict', query: { home, away } }} className={link}>
+        Price this matchup
+        {arrow}
+      </Link>
+      <Link
+        href={{ pathname: '/predict', query: { home: away, away: home } }}
+        className={link}
+      >
+        Flip venue
+        {arrow}
+      </Link>
+    </div>
+  )
+}
 
 /** The most recent completed regular-season record, as a caption. */
 function recordLine(abbreviation: string): string | undefined {

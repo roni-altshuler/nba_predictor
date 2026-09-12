@@ -374,6 +374,20 @@ a.card:hover,
   .ambient-glow-b { animation: none; }
 }
 
+/* The reader's dial (2026-09-12). `data-ambient` is set on <html> before
+   first paint by the root layout's inline script and switched by
+   AmbientToggle. `soft` — the default — dims and slightly blurs the chalk
+   game and takes the floor (seams + embers) to 0.6×; `vivid` is the full
+   look at the reduced in-canvas budgets; `off` hides both halves, and
+   CourtField stops its rAF loop when it sees `off`, so hidden means idle. */
+html[data-ambient='soft'] .ambient-canvas {
+  opacity: 0.55;
+  filter: blur(0.6px);
+}
+html[data-ambient='soft'] .ambient-court { opacity: 0.6; }
+html[data-ambient='off'] .ambient-court,
+html[data-ambient='off'] .ambient-canvas { display: none; }
+
 table { border-collapse: collapse; width: 100%; }
 th {
   text-align: left;

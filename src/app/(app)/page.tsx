@@ -1,9 +1,11 @@
 import Link from 'next/link'
 
+import { BarLadder, type BarLadderRow } from '@/components/charts/BarLadder'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
+import { QuickPicks } from '@/components/forecast/QuickPicks'
 import { LiveSlate } from '@/components/live/LiveSlate'
 import { StatTile } from '@/components/primitives/StatTile'
-import { TeamLogo } from '@/components/primitives/TeamLogo'
+import { TeamExplorer, type ExplorerRow } from '@/components/teams/TeamExplorer'
 import {
   getGameForecasts,
   getPowerRatings,
@@ -14,6 +16,9 @@ import { dayLabel, pct, stamp } from '@/lib/format'
 
 export const metadata = { title: 'Today' }
 export const dynamic = 'force-static'
+
+const sectionLink =
+  'font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--accent-info)]'
 
 export default function HomePage() {
   const forecasts = getGameForecasts()
@@ -27,18 +32,74 @@ export default function HomePage() {
   // both. Joined here rather than duplicating the logo URL into a second
   // artifact, which would be one more thing to keep in step.
   const brand = new Map((ratings?.teams ?? []).map((t) => [t.team_id, t]))
+  const provenance = projections ?? forecasts
+
+  // Title odds: the eight likeliest champions. Bars are a share of the
+  // leader so the list has resolution; the number beside each is the claim.
+  const contenders = projections
+    ? [...projections.teams]
+        .sort((a, b) => b.p_championship - a.p_championship)
+        .slice(0, 8)
+    : []
+  const topOdds = contenders[0]?.p_championship || 1
+  const oddsRows: BarLadderRow[] = contenders.map((team) => {
+    const mark = brand.get(team.team_id)
+    return {
+      key: String(team.team_id),
+      href: mark ? `/teams/${mark.abbreviation}` : undefined,
+      logo: mark?.logo,
+      abbreviation: mark?.abbreviation,
+      name: team.name,
+      label: mark?.abbreviation ?? team.name,
+      caption: `${team.wins.toFixed(1)} W · ${pct(team.p_playoffs, 0)} playoffs`,
+      fill: team.p_championship / topOdds,
+      value: pct(team.p_championship),
+    }
+  })
+
+  // Power ratings: bars span the PUBLISHED best-to-worst of all 30, so the
+  // top-eight ladder reads on the same scale as the full table.
+  const rated = ratings?.teams ?? []
+  const best = rated[0]?.elo ?? 1500
+  const worst = rated[rated.length - 1]?.elo ?? 1500
+  const span = Math.max(best - worst, 1)
+  const ratingRows: BarLadderRow[] = rated.slice(0, 8).map((team) => ({
+    key: String(team.team_id),
+    href: `/teams/${team.abbreviation}`,
+    logo: team.logo,
+    abbreviation: team.abbreviation,
+    name: team.name,
+    label: team.abbreviation,
+    caption: team.conference?.replace(' Conference', ''),
+    fill: (team.elo - worst) / span,
+    value: String(Math.round(team.elo)),
+    rank: team.rank,
+  }))
+
+  // The explorer: every franchise, captioned with its projected record when
+  // the projection exists and its rating otherwise. The heading says which.
+  const projectionById = new Map((projections?.teams ?? []).map((t) => [t.team_id, t]))
+  const explorer: ExplorerRow[] = rated.map((team) => {
+    const projection = projectionById.get(team.team_id)
+    return {
+      team,
+      caption: projection
+        ? `${projection.wins.toFixed(0)}–${projection.losses.toFixed(0)}`
+        : String(Math.round(team.elo)),
+    }
+  })
 
   return (
     <div>
       <header className="mb-8">
         <p className="eyebrow">Hardwood</p>
         <h1 className="mt-1 text-2xl">Calibrated NBA forecasting</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Game and season probabilities, scored against the closing line. The
-          model does not carry market features, so it is measured against the
-          market rather than trained on it — and it loses, by a known and
-          published margin.
-        </p>
+        {provenance ? (
+          <p className="mt-2 font-numeric text-[11px] text-[var(--text-tertiary)]">
+            model {provenance.model_version} · generated{' '}
+            {stamp(provenance.generated_at)} · scored against the closing line
+          </p>
+        ) : null}
       </header>
 
       {!forecasts ? (
@@ -64,10 +125,7 @@ export default function HomePage() {
             <section className="mb-8">
               <div className="mb-3 flex items-baseline justify-between">
                 <h2 className="text-sm">Next slate · {dayLabel(nextDay[0])}</h2>
-                <Link
-                  href="/games"
-                  className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--accent-info)]"
-                >
+                <Link href="/games" className={sectionLink}>
                   All games
                 </Link>
               </div>
@@ -77,124 +135,51 @@ export default function HomePage() {
                   already renders. Off nights it renders exactly what the
                   old server-side map did. */}
               <LiveSlate games={nextDay[1].slice(0, 4)} />
+              {/* Every game on the slate, not just the four cards, as a
+                  jump into the head-to-head surface. */}
+              <QuickPicks games={nextDay[1]} className="mt-4" />
             </section>
           ) : null}
         </>
       )}
 
-      {projections ? (
+      {oddsRows.length ? (
         <section className="mb-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 className="text-sm">Title odds</h2>
-            <Link
-              href="/season"
-              className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--accent-info)]"
-            >
+            <Link href="/season" className={sectionLink}>
               Full projection
             </Link>
           </div>
-          <div className="card overflow-x-auto">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Team</th>
-                  <th scope="col" className="numeric text-right">Proj. W</th>
-                  <th scope="col" className="numeric text-right">Playoffs</th>
-                  <th scope="col" className="numeric text-right">Title</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projections.teams.slice(0, 8).map((team) => {
-                  const mark = brand.get(team.team_id)
-                  const cell = (
-                    <>
-                      <TeamLogo
-                        logo={mark?.logo}
-                        abbreviation={mark?.abbreviation}
-                        name={team.name}
-                        size={26}
-                      />
-                      <span className="font-numeric text-[var(--text-primary)]">
-                        {mark?.abbreviation ?? team.name}
-                      </span>
-                    </>
-                  )
-                  return (
-                  <tr key={team.team_id}>
-                    <td>
-                      {mark ? (
-                        <Link
-                          href={`/teams/${mark.abbreviation}`}
-                          className="inline-flex items-center gap-2.5 hover:underline"
-                        >
-                          {cell}
-                        </Link>
-                      ) : (
-                        <span className="inline-flex items-center gap-2.5">
-                          {cell}
-                        </span>
-                      )}
-                    </td>
-                    <td className="numeric text-right">{team.wins.toFixed(1)}</td>
-                    <td className="numeric text-right">{pct(team.p_playoffs, 0)}</td>
-                    <td className="numeric text-right text-[var(--text-primary)]">
-                      {pct(team.p_championship)}
-                    </td>
-                  </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+          <BarLadder rows={oddsRows} ariaLabel="Championship odds, top eight" />
         </section>
       ) : null}
 
-      {ratings ? (
+      {ratingRows.length ? (
         <section className="mb-8">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 className="text-sm">Power ratings</h2>
-            <Link
-              href="/ratings"
-              className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--accent-info)]"
-            >
+            <Link href="/ratings" className={sectionLink}>
               All 30
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-            {ratings.teams.slice(0, 5).map((team) => (
-              <Link
-                key={team.team_id}
-                href={`/teams/${team.abbreviation}`}
-                className="card flex items-center gap-3 p-3"
-              >
-                <TeamLogo
-                  logo={team.logo}
-                  abbreviation={team.abbreviation}
-                  name={team.name}
-                  size={34}
-                />
-                <div className="min-w-0">
-                  <p className="eyebrow">#{team.rank}</p>
-                  <p className="numeric truncate text-xs text-[var(--text-primary)]">
-                    {team.abbreviation}
-                  </p>
-                  <p className="numeric text-sm text-[var(--text-secondary)]">
-                    {Math.round(team.elo)}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <BarLadder rows={ratingRows} ariaLabel="Power ratings, top eight" />
+        </section>
+      ) : null}
+
+      {explorer.length ? (
+        <section className="mb-8">
+          <div className="mb-3 flex items-baseline justify-between">
+            <h2 className="text-sm">Teams</h2>
+            <span className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)]">
+              {projections ? 'projected record' : 'elo'}
+            </span>
           </div>
+          <TeamExplorer rows={explorer} />
         </section>
       ) : null}
 
       <EvidencePanel measured={projections?.measured} />
-
-      {projections ? (
-        <p className="mt-4 font-numeric text-[10px] text-[var(--text-tertiary)]">
-          model {projections.model_version} · generated {stamp(projections.generated_at)}
-        </p>
-      ) : null}
     </div>
   )
 }

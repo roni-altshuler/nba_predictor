@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
 
 import { ProbabilityBar } from '@/components/forecast/ProbabilityBar'
@@ -13,6 +14,52 @@ import type { Matchups } from '@/lib/history'
 export interface ScheduledMeeting {
   id: string
   date: string
+}
+
+type Team = Matchups['teams'][number]
+
+export interface Pair {
+  home: string
+  away: string
+}
+
+/**
+ * The pairing the page opens on: `?home=&away=` when both name a published
+ * team (any case, and not the same team twice), otherwise the first two by
+ * name. An unknown code falls back rather than failing — a link from an
+ * archived game between two relocated franchises should still land on a
+ * working picker.
+ */
+export function initialPair(
+  teams: Team[],
+  home: string | null,
+  away: string | null,
+): Pair {
+  const known = (value: string | null): string | null => {
+    const key = (value ?? '').toUpperCase()
+    return teams.some((t) => t.abbreviation === key) ? key : null
+  }
+  const h = known(home) ?? teams[0]?.abbreviation ?? ''
+  const wanted = known(away)
+  const a =
+    wanted && wanted !== h
+      ? wanted
+      : (teams.find((t) => t.abbreviation !== h)?.abbreviation ?? '')
+  return { home: h, away: a }
+}
+
+/**
+ * Keep the address bar naming the pairing, so it can be shared or reloaded.
+ *
+ * Native `replaceState` rather than `router.replace`: Next's router
+ * integrates with it (useSearchParams follows), it is synchronous, and it
+ * costs no round-trip — the router version refetches the route payload on
+ * every select change, for a page whose data is already in hand.
+ */
+function syncUrl(pair: Pair) {
+  if (typeof window === 'undefined') return
+  const query = new URLSearchParams({ home: pair.home, away: pair.away })
+  window.history.replaceState(null, '', `?${query.toString()}`)
 }
 
 /**
@@ -28,6 +75,9 @@ export interface ScheduledMeeting {
  * The venue toggle is real, not cosmetic: home court is the single largest
  * non-rating term in the model, and swapping it is what makes the surface
  * honest about a neutral-court question having no answer here.
+ *
+ * The pairing is also the URL (`?home=&away=`), so game pages, team pages
+ * and the home page's quick picks can deep-link into it.
  */
 export function MatchupPicker({
   data,
@@ -36,9 +86,16 @@ export function MatchupPicker({
   data: Matchups
   scheduled?: Record<string, ScheduledMeeting>
 }) {
-  const teams = [...data.teams].sort((a, b) => a.name.localeCompare(b.name))
-  const [homeKey, setHome] = useState(teams[0]?.abbreviation ?? '')
-  const [awayKey, setAway] = useState(teams[1]?.abbreviation ?? '')
+  const teams = useMemo(
+    () => [...data.teams].sort((a, b) => a.name.localeCompare(b.name)),
+    [data.teams],
+  )
+  const params = useSearchParams()
+  const [pair, setPair] = useState<Pair>(() =>
+    initialPair(teams, params?.get('home') ?? null, params?.get('away') ?? null),
+  )
+  const homeKey = pair.home
+  const awayKey = pair.away
 
   const lookup = useMemo(() => {
     const map = new Map<string, Matchups['matchups'][number]>()
@@ -51,10 +108,13 @@ export function MatchupPicker({
   const result = lookup.get(`${homeKey}|${awayKey}`)
   const fixture = scheduled[`${homeKey}|${awayKey}`]
 
-  const swap = () => {
-    setHome(awayKey)
-    setAway(homeKey)
+  const choose = (next: Pair) => {
+    setPair(next)
+    syncUrl(next)
   }
+  const setHome = (value: string) => choose({ home: value, away: awayKey })
+  const setAway = (value: string) => choose({ home: homeKey, away: value })
+  const swap = () => choose({ home: awayKey, away: homeKey })
 
   return (
     <div>
@@ -72,6 +132,7 @@ export function MatchupPicker({
             onClick={swap}
             className="h-9 rounded-sm border border-[var(--border-color)] px-3 font-numeric text-[11px] uppercase tracking-[0.1em] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]"
             aria-label="Swap home and away"
+            title="Flip the venue — the difference is what home court is worth"
           >
             Swap
           </button>
@@ -131,9 +192,9 @@ export function MatchupPicker({
             </StatTile>
           </dl>
 
+          {/* The published basis, verbatim and alone. */}
           <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            {data.note} Home court is worth about two points in the current
-            era — <em>Swap</em> shows exactly how much.
+            {data.note}
           </p>
 
           {/* When the hypothetical is also a real fixture, hand the reader
@@ -237,4 +298,3 @@ function Side({
     </div>
   )
 }
-

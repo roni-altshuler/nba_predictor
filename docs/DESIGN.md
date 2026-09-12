@@ -245,15 +245,15 @@ keep it a background and not a broadcast:
   number on this site is a claim. The bucket itself is the payoff.
 - **It never sits under a number.** Cards, tables, and chrome are opaque
   by system rule; the game lives in the canvas and the gaps.
-- Chalk-dust alphas only (court ≤ 0.30, players ≤ 0.45, ball and pulse
-  ≤ 0.60; the ball's flight trail fades from half the ball's alpha). If
+- Chalk-dust alphas only (court ≤ 0.23, players ≤ 0.29, ball and pulse
+  ≤ 0.39; the ball's flight trail fades from half the ball's alpha). If
   a value wants to be higher than these, the answer is no.
 - **The frame never chases the play.** The first cut had a broadcast
   camera that tracked the ball and pushed in to ~1.7× — the whole
   background moving is exactly the kind of motion that pulls a reader
   off the data, and the owner flagged it. The camera is now a breath:
-  zoom ≤ ~1.05×, a lean of a few percent toward the ball, both eased
-  slowly and clamped so the full floor never leaves view. The drama
+  zoom ≤ 1.03×, a lean of ~2.5% toward the ball, both eased slowly and
+  clamped so the full floor never leaves view. The drama
   lives in the play (drives, steals, fast breaks, the trail, the
   swish), never in the framing, and never in brighter or thicker chalk.
 - Slow and cheap: rendering is capped near 30fps, `requestAnimationFrame`
@@ -262,6 +262,27 @@ keep it a background and not a broadcast:
 - The shell wrapper deliberately paints **no** background — the body's
   black is the canvas the board draws on. Reintroducing an opaque wrapper
   there silently deletes the board (and the hardwood wash beneath it).
+
+**2026-09-12 — softer by default, and the reader holds the dial.** The owner
+found the game "a little too sharp" to focus past, so the budgets above were
+cut inside the canvas — court lines 0.30 → 0.23 (×0.75); players 0.45 → 0.29
+and ball, trail and pulse 0.60 → 0.39 (×0.65); zoom cap 1.05 → 1.03 with the
+lean halved (±2.5% of the half-length, ±4% of the half-width); the settle,
+dwell and resolve pauses ×1.5 (850 / 550–1100 / 950 ms → 1275 / 825–1650 /
+1425 ms); the make-pulse 700 → 450 ms with a smaller ring — and a three-state
+preference sits on top: `<html data-ambient="soft|vivid|off">`, persisted as
+`hardwood-ambient`, set before first paint by an inline script in the root
+layout and switched by `AmbientToggle` (sidebar footer; bottom of the mobile
+More sheet). `soft` is the default: the canvas at 0.55 opacity with a 0.6px
+blur and the CSS floor (seams and embers) at 0.6×. `vivid` is the full look
+at the reduced budgets. `off` hides both halves, and `CourtField` stops its
+rAF loop on the `ambientchange` event, so hidden also means idle. Reduced
+motion is unchanged: a framed still, `animation: none`. The same date's
+other change is copy, not motion: page headers are eyebrow · h1 · one mono
+provenance line, section footnotes are one sentence, and the home page's
+title odds and power ratings are bar ladders (`BarLadder`, `--viz-model`,
+numbers as text) beside a team explorer and quick-pick chips into `/predict`,
+which now takes `?home=&away=`.
 
 ## 7. The honesty rules that are also design rules
 

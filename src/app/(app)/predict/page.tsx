@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { MatchupPicker, type ScheduledMeeting } from './MatchupPicker'
 import { getGameForecasts } from '@/lib/artifacts'
 import { getMatchups } from '@/lib/history'
@@ -48,19 +50,31 @@ export default function PredictPage() {
       <header className="mb-6">
         <p className="eyebrow">Head to head</p>
         <h1 className="mt-1 text-2xl">Any two teams</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Every one of the {matchups.matchups.length} ordered pairings at
-          current ratings, computed once and shipped with the page. The same
-          model that produces the game forecasts produces these, so the two
-          cannot disagree.
+        <p className="mt-2 font-numeric text-[11px] text-[var(--text-tertiary)]">
+          {matchups.matchups.length} ordered pairings · ratings as of{' '}
+          {stamp(matchups.generated_at)} · the same model as the game forecasts
         </p>
       </header>
 
-      <MatchupPicker data={matchups} scheduled={scheduled} />
+      {/* The picker reads `?home=&away=` with useSearchParams, which on a
+          static page renders client-side up to the nearest Suspense
+          boundary. The fallback mirrors the picker card's shape so nothing
+          jumps when it arrives. */}
+      <Suspense fallback={<PickerFallback />}>
+        <MatchupPicker data={matchups} scheduled={scheduled} />
+      </Suspense>
+    </div>
+  )
+}
 
-      <p className="mt-4 font-numeric text-[10px] text-[var(--text-tertiary)]">
-        ratings as of {stamp(matchups.generated_at)}
-      </p>
+function PickerFallback() {
+  return (
+    <div className="card p-4" aria-busy="true" aria-label="Loading the picker">
+      <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
+        <div className="skeleton-shimmer h-[3.75rem]" />
+        <div className="skeleton-shimmer h-9 w-16" />
+        <div className="skeleton-shimmer h-[3.75rem]" />
+      </div>
     </div>
   )
 }

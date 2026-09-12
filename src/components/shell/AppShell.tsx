@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { PageTransition } from '@/components/motion/PageTransition'
 import { AmbientBackground } from '@/components/shell/AmbientBackground'
+import { AmbientToggle } from '@/components/shell/AmbientToggle'
 import { EASE_OUT } from '@/lib/motion'
 import { recordVisit } from '@/lib/navstack'
 import { cn } from '@/lib/utils'
@@ -142,6 +143,11 @@ export function AppShell({
             ),
           )}
         </nav>
+        {/* The quiet block at the bottom of the rail: the reader's dial on
+            the ambient court. */}
+        <div className="border-t border-[var(--border-color)] p-3">
+          <AmbientToggle />
+        </div>
       </aside>
 
       {/* Mobile top bar */}
@@ -328,6 +334,9 @@ function MoreSheet({
             </Link>
           ))}
         </nav>
+        <div className="mt-3 border-t border-[var(--border-color)] pt-3">
+          <AmbientToggle />
+        </div>
       </motion.div>
     </div>
   )

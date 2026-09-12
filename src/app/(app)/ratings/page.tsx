@@ -23,28 +23,23 @@ export default function RatingsPage() {
       <header className="mb-6">
         <p className="eyebrow">Season {ratings.season}</p>
         <h1 className="mt-1 text-2xl">Power ratings</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Elo with a margin-of-victory multiplier, tuned over 180
-          configurations on 29,653 games. 100 rating points is roughly 3.5
-          points of expected margin.
+        <p className="mt-2 font-numeric text-[11px] text-[var(--text-tertiary)]">
+          model {ratings.model_version} · generated {stamp(ratings.generated_at)}{' '}
+          · 100 Elo ≈ 3.5 points of margin
         </p>
       </header>
 
-      <p className="mb-6 max-w-2xl text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-        Ratings regress 40% toward the mean between seasons — measured, not
-        assumed.{' '}
+      <RatingsTable teams={ratings.teams} />
+
+      <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        Elo with a margin-of-victory multiplier, regressed 40% toward the mean
+        between seasons — measured, not assumed.{' '}
         <Link
           href="/about#regression"
           className="text-[var(--accent-info)] hover:underline"
         >
           Why ratings regress
         </Link>
-      </p>
-
-      <RatingsTable teams={ratings.teams} />
-
-      <p className="mt-4 font-numeric text-[10px] text-[var(--text-tertiary)]">
-        model {ratings.model_version} · generated {stamp(ratings.generated_at)}
       </p>
     </div>
   )

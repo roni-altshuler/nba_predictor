@@ -74,6 +74,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <style>{`:root { --font-display: var(--font-sans); }`}</style>
+        {/* The ambient preference, applied before first paint so a returning
+            reader never sees the court flash vivid and then dim. Reads the
+            key AmbientToggle writes; anything unknown is `soft`. Kept well
+            under 300 bytes, deliberately — it blocks parsing. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var v=localStorage.getItem('hardwood-ambient');document.documentElement.dataset.ambient=v==='vivid'||v==='off'?v:'soft'}catch(e){document.documentElement.dataset.ambient='soft'}",
+          }}
+        />
       </head>
       <body className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] antialiased font-sans">
         <a

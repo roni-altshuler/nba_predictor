@@ -16,18 +16,23 @@ import { useEffect, useRef } from 'react'
  * always in frame, centred in the viewport, on every device.** The
  * background must never make a reader look away from the data, so the
  * broadcast-style tracking camera of the first cut was demoted to a
- * breath: the virtual camera only leans a few percent toward the ball
- * (zoom ≤ ~1.05×, eased slowly), clamped so the full floor never leaves
- * view. Portrait viewports rotate the court upright so it fits the
+ * breath: the virtual camera only leans a couple of percent toward the
+ * ball (zoom ≤ 1.03×, eased slowly), clamped so the full floor never
+ * leaves view. Portrait viewports rotate the court upright so it fits the
  * device appropriately instead of shrinking to a sliver. The drama
  * lives in the play, not the framing.
  *
  * What keeps it a background and not a broadcast:
  * - **No digits, ever.** A score in the background is a number, and every
  *   number on this site is a claim. The bucket itself is the payoff.
- * - Chalk-dust alphas only (court ≤ 0.30, players ≤ 0.45, ball ≤ 0.60 —
+ * - Chalk-dust alphas only (court ≤ 0.23, players ≤ 0.29, ball ≤ 0.39 —
  *   the ball's fading flight trail stays under the ball's own cap), and
  *   every surface that carries a number is opaque and paints over it.
+ * - The reader holds a dial (2026-09-12): `<html data-ambient>` is `soft`
+ *   by default — the CSS dims and blurs this canvas — or `vivid`, or
+ *   `off`, in which case the loop is stopped outright (no rAF) until an
+ *   `ambientchange` event says otherwise. The toggle lives in the shell;
+ *   the root layout's inline script sets the attribute before first paint.
  * - Rendering is capped near 30fps; `requestAnimationFrame` only runs
  *   while the tab is visible; reduced motion gets a single framed
  *   mid-possession still and no motion at all.
@@ -40,29 +45,33 @@ import { useEffect, useRef } from 'react'
 const DPR_CAP = 2
 const FPS_INTERVAL = 33 // ~30fps — an ambient layer does not need 60
 
-// Alphas — the caps documented in DESIGN.md §6a.
-const COURT_ALPHA = 0.3
-const O_ALPHA = 0.45 // white chalk team
-const X_ALPHA = 0.45 // amber chalk team
-const BALL_ALPHA = 0.6
+// Alphas — the caps documented in DESIGN.md §6a. Cut 2026-09-12 (court
+// ×0.75, every moving mark ×0.65) after the owner found the game too sharp
+// to read past; the `soft` preference dims the whole canvas further in CSS.
+const COURT_ALPHA = 0.23
+const O_ALPHA = 0.29 // white chalk team
+const X_ALPHA = 0.29 // amber chalk team
+const BALL_ALPHA = 0.39
 
 const X_CHALK = '226, 136, 47' // the amber the wood ramp already owns
 
 // Pace, ms. A half-court possession is advance + settle + swings + shot;
-// a fast break compresses all of it.
+// a fast break compresses all of it. The pauses (settle, dwell, resolve)
+// run 1.5× their 2026-08-25 values so the floor rests more than it moves.
 const ADVANCE_MS = 2200
 const ADVANCE_FAST_MS = 1250
-const SETTLE_MS = 850
-const SETTLE_FAST_MS = 420
-const DWELL_MIN = 550
-const DWELL_RANGE = 550
+const SETTLE_MS = 1275
+const SETTLE_FAST_MS = 630
+const DWELL_MIN = 825
+const DWELL_RANGE = 825
 const CATCH_SHOOT_MS = 300
 const PASS_MS = 400
 const SHOT_MS = 760
 const LAYUP_MS = 470
 const DRIVE_MS_MAX = 1100
-const RESOLVE_MS = 950
+const RESOLVE_MS = 1425
 const TRAIL_MS = 420
+const PULSE_MS = 450 // the ring off the rim after a make — brief, not a firework
 const STEAL_CHANCE = 0.08
 const FASTBREAK_AFTER_BOARD = 0.4
 
@@ -203,6 +212,8 @@ export function CourtField() {
       cam: { x: 0, y: 0, z: 1, tx: 0, ty: 0, tz: 1 } as Camera,
       game: null as Game | null,
       reducedMotion: false,
+      // `data-ambient="off"`: the loop must not run at all.
+      off: false,
       rafId: 0,
       running: false,
       lastFrame: 0,
@@ -218,7 +229,7 @@ export function CourtField() {
       canvas.height = Math.floor(h * state.dpr)
       ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0)
       // The whole floor fits with margin to spare — even at the camera's
-      // maximum lean (~1.05× zoom plus a small offset) both rims stay
+      // maximum lean (1.03× zoom plus a small offset) both rims stay
       // inside the viewport. Portrait devices get the court upright.
       // The desktop sidebar is opaque and fixed, so "centred" means
       // centred in the region beside it — a viewport-centred court hides
@@ -596,30 +607,32 @@ export function CourtField() {
      */
     const updateCameraTargets = (g: Game) => {
       const cam = state.cam
+      // Zoom ≤ 1.03 and a lean of ±2.5% / ±4% of the half-floor — half of
+      // the 2026-08-25 values, because even a breath was being noticed.
       let tz = 1
       switch (g.phase) {
         case 'possession':
-          tz = 1.02
+          tz = 1.01
           break
         case 'drive':
-          tz = 1.04
+          tz = 1.02
           break
         case 'flight':
-          tz = g.flight?.kind === 'shot' ? 1.045 : 1.02
+          tz = g.flight?.kind === 'shot' ? 1.025 : 1.01
           break
         case 'resolve':
-          tz = 1.05
+          tz = 1.03
           break
         default:
           tz = 1
       }
       cam.tx = Math.max(
-        -state.halfW * 0.05,
-        Math.min(state.halfW * 0.05, g.ball.x * 0.06),
+        -state.halfW * 0.025,
+        Math.min(state.halfW * 0.025, g.ball.x * 0.03),
       )
       cam.ty = Math.max(
-        -state.halfH * 0.08,
-        Math.min(state.halfH * 0.08, g.ball.y * 0.06),
+        -state.halfH * 0.04,
+        Math.min(state.halfH * 0.04, g.ball.y * 0.03),
       )
       cam.tz = tz
     }
@@ -746,13 +759,13 @@ export function CourtField() {
       ctx.stroke()
       // The bucket: a ring blooming off the rim, plus the swish flicks.
       if (g.pulseStart > 0) {
-        const t = (now - g.pulseStart) / 700
+        const t = (now - g.pulseStart) / PULSE_MS
         if (t >= 1) {
           g.pulseStart = 0
         } else {
           ctx.globalAlpha = BALL_ALPHA * (1 - t)
           ctx.beginPath()
-          ctx.arc(g.pulsePoint.x, g.pulsePoint.y, 4 + t * 16, 0, Math.PI * 2)
+          ctx.arc(g.pulsePoint.x, g.pulsePoint.y, 4 + t * 12, 0, Math.PI * 2)
           ctx.stroke()
           ctx.beginPath()
           ctx.moveTo(g.pulsePoint.x - 3, g.pulsePoint.y + 6)
@@ -796,7 +809,7 @@ export function CourtField() {
     }
 
     const start = () => {
-      if (state.running || state.reducedMotion) return
+      if (state.running || state.reducedMotion || state.off) return
       state.running = true
       state.lastFrame = performance.now()
       state.rafId = requestAnimationFrame(loop)
@@ -829,6 +842,7 @@ export function CourtField() {
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     const handleMotion = () => {
       state.reducedMotion = motionQuery.matches
+      if (state.off) return
       if (state.reducedMotion) {
         stop()
         drawStill()
@@ -837,19 +851,39 @@ export function CourtField() {
       }
     }
 
+    /**
+     * The reader's dial. `off` stops the loop outright — no rAF, no
+     * drawing — and clears the canvas so nothing stale shows if the CSS
+     * that hides it is ever missing; anything else resumes through the
+     * same reduced-motion gate a visibility change goes through.
+     */
+    const readOff = () => document.documentElement.dataset.ambient === 'off'
+    const handleAmbient = () => {
+      state.off = readOff()
+      if (state.off) {
+        stop()
+        ctx.clearRect(0, 0, state.width, state.height)
+      } else {
+        handleMotion()
+      }
+    }
+
     const resizeObserver = new ResizeObserver(() => {
       layout()
-      if (state.reducedMotion) drawStill()
+      if (state.reducedMotion && !state.off) drawStill()
     })
 
     layout()
+    state.off = readOff()
     handleMotion()
     resizeObserver.observe(document.documentElement)
     motionQuery.addEventListener('change', handleMotion)
     document.addEventListener('visibilitychange', handleVisibility)
+    window.addEventListener('ambientchange', handleAmbient)
 
     return () => {
       stop()
+      window.removeEventListener('ambientchange', handleAmbient)
       document.removeEventListener('visibilitychange', handleVisibility)
       motionQuery.removeEventListener('change', handleMotion)
       resizeObserver.disconnect()
@@ -859,6 +893,7 @@ export function CourtField() {
   return (
     <canvas
       ref={canvasRef}
+      className="ambient-canvas"
       aria-hidden="true"
       style={{
         position: 'fixed',
