@@ -116,9 +116,14 @@ class GameForecast:
         """Joint distribution over (home_score, away_score).
 
         The basketball analogue of the soccer project's scoreline grid.
-        Built from the same (margin, total) normal, so summing the
-        home-wins half of it reproduces `p_home` exactly.
+        A bounded discretisation of the fitted correlated normal. Ties are
+        excluded (NBA final scores include overtime). Each winning half is
+        normalised to its published moneyline probability; truncating the
+        score range must not silently change the winner forecast. Marginal
+        totals remain a discretised approximation, not an exact normal.
         """
+        if low >= high or self.margin_sd <= 0 or self.total_sd <= 0:
+            raise ValueError("score grid requires low < high and positive dispersions")
         axis = range(low, high + 1)
         home = np.arange(low, high + 1)[:, None].astype(float)
         away = np.arange(low, high + 1)[None, :].astype(float)
@@ -126,11 +131,16 @@ class GameForecast:
         total = home + away
         zm = (margin - self.exp_margin) / self.margin_sd
         zt = (total - self.exp_total) / self.total_sd
-        rho = self.margin_total_corr if hasattr(self, "margin_total_corr") else 0.0
-        density = np.exp(-0.5 * (zm ** 2 + zt ** 2))
-        total_mass = density.sum()
-        if total_mass > 0:
-            density = density / total_mass
+        rho = float(getattr(self, "margin_total_corr", 0.0))
+        if not math.isfinite(rho) or abs(rho) >= 1:
+            raise ValueError("margin-total correlation must lie strictly between -1 and 1")
+        log_density = -(zm ** 2 - 2 * rho * zm * zt + zt ** 2) / (2 * (1 - rho ** 2))
+        density = np.zeros_like(log_density)
+        # Separate log-space normalisation avoids underflow on a narrow grid
+        # or a heavily favoured side while preserving both probability masses.
+        for mask, mass in ((margin > 0, self.p_home), (margin < 0, self.p_away)):
+            weights = np.exp(log_density[mask] - log_density[mask].max())
+            density[mask] = weights / weights.sum() * mass
         return density, axis, axis
 
     def as_dict(self) -> Dict:

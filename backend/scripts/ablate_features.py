@@ -136,7 +136,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise SystemExit(f"unknown block {name!r}; known: {sorted(BLOCKS)}")
         experiments.append((name, BLOCKS[name]))
     if not experiments:
-        experiments = sorted(BLOCKS.items())
+        experiments = sorted((name, columns) for name, columns in BLOCKS.items()
+                             if set(columns).issubset(FEATURE_NAMES))
+        logger.info("default sweep includes only blocks in the current feature vector")
 
     rows = load_corpus(args.from_season, args.to_season)
     if not rows:

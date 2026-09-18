@@ -41,6 +41,7 @@ ingest does silently.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import sys
@@ -60,6 +61,7 @@ from backend.services.data.warehouse import (
 from backend.services.data.espn_loader import NBA_COMPETITION_ID
 from backend.services.espn.client import current_season
 from backend.services.forecast.version import model_version
+from backend.services.forecast.history import read_history, utc
 from backend.services.playoffs.projection import (
     assign_projected_seeds,
     project_first_round,
@@ -220,6 +222,8 @@ def remaining_schedule(
         out.append(
             {
                 "game_id": row["game_id"],
+                "season": season,
+                "season_type": SEASON_TYPE_REGULAR,
                 "date_utc": row["date_utc"],
                 "home_team_id": home,
                 "away_team_id": away,
@@ -279,20 +283,23 @@ def forecast_games(
     # feeding a 19-feature model a rating gap makes it fall back to its
     # intercept for everything else — which published an expected total of
     # 14.1 points on the first run. See `FeatureBuilder.vector_for`.
-    vectors = np.vstack(
-        [
-            builder.vector_for(
-                game["home_team_id"],
-                game["away_team_id"],
-                _parse_utc(game["date_utc"]),
-                neutral=bool(game["neutral_site"]),
-            )
-            for game in games
-        ]
-    )
+    vectors = builder.vectors_for_schedule(games)
     forecasts = model.predict(vectors)
 
     dead = dead_feature_blocks(train_X, vectors) if train_X is not None else []
+    # A regular-season-only slate legitimately has no playoff variation.
+    # Exempt context flags only when every served value matches its fixture;
+    # an incorrectly populated flag must still be reported as skew.
+    context = {
+        "is_playoff": np.array([int(g.get("season_type", 2)) == 3 for g in games]),
+        "is_neutral": np.array([bool(g["neutral_site"]) for g in games]),
+    }
+    expected_constants = {
+        name for name, expected in context.items()
+        if len(set(expected)) == 1
+        and np.array_equal(vectors[:, FEATURE_NAMES.index(name)], expected)
+    }
+    dead = [name for name in dead if name not in expected_constants]
     if dead:
         logger.error(
             "TRAIN/SERVE SKEW: %s vary in training and are constant at serve "
@@ -301,10 +308,10 @@ def forecast_games(
             dead,
         )
 
-    for game, forecast in zip(games, forecasts):
+    for game, forecast, vector in zip(games, forecasts, vectors):
         home, away = game["home_team_id"], game["away_team_id"]
-        home_elo = builder.elo.get(home)
-        away_elo = builder.elo.get(away)
+        home_elo = float(vector[FEATURE_NAMES.index("elo_home")]) + 1500.0
+        away_elo = float(vector[FEATURE_NAMES.index("elo_away")]) + 1500.0
         record = {
             "game_id": game["game_id"],
             "date_utc": game["date_utc"],
@@ -486,7 +493,7 @@ def append_forecast_log(
             continue
         # A forecast stamped after tip-off is not a forecast. It cannot be
         # scored as one later, so it is not written as one now.
-        if str(generated_at) >= str(game["date_utc"]):
+        if utc(generated_at) >= utc(game["date_utc"]):
             continue
         value = game.get("value") or {}
         forecasts[game_id] = {
@@ -525,11 +532,7 @@ def append_forecast_log(
 
 
 def _read_log(path: Path) -> Dict:
-    try:
-        payload = json.loads(path.read_text())
-    except (OSError, json.JSONDecodeError):
-        return {}
-    return payload if isinstance(payload, dict) else {}
+    return read_history(path)
 
 
 def _publish(path: Path, payload: Dict) -> None:
@@ -561,6 +564,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
 
     season = args.season or current_season()
+    # Validate durable history before training or overwriting any served artifact.
+    read_history(Path(args.out_dir) / "forecast_log.json")
     warehouse = get_warehouse()
     franchises = load_franchises(warehouse)
     if len(franchises) != 30:
@@ -601,6 +606,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     config = {
         "features": list(FEATURE_NAMES),
+        "feature_pipeline": "season-boundary-and-schedule-v2",
         "elo": EloConfig().as_dict(),
         "shock_sd": STRENGTH_SHOCK_SD,
         "sims": args.sims,
@@ -608,6 +614,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "margin_sd": model.params.margin_sd,
         "total_sd": model.params.total_sd,
     }
+    # Configuration labels alone cannot identify fitted coefficients. Preserve
+    # feature ORDER here: each coefficient is positional.
+    fitted = {"params": model.params.as_dict(), "feature_names": model.feature_names,
+              "margin_coef": model._margin_coef.tolist(), "total_coef": model._total_coef.tolist()}
+    artifact_sha256 = hashlib.sha256(json.dumps(fitted, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    config["artifact_sha256"] = artifact_sha256
     version = model_version(config)
     logger.info("model version %s", version)
 
@@ -642,26 +654,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     projections["model_version"] = version
     projections["config"] = config
     projections["measured"] = _measured_block()
-    _publish(out_dir / "season_projections.json", projections)
 
     games = forecast_games(model, builder, remaining, franchises, train_X)
     priced = sum(1 for g in games if g.get("value"))
     flagged = sum(1 for g in games if (g.get("value") or {}).get("flagged"))
-    _publish(
-        out_dir / "game_forecasts.json",
-        {
-            "season": season,
-            "season_start": season_start(warehouse, season),
-            "generated_at": generated_at,
-            "model_version": version,
-            "n_games": len(games),
-            "n_priced": priced,
-            "n_flagged": flagged,
-            "min_edge": MIN_EDGE,
-            "games": games,
-        },
-    )
-
     # The append-only half. Everything above is overwritten next run; this is
     # what survives to be scored as a LIVE record rather than reconstructed
     # as a backtest. See `record_provenance`.
@@ -686,6 +682,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         n_odds,
         generated_at,
         new_to_log,
+    )
+
+    _publish(out_dir / "season_projections.json", projections)
+    _publish(
+        out_dir / "game_forecasts.json",
+        {
+            "season": season,
+            "season_start": season_start(warehouse, season),
+            "generated_at": generated_at,
+            "model_version": version,
+            "trained_through": model.params.trained_through,
+            "artifact_sha256": artifact_sha256,
+            "feature_pipeline": config["feature_pipeline"],
+            "n_games": len(games),
+            "n_priced": priced,
+            "n_flagged": flagged,
+            "min_edge": MIN_EDGE,
+            "games": games,
+        },
     )
 
     ratings = sorted(

@@ -306,6 +306,21 @@ function LiveSection({ live }: { live: LiveRecord | null }) {
             the last one before it.
           </p>
 
+          {live.cohorts?.length ? (
+            <div className="mt-5 overflow-x-auto">
+              <h3 className="mb-2 text-xs">By model and forecast lead time</h3>
+              <p className="mb-3 text-xs text-[var(--text-tertiary)]">Separate versions and horizons; small cohorts are descriptive, not evidence of improvement.</p>
+              <table className="w-full text-xs">
+                <thead><tr><th scope="col">Model</th><th scope="col">Before tip-off</th><th scope="col">Games</th><th scope="col">Brier</th><th scope="col">Log loss</th></tr></thead>
+                <tbody>{live.cohorts.map(row => <tr key={`${row.model_version}-${row.horizon}`}>
+                  <td className="font-numeric">{row.model_version}</td>
+                  <td>{({ under_24h: 'Under 24 hours', '1_to_7_days': '1–7 days', over_7_days: 'Over 7 days', unknown: 'Unknown' } as Record<string, string>)[row.horizon] || row.horizon}</td>
+                  <td className="numeric">{row.n}</td><td className="numeric">{num(row.brier, 4)}</td><td className="numeric">{num(row.log_loss, 4)}</td>
+                </tr>)}</tbody>
+              </table>
+            </div>
+          ) : null}
+
           {live.margin?.n ? (
             <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
               Expected margin off by {num(live.margin.mae, 2)} points on

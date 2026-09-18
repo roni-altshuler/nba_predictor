@@ -130,8 +130,8 @@ Two families, and the split is functional:
 
 | Family | Variable | Used for |
 |---|---|---|
-| Inter | `--font-sans` / `--font-display` | headings and prose |
-| JetBrains Mono | `--font-mono-numeric` | **every number**, nav, buttons, captions, table headers |
+| Native sans stack | `--font-sans` / `--font-display` | headings and prose |
+| Native monospace stack | `--font-mono-numeric` | **every number**, nav, buttons, captions, table headers |
 
 - `h1`–`h3`: uppercase, `letter-spacing: 0.08em`, weight 600, `--text-primary`.
   **Positive tracking** — it is what makes the restraint elsewhere read as
@@ -175,7 +175,7 @@ vocabulary is one file (`src/lib/motion.ts`, ported from Pitchverse — one
 ease-out curve, two springs) and the full inventory is:
 
 - **Route transition** (`<PageTransition>`, mounted once in the shell):
-  enter-only fade-and-rise, 350ms. No exit animation — an exit blocks the
+  enter-only CSS fade-and-rise, 150ms, with a reduced-motion media query. No exit animation — an exit blocks the
   navigation the reader just asked for.
 - **The mobile tab underline** slides between tabs via a shared
   framer-motion `layoutId`.
@@ -322,3 +322,17 @@ These are not editorial preferences — they change what components render:
   Always `text-[var(--text-tertiary)]`.
 - **A second place a probability is computed.** The frontend renders
   published JSON. A component that recomputes is a model nobody benchmarked.
+
+## Forecast Lab (2026-09-18)
+
+Courtside adds an interactive matchup, slate selection, team following, and links
+into game detail, season and bracket pages. `/lab` adds shareable matchups and
+explicit single-game record scenarios; these never modify published probabilities.
+Keep the selected game before the slate on phones. Native font stacks remove
+build-time font downloads while retaining the sans/monospace hierarchy.
+
+The franchise panel uses stable public abbreviations and works without upcoming
+games. Filter state belongs in the URL and browser history. Score ranges are
+model-implied normal quantiles of published moments, presented with adjustable
+coverage and a plain explanation of assumptions; they do not recompute winner
+probabilities or claim empirical calibration for future games.

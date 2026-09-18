@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -27,9 +30,11 @@ export function TeamLogo({
   size?: number
   className?: string
 }) {
+  const [failedSrc, setFailedSrc] = useState<string | null>(null)
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
   const label = name || abbreviation || 'Team'
 
-  if (!logo) {
+  if (!logo || failedSrc === logo) {
     return (
       <span
         className={cn(
@@ -48,7 +53,7 @@ export function TeamLogo({
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center justify-center overflow-hidden rounded-sm',
+        'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-sm',
         className,
       )}
       style={{
@@ -58,6 +63,7 @@ export function TeamLogo({
         boxShadow: 'inset 0 0 0 1px var(--logo-plate-ring)',
       }}
     >
+      {loadedSrc !== logo ? <span aria-hidden="true" className="font-numeric" style={{ color: 'var(--background)', fontSize: Math.max(8, size * 0.3) }}>{(abbreviation || '?').slice(0, 3)}</span> : null}
       {/* Plain <img>: these are remote ESPN CDN assets at a fixed small size,
           and next/image's optimiser buys nothing at 24px while adding a
           serverless hop per logo on a page that renders thirty of them. */}
@@ -69,7 +75,9 @@ export function TeamLogo({
         height={size}
         loading="lazy"
         decoding="async"
-        style={{ width: size * 0.82, height: size * 0.82, objectFit: 'contain' }}
+        onLoad={() => setLoadedSrc(logo)}
+        onError={() => setFailedSrc(logo)}
+        style={{ position: 'absolute', opacity: loadedSrc === logo ? 1 : 0, width: size * 0.82, height: size * 0.82, objectFit: 'contain' }}
       />
     </span>
   )

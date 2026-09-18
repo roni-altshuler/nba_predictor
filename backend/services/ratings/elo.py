@@ -189,14 +189,10 @@ class EloRatingSystem:
     def regress_to_season(self, season: int) -> bool:
         """Apply the offseason regression for a season not yet played.
 
-        **A forecaster must call this and a backtest must not.** The rolling
-        update applies carryover lazily, when the first game of a new season
-        arrives — which is correct while walking a corpus, and wrong the
-        moment you stop walking and start projecting. `forecast_season` fits
-        on every game ever played and then asks for ratings for a season
-        whose first game does not exist yet, so without this the projection
-        runs on END-OF-LAST-SEASON ratings and skips the regression the
-        sweep measured as the single most valuable Elo setting.
+        Call before reading pre-game ratings at a season boundary, in both
+        feature construction and publication. The update also checks the
+        boundary, but doing so only after emitting a feature row leaves the
+        first game of each season on unregressed ratings. Calls are idempotent.
 
         Concretely, on the 2026-27 projection: New York finished 2025-26 on
         1790 and would have been projected from it, giving a 43% title

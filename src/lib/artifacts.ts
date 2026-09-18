@@ -15,6 +15,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { easternDay, validateForecasts } from './courtside'
 
 const PREDICTIONS_DIR = path.join(process.cwd(), 'backend', 'data', 'predictions')
 const DIAGNOSTICS_DIR = path.join(process.cwd(), 'backend', 'data', 'diagnostics')
@@ -123,6 +124,9 @@ export interface GameForecasts {
   season_start?: string | null
   generated_at: string
   model_version: string
+  trained_through?: string | null
+  artifact_sha256?: string
+  feature_pipeline?: string
   n_games: number
   n_priced: number
   n_flagged: number
@@ -165,7 +169,7 @@ export function getSeasonProjections(): SeasonProjections | null {
 }
 
 export function getGameForecasts(): GameForecasts | null {
-  return readJson<GameForecasts>(PREDICTIONS_DIR, 'game_forecasts.json')
+  return validateForecasts(readJson<unknown>(PREDICTIONS_DIR, 'game_forecasts.json'))
 }
 
 export function getPowerRatings(): PowerRatings | null {
@@ -304,6 +308,7 @@ export interface LiveRecord {
   generated_at: string
   n: number
   basis: 'live'
+  cohorts?: Array<{ model_version: string; horizon: string; n: number; brier?: number; log_loss?: number; accuracy?: number }>
   note: string
   first_tipoff: string | null
   last_tipoff: string | null
@@ -418,7 +423,7 @@ export function groupByWeek(
 
   const anchored = Boolean(seasonStart)
   const anchor = mondayOf(
-    seasonStart ? String(seasonStart).slice(0, 10) : days[0][0],
+    seasonStart ? easternDay(seasonStart) : days[0][0],
   )
 
   const weeks = new Map<number, GameWeek>()
@@ -449,9 +454,7 @@ export function groupByDay(games: GameForecast[]): Array<[string, GameForecast[]
   for (const game of games) {
     // Bucketed on the US Eastern day, matching how the league itself talks
     // about a slate. A UTC bucket splits a normal evening across two dates.
-    const day = new Date(new Date(game.date_utc).getTime() - 5 * 3600 * 1000)
-      .toISOString()
-      .slice(0, 10)
+    const day = easternDay(game.date_utc)
     const existing = buckets.get(day)
     if (existing) existing.push(game)
     else buckets.set(day, [game])

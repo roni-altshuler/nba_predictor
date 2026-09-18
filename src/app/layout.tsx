@@ -1,22 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-})
-
-// Monospace carries every number on the site — scores, probabilities, win
-// totals. Tabular figures keep a column from shifting as digits change.
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono-numeric',
-  display: 'swap',
-  weight: ['400', '500', '700'],
-})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://hardwood-predictor.vercel.app'
 
@@ -70,10 +53,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
+      className="dark"
     >
       <head>
-        <style>{`:root { --font-display: var(--font-sans); }`}</style>
+        <style>{`:root { --font-sans: Arial, Helvetica, sans-serif; --font-mono-numeric: "SFMono-Regular", Consolas, "Liberation Mono", monospace; --font-display: var(--font-sans); }`}</style>
         {/* The ambient preference, applied before first paint so a returning
             reader never sees the court flash vivid and then dim. Reads the
             key AmbientToggle writes; anything unknown is `soft`. Kept well

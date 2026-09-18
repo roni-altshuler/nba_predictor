@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-09-18T12:55:32.483249+00:00",
+  "baseline_commit": "006d8bcf92df489d8c3727b08ac67f7c303706ef",
+  "baseline_source_sha256": "e386c6787ebbf152f38963428a8aefea01ba4af28546e47bb1e4f5ace2a7841c",
+  "corrected_source_sha256": "026a7abcb0fe814917512ca2dcd97630bdbd82ace463c406707c1a2a0fd0a1e6",
+  "input_sha256": "67c7d1e8df6e5ae7a7806377ee9bf464e4c137ca9c0f3f1e4fcffaa761850bb8",
+  "n_input": 29653,
+  "n_changed_feature_rows": 22,
+  "n_paired": 11543,
+  "outer_seasons": [
+    2018,
+    2026
+  ],
+  "refits": "monthly; earlier UTC days only",
+  "scores": {
+    "baseline": {
+      "n": 11543,
+      "brier": 0.2163044447574405,
+      "log_loss": 0.6217227627280455,
+      "accuracy": 0.6508706575413671,
+      "ece": 0.010730588037952637,
+      "mean_predicted": 0.5641070924407819,
+      "base_rate": 0.5612059256692368
+    },
+    "corrected": {
+      "n": 11543,
+      "brier": 0.2163233333919891,
+      "log_loss": 0.6217728993565715,
+      "accuracy": 0.6510439227237287,
+      "ece": 0.011029985853808892,
+      "mean_predicted": 0.5641013812799851,
+      "base_rate": 0.5612059256692368
+    }
+  },
+  "delta_brier": {
+    "mean_diff": 1.88886345485679e-05,
+    "ci_low": 3.347262225238656e-06,
+    "ci_high": 3.5691636441944455e-05,
+    "blocks": 307,
+    "iterations": 2000,
+    "seed": 41,
+    "unit": "UTC calendar week"
+  },
+  "claim": "Correctness and train/serve parity repair; no demonstrated accuracy gain. Does not evaluate long-range schedule projections.",
+  "paired_rows_sha256": "b7e9636475568f40cddb97eb3b37fdafc7eb975d09f61bb7504de0c8d4b634e4"
+}

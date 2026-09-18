@@ -49,6 +49,7 @@ export interface SeasonLink {
 
 const NAV = [
   { href: '/', label: 'Today', short: 'Today' },
+  { href: '/lab', label: 'Forecast Lab', short: 'Lab' },
   { href: '/preview', label: 'Season preview', short: 'Preview' },
   { href: '/season', label: 'Current season', short: 'Season' },
   { href: '/games', label: 'Games', short: 'Games' },
@@ -63,7 +64,7 @@ const NAV = [
   { href: '/about', label: 'How it works', short: 'About' },
 ]
 
-const MOBILE_BAR = ['/', '/games', '/season', '/accuracy']
+const MOBILE_BAR = ['/', '/lab', '/season', '/accuracy']
 const MOBILE_NAV = NAV.filter((item) => MOBILE_BAR.includes(item.href))
 const MOBILE_MORE = NAV.filter((item) => !MOBILE_BAR.includes(item.href))
 

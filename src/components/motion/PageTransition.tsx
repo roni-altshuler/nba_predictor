@@ -1,9 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-
-import { pageVariants } from '@/lib/motion'
 
 /**
  * Route transition, mounted once in the shell around `{children}`.
@@ -18,18 +15,10 @@ import { pageVariants } from '@/lib/motion'
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const reduced = useReducedMotion()
-
-  if (reduced) return <>{children}</>
 
   return (
-    <motion.div
-      key={pathname}
-      initial="hidden"
-      animate="visible"
-      variants={pageVariants}
-    >
+    <div key={pathname} className="page-enter">
       {children}
-    </motion.div>
+    </div>
   )
 }

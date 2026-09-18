@@ -39,6 +39,7 @@ assumed:
 from __future__ import annotations
 
 import logging
+from copy import copy, deepcopy
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -280,6 +281,8 @@ class FeatureBuilder:
             away_id = int(game["away_team_id"])
             home = self.state[home_id]
             away = self.state[away_id]
+            # Regress before reading pre-game ratings, including the opener.
+            self.elo.regress_to_season(season)
             home.roll_season(season)
             away.roll_season(season)
 
@@ -288,36 +291,10 @@ class FeatureBuilder:
 
             home_elo = self.elo.get(home_id)
             away_elo = self.elo.get(away_id)
-            edge = 0.0 if neutral else self.elo.config.home_advantage
 
-            home_rest = home.rest_days(when)
-            away_rest = away.rest_days(when)
-
-            vector = [
-                (home_elo + edge) - away_elo,
-                home_elo - 1500.0,
-                away_elo - 1500.0,
-                home.net_rating() - away.net_rating(),
-                home.net_rating(),
-                away.net_rating(),
-                home_rest - away_rest,
-                1.0 if home_rest <= 1.0 else 0.0,
-                1.0 if away_rest <= 1.0 else 0.0,
-                float(home.games_in_last(when, 7)),
-                float(away.games_in_last(when, 7)),
-                home.pace() + away.pace(),
-                home.offense(),
-                away.offense(),
-                home.defense(),
-                away.defense(),
-                min(home.games_this_season / self.games_per_season, 1.0),
-                1.0 if neutral else 0.0,
-                is_playoff,
-            ]
-            assert len(vector) == len(FEATURE_NAMES), (
-                f"vector is {len(vector)} long, FEATURE_NAMES is "
-                f"{len(FEATURE_NAMES)} — they must not drift"
-            )
+            vector = self.vector_for(
+                home_id, away_id, when, neutral=neutral, is_playoff=bool(is_playoff)
+            ).tolist()
 
             home_score = int(game["home_score"])
             away_score = int(game["away_score"])
@@ -427,6 +404,45 @@ class FeatureBuilder:
             f"{len(FEATURE_NAMES)} — the two paths have drifted"
         )
         return np.asarray(vector, dtype=float)
+
+    def vectors_for_schedule(self, games: Sequence[Dict]) -> np.ndarray:
+        """Project known schedule load without inventing future performances.
+
+        Results, form and ratings remain observed-only. On a private state copy,
+        advance dates and season counters after each fixture. Return rows in the
+        caller's order, even when fixtures arrive unsorted. Input must be the full
+        remaining schedule, not a filtered team's subset.
+        """
+        projected = copy(self)
+        projected.state = deepcopy(self.state)
+        projected.elo = copy(self.elo)
+        projected.elo.ratings = dict(self.elo.ratings)
+        vectors = np.empty((len(games), len(FEATURE_NAMES)))
+        seen = set()
+        for index in sorted(range(len(games)), key=lambda i: _parse(games[i]["date_utc"])):
+            game = games[index]
+            if game["game_id"] in seen:
+                raise ValueError("duplicate game in remaining schedule")
+            seen.add(game["game_id"])
+            when = _parse(game["date_utc"])
+            home_id, away_id = int(game["home_team_id"]), int(game["away_team_id"])
+            states = [projected.state[home_id], projected.state[away_id]]
+            if any(state.last_game is not None and when <= state.last_game for state in states):
+                raise ValueError("remaining schedule overlaps observed or scheduled games")
+            if game.get("season") is not None:
+                season = int(game["season"])
+                projected.elo.regress_to_season(season)
+                for state in states:
+                    state.roll_season(season)
+            vectors[index] = projected.vector_for(
+                home_id, away_id, when, neutral=bool(game.get("neutral_site", False)),
+                is_playoff=int(game.get("season_type", 2)) == 3,
+            )
+            for state in states:
+                state.last_game = when
+                state.game_dates.append(when)
+                state.games_this_season += 1
+        return vectors
 
     def _absorb(
         self,

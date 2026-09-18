@@ -1,0 +1,337 @@
+{
+  "scores": {
+    "incumbent": {
+      "n": 11543,
+      "brier": 0.2163044447574405,
+      "log_loss": 0.6217227627280455,
+      "accuracy": 0.6508706575413671,
+      "ece": 0.010730588037952637,
+      "mean_predicted": 0.5641070924407819,
+      "base_rate": 0.5612059256692368
+    },
+    "challenger": {
+      "n": 11543,
+      "brier": 0.21642758834582124,
+      "log_loss": 0.6219805899668567,
+      "accuracy": 0.6509572901325479,
+      "ece": 0.013008657212295353,
+      "mean_predicted": 0.557510167498626,
+      "base_rate": 0.5612059256692368
+    }
+  },
+  "continuous": {
+    "incumbent": {
+      "margin": {
+        "n": 11543,
+        "mae": 10.742926470986289,
+        "rmse": 13.725993966090652,
+        "bias": 0.5459571724592696,
+        "median_ae": 8.789169083292485,
+        "mean_actual": 2.104305639781686,
+        "mean_predicted": 2.6502628122409555
+      },
+      "total": {
+        "n": 11543,
+        "mae": 15.098319635311316,
+        "rmse": 19.112518392413165,
+        "bias": -1.832805067684414,
+        "median_ae": 12.691474133039208,
+        "mean_actual": 223.9521788096682,
+        "mean_predicted": 222.1193737419838
+      }
+    },
+    "challenger": {
+      "margin": {
+        "n": 11543,
+        "mae": 10.732588155940176,
+        "rmse": 13.71187423463226,
+        "bias": 0.3801440198429778,
+        "median_ae": 8.787163634242006,
+        "mean_actual": 2.104305639781686,
+        "mean_predicted": 2.4844496596246635
+      },
+      "total": {
+        "n": 11543,
+        "mae": 15.082792386126544,
+        "rmse": 19.074048618790602,
+        "bias": -1.0082685002628216,
+        "median_ae": 12.686976446316464,
+        "mean_actual": 223.9521788096682,
+        "mean_predicted": 222.9439103094054
+      }
+    }
+  },
+  "paired_market": {
+    "n": 8213,
+    "coverage": 0.7115134713679286,
+    "method": "Shin; complete moneylines only",
+    "incumbent": {
+      "n": 8213,
+      "brier": 0.21922672103597277,
+      "log_loss": 0.6283879394030829,
+      "accuracy": 0.6466577377328625,
+      "ece": 0.006873486631809375,
+      "mean_predicted": 0.5668881248072409,
+      "base_rate": 0.5642274442956289
+    },
+    "challenger": {
+      "n": 8213,
+      "brier": 0.2193909085878547,
+      "log_loss": 0.6287268699253529,
+      "accuracy": 0.6464142213563863,
+      "ece": 0.010681113942385355,
+      "mean_predicted": 0.5596122269232475,
+      "base_rate": 0.5642274442956289
+    },
+    "market": {
+      "n": 8213,
+      "brier": 0.20919384171904698,
+      "log_loss": 0.6057794264048499,
+      "accuracy": 0.6713137708510898,
+      "ece": 0.01591340221726344,
+      "mean_predicted": 0.5671407550458571,
+      "base_rate": 0.5642274442956289
+    }
+  },
+  "bootstrap": {
+    "mean_diff": 0.00012314358838071458,
+    "ci_low": -0.00011023442494275786,
+    "ci_high": 0.0003503363107068268,
+    "blocks": 307,
+    "iterations": 2000,
+    "seed": 41,
+    "unit": "UTC calendar week"
+  },
+  "folds": [
+    {
+      "season": 2018,
+      "selection_season": 2017,
+      "window_years": 6,
+      "n": 1312,
+      "delta_brier": 0.0005106282813680022,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.217411878831238
+        },
+        {
+          "window_years": 3,
+          "brier": 0.21732639435229958
+        },
+        {
+          "window_years": 6,
+          "brier": 0.21710809045708757
+        }
+      ]
+    },
+    {
+      "season": 2019,
+      "selection_season": 2018,
+      "window_years": null,
+      "n": 1312,
+      "delta_brier": 0.0,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.21357383289452253
+        },
+        {
+          "window_years": 3,
+          "brier": 0.21495793371489885
+        },
+        {
+          "window_years": 6,
+          "brier": 0.21408446117589053
+        }
+      ]
+    },
+    {
+      "season": 2020,
+      "selection_season": 2019,
+      "window_years": null,
+      "n": 1143,
+      "delta_brier": 0.0,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.21302496091774514
+        },
+        {
+          "window_years": 3,
+          "brier": 0.21475417768011765
+        },
+        {
+          "window_years": 6,
+          "brier": 0.21407219588825568
+        }
+      ]
+    },
+    {
+      "season": 2021,
+      "selection_season": 2020,
+      "window_years": 6,
+      "n": 1171,
+      "delta_brier": -3.559294915740737e-05,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.2200950726734019
+        },
+        {
+          "window_years": 3,
+          "brier": 0.22008275683162612
+        },
+        {
+          "window_years": 6,
+          "brier": 0.2196553315666832
+        }
+      ]
+    },
+    {
+      "season": 2022,
+      "selection_season": 2021,
+      "window_years": 6,
+      "n": 1323,
+      "delta_brier": 0.0002215655959200122,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.22543659871402652
+        },
+        {
+          "window_years": 3,
+          "brier": 0.22591193886046293
+        },
+        {
+          "window_years": 6,
+          "brier": 0.22540100576486916
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "selection_season": 2022,
+      "window_years": null,
+      "n": 1320,
+      "delta_brier": 0.0,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.22024603480763555
+        },
+        {
+          "window_years": 3,
+          "brier": 0.22143105853888714
+        },
+        {
+          "window_years": 6,
+          "brier": 0.22046760040355554
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "selection_season": 2023,
+      "window_years": null,
+      "n": 1319,
+      "delta_brier": 0.0,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.2270966673298232
+        },
+        {
+          "window_years": 3,
+          "brier": 0.22831135927037832
+        },
+        {
+          "window_years": 6,
+          "brier": 0.22803100593920983
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "selection_season": 2024,
+      "window_years": 6,
+      "n": 1321,
+      "delta_brier": -0.00025807181663958117,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.21127104925354503
+        },
+        {
+          "window_years": 3,
+          "brier": 0.21110197108490658
+        },
+        {
+          "window_years": 6,
+          "brier": 0.2110126603664
+        }
+      ]
+    },
+    {
+      "season": 2026,
+      "selection_season": 2025,
+      "window_years": 6,
+      "n": 1322,
+      "delta_brier": 0.0006361293989151313,
+      "inner_scores": [
+        {
+          "window_years": null,
+          "brier": 0.21065310115481597
+        },
+        {
+          "window_years": 3,
+          "brier": 0.21061804170264653
+        },
+        {
+          "window_years": 6,
+          "brier": 0.2103950293381764
+        }
+      ]
+    }
+  ],
+  "statistical_gate_passed": false,
+  "production_eligible": false,
+  "gate": {
+    "ci_high_below": -0.0005,
+    "max_season_regression": 0.002
+  },
+  "verdict": "hold_incumbent",
+  "limitations": [
+    "Exploratory reuse of previously inspected history; not an untouched final test.",
+    "Local warehouse snapshot; no current production data parity claim.",
+    "Monthly complete-day fits differ from the existing 30-day refit benchmark.",
+    "Historical pre-game features do not validate frozen long-range season forecasts."
+  ],
+  "generated_at": "2026-09-18T11:35:08.892075+00:00",
+  "input_sha256": "67c7d1e8df6e5ae7a7806377ee9bf464e4c137ca9c0f3f1e4fcffaa761850bb8",
+  "input_games": 29653,
+  "numpy": "2.3.4",
+  "python": "3.12.3",
+  "feature_names": [
+    "elo_diff",
+    "elo_home",
+    "elo_away",
+    "form_net_diff",
+    "form_net_home",
+    "form_net_away",
+    "rest_diff",
+    "home_b2b",
+    "away_b2b",
+    "home_games_in_7",
+    "away_games_in_7",
+    "pace_sum",
+    "form_off_home",
+    "form_off_away",
+    "form_def_home",
+    "form_def_away",
+    "season_progress",
+    "is_neutral",
+    "is_playoff"
+  ],
+  "paired_rows_file": "history_window_experiment.jsonl.gz",
+  "paired_rows_sha256": "33b56ab0d3fa7a908fbedb65b5712bd4f64c3848fe1f596c3d7a97e89de8561e"
+}

@@ -590,11 +590,12 @@ def test_the_warehouse_wins_when_it_is_earlier_than_the_log(warehouse, tmp_path)
     assert rows[0]["taken_ml_home"] == -150
 
 
-def test_a_missing_or_corrupt_log_is_not_fatal(warehouse, tmp_path):
+def test_missing_history_is_empty_but_corruption_blocks_scoring(warehouse, tmp_path):
     assert score_live.earliest_forecasts(warehouse, 2027, tmp_path / "nope.json") == []
     bad = tmp_path / "bad.json"
     bad.write_text("{ not json")
-    assert score_live.earliest_forecasts(warehouse, 2027, bad) == []
+    with pytest.raises(ValueError, match="forecast history"):
+        score_live.earliest_forecasts(warehouse, 2027, bad)
 
 
 def test_the_log_respects_the_season_filter(warehouse, tmp_path):

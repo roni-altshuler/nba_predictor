@@ -1,3 +1,4 @@
+import { Courtside } from '@/components/courtside/Courtside'
 import Link from 'next/link'
 
 import { BarLadder, type BarLadderRow } from '@/components/charts/BarLadder'
@@ -93,7 +94,7 @@ export default function HomePage() {
     <div>
       <header className="mb-8">
         <p className="eyebrow">Hardwood</p>
-        <h1 className="mt-1 text-2xl">Calibrated NBA forecasting</h1>
+        <h1 className="mt-1 text-2xl">Your front row to the forecast.</h1>
         {provenance ? (
           <p className="mt-2 font-numeric text-[11px] text-[var(--text-tertiary)]">
             model {provenance.model_version} · generated{' '}
@@ -101,6 +102,8 @@ export default function HomePage() {
           </p>
         ) : null}
       </header>
+
+      <Courtside initial={forecasts ? { ...forecasts, games: days.slice(0, 7).flatMap(([, games]) => games) } : null} compact />
 
       {!forecasts ? (
         <EmptyState />
@@ -124,7 +127,7 @@ export default function HomePage() {
           {nextDay ? (
             <section className="mb-8">
               <div className="mb-3 flex items-baseline justify-between">
-                <h2 className="text-sm">Next slate · {dayLabel(nextDay[0])}</h2>
+                <h2 className="text-sm">Scoreboard · {dayLabel(nextDay[0])}</h2>
                 <Link href="/games" className={sectionLink}>
                   All games
                 </Link>

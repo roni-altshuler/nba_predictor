@@ -71,6 +71,7 @@ from backend.services.data.warehouse import (
     get_warehouse,
 )
 from backend.services.espn.client import current_season
+from backend.services.forecast.history import read_history, utc
 from backend.services.prediction import market as mkt
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)-7s %(message)s")
@@ -153,13 +154,16 @@ def earliest_forecasts(warehouse, season: int, log_path: Path) -> List[Dict]:
         if entry.get("season") not in (None, season):
             continue
         tipoff, generated = entry.get("tipoff_utc"), entry.get("generated_at")
-        if not tipoff or not generated or str(generated) >= str(tipoff):
+        try:
+            if not tipoff or not generated or utc(generated) >= utc(tipoff):
+                continue
+        except (ValueError, TypeError):
             continue
         existing = merged.get(game_id)
         # Keep whichever is genuinely earlier. The log should always be the
         # earlier of the two, but "should" is not a guarantee and taking the
         # later of two pre-tipoff forecasts would weaken the claim silently.
-        if existing and str(existing["generated_at"]) < str(generated):
+        if existing and utc(existing["generated_at"]) < utc(generated):
             existing["taken_ml_home"] = entry.get("ml_home")
             existing["taken_ml_away"] = entry.get("ml_away")
             continue
@@ -181,12 +185,7 @@ def earliest_forecasts(warehouse, season: int, log_path: Path) -> List[Dict]:
 
 
 def _read_log(path: Path) -> Dict[str, Dict]:
-    try:
-        payload = json.loads(path.read_text())
-    except (OSError, json.JSONDecodeError):
-        return {}
-    forecasts = payload.get("forecasts") if isinstance(payload, dict) else None
-    return forecasts if isinstance(forecasts, dict) else {}
+    return read_history(path).get("forecasts", {})
 
 
 def join(
@@ -366,6 +365,14 @@ def evaluate(records: Sequence[Dict], devig: str = "shin") -> Dict:
             "reason": "no settled game carries both a stored forecast and a price",
         }
 
+    cohorts = {}
+    for record in records:
+        version = record.get("model_version") or "unrecorded"
+        hours = record.get("lead_hours")
+        horizon = "unknown" if hours is None else ("under_24h" if hours < 24 else "1_to_7_days" if hours < 168 else "over_7_days")
+        cohorts.setdefault((version, horizon), []).append((record["p_home"], record["home_won"]))
+    out["cohorts"] = [{"model_version": version, "horizon": horizon, **mkt.summarise(pairs)}
+                      for (version, horizon), pairs in sorted(cohorts.items())]
     out["clv"] = _clv_summary(records)
     return out
 
@@ -609,7 +616,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             if k in {
                 "game_id", "tipoff_utc", "generated_at", "home_team", "away_team",
                 "p_home", "home_won", "exp_margin", "margin", "exp_total",
-                "total", "lead_hours", "clv",
+                "total", "lead_hours", "clv", "model_version",
             }
         }
         for record in sorted(records, key=lambda r: r["tipoff_utc"] or "")

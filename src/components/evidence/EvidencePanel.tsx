@@ -97,7 +97,7 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
         features.{' '}
         <Link
           href="/about#benchmark"
-          className="text-[var(--accent-info)] hover:underline"
+          className="text-[var(--accent-info)] underline underline-offset-2 hover:underline"
         >
           Why the market is the benchmark
         </Link>

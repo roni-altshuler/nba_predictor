@@ -298,3 +298,57 @@ class TestServingPath:
     def test_zero_variance_flags_a_constant_column(self):
         X = np.column_stack([np.arange(50.0), np.ones(50)])
         assert zero_variance(X, ["moves", "constant"]) == ["constant"]
+
+
+def test_season_opener_training_and_serving_vectors_match():
+    from copy import deepcopy
+    builder = FeatureBuilder()
+    builder.build(_sequence(20))
+    served = deepcopy(builder)
+    served.elo.regress_to_season(2021)
+    for state in served.state.values():
+        state.roll_season(2021)
+    when = datetime(2020, 10, 20, tzinfo=timezone.utc)
+    expected = served.vector_for(1, 2, when)
+    X, _, _, meta = builder.build([_row('opener', when.isoformat(), 1, 2, 90, 120, season=2021)])
+    np.testing.assert_allclose(X[0], expected)
+    assert meta[0]['elo_home'] == pytest.approx(served.elo.get(1))
+    # The Elo update must not apply carryover a second time.
+    assert builder.elo.history[-1].home_elo == pytest.approx(served.elo.get(1))
+
+
+def test_schedule_projects_load_without_fabricating_form_or_mutating_observations():
+    from copy import deepcopy
+    builder = FeatureBuilder()
+    builder.build(_sequence(20))
+    before = deepcopy(builder.state)
+    ratings = dict(builder.elo.ratings)
+    games = [
+        {'game_id': 'a', 'date_utc': '2020-10-20T20:00:00Z', 'home_team_id': 1, 'away_team_id': 2, 'season': 2021},
+        {'game_id': 'b', 'date_utc': '2020-10-21T20:00:00Z', 'home_team_id': 1, 'away_team_id': 3, 'season': 2021},
+    ]
+    # Caller order is arbitrary; feature advancement must still follow time.
+    X = builder.vectors_for_schedule(list(reversed(games)))
+    ix = FEATURE_NAMES.index
+    assert X[0, ix('home_b2b')] == 1
+    assert X[0, ix('away_b2b')] == 0
+    assert X[0, ix('rest_diff')] == -4
+    assert X[0, ix('home_games_in_7')] == 1
+    assert X[0, ix('season_progress')] == pytest.approx(1 / 82)
+    assert X[1, ix('season_progress')] == 0
+    assert X[0, ix('form_net_home')] == X[1, ix('form_net_home')]
+    assert X[0, ix('elo_home')] == X[1, ix('elo_home')]
+    assert builder.state == before
+    assert builder.elo.ratings == ratings
+    np.testing.assert_array_equal(X, builder.vectors_for_schedule(list(reversed(games))))
+
+
+def test_schedule_rejects_duplicate_and_observed_fixtures():
+    builder = FeatureBuilder()
+    rows = _sequence(2)
+    builder.build(rows)
+    with pytest.raises(ValueError, match='overlaps'):
+        builder.vectors_for_schedule([rows[-1]])
+    game = {'game_id': 'future', 'date_utc': '2020-10-20T20:00:00Z', 'home_team_id': 1, 'away_team_id': 2}
+    with pytest.raises(ValueError, match='duplicate'):
+        builder.vectors_for_schedule([game, game])

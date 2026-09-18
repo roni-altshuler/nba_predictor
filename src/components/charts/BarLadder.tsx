@@ -68,7 +68,7 @@ export function BarLadder({
               name={row.name}
               size={22}
             />
-            <span className="w-[7.25rem] shrink-0 sm:w-40">
+            <span className="min-w-0 w-[7.25rem] sm:w-40 sm:shrink-0">
               <span className="block truncate font-numeric text-xs text-[var(--text-primary)]">
                 {row.label}
               </span>

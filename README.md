@@ -83,6 +83,26 @@ And the *shape* of the distribution they come from, which matters more — the w
 
 **The live record is empty**: the season has not started. Every forecast is stamped before its tip-off — to the warehouse and to a committed `forecast_log.json` that survives a warehouse rebuild — and scored from zero, in its own table, never merged with the walk-forward above.
 
+## Courtside and Forecast Lab
+
+The home page now provides an interactive matchup and team following. `/lab` adds
+slate and team filters, close-call discovery, shareable matchups, and hypothetical
+single-game records, a complete franchise-following panel, bookmarkable filters,
+and adjustable model-implied score ranges. Probabilities remain the published model outputs; the page
+shows provenance, freshness and links to the measured record.
+
+The [September improvement audit](docs/IMPROVEMENT_AUDIT_2026-09-18.md) documents
+implemented history safeguards, coherent score grids and the measured history-window
+experiment. The history-window challenger did not pass. Season-opener Elo and
+future schedule-load repairs take effect at the next publication; no historical
+forecast is rewritten.
+
+```bash
+python3 -m backend.scripts.experiment_history_window
+python3 -m backend.scripts.compare_feature_boundary
+node scripts/courtside_audit.mjs  # running local site, QA_BASE defaults to port 3002
+```
+
 ## Quick start
 
 ```bash
@@ -123,7 +143,7 @@ backend/
     playoffs/     best-of-seven enumeration, historical and projected brackets
     forecast/     model versioning
   scripts/        ingest, benchmark, tune, publish, title-race tracking
-  tests/          275 tests
+  tests/          backend regression tests
   main.py         FastAPI
 src/
   app/            Next.js App Router — 17 routes, 5 API routes, per-game social cards
@@ -141,8 +161,8 @@ src/
 ## Testing
 
 ```bash
-python3 -m pytest backend/tests/   # 275 tests
-npm test                            # 102 tests
+python3 -m pytest backend/tests/   # backend regression tests
+npm test                            # frontend regression tests
 npx next lint && npm run typecheck
 ```
 
