@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-09-19T14:11:02+00:00",
+  "generated_at": "2026-09-20T14:29:24+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -942,7 +942,7 @@
       "elo": 1328.5
     }
   ],
-  "model_version": "2026.08.1+ce66f6fc",
+  "model_version": "2026.08.1+53b7ee64",
   "config": {
     "features": [
       "elo_diff",
@@ -979,9 +979,9 @@
     "shock_sd": 0.10390415232135632,
     "sims": 20000,
     "season": 2027,
-    "margin_sd": 12.627796745982234,
+    "margin_sd": 12.627796745982232,
     "total_sd": 18.98469098716709,
-    "artifact_sha256": "f945c873cb3fb2f0d7bd639f0a9758616cb535a9f5730ec1821dd704657d72f8"
+    "artifact_sha256": "8a41d189defdea78c133243a3e309a0499fc61fe44129b62042c7369307d4baa"
   },
   "measured": {
     "available": true,

@@ -1,10 +1,10 @@
 {
   "season": 2027,
   "season_start": "2026-10-20T19:00:00+00:00",
-  "generated_at": "2026-09-19T14:11:02+00:00",
-  "model_version": "2026.08.1+ce66f6fc",
+  "generated_at": "2026-09-20T14:29:24+00:00",
+  "model_version": "2026.08.1+53b7ee64",
   "trained_through": "2026-06-14T00:30:00+00:00",
-  "artifact_sha256": "f945c873cb3fb2f0d7bd639f0a9758616cb535a9f5730ec1821dd704657d72f8",
+  "artifact_sha256": "8a41d189defdea78c133243a3e309a0499fc61fe44129b62042c7369307d4baa",
   "feature_pipeline": "season-boundary-and-schedule-v2",
   "n_games": 1200,
   "n_priced": 0,
