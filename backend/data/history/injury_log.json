@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-09-26T14:54:21+00:00",
- "n_rows": 195,
+ "last_observed": "2026-09-27T15:32:41+00:00",
+ "n_rows": 198,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -1954,6 +1954,36 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-09-26T14:54:21+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Rob Dillingham",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right wrist surgery",
+   "return_date": "2026-10-01",
+   "espn_date": "2026-09-26T21:48Z",
+   "observed_at": "2026-09-27T15:32:41+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Steven Adams",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle surgery",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-09-27T04:10Z",
+   "observed_at": "2026-09-27T15:32:41+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Rob Dillingham",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-27T15:32:41+00:00"
   }
  ]
 }
