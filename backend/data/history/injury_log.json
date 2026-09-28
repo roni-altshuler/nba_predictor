@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-09-27T15:32:41+00:00",
- "n_rows": 198,
+ "last_observed": "2026-09-28T18:25:39+00:00",
+ "n_rows": 215,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -1984,6 +1984,176 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-09-27T15:32:41+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Mikel Brown Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-09-28T14:36Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Kristaps Porzingis",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-09-28T15:15Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Bradley Beal",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Knee inflammation",
+   "return_date": "2026-10-04",
+   "espn_date": "2026-09-28T18:12Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Brandon Ingram",
+   "position": "F",
+   "status": "Out",
+   "detail": "Achilles surgery",
+   "return_date": "2026-11-01",
+   "espn_date": "2026-09-28T18:01Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Yanic Konan Niederhauser",
+   "position": "C",
+   "status": "Out",
+   "detail": "Right foot surgery",
+   "return_date": "2026-11-01",
+   "espn_date": "2026-09-28T18:07Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Micah Peavy",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-05",
+   "espn_date": "2026-09-28T16:31Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Zach Edey",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle surgery",
+   "return_date": "2026-10-05",
+   "espn_date": "2026-09-28T16:12Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jonathan Isaac",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left knee sprain",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-09-28T17:13Z",
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Nolan Traore",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Brandon Miller",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Josh Giddey",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Trevor Keels",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Portland Trail Blazers",
+   "player": "Ja Morant",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "De'Andre Hunter",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Keegan Murray",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Zach LaVine",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Collin Murray-Boyles",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-28T18:25:39+00:00"
   }
  ]
 }
