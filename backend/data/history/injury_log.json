@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-09-28T18:25:39+00:00",
- "n_rows": 215,
+ "last_observed": "2026-09-29T16:47:58+00:00",
+ "n_rows": 227,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -2154,6 +2154,126 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-09-28T18:25:39+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Zach Collins",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right toe surgery",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-09-28T23:31Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Morez Johnson Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-09-28T22:24Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Santi Aldama",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-01",
+   "espn_date": "2026-09-26T18:15Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Alex Toohey",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left knee surgery",
+   "return_date": "2026-10-01",
+   "espn_date": "2026-09-10T01:12Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Drew Eubanks",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left thumb surgery",
+   "return_date": "2026-10-01",
+   "espn_date": "2026-09-16T01:15Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "N'Faly Dante",
+   "position": "C",
+   "status": "Out",
+   "detail": "Right knee surgery",
+   "return_date": "2026-11-02",
+   "espn_date": "2026-09-27T00:52Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Izaiyah Nelson",
+   "position": "F",
+   "status": "Out",
+   "detail": "Left ankle surgery",
+   "return_date": "2026-11-01",
+   "espn_date": "2026-09-28T21:33Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Phoenix Suns",
+   "player": "Mark Williams",
+   "position": "C",
+   "status": "Out",
+   "detail": "Left shoulder surgery",
+   "return_date": "2027-02-03",
+   "espn_date": "2026-09-11T16:03Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Portland Trail Blazers",
+   "player": "Shaedon Sharpe",
+   "position": "G",
+   "status": "Out",
+   "detail": "Right knee surgery",
+   "return_date": "2027-03-02",
+   "espn_date": "2026-08-24T20:23Z",
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Rob Dillingham",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Richie Saunders",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Franz Wagner",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-29T16:47:58+00:00"
   }
  ]
 }

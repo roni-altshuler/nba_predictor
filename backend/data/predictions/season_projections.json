@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-09-28T18:24:51+00:00",
+  "generated_at": "2026-09-29T16:47:27+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -942,7 +942,7 @@
       "elo": 1328.5
     }
   ],
-  "model_version": "2026.08.1+ce66f6fc",
+  "model_version": "2026.08.1+53b7ee64",
   "config": {
     "features": [
       "elo_diff",
@@ -979,19 +979,19 @@
     "shock_sd": 0.10390415232135632,
     "sims": 20000,
     "season": 2027,
-    "margin_sd": 12.627796745982234,
+    "margin_sd": 12.627796745982232,
     "total_sd": 18.98469098716709,
-    "artifact_sha256": "f945c873cb3fb2f0d7bd639f0a9758616cb535a9f5730ec1821dd704657d72f8"
+    "artifact_sha256": "8a41d189defdea78c133243a3e309a0499fc61fe44129b62042c7369307d4baa"
   },
   "measured": {
     "available": true,
-    "generated_at": "2026-09-21T18:23:22+00:00",
+    "generated_at": "2026-09-28T19:54:40+00:00",
     "walk_forward_n": 25749,
-    "walk_forward_brier": 0.2106035898830942,
-    "walk_forward_ece": 0.011202318592358061,
+    "walk_forward_brier": 0.21060358988308814,
+    "walk_forward_ece": 0.011202318592349311,
     "paired_n": 14600,
     "market_brier": 0.2069878313121994,
-    "model_brier": 0.21410703055986954,
+    "model_brier": 0.2141070305598702,
     "gap_to_market": 0.00712,
     "bootstrap": {
       "mean_diff": 0.00712,
