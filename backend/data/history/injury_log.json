@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-09-29T16:47:58+00:00",
- "n_rows": 227,
+ "last_observed": "2026-09-30T16:41:09+00:00",
+ "n_rows": 235,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -2274,6 +2274,86 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-09-29T16:47:58+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Jalen Duren",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Not injury related",
+   "return_date": "2026-10-05",
+   "espn_date": "2026-09-29T18:06Z",
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Larry Nance Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-09-29T17:33Z",
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Anthony Black",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle sprain",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-09-30T16:10Z",
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Noah Penda",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-09-30T16:11Z",
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Dailyn Swain",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Steven Adams",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Bam Adebayo",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-30T16:41:09+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Giannis Antetokounmpo",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-09-30T16:41:09+00:00"
   }
  ]
 }
