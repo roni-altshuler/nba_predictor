@@ -1,0 +1,92 @@
+[
+  {
+    "game_id": "401909088",
+    "date_utc": "2026-10-20T22:00:00+03:00",
+    "venue": "Little Caesars Arena",
+    "neutral_site": false,
+    "home": {
+      "team_id": 9,
+      "name": "Detroit Pistons",
+      "abbreviation": "DET",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+      "elo": 1587.6
+    },
+    "away": {
+      "team_id": 2,
+      "name": "Boston Celtics",
+      "abbreviation": "BOS",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
+      "elo": 1581.7
+    },
+    "p_home": 0.566659,
+    "p_away": 0.433341,
+    "exp_margin": 2.62,
+    "exp_total": 217.61,
+    "exp_home_score": 110.11,
+    "exp_away_score": 107.49,
+    "margin_sd": 12.628,
+    "total_sd": 18.985
+  },
+  {
+    "game_id": "401909089",
+    "date_utc": "2026-10-21T02:00:00+03:00",
+    "venue": "Madison Square Garden",
+    "neutral_site": false,
+    "home": {
+      "team_id": 20,
+      "name": "New York Knicks",
+      "abbreviation": "NY",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
+      "elo": 1673.9
+    },
+    "away": {
+      "team_id": 23,
+      "name": "Philadelphia 76ers",
+      "abbreviation": "PHI",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+      "elo": 1522.2
+    },
+    "p_home": 0.767243,
+    "p_away": 0.232757,
+    "exp_margin": 9.716,
+    "exp_total": 218.73,
+    "exp_home_score": 114.22,
+    "exp_away_score": 104.51,
+    "margin_sd": 12.628,
+    "total_sd": 18.985
+  },
+  {
+    "game_id": "401909090",
+    "date_utc": "2026-10-21T04:30:00+03:00",
+    "venue": "Frost Bank Center",
+    "neutral_site": false,
+    "home": {
+      "team_id": 27,
+      "name": "San Antonio Spurs",
+      "abbreviation": "SA",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+      "elo": 1657.2
+    },
+    "away": {
+      "team_id": 21,
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+      "elo": 1642.3
+    },
+    "p_home": 0.584714,
+    "p_away": 0.415286,
+    "exp_margin": 3.202,
+    "exp_total": 219.85,
+    "exp_home_score": 111.53,
+    "exp_away_score": 108.32,
+    "margin_sd": 12.628,
+    "total_sd": 18.985
+  }
+]
