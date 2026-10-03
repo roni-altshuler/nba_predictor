@@ -1,6 +1,9 @@
 # Hardwood
 
-Calibrated NBA game and season forecasting, scored against the closing line.
+NBA game and season forecasts, with historical market comparisons.
+
+[Daily slate and matchup browsing](docs/SLATE_BROWSING_2026-10.md) adds shareable
+dates and franchise filters, a focused game preview and explicit forecast timing.
 
 A port of the sibling soccer project ([`soccer_predictor`](https://github.com/roni-altshuler/soccer_predictor)) to basketball. Same architecture, same evidence discipline, same design language — and several of the measured conclusions are the opposite, because basketball is a different sport with different institutions. Those inversions are documented in [CLAUDE.md](CLAUDE.md).
 

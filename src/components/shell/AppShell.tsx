@@ -175,7 +175,7 @@ export function AppShell({
         <footer className="px-4 pb-28 md:px-8 md:pb-10">
           <div className="mx-auto w-full max-w-shell border-t border-[var(--border-color)] pt-4">
             <p className="text-[10px] leading-relaxed text-[var(--text-tertiary)]">
-              Forecasts are scored against the closing line. Nothing here is
+              Forecasts are compared with historical markets. Nothing here is
               betting advice.{' '}
               <Link
                 href="/about"
