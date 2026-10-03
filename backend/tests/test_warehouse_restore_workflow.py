@@ -1,9 +1,9 @@
 """Execute the workflow's restore shell with a controlled release download."""
 import gzip
 import os
-from pathlib import Path
 import shutil
 import subprocess
+from pathlib import Path
 
 import pytest
 import yaml
@@ -29,7 +29,7 @@ def restore(tmp_path, *, download_status=0, full_rebuild="false", corrupt=False)
     # Resolve the temporary shim inside bash, including Windows drive paths.
     result = subprocess.run([BASH, "-e", "-o", "pipefail", "-c",
                              'export PATH="$PWD/bin:$PATH"; source restore.sh'],
-                            cwd=tmp_path, env=env, capture_output=True, text=True)
+                            cwd=tmp_path, env=env, capture_output=True, text=True, check=False)
     return result
 
 
