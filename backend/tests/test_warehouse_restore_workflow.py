@@ -8,7 +8,6 @@ from pathlib import Path
 import pytest
 import yaml
 
-
 BASH = "C:/Program Files/Git/bin/bash.exe" if os.name == "nt" else shutil.which("bash")
 pytestmark = pytest.mark.skipif(not BASH or not Path(BASH).exists(), reason="bash required")
 
