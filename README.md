@@ -160,6 +160,18 @@ src/
 
 ## Testing
 
+See the [October quality roadmap](docs/QUALITY_ROADMAP_2026-10.md) for the next
+model evaluation and browser acceptance criteria.
+
+The daily publisher requires a successful restore of the release warehouse.
+Download or decompression failures stop publication and leave the previous
+artifacts available. Retry a transient failure; the manual workflow's
+`full_rebuild=true` option permits deliberate recovery from scratch after a
+failed download. A rebuilt warehouse cannot recover every prior forecast
+snapshot, so that option is a recovery decision rather than an automatic retry.
+The restore policy is exercised with mocked downloads by
+`python -m pytest backend/tests/test_warehouse_restore_workflow.py -q` (requires Bash).
+
 ```bash
 python3 -m pytest backend/tests/   # backend regression tests
 npm test                            # frontend regression tests
