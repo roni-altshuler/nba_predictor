@@ -55,19 +55,27 @@ jobs:
       - name: Restore the warehouse
         # The warehouse is gitignored — it is derived data, and a 300MB
         # SQLite file does not belong in git history. It is republished as a
-        # release asset each run, so a runner that cannot download it must
-        # rebuild rather than forecast from nothing.
+        # release asset each run. A failed download is not proof that the
+        # asset is absent: rebuilding would discard forecast snapshots.
+        # Only an explicit full_rebuild request permits recovery from scratch.
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FULL_REBUILD: ${{ github.event.inputs.full_rebuild || 'false' }}
+          WAREHOUSE_DIR: ${{ runner.temp }}/warehouse-restore
         run: |
+          mkdir -p "$WAREHOUSE_DIR"
           if gh release download warehouse-latest \
-               --pattern 'warehouse.sqlite.gz' --dir /tmp --clobber; then
-            gunzip -f /tmp/warehouse.sqlite.gz
-            mv /tmp/warehouse.sqlite backend/data/warehouse.sqlite
+               --pattern 'warehouse.sqlite.gz' --dir "$WAREHOUSE_DIR" --clobber; then
+            gunzip -f "$WAREHOUSE_DIR/warehouse.sqlite.gz"
+            mkdir -p backend/data
+            mv "$WAREHOUSE_DIR/warehouse.sqlite" backend/data/warehouse.sqlite
             echo "restored warehouse"
-          else
-            echo "no published warehouse — will rebuild from scratch"
+          elif [ "$FULL_REBUILD" = 'true' ]; then
+            echo "Restore failed; explicit full_rebuild permits recovery from scratch"
             echo "NEEDS_FULL_BUILD=true" >> "$GITHUB_ENV"
+          else
+            echo "::error::Warehouse restore failed. Forecast publication stopped to preserve snapshot history. Retry the download; use full_rebuild only for deliberate recovery."
+            exit 1
           fi
 
       - name: Rebuild the warehouse in full
