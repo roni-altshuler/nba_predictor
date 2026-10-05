@@ -52,6 +52,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
+from backend.services.data.ingestion import read_status
 from backend.services.data.warehouse import (
     SEASON_TYPE_PLAY_IN,
     SEASON_TYPE_POSTSEASON,
@@ -654,6 +655,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     projections["model_version"] = version
     projections["config"] = config
     projections["measured"] = _measured_block()
+    projections["ingestion"] = read_status()
 
     games = forecast_games(model, builder, remaining, franchises, train_X)
     priced = sum(1 for g in games if g.get("value"))
@@ -691,6 +693,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "season": season,
             "season_start": season_start(warehouse, season),
             "generated_at": generated_at,
+            "ingestion": projections["ingestion"],
             "model_version": version,
             "trained_through": model.params.trained_through,
             "artifact_sha256": artifact_sha256,

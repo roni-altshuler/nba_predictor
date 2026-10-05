@@ -1,0 +1,132 @@
+{
+  "id": "401909454",
+  "uid": "s:40~l:46~e:401909454",
+  "date": "2026-12-08T05:00Z",
+  "name": "TBD at TBD",
+  "shortName": "TBD @ TBD",
+  "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+  },
+  "competitions": [
+    {
+      "id": "401909454",
+      "uid": "s:40~l:46~e:401909454~c:401909454",
+      "date": "2026-12-08T05:00Z",
+      "attendance": 0,
+      "type": {
+        "id": "1",
+        "abbreviation": "STD"
+      },
+      "timeValid": false,
+      "neutralSite": false,
+      "conferenceCompetition": false,
+      "playByPlayAvailable": false,
+      "recent": false,
+      "competitors": [
+        {
+          "id": "-1",
+          "uid": "s:40~l:46~t:-1",
+          "type": "team",
+          "order": 0,
+          "homeAway": "home",
+          "name": "TBD",
+          "team": {
+            "id": "-1",
+            "uid": "s:40~l:46~t:-1",
+            "location": "TBD",
+            "name": "TBD",
+            "abbreviation": "TBD",
+            "displayName": "TBD",
+            "shortDisplayName": "TBD",
+            "isActive": false,
+            "links": []
+          },
+          "score": "0",
+          "statistics": []
+        },
+        {
+          "id": "-2",
+          "uid": "s:40~l:46~t:-2",
+          "type": "team",
+          "order": 1,
+          "homeAway": "away",
+          "name": "TBD",
+          "team": {
+            "id": "-2",
+            "uid": "s:40~l:46~t:-2",
+            "location": "TBD",
+            "name": "TBD",
+            "abbreviation": "TBD",
+            "displayName": "TBD",
+            "shortDisplayName": "TBD",
+            "isActive": false,
+            "links": []
+          },
+          "score": "0",
+          "statistics": []
+        }
+      ],
+      "notes": [
+        {
+          "type": "event",
+          "headline": "NBA Cup - Semifinals"
+        }
+      ],
+      "status": {
+        "clock": 0.0,
+        "displayClock": "0.0",
+        "period": 0,
+        "type": {
+          "id": "1",
+          "name": "STATUS_SCHEDULED",
+          "state": "pre",
+          "completed": false,
+          "description": "Scheduled",
+          "detail": "12/8 - TBD",
+          "shortDetail": "TBD"
+        }
+      },
+      "broadcasts": [],
+      "format": {
+        "regulation": {
+          "periods": 4
+        }
+      },
+      "startDate": "2026-12-08T05:00Z",
+      "broadcast": "",
+      "geoBroadcasts": [],
+      "highlights": []
+    }
+  ],
+  "links": [
+    {
+      "language": "en-US",
+      "rel": [
+        "summary",
+        "desktop",
+        "event"
+      ],
+      "href": "https://www.espn.com/nba/game/_/gameId/401909454/tbd-tbd",
+      "text": "Gamecast",
+      "shortText": "Gamecast",
+      "isExternal": false,
+      "isPremium": false
+    }
+  ],
+  "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 0,
+    "type": {
+      "id": "1",
+      "name": "STATUS_SCHEDULED",
+      "state": "pre",
+      "completed": false,
+      "description": "Scheduled",
+      "detail": "12/8 - TBD",
+      "shortDetail": "TBD"
+    }
+  }
+}
