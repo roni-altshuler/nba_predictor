@@ -1,7 +1,24 @@
 {
   "season": 2027,
   "season_start": "2026-10-20T19:00:00+00:00",
-  "generated_at": "2026-10-04T15:40:03+00:00",
+  "generated_at": "2026-10-05T19:32:31+00:00",
+  "ingestion": {
+    "source": "espn",
+    "status": "ok",
+    "attempted_at": "2026-10-05T19:32:22+00:00",
+    "seasons": [
+      2027
+    ],
+    "last_success_at": "2026-10-05T19:32:22+00:00",
+    "event_count": 1273,
+    "warehouse_updated": true,
+    "error": null,
+    "stats": {
+      "games": 3,
+      "scheduled": 1264,
+      "skipped": 6
+    }
+  },
   "model_version": "2026.08.1+ce66f6fc",
   "trained_through": "2026-06-14T00:30:00+00:00",
   "artifact_sha256": "f945c873cb3fb2f0d7bd639f0a9758616cb535a9f5730ec1821dd704657d72f8",
