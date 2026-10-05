@@ -39,6 +39,34 @@ provider errors, missing arrays and responses at the event limit are failures.
 An explicit valid empty events array remains a healthy empty observation.
 Only validated responses enter the client cache.
 
+### Cup placeholder compatibility check
+
+A focused follow-up read on October 5 verified six undrawn Cup events across
+December 4, 5, 8 and 11: `401909450`, `401909451`, `401909452`, `401909453`,
+`401909454` and `401909456`. Both sides in every event are explicitly named
+`TBD`, with ESPN team IDs `-1` and `-2`, and the events are scheduled/unplayed.
+For example, [the December 8 response](https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261208&limit=1000)
+contains event `401909454`, date `2026-12-08T05:00Z`, season 2027/type 2,
+status `pre`/`completed: false`, and the two `TBD` competitors. Its unmodified
+event is frozen in `backend/tests/fixtures/espn_cup_tbd_401909454.json`.
+
+The first version of this validator rejected negative IDs before the loader
+could skip these slots. Validation now permits a negative team ID only when
+that competitor has an explicit recognized placeholder name and the event
+is unplayed (`pre`, `completed: false`). Event IDs and every other loader
+field remain validated. Missing IDs/names, malformed real-team IDs and live
+or completed events cannot use the exception. Shared placeholder matching
+keeps the validator and loader aligned. The loader skips a pairing with any
+placeholder before resolving either team, including a partly drawn pairing.
+Skipped slots remain observable in ingestion counts and create no warehouse
+team, result or scheduled-game rows.
+
+Fifteen read-only daily responses for December 4–18 contained 61 events,
+including those six slots. Replaying these captured provider responses into
+a temporary database validates all 61 events and writes only the 55 real
+scheduled pairings; all six slots are skipped. This is a bounded compatibility
+check, not a production or whole-season refresh.
+
 ## Preservation and reporting
 
 `build_warehouse` fetches all selected seasons before constructing a loader.

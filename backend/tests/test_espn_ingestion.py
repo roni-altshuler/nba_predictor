@@ -1,5 +1,7 @@
 """Provider failures must not become empty, successful warehouse refreshes."""
 
+import copy
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import AsyncMock
@@ -12,13 +14,20 @@ from backend.scripts import build_warehouse
 from backend.services.data.espn_loader import ESPNLoader
 from backend.services.data.ingestion import read_status, record_status
 from backend.services.data.warehouse import Warehouse
-from backend.services.espn.client import ESPNClient, ESPNUnavailable
+from backend.services.espn.client import ESPNClient, ESPNUnavailable, validate_scoreboard
 from backend.tests.test_warehouse_and_loader import _event
 
 
 START = datetime(2026, 10, 3, tzinfo=timezone.utc)
 END = datetime(2026, 10, 5, tzinfo=timezone.utc)
 RANGE_ERROR = {"code": 400, "message": "Failed to get events endpoint."}
+
+
+@pytest.fixture
+def cup_slot():
+    # Unmodified event captured from ESPN's 20261208 scoreboard on 2026-10-05.
+    fixture = Path(__file__).parent / "fixtures/espn_cup_tbd_401909454.json"
+    return json.loads(fixture.read_text())
 
 
 @pytest.fixture
@@ -144,6 +153,68 @@ async def test_non_json_success_is_unavailable(mock_client):
 async def test_healthy_empty_range_is_not_an_outage(mock_client):
     client = mock_client(lambda request: httpx.Response(200, json={"events": []}))
     assert await client.get_scoreboard_range(START, END) == []
+
+
+@pytest.mark.asyncio
+async def test_captured_cup_slots_validate_but_never_enter_warehouse(mock_client, cup_slot, tmp_path):
+    client = mock_client(lambda request: httpx.Response(200, json={"events": [cup_slot]}))
+    day = datetime(2026, 12, 8, tzinfo=timezone.utc)
+    events = await client.get_scoreboard_range(day, day, use_cache=True)
+    assert events == [cup_slot]
+    assert client.cache.get("nba_sb_20261208_1000_None")["events"] == [cup_slot]
+    warehouse = Warehouse(tmp_path / "cup.sqlite")
+    warehouse.migrate()
+    try:
+        stats = ESPNLoader(warehouse).load_events(events)
+        assert stats == {"games": 0, "scheduled": 0, "skipped": 1, "pruned": 0}
+        assert warehouse.counts()["teams"] == 0
+        assert warehouse.counts()["scheduled_games"] == 0
+        assert warehouse.counts()["games"] == 0
+    finally:
+        warehouse.close()
+
+
+@pytest.mark.parametrize("change", [
+    "franchise_name", "missing_names", "missing_id", "nonnumeric_id",
+    "boolean_id", "unicode_id", "in_progress", "completed", "final",
+])
+def test_cup_exception_does_not_accept_malformed_or_played_teams(cup_slot, change):
+    event = copy.deepcopy(cup_slot)
+    team = event["competitions"][0]["competitors"][0]["team"]
+    status = event["status"]["type"]
+    if change == "franchise_name":
+        team.update(displayName="Boston Celtics", name="Celtics", abbreviation="BOS")
+    elif change == "missing_names":
+        for key in ["displayName", "name", "abbreviation"]:
+            team.pop(key)
+    elif change in {"missing_id", "nonnumeric_id", "boolean_id", "unicode_id"}:
+        team["id"] = {"missing_id": None, "nonnumeric_id": "slot", "boolean_id": True,
+                      "unicode_id": "-١"}[change]
+    elif change == "in_progress":
+        status["state"] = "in"
+    elif change == "completed":
+        status["completed"] = True
+    else:
+        status.update(state="post", completed=True, name="STATUS_FINAL")
+    with pytest.raises(ESPNUnavailable):
+        validate_scoreboard({"events": [event]})
+
+
+def test_partly_drawn_cup_event_skips_before_any_team_write(cup_slot, tmp_path):
+    event = copy.deepcopy(cup_slot)
+    event["competitions"][0]["competitors"][0]["team"].update(
+        id="2", displayName="Boston Celtics", name="Celtics", abbreviation="BOS"
+    )
+    validate_scoreboard({"events": [event]})
+    warehouse = Warehouse(tmp_path / "cup.sqlite")
+    warehouse.migrate()
+    try:
+        stats = ESPNLoader(warehouse).load_events([event])
+        assert stats["skipped"] == 1
+        assert warehouse.counts()["teams"] == 0
+        assert warehouse.counts()["scheduled_games"] == 0
+    finally:
+        warehouse.close()
 
 
 @pytest.mark.asyncio

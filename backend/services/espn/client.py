@@ -29,6 +29,8 @@ from typing import Any, Callable, Dict, List, Optional
 
 import httpx
 
+from backend.services.data.placeholders import is_placeholder_team
+
 logger = logging.getLogger(__name__)
 
 # ESPN's own sport/league slugs. `nba` is the only league this project serves;
@@ -52,6 +54,24 @@ class ESPNUnavailable(RuntimeError):
     def __init__(self, message: str, *, range_unsupported: bool = False):
         super().__init__(message)
         self.range_unsupported = range_unsupported
+
+
+def _valid_scoreboard_team(team: Any, *, pending: bool) -> bool:
+    if not isinstance(team, dict):
+        return False
+    team_id = team.get("id")
+    if isinstance(team_id, bool) or not isinstance(team_id, (str, int)):
+        return False
+    text = str(team_id)
+    if not text.isascii():
+        return False
+    if text.isdigit():
+        return True
+    # ESPN's unplayed Cup slots use -1/-2 with explicit TBD names. Keep
+    # them visible to the loader's skip count, without accepting corrupt
+    # franchise IDs or relaxing validation of missing metadata.
+    return (pending and text.startswith("-") and text[1:].isdigit()
+            and int(text) < 0 and is_placeholder_team(team))
 
 
 def validate_scoreboard(data: Any) -> None:
@@ -84,11 +104,10 @@ def validate_scoreboard(data: Any) -> None:
                 and len(sides) == 2
                 and {side["homeAway"] for side in sides} == {"home", "away"}
                 and all(
-                    isinstance(side["team"], dict)
-                    and not isinstance(side["team"].get("id"), bool)
-                    and isinstance(side["team"].get("id"), (str, int))
-                    and str(side["team"]["id"]).isascii()
-                    and str(side["team"]["id"]).isdigit()
+                    _valid_scoreboard_team(
+                        side["team"],
+                        pending=status["state"] == "pre" and status["completed"] is False,
+                    )
                     for side in sides
                 )
             )
