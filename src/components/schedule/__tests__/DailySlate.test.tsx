@@ -3,6 +3,8 @@ import openingSlate from './fixtures/opening-slate.json'
 import type { GameForecast } from '@/lib/artifacts'
 import { DailySlate, validSlateDay } from '../DailySlate'
 
+jest.mock('next/navigation', () => ({ useSearchParams: () => new URLSearchParams(window.location.search) }))
+
 // Frozen public October 2 rows: daily publication must not move test fixtures.
 const games = openingSlate as GameForecast[]
 
@@ -48,4 +50,22 @@ test('invalid dates and unknown teams cannot poison the slate state', () => {
   render(<DailySlate games={games} initialDay="2026-10-20" />)
   expect(screen.getByLabelText('Game date')).toHaveValue('2026-10-20')
   expect(screen.getByLabelText('Filter by franchise')).toHaveValue('')
+})
+
+test('same-path Next navigation restores the query without a popstate or changed forecast props', () => {
+  const view = render(<DailySlate games={games} initialDay="2026-10-20" />)
+  fireEvent.change(screen.getByLabelText('Game date'), { target: { value: '2026-10-21' } })
+  fireEvent.change(screen.getByLabelText('Filter by franchise'), { target: { value: 'BOS' } })
+  expect(screen.getByLabelText('Game date')).toHaveValue('2026-10-21')
+  expect(screen.getByLabelText('Filter by franchise')).toHaveValue('BOS')
+  // Next's query context updates after Link navigation; the slate stays mounted.
+  window.history.pushState(null, '', '/games')
+  view.rerender(<DailySlate games={games} initialDay="2026-10-20" />)
+  expect(screen.getByLabelText('Game date')).toHaveValue('2026-10-20')
+  expect(screen.getByLabelText('Filter by franchise')).toHaveValue('')
+  expect(screen.getByText('3 published games')).toBeInTheDocument()
+  window.history.replaceState(null, '', '/games?date=2026-10-21&team=BOS')
+  view.rerender(<DailySlate games={games} initialDay="2026-10-20" />)
+  expect(screen.getByLabelText('Game date')).toHaveValue('2026-10-21')
+  expect(screen.getByLabelText('Filter by franchise')).toHaveValue('BOS')
 })

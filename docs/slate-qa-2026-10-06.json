@@ -4,7 +4,7 @@
   "checks": {
     "lint": "passed",
     "typecheck": "passed",
-    "frontend_tests": 202,
+    "frontend_tests": 203,
     "backend_tests": 353,
     "production_build": "passed",
     "static_pages": 504
@@ -19,6 +19,7 @@
         "browserErrors": [],
         "slateAccessibility": [],
         "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
         "todayAndDateRail": true,
         "previousAndNextSlates": true,
         "dateAndTeamHistory": true,
@@ -35,6 +36,7 @@
         "browserErrors": [],
         "slateAccessibility": [],
         "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
         "todayAndDateRail": true,
         "previousAndNextSlates": true,
         "dateAndTeamHistory": true,
@@ -51,6 +53,7 @@
         "browserErrors": [],
         "slateAccessibility": [],
         "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
         "todayAndDateRail": true,
         "previousAndNextSlates": true,
         "dateAndTeamHistory": true,
@@ -67,6 +70,7 @@
         "browserErrors": [],
         "slateAccessibility": [],
         "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
         "todayAndDateRail": true,
         "previousAndNextSlates": true,
         "dateAndTeamHistory": true,
@@ -78,6 +82,7 @@
         "unknownGameRecovery": true
       }
     ],
+    "serverRenderedSlate": true,
     "serialization": {
       "htmlBytes": 66015,
       "rscBytes": 31533,
@@ -104,5 +109,6 @@
     "theme": "existing walnut dark",
     "team_mark_plate": "#fdf6ee",
     "new_runtime_dependencies": false
-  }
+  },
+  "same_path_followup": "slate-same-path-qa-2026-10-06.json"
 }

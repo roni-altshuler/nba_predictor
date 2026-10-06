@@ -323,6 +323,7 @@ function MoreSheet({
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               aria-current={isActive(pathname, item.href) ? 'page' : undefined}
               className={cn(
                 'flex min-h-[44px] items-center px-3 text-xs uppercase tracking-[0.12em] transition-colors',

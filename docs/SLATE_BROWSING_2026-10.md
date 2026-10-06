@@ -10,7 +10,7 @@ published-game counts.
 Game cards open the existing matchup route. Upcoming headers show full team
 names, season-labelled records, published win probabilities, venue, publication
 time and results cutoff. The preview renders on the server with scalar timestamp
-props. Only the focused section navigation is a new client island; it receives
+props. Focused section navigation is a small client island; it receives
 no forecast data. Existing logo fallbacks and contextual Back controls remain
 interactive. The Games index retains the schedule needed for local browsing.
 
@@ -38,11 +38,11 @@ All work and local checks ran in the saved cloud environment. Current main
 retaining its security updates, ingestion guards and October 5 forecast artifact.
 No backend, workflow, dependency or forecast changes are introduced against main.
 
-- Lint and TypeScript passed; 202 frontend tests and 353 backend tests passed.
+- Lint and TypeScript passed; 203 frontend tests and 353 backend tests passed.
   The production build completed all 504 static pages. The original four slate
-  regressions retain their frozen opening-night rows; nine additional cases cover
+  regressions retain their frozen opening-night rows; ten additional cases cover
   header timing, unknown cutoffs, section focus/history, loading, server-response
-  retry and the Back-control effect-order race.
+  retry, the Back-control effect-order race and same-path query navigation.
 - Chromium checks against the production server passed at 320, 390, 768 and
   1440 px: native date selection, Today, the date rail, previous/next published
   slates, franchise filtering, previous history and
@@ -73,6 +73,29 @@ select the local URL, screenshot directory and installed Chromium executable.
 ![Daily slate on desktop](screenshots/slate-desktop.png)
 ![Daily slate on a phone](screenshots/slate-mobile.png)
 ![Matchup preview on a phone](screenshots/matchup-mobile.png)
+
+## Same-path navigation follow-up
+
+Independent review requested the sequence `/games?date=2026-10-21&team=BOS`
+→ app Games link → Back → Forward. A cold link stayed correct. After selecting
+that same date and franchise through the controls, the cached Next Link changed
+the URL to `/games` while the mounted slate still showed October 21/BOS, on both
+390 px and 1440 px. The old effect watched only `popstate` and forecast-prop
+changes, neither of which the cached link required.
+
+A small query observer now subscribes to Next's search parameters, inside a null
+Suspense boundary so the slate's initial game links still render on the server.
+The existing native-history listener remains. The mobile More menu also closes
+when its link is clicked, including a navigation that keeps the same pathname.
+The new regression holds the forecast props stable and updates the query without
+`popstate`; browser QA covers both cold and control-based arrival followed by
+Games/Back/Forward. The permanent audit adds cached same-path navigation at all
+four widths and asserts that the initial game links remain server-rendered.
+
+[Before/after query-state evidence](slate-same-path-qa-2026-10-06.json) records
+the exact URLs and visible filters at every step.
+[Desktop after Games navigation](screenshots/same-path-desktop.png) ·
+[Mobile after Games navigation](screenshots/same-path-mobile.png).
 
 ## Remaining coverage and model work
 

@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { GameCard } from '@/components/forecast/GameCard'
 import type { GameForecast } from '@/lib/artifacts'
@@ -22,6 +23,13 @@ function offsetDay(day: string, offset: number) {
   return date.toISOString().slice(0, 10)
 }
 
+/** Observe Next Link query changes without suspending the server-rendered slate. */
+function SlateUrlSync({ restore }: { restore: () => void }) {
+  const query = useSearchParams().toString()
+  useEffect(() => restore(), [query, restore])
+  return null
+}
+
 /** One published day's games, with a shareable date/team and real history entries. */
 export function DailySlate({ games, initialDay }: { games: GameForecast[]; initialDay: string }) {
   const [selection, setSelection] = useState({ day: initialDay, team: '' })
@@ -29,19 +37,20 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
   const teams = useMemo(() => [...new Map(games.flatMap(game => [game.home, game.away])
     .map(side => [side.abbreviation, side])).values()].sort((a, b) => a.name.localeCompare(b.name)), [games])
 
-  useEffect(() => {
-    const restore = () => {
-      const params = new URLSearchParams(window.location.search)
-      const day = params.get('date')
-      const team = params.get('team') ?? ''
-      setSelection({ day: validSlateDay(day) ? day : initialDay,
-        team: teams.some(side => side.abbreviation === team) ? team : '' })
-    }
-    restore()
+  const restore = useCallback(() => {
+    const params = new URLSearchParams(window.location.search)
+    const day = params.get('date')
+    const team = params.get('team') ?? ''
+    setSelection({ day: validSlateDay(day) ? day : initialDay,
+      team: teams.some(side => side.abbreviation === team) ? team : '' })
     setReady(true)
+  }, [initialDay, teams])
+
+  useEffect(() => {
+    restore()
     window.addEventListener('popstate', restore)
     return () => window.removeEventListener('popstate', restore)
-  }, [initialDay, teams])
+  }, [restore])
 
   const select = (day: string, team = selection.team) => {
     const url = new URL(window.location.href)
@@ -68,6 +77,7 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
 
   return (
     <section aria-label="Daily slate" data-ready={ready}>
+      <Suspense fallback={null}><SlateUrlSync restore={restore} /></Suspense>
       <div className="card mb-5 p-3 sm:p-4">
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="flex min-w-0 flex-col gap-2">
