@@ -80,6 +80,10 @@ export default async function TeamPage({
   const lastRecord = lastSeasonFile?.standings.find(
     (s) => s.abbreviation === team.abbreviation,
   )
+  const playerGames = (lastSeasonFile?.games ?? [])
+    .filter(g => g.home_id === team.team_id || g.away_id === team.team_id)
+    .sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id))
+    .slice(0, 3)
 
   return (
     <div>
@@ -164,6 +168,21 @@ export default async function TeamPage({
           </div>
         </section>
       ) : null}
+
+      <section aria-labelledby="team-players" className="mb-8">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="team-players" className="text-sm">Explore players</h2>
+          <p className="font-numeric text-[11px] text-[var(--text-tertiary)]">Current roster unavailable</p>
+        </div>
+        <p className="mb-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">Open a completed game, then select a player in its ESPN box score. These are game-specific team assignments, rather than a current roster.</p>
+        {playerGames.length ? <div className="grid gap-3 sm:grid-cols-3">{playerGames.map(game => (
+          <Link key={game.id} href={`/games/${game.id}#player-box-scores`} prefetch={false} className="card flex flex-col gap-3 p-4">
+            <span className="font-numeric text-[11px] text-[var(--text-tertiary)]">{gameDate(game.date)} · final</span>
+            <span className="font-numeric text-sm">{game.away} {game.away_score} – {game.home_score} {game.home}</span>
+            <span className="mt-auto text-xs text-[var(--accent-info)]">Player box score →</span>
+          </Link>
+        ))}</div> : <p className="card p-4 text-sm text-[var(--text-secondary)]">No completed games are published for this team.</p>}
+      </section>
 
       {history && history.seasons.length > 2 ? (
         <section className="mb-8">

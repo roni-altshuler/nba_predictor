@@ -198,6 +198,7 @@ model changes.
 | `/seasons/[season]/series/[slug]` | one playoff series, game by game |
 | `/seasons/[season]/games` | every game that season, by month |
 | `/teams/[abbr]` | rating history, seed distribution, next games |
+| `/players/espn/[id]?game=&team=` | owner-requested single-game player profile, explicit ESPN team mapping, source and unavailable coverage |
 | `/predict` | head-to-head for any two franchises |
 | `/ratings` | all 30 power ratings |
 | `/accuracy` | the LIVE record first, then the backtest: Brier, calibration, margin/total accuracy, interval coverage and PIT |
