@@ -25,9 +25,11 @@ import asyncio
 import logging
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 import httpx
+
+from backend.services.data.placeholders import is_placeholder_team
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +46,85 @@ ESPN_LEAGUE_IDS = {
 NBA_COMPETITION_ID = "nba"
 NBA_PLAYOFFS_COMPETITION_ID = "nba.playoffs"
 NBA_CUP_COMPETITION_ID = "nba.cup"
+
+
+class ESPNUnavailable(RuntimeError):
+    """A failed fetch is not evidence of an empty scoreboard."""
+
+    def __init__(self, message: str, *, range_unsupported: bool = False):
+        super().__init__(message)
+        self.range_unsupported = range_unsupported
+
+
+def _valid_scoreboard_team(team: Any, *, pending: bool) -> bool:
+    if not isinstance(team, dict):
+        return False
+    team_id = team.get("id")
+    if isinstance(team_id, bool) or not isinstance(team_id, (str, int)):
+        return False
+    text = str(team_id)
+    if not text.isascii():
+        return False
+    if text.isdigit():
+        return True
+    # ESPN's unplayed Cup slots use -1/-2 with explicit TBD names. Keep
+    # them visible to the loader's skip count, without accepting corrupt
+    # franchise IDs or relaxing validation of missing metadata.
+    return (pending and text.startswith("-") and text[1:].isdigit()
+            and int(text) < 0 and is_placeholder_team(team))
+
+
+def validate_scoreboard(data: Any) -> None:
+    """Validate the fields the loader needs before caching or writing rows."""
+    if not isinstance(data, dict) or not isinstance(data.get("events"), list):
+        raise ESPNUnavailable("ESPN scoreboard must contain an events array")
+    if data.get("error") or (isinstance(data.get("code"), int) and data["code"] >= 400):
+        raise ESPNUnavailable("ESPN scoreboard contains a provider error")
+    for event in data["events"]:
+        if not isinstance(event, dict):
+            raise ESPNUnavailable("ESPN scoreboard contains a non-object event")
+        event_id = event.get("id")
+        if (isinstance(event_id, bool) or not isinstance(event_id, (str, int))
+                or not str(event_id).isascii() or not str(event_id).isdigit()
+                or int(event_id) <= 0):
+            raise ESPNUnavailable("ESPN scoreboard contains an invalid event id")
+        try:
+            date = datetime.fromisoformat(event["date"].replace("Z", "+00:00"))
+            season = event["season"]
+            competition = event["competitions"][0]
+            status = (event.get("status") or competition["status"])["type"]
+            sides = competition["competitors"]
+            valid = (
+                date.tzinfo is not None
+                and type(season["year"]) is int and season["year"] > 0
+                and type(season["type"]) is int and season["type"] > 0
+                and status["state"] in {"pre", "in", "post"}
+                and type(status["completed"]) is bool
+                and isinstance(status["name"], str)
+                and len(sides) == 2
+                and {side["homeAway"] for side in sides} == {"home", "away"}
+                and all(
+                    _valid_scoreboard_team(
+                        side["team"],
+                        pending=status["state"] == "pre" and status["completed"] is False,
+                    )
+                    for side in sides
+                )
+            )
+            abandoned = any(token in status["name"] for token in (
+                "POSTPONED", "CANCELED", "CANCELLED", "SUSPENDED", "FORFEIT"
+            ))
+            if status["state"] == "post" and status["completed"] and not abandoned:
+                valid = valid and all(
+                    not isinstance(side.get("score"), bool)
+                    and isinstance(side.get("score"), (str, int))
+                    and str(side["score"]).isascii() and str(side["score"]).isdigit()
+                    for side in sides
+                )
+        except (KeyError, IndexError, TypeError, ValueError, AttributeError):
+            valid = False
+        if not valid:
+            raise ESPNUnavailable(f"ESPN event {event_id} has invalid loader fields")
 
 
 class RateLimiter:
@@ -139,10 +220,14 @@ class ESPNClient:
         cache_key: Optional[str] = None,
         cache_ttl: Optional[int] = None,
         retries: int = 3,
+        strict: bool = False,
+        validate: Optional[Callable[[Any], None]] = None,
     ) -> Optional[Dict]:
         if cache_key:
             cached = self.cache.get(cache_key)
             if cached is not None:
+                if validate:
+                    validate(cached)
                 return cached
 
         url = endpoint if endpoint.startswith("http") else f"{self.BASE_URL}/{endpoint}"
@@ -154,22 +239,50 @@ class ESPNClient:
                 response = await client.get(url, params=params)
                 response.raise_for_status()
                 data = response.json()
+                if validate:
+                    validate(data)
                 if cache_key:
                     self.cache.set(cache_key, data, cache_ttl or self.default_ttl)
                 return data
             except httpx.HTTPStatusError as exc:
                 status = exc.response.status_code
                 # 404 is an answer ("no such event"), not a transient failure.
-                if status == 404:
+                if status == 404 and not strict:
                     return None
                 logger.warning("ESPN HTTP %s for %s (attempt %d)", status, url, attempt + 1)
+                if 400 <= status < 500 and status != 429:
+                    if strict:
+                        try:
+                            error = exc.response.json()
+                        except ValueError:
+                            error = None
+                        # Observed on site.web's scoreboard range queries.
+                        # An unrelated 400, auth failure, or outage is never
+                        # permission to fan out into hundreds of requests.
+                        unsupported = (
+                            isinstance(error, dict) and error.get("code") == 400
+                            and error.get("message") == "Failed to get events endpoint."
+                            and status == 400
+                        )
+                        raise ESPNUnavailable(
+                            f"ESPN HTTP {status} for {url}", range_unsupported=unsupported
+                        ) from exc
+                    return None
+            except ESPNUnavailable:
+                raise
             except httpx.RequestError as exc:
                 logger.warning("ESPN request error for %s: %s", url, exc)
+            except ValueError as exc:
+                if strict:
+                    raise ESPNUnavailable(f"ESPN invalid JSON for {url}") from exc
+                return None
             except Exception as exc:  # noqa: BLE001 - last-resort guard
                 logger.warning("ESPN unexpected error for %s: %s", url, exc)
             if attempt < retries - 1:
                 await asyncio.sleep(1.5 * (attempt + 1))
         logger.error("ESPN gave up on %s after %d attempts", url, retries)
+        if strict:
+            raise ESPNUnavailable(f"ESPN unavailable after {retries} attempts for {url}")
         return None
 
     # ------------------------------------------------------- scoreboard
@@ -181,22 +294,34 @@ class ESPNClient:
         limit: int = 1000,
         season_type: Optional[int] = None,
         use_cache: bool = True,
-    ) -> Optional[Dict]:
+    ) -> Dict:
         """Scoreboard for a date or an inclusive `YYYYMMDD-YYYYMMDD` range.
 
         `limit` is passed on EVERY call, never left to the default: ESPN
         truncates silently and a truncated season looks exactly like a short
         one.
         """
+        if limit < 1:
+            raise ValueError("limit must be positive")
+
+        def validate_payload(data: Any) -> None:
+            validate_scoreboard(data)
+            if len(data["events"]) >= limit:
+                raise ESPNUnavailable(f"ESPN scoreboard at limit {limit}; coverage may be truncated")
+
         params: Dict[str, Any] = {"limit": limit}
         if dates:
             params["dates"] = dates
         if season_type is not None:
             params["seasontype"] = season_type
         key = f"nba_sb_{dates or 'today'}_{limit}_{season_type}" if use_cache else None
-        return await self._request(
-            "scoreboard", params, key, self.live_ttl if not dates else self.default_ttl
+        data = await self._request(
+            "scoreboard", params, key, self.live_ttl if not dates else self.default_ttl,
+            strict=True, validate=validate_payload,
         )
+        if data is None:
+            raise ESPNUnavailable("ESPN scoreboard unavailable")
+        return data
 
     async def get_scoreboard_range(
         self,
@@ -212,27 +337,37 @@ class ESPNClient:
         Chunked because the cap is on events per response, not on the range:
         a busy NBA fortnight is ~110 games, comfortably inside one page, while
         a whole season is not. Returns raw ESPN event dicts, de-duplicated on
-        event id — chunk boundaries overlap by a day so a game filed against a
-        UTC date on the far side of midnight is never dropped.
+        event id. Tokens are ESPN's Eastern calendar days, not UTC tip-offs.
+        If this host rejects ranges with its known 400 contract, use one
+        request per day for the remainder of this call. No partial result is
+        returned if any request fails or reaches the page limit.
         """
+        if chunk_days < 1 or limit < 1 or start.date() > end.date():
+            raise ValueError("chunk_days/limit must be positive and start must precede end")
         seen: Dict[str, Dict] = {}
-        cursor = start
-        while cursor <= end:
-            chunk_end = min(cursor + timedelta(days=chunk_days - 1), end)
-            token = f"{cursor:%Y%m%d}-{chunk_end:%Y%m%d}"
-            data = await self.get_scoreboard(token, limit=limit, use_cache=use_cache)
-            events = (data or {}).get("events") or []
+        cursor = start.date()
+        daily = chunk_days == 1
+        while cursor <= end.date():
+            chunk_end = min(cursor + timedelta(days=0 if daily else chunk_days - 1), end.date())
+            token = (f"{cursor:%Y%m%d}" if cursor == chunk_end
+                     else f"{cursor:%Y%m%d}-{chunk_end:%Y%m%d}")
+            try:
+                data = await self.get_scoreboard(token, limit=limit, use_cache=use_cache)
+            except ESPNUnavailable as exc:
+                if exc.range_unsupported and cursor != chunk_end and not daily:
+                    logger.warning("ESPN rejected date range %s; switching to daily queries", token)
+                    daily = True
+                    continue
+                raise
+            validate_scoreboard(data)
+            events = data["events"]
             if len(events) >= limit:
-                logger.error(
-                    "ESPN returned %d events for %s — at the limit, so the range "
-                    "is TRUNCATED. Reduce chunk_days.",
-                    len(events),
-                    token,
+                raise ESPNUnavailable(
+                    f"ESPN returned {len(events)} events for {token} at limit {limit}; "
+                    "coverage may be truncated"
                 )
             for event in events:
-                event_id = str(event.get("id"))
-                if event_id:
-                    seen[event_id] = event
+                seen[str(event["id"])] = event
             cursor = chunk_end + timedelta(days=1)
         return list(seen.values())
 

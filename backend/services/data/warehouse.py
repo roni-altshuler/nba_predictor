@@ -375,11 +375,22 @@ class Warehouse:
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
         conn = self.conn
+        nested = conn.in_transaction
+        # Loader methods transact independently. Savepoints let a whole
+        # refresh roll them back together, including team registration.
+        conn.execute("SAVEPOINT warehouse_write" if nested else "BEGIN")
         try:
             yield conn
-            conn.commit()
+            if nested:
+                conn.execute("RELEASE SAVEPOINT warehouse_write")
+            else:
+                conn.commit()
         except Exception:
-            conn.rollback()
+            if nested:
+                conn.execute("ROLLBACK TO SAVEPOINT warehouse_write")
+                conn.execute("RELEASE SAVEPOINT warehouse_write")
+            else:
+                conn.rollback()
             raise
 
     def close(self) -> None:

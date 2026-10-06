@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getIngestionHealth } from '@/lib/ingestion'
 
 import {
   getGameForecasts,
@@ -10,7 +11,7 @@ import {
 export const dynamic = 'force-dynamic'
 
 /**
- * Liveness plus artifact presence.
+ * Artifact presence and separately observed ingestion freshness.
  *
  * Reports which artifacts are missing rather than returning a bare "ok".
  * A deploy whose pipeline has not run serves an empty site, and a health
@@ -26,14 +27,17 @@ export async function GET() {
   const missing = Object.entries(artifacts)
     .filter(([, present]) => !present)
     .map(([name]) => name)
+  const ingestion = getIngestionHealth()
+  const degraded = missing.length > 0 || ingestion.status !== 'fresh'
 
   return NextResponse.json(
     {
-      status: missing.length ? 'degraded' : 'ok',
+      status: degraded ? 'degraded' : 'ok',
+      ingestion,
       artifacts,
       missing,
       timestamp: new Date().toISOString(),
     },
-    { status: missing.length ? 503 : 200 },
+    { status: degraded ? 503 : 200 },
   )
 }

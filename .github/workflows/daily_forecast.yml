@@ -85,13 +85,20 @@ jobs:
           python -m backend.scripts.backfill_odds --seasons 2004-2027 --missing-only
 
       - name: Refresh the current season
-        # New results are the entire reason this job runs. A failure here
-        # means forecasting from a stale corpus, which is stale but not
-        # WRONG — so it may fail without stopping the run.
-        continue-on-error: true
+        # Failed ingestion must retain the previously published forecasts,
+        # warehouse asset and live-record stamps, and make this run red.
         run: |
           python -m backend.scripts.build_warehouse --current-season
           python -m backend.scripts.backfill_odds --missing-only --limit 400
+
+      - name: Retain ingestion diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ingestion-status
+          path: backend/data/diagnostics/ingestion_status.json
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Integrity check
         # NOT continue-on-error. Publishing a forecast derived from a corpus

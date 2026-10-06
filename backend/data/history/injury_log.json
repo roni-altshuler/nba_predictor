@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-10-02T16:30:26+00:00",
- "n_rows": 281,
+ "last_observed": "2026-10-05T19:33:18+00:00",
+ "n_rows": 332,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -2814,6 +2814,516 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-10-02T16:30:26+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Spencer Jones",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-04",
+   "espn_date": "2026-10-03T03:05Z",
+   "observed_at": "2026-10-03T15:04:35+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Jimmy Butler III",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right knee surgery",
+   "return_date": "2027-01-02",
+   "espn_date": "2026-10-02T18:48Z",
+   "observed_at": "2026-10-03T15:04:35+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Keshad Johnson",
+   "position": "F",
+   "status": "Out",
+   "detail": "Hamstring",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-02T17:05Z",
+   "observed_at": "2026-10-03T15:04:35+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Jalen Duren",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-05",
+   "espn_date": "2026-10-03T18:15Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Quenton Jackson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-04T15:23Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "T.J. McConnell",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-04T15:21Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Kobe Sanders",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left hip",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T20:11Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Alijah Martin",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Knee inflammation",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-04T02:51Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Allen Graves",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Groin",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T21:30Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Jamison Battle",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T21:35Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Kawhi Leonard",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Not injury related",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T21:27Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Kyle Anderson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right knee bruise",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T21:32Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Nate Bittle",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right foot",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-04T02:56Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Trayce Jackson-Davis",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-03T21:35Z",
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Myron Gardner",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Mohamed Diawara",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Phoenix Suns",
+   "player": "CJ Huntley",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Phoenix Suns",
+   "player": "Duop Reath",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Chucky Hepburn",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-04T15:40:51+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Mouhamed Gueye",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left foot fracture",
+   "return_date": "2026-10-21",
+   "espn_date": "2026-07-19T00:14Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Joshua Jefferson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T16:55Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Mikel Brown Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T16:51Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Nic Claxton",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-21",
+   "espn_date": "2026-10-05T18:00Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Jamal Murray",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Personal",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-10-04T21:58Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Spencer Jones",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-10-04T22:00Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Bradley Beal",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Knee inflammation",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-09-28T18:12Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Max Strus",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right ankle",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-04T23:41Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Alex Caruso",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:46Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Cason Wallace",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:47Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Chet Holmgren",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:45Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Isaiah Hartenstein",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:43Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jalen Williams",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Not injury related",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:41Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Nikola Topic",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Back surgery",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:51Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Shai Gilgeous-Alexander",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Not injury related",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:40Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Thomas Sorber",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right knee surgery",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T17:52Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jalen Suggs",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-07",
+   "espn_date": "2026-10-05T16:33Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Adem Bona",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Foot sprain",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:54Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Anfernee Simons",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:59Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Dominick Barlow",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:56Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Joel Embiid",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:49Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "LeBron James",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:52Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Tyrese Maxey",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-05T17:54Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Ben Simmons",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-05",
+   "espn_date": "2026-10-05T17:30Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Tobias Harris",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left calf strain",
+   "return_date": "2026-10-20",
+   "espn_date": "2026-10-05T01:27Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Scottie Barnes",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Knee",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-05T18:30Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Brice Sensabaugh",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left hip",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-10-04T21:49Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Josh Green",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left knee",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-10-04T21:50Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Kyle Filipowski",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-06",
+   "espn_date": "2026-10-04T21:46Z",
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Trevon Brazile",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Alex Toohey",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-05T19:33:18+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Trey Alexander",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-05T19:33:18+00:00"
   }
  ]
 }

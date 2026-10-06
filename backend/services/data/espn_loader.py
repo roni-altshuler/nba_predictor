@@ -37,6 +37,7 @@ import re
 from datetime import datetime, timezone
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
+from backend.services.data.placeholders import is_placeholder, is_placeholder_team
 from backend.services.data.warehouse import (
     SEASON_TYPE_ALLSTAR,
     SEASON_TYPE_POSTSEASON,
@@ -116,25 +117,6 @@ _PLAY_IN_RE = re.compile(r"play[-\s]?in", re.IGNORECASE)
 # this from ESPN's undrawn Asian Cup rounds, where placeholder competitors
 # like "Group A 2nd Place" were resolved into one invented club and produced a
 # tie whose two sides were the same team — a guaranteed advance.
-_PLACEHOLDER_NAMES = {
-    "tbd", "tba", "to be determined", "to be announced", "bye",
-    "winner", "loser", "team tbd",
-}
-_PLACEHOLDER_RE = re.compile(
-    r"^(tbd|tba|bye)$|winner of|loser of|\d(st|nd|rd|th)\s+place|"
-    r"group\s+[a-h]\s|seed\s+\d",
-    re.IGNORECASE,
-)
-
-
-def is_placeholder(name: Optional[str]) -> bool:
-    """True when a competitor is a bracket slot rather than a franchise."""
-    if not name:
-        return True
-    text = str(name).strip()
-    if text.lower() in _PLACEHOLDER_NAMES:
-        return True
-    return bool(_PLACEHOLDER_RE.search(text))
 
 
 class ESPNLoader:
@@ -264,6 +246,11 @@ class ESPNLoader:
         home = next((c for c in competitors if c.get("homeAway") == "home"), None)
         away = next((c for c in competitors if c.get("homeAway") == "away"), None)
         if home is None or away is None:
+            return None, None
+
+        # Skip an undrawn pairing before resolving either side, so even a
+        # partly drawn bracket cannot write team metadata from a slot event.
+        if any(is_placeholder_team(side.get("team")) for side in (home, away)):
             return None, None
 
         home_id = self._team_key(home, date_utc)
