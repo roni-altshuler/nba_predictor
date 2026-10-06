@@ -11,7 +11,14 @@ export interface PlayerGameContext {
   awayScore: number
   homeScore: number
   archivePublishedAt: string | null
-  team: { id: string; name: string; abbreviation: string | null; href: string | null }
+  team: {
+    /** ESPN team ID for this game's participant. */
+    id: string
+    /** Only the matching ESPN game box score may supply this name. */
+    gameReportedName: string | null
+    /** Archive standings normalize franchise names across seasons. */
+    franchise: { name: string; abbreviation: string | null; href: string | null }
+  }
 }
 
 export type PlayerProfile = {
@@ -50,12 +57,20 @@ export async function getPlayerProfile(identity: AthleteIdentity, gameId: string
     id: event.id, date: event.date,
     away: event.away, home: event.home,
     awayScore: event.away_score, homeScore: event.home_score,
-    team: { id: side.id, name: side.name, abbreviation: side.abbreviation, href: getPowerRatings()?.teams.some(t => t.team_id === side.warehouseId && t.abbreviation === side.abbreviation) ? `/teams/${side.abbreviation}` : null },
+    team: {
+      id: side.id,
+      gameReportedName: null,
+      franchise: {
+        name: side.name, abbreviation: side.abbreviation,
+        href: getPowerRatings()?.teams.some(t => t.team_id === side.warehouseId && t.abbreviation === side.abbreviation) ? `/teams/${side.abbreviation}` : null,
+      },
+    },
     archivePublishedAt: getSeasonsIndex()?.generated_at ?? null,
   }
   const box = await getEspnBoxScore(game.id)
   if (!box || box.gameId !== game.id) return unavailable('box_score_unavailable', game)
   const team = box.teams.find(t => t.teamId === providerTeamId)
+  game.team.gameReportedName = typeof team?.displayName === 'string' && team.displayName.trim() ? team.displayName.trim() : null
   const player = team?.players.find(p => sameAthlete({ provider: p.provider, id: p.id }, identity))
   if (!player || !team) return unavailable('player_not_in_game', game)
   return { identity, status: 'available', game, player, labels: team.labels }

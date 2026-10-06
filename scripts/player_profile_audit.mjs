@@ -13,7 +13,7 @@ assert(upcoming)
 const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(upcoming.date_utc))
 const origin = `/games?date=${day}&team=NY`
 const profileUrl = '/players/espn/900000001?game=401859967&team=18'
-const results = { basis: 'Synthetic ESPN box-score fixture; committed game/team context', widths: [] }
+const results = { basis: 'Synthetic ESPN box-score fixture; committed game/team context', widths: [], historical: [] }
 const browser = await chromium.launch({ ...(process.env.QA_BROWSER ? { executablePath: process.env.QA_BROWSER } : {}) })
 const noOverflow = async page => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
 const accessibility = async page => {
@@ -47,6 +47,7 @@ try {
     await guard.focus()
     await page.keyboard.press('Enter')
     await page.getByRole('heading', { name: 'QA Guard', exact: true }).waitFor()
+    await page.getByText('Source: ESPN final game summary. Stats describe this game only. Source update time unavailable.', { exact: true }).waitFor()
     assert.equal(await page.getByText('29', { exact: true }).count(), 1)
     assert.equal(await page.getByText('Unavailable', { exact: true }).count(), 3)
     assert.equal(await page.locator('article img').count(), 0)
@@ -113,6 +114,60 @@ try {
   assert.equal(await page.getByRole('link', { name: 'Game box score', exact: true }).getAttribute('href'), '/games/401859967#player-box-scores')
   results.coldGameFallback = true
   await cold.close()
+
+  const historicalCases = [
+    { game: '231030025', team: '25', year: 2003, reported: 'Seattle SuperSonics', franchise: 'Oklahoma City Thunder', abbreviation: 'OKC' },
+    { game: '241103012', team: '25', year: 2004, reported: 'Seattle SuperSonics', franchise: 'Oklahoma City Thunder', abbreviation: 'OKC' },
+    { game: '231029028', team: '17', year: 2003, reported: 'New Jersey Nets', franchise: 'Brooklyn Nets', abbreviation: 'BKN' },
+    { game: '241103017', team: '17', year: 2004, reported: 'New Jersey Nets', franchise: 'Brooklyn Nets', abbreviation: 'BKN' },
+    { game: '231029003', team: '3', year: 2003, reported: 'New Orleans Hornets', franchise: 'New Orleans Pelicans', abbreviation: 'NO' },
+    { game: '241103003', team: '3', year: 2004, reported: 'New Orleans Hornets', franchise: 'New Orleans Pelicans', abbreviation: 'NO' },
+  ]
+  for (const width of [320, 390, 1440]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' })
+    const page = await context.newPage()
+    const errors = []
+    page.on('pageerror', error => errors.push(error.message))
+    for (const fixture of historicalCases) {
+      const parent = `/games/${fixture.game}#player-box-scores`
+      const profile = `/players/espn/900000001?game=${fixture.game}&team=${fixture.team}`
+      await page.goto(`${base}${parent}`)
+      const name = page.locator('#player-box-scores table').getByRole('link', { name: 'QA Historical Guard', exact: true })
+      assert.equal(await name.getAttribute('href'), profile)
+      await name.focus()
+      await page.keyboard.press('Enter')
+      await page.getByRole('heading', { name: 'QA Historical Guard', exact: true }).waitFor()
+      const reported = await page.getByText(/^Game-reported team ·/).textContent()
+      assert.equal(reported, `Game-reported team · ${fixture.reported}`)
+      assert(!reported.includes(fixture.franchise))
+      const selectedGame = page.getByRole('region', { name: 'The selected game' })
+      assert.equal(await selectedGame.getByRole('link').getAttribute('href'), parent)
+      await selectedGame.getByText(new RegExp(`\\b${fixture.year}\\b`)).waitFor()
+      assert.equal(await page.getByRole('link', { name: fixture.franchise, exact: true }).getAttribute('href'), `/teams/${fixture.abbreviation}`)
+      await page.getByText('Score matchup uses normalized franchise codes.', { exact: true }).waitFor()
+      await noOverflow(page)
+      const violations = await accessibility(page)
+      if (fixture.team === '25' && fixture.year === 2003) await page.screenshot({ path: `${out}/historical-fixture-${width}.png`, fullPage: true })
+      await page.getByRole('button', { name: 'Back', exact: true }).click()
+      await page.waitForURL(`${base}${parent}`)
+      await page.goForward()
+      await page.waitForURL(`${base}${profile}`)
+      await page.getByText(`Game-reported team · ${fixture.reported}`, { exact: true }).waitFor()
+      results.historical.push({ width, ...fixture, canonicalLink: profile, gameReportedNameSeparated: true, franchiseLinkPreserved: true, keyboardAndBackForward: true, noOverflow: true, accessibility: violations })
+    }
+    for (const gameId of ['231031012', '231107025']) {
+      await page.goto(`${base}/players/espn/900000001?game=${gameId}&team=25`)
+      await page.getByText('Game-reported team · Unavailable', { exact: true }).waitFor()
+      assert.equal(await page.getByRole('link', { name: 'Oklahoma City Thunder', exact: true }).getAttribute('href'), '/teams/OKC')
+      await noOverflow(page)
+      const violations = await accessibility(page)
+      if (gameId === '231031012') await page.screenshot({ path: `${out}/historical-name-unavailable-${width}.png`, fullPage: true })
+      results.historical.push({ width, game: gameId, missingGameName: true, nameInferredFromFranchise: false, noOverflow: true, accessibility: violations })
+    }
+    assert.deepEqual(errors, [])
+    await context.close()
+    console.log(`2003/2004 historical names and fallbacks passed at ${width}px`)
+  }
 } finally {
   await browser.close()
   await writeFile(`${out}/results.json`, JSON.stringify(results, null, 2) + '\n')

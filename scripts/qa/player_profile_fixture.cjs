@@ -13,6 +13,17 @@ const payload = {
     statistics: [{ names: ['MIN', 'PTS', 'FG', '3PT', 'REB', 'AST', '+/-'], athletes: [line('900000001', 'QA Guard'), line('900000002', 'QA Reserve', true)], totals: [] }],
   }] },
 }
+// These are supplied test responses, not a historical-team lookup used by the
+// app. Game IDs/provider mappings come from the committed 2003/2004 results.
+const historical = {
+  '231030025': { id: '25', abbreviation: 'SEA', displayName: 'Seattle SuperSonics' },
+  '241103012': { id: '25', abbreviation: 'SEA', displayName: 'Seattle SuperSonics' },
+  '231029028': { id: '17', abbreviation: 'NJ', displayName: 'New Jersey Nets' },
+  '241103017': { id: '17', abbreviation: 'NJ', displayName: 'New Jersey Nets' },
+  '231029003': { id: '3', abbreviation: 'NO', displayName: 'New Orleans Hornets' },
+  '241103003': { id: '3', abbreviation: 'NO', displayName: 'New Orleans Hornets' },
+  '231031012': { id: '25', abbreviation: 'SEA', displayName: null },
+}
 globalThis.fetch = async (input, options) => {
   const url = String(input?.url || input)
   if (url.startsWith('https://site.web.api.espn.com/')) {
@@ -20,6 +31,13 @@ globalThis.fetch = async (input, options) => {
     if (url.includes('/summary?event=401859967') && mode === 'available') {
       await new Promise(resolve => setTimeout(resolve, 800))
       return new Response(JSON.stringify(payload), { status: 200, headers: { 'Content-Type': 'application/json' } })
+    }
+    const event = new URL(url).searchParams.get('event')
+    if (historical[event] && mode === 'available') {
+      return new Response(JSON.stringify({ header: { id: event }, boxscore: { players: [{
+        ...payload.boxscore.players[0], team: historical[event],
+        statistics: [{ ...payload.boxscore.players[0].statistics[0], athletes: [line('900000001', 'QA Historical Guard')] }],
+      }] } }), { status: 200, headers: { 'Content-Type': 'application/json' } })
     }
     return new Response('{}', { status: 503, headers: { 'Content-Type': 'application/json' } })
   }

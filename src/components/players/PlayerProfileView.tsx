@@ -32,10 +32,13 @@ export function PlayerProfileView({ profile }: { profile: PlayerProfile }) {
           <div className="min-w-0 flex-1">
             <h1 className="break-words text-xl leading-tight sm:text-3xl">{player?.name ?? 'Player profile unavailable'}</h1>
             {game ? (
-              <p className="mt-3 text-sm text-[var(--text-secondary)]">
-                Team in this game ·{' '}
-                {game.team.href ? <Link href={game.team.href} className="text-[var(--accent-info)] underline underline-offset-4">{game.team.name}</Link> : game.team.name}
-              </p>
+              <div className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
+                <p>Game-reported team · {game.team.gameReportedName ?? 'Unavailable'}</p>
+                <p className="text-xs">
+                  Franchise reference ·{' '}
+                  {game.team.franchise.href ? <Link href={game.team.franchise.href} className="text-[var(--accent-info)] underline underline-offset-4">{game.team.franchise.name}</Link> : game.team.franchise.name}
+                </p>
+              </div>
             ) : null}
             {player ? (
               <p className="mt-2 font-numeric text-xs text-[var(--text-secondary)]">
@@ -64,6 +67,7 @@ export function PlayerProfileView({ profile }: { profile: PlayerProfile }) {
             </span>
             <span className="text-xs text-[var(--accent-info)]">Game &amp; full box score →</span>
           </Link>
+          <p className="mt-2 text-xs text-[var(--text-tertiary)]">Score matchup uses normalized franchise codes.</p>
         </section>
       ) : null}
 
@@ -113,7 +117,7 @@ export function PlayerProfileView({ profile }: { profile: PlayerProfile }) {
             </div>
           ))}
         </dl>
-        <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">The published archive has no verified roster or career dataset. A game’s team and position do not establish current membership; partial game coverage does not establish season averages.</p>
+        <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[var(--text-tertiary)]">Franchise references use normalized names, which may be modern names for historical games. The published archive has no verified roster or career dataset. A game’s team and position do not establish current membership; partial game coverage does not establish season averages.</p>
       </section>
       {game ? <p className="text-xs text-[var(--text-tertiary)]">Results archive published {game.archivePublishedAt ? date(game.archivePublishedAt) : 'at an unavailable time'}. Player lines are read separately from ESPN.</p> : null}
     </article>
