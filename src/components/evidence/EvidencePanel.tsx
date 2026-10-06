@@ -48,12 +48,12 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
             <tr>
               <th scope="col">Forecaster</th>
               <th scope="col" className="numeric text-right">Brier</th>
-              <th scope="col" className="numeric text-right">Gap to close</th>
+              <th scope="col" className="numeric text-right">Gap to market</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Market (closing line)</td>
+              <td>Historical market</td>
               <td className="numeric text-right">{num(measured.market_brier, 4)}</td>
               <td className="numeric text-right text-[var(--text-tertiary)]">—</td>
             </tr>
@@ -86,15 +86,14 @@ export function EvidencePanel({ measured }: { measured: MeasuredBlock | undefine
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
         {measured.basis ??
           'historical walk-forward; not a live published record'}
-        {' — the closing line is better'}
+        {' - the historical market is better'}
         {boot
           ? ` (paired bootstrap ${num(boot.mean_diff, 5)}, 95% CI [${num(
               boot.ci_low,
               5,
             )}, ${num(boot.ci_high, 5)}])`
           : ''}
-        , which is the expected result for a model that carries no market
-        features.{' '}
+        . Backfilled prices have no independently verified closing timestamp.{' '}
         <Link
           href="/about#benchmark"
           className="text-[var(--accent-info)] underline underline-offset-2 hover:underline"

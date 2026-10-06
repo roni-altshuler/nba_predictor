@@ -6,6 +6,7 @@ import { LiveGameStrip } from '@/components/live/LiveGameStrip'
 import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
+import { MatchupHeader } from '@/components/schedule/MatchupHeader'
 import { getGameForecasts } from '@/lib/artifacts'
 import {
   getEspnBoxScore,
@@ -16,7 +17,7 @@ import {
   type TeamInjuries,
   type WinProbability,
 } from '@/lib/espn'
-import { gameTime, moneyline, num, pct, signed, spread } from '@/lib/format'
+import { moneyline, num, pct, signed, spread } from '@/lib/format'
 import {
   SEASON_TYPE_LABEL,
   formFor,
@@ -68,7 +69,8 @@ export async function generateMetadata({
       title: `${game.away} ${game.away_score} – ${game.home_score} ${game.home}`,
     }
   }
-  const upcoming = getGameForecasts()?.games.find((g) => g.game_id === id)
+  const forecasts = getGameForecasts()
+  const upcoming = forecasts?.games.find((g) => g.game_id === id)
   if (upcoming) {
     return { title: `${upcoming.away.abbreviation} at ${upcoming.home.abbreviation}` }
   }
@@ -112,8 +114,9 @@ export default async function GamePage({
     return <AllStarGame event={allStar} box={box} />
   }
 
-  const upcoming = getGameForecasts()?.games.find((g) => g.game_id === id)
-  if (upcoming) {
+  const forecasts = getGameForecasts()
+  const upcoming = forecasts?.games.find((g) => g.game_id === id)
+  if (upcoming && forecasts) {
     // Availability, for the branch where it can still change the game. On an
     // archived fixture it would be today's report about a game played years
     // ago, which is worse than nothing.
@@ -123,7 +126,8 @@ export default async function GamePage({
       upcoming.home.name,
       upcoming.away.name,
     ])
-    return <UpcomingGame game={upcoming} injuries={injuries} />
+    return <UpcomingGame game={upcoming} injuries={injuries}
+      generatedAt={forecasts.generated_at} trainedThrough={forecasts.trained_through} />
   }
 
   notFound()
@@ -742,44 +746,18 @@ function BoxScore({ game }: { game: ArchiveGame }) {
 function UpcomingGame({
   game,
   injuries = [],
+  generatedAt,
+  trainedThrough,
 }: {
   game: NonNullable<ReturnType<typeof getGameForecasts>>['games'][number]
   injuries?: TeamInjuries[]
+  generatedAt: string
+  trainedThrough?: string | null
 }) {
   return (
     <div>
-      <header className="mb-6">
-        <BackLink href="/games" label="Upcoming games" />
-        <p className="eyebrow mt-3">{gameTime(game.date_utc)}</p>
-        <div className="mt-3 flex items-center justify-between gap-4">
-          <ScoreSide
-            team={game.away.abbreviation}
-            meta={game.away}
-            probability={game.p_away}
-            record={recordLine(game.away.abbreviation)}
-          />
-          <span
-            className="font-numeric text-xs text-[var(--text-tertiary)]"
-            data-score="pending"
-          >
-            vs
-          </span>
-          <ScoreSide
-            team={game.home.abbreviation}
-            meta={game.home}
-            probability={game.p_home}
-            record={recordLine(game.home.abbreviation)}
-            align="right"
-          />
-        </div>
-        <p className="mt-3 text-xs text-[var(--text-tertiary)]">
-          {new Date(game.date_utc).toLocaleDateString('en-US', {
-            weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
-            timeZone: 'America/New_York',
-          })}
-          {game.venue ? ` · ${game.venue}` : ''}
-        </p>
-      </header>
+      <MatchupHeader game={game} generatedAt={generatedAt} trainedThrough={trainedThrough}
+        records={{ home: recordLine(game.home.abbreviation), away: recordLine(game.away.abbreviation) }} />
 
       {/* Client island: silent until this event is actually happening, then
           score, period, clock and ESPN's own win probability, labelled as
@@ -792,7 +770,7 @@ function UpcomingGame({
         awayAbbr={game.away.abbreviation}
       />
 
-      <section className="card mb-6 p-4">
+      <section id="forecast" className="card mb-6 scroll-mt-20 p-4">
         <h2 className="mb-3 text-sm">Forecast</h2>
         <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <StatTile dl label="Home win">{pct(game.p_home)}</StatTile>
@@ -806,7 +784,7 @@ function UpcomingGame({
       </section>
 
       {game.value ? (
-        <section className="card mb-6 p-4">
+        <section id="market" className="card mb-6 scroll-mt-20 p-4">
           <h2 className="mb-3 text-sm">Value surface</h2>
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatTile dl label="Moneyline">
@@ -818,7 +796,7 @@ function UpcomingGame({
           </dl>
         </section>
       ) : (
-        <section className="card mb-6 p-4">
+        <section id="market" className="card mb-6 scroll-mt-20 p-4">
           <h2 className="text-sm">No market line</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             No sportsbook has published a price for this game yet, so there is
@@ -827,16 +805,16 @@ function UpcomingGame({
         </section>
       )}
 
-      <InjuryReport
+      <div id="availability" className="scroll-mt-20"><InjuryReport
         injuries={injuries}
         away={game.away}
         home={game.home}
-      />
+      /></div>
 
-      <SeriesHistory
+      <div id="context" className="scroll-mt-20"><SeriesHistory
         away={game.away.abbreviation}
         home={game.home.abbreviation}
-      />
+      /></div>
 
       <div className="mb-6 grid gap-4 md:grid-cols-2">
         <FormPanel abbreviation={game.away.abbreviation} name={game.away.name} />
@@ -1327,4 +1305,3 @@ function PeriodTable({
     </section>
   )
 }
-

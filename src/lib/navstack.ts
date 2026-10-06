@@ -18,6 +18,7 @@
 
 const KEY = 'hardwood.navstack'
 const MAX_DEPTH = 50
+export const NAVSTACK_CHANGE = 'hardwood-navstack-change'
 
 function read(): string[] {
   if (typeof window === 'undefined') return []
@@ -50,6 +51,7 @@ export function recordVisit(pathname: string) {
     stack.push(pathname)
   }
   write(stack)
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event(NAVSTACK_CHANGE))
 }
 
 /** Is there an in-app page behind this one to go back to? */

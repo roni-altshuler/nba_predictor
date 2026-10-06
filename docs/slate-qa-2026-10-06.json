@@ -1,0 +1,114 @@
+{
+  "verified_date": "2026-10-06",
+  "base_main": "d021f351a72a9589e872965118b8846118a4c4bc",
+  "checks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "frontend_tests": 203,
+    "backend_tests": 353,
+    "production_build": "passed",
+    "static_pages": 504
+  },
+  "production_browser": {
+    "source": "2026-10-05T19:32:31+00:00",
+    "gameId": "401909088",
+    "widths": [
+      {
+        "width": 320,
+        "overflow": false,
+        "browserErrors": [],
+        "slateAccessibility": [],
+        "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
+        "todayAndDateRail": true,
+        "previousAndNextSlates": true,
+        "dateAndTeamHistory": true,
+        "keyboardGameLink": true,
+        "sectionFocus": true,
+        "matchupBackAndForward": true,
+        "emptyRecovery": true,
+        "weeklyExpansion": true,
+        "unknownGameRecovery": true
+      },
+      {
+        "width": 390,
+        "overflow": false,
+        "browserErrors": [],
+        "slateAccessibility": [],
+        "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
+        "todayAndDateRail": true,
+        "previousAndNextSlates": true,
+        "dateAndTeamHistory": true,
+        "keyboardGameLink": true,
+        "sectionFocus": true,
+        "matchupBackAndForward": true,
+        "emptyRecovery": true,
+        "weeklyExpansion": true,
+        "unknownGameRecovery": true
+      },
+      {
+        "width": 768,
+        "overflow": false,
+        "browserErrors": [],
+        "slateAccessibility": [],
+        "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
+        "todayAndDateRail": true,
+        "previousAndNextSlates": true,
+        "dateAndTeamHistory": true,
+        "keyboardGameLink": true,
+        "sectionFocus": true,
+        "matchupBackAndForward": true,
+        "emptyRecovery": true,
+        "weeklyExpansion": true,
+        "unknownGameRecovery": true
+      },
+      {
+        "width": 1440,
+        "overflow": false,
+        "browserErrors": [],
+        "slateAccessibility": [],
+        "matchupAccessibility": [],
+        "samePathGamesLinkHistory": true,
+        "todayAndDateRail": true,
+        "previousAndNextSlates": true,
+        "dateAndTeamHistory": true,
+        "keyboardGameLink": true,
+        "sectionFocus": true,
+        "matchupBackAndForward": true,
+        "emptyRecovery": true,
+        "weeklyExpansion": true,
+        "unknownGameRecovery": true
+      }
+    ],
+    "serverRenderedSlate": true,
+    "serialization": {
+      "htmlBytes": 66015,
+      "rscBytes": 31533,
+      "unrelatedForecastIds": 0,
+      "coldEasternParent": true
+    }
+  },
+  "controlled_development_states": {
+    "width": 320,
+    "loadingBoundary": true,
+    "errorBoundary": true,
+    "retryRecovered": true,
+    "overflow": false
+  },
+  "development_serialization_comparison": {
+    "game_id": "401909088",
+    "before_html_bytes": 941908,
+    "after_html_bytes": 125391,
+    "removed_forecast_object_bytes": 740826,
+    "before_unrelated_forecast_ids": 1199,
+    "after_unrelated_forecast_ids": 0
+  },
+  "visual_refinement": {
+    "theme": "existing walnut dark",
+    "team_mark_plate": "#fdf6ee",
+    "new_runtime_dependencies": false
+  },
+  "same_path_followup": "slate-same-path-qa-2026-10-06.json"
+}

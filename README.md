@@ -1,6 +1,9 @@
 # Hardwood
 
-Calibrated NBA game and season forecasting, scored against the closing line.
+NBA game and season forecasts, with historical market comparisons.
+
+[Daily slate and matchup browsing](docs/SLATE_BROWSING_2026-10.md) adds shareable
+dates and franchise filters, a focused game preview and explicit forecast timing.
 
 A port of the sibling soccer project ([`soccer_predictor`](https://github.com/roni-altshuler/soccer_predictor)) to basketball. Same architecture, same evidence discipline, same design language — and several of the measured conclusions are the opposite, because basketball is a different sport with different institutions. Those inversions are documented in [CLAUDE.md](CLAUDE.md).
 
@@ -14,11 +17,16 @@ A port of the sibling soccer project ([`soccer_predictor`](https://github.com/ro
 6. **A live record** — what was published before each tip-off, scored separately from the backtest and never merged with it
 7. **In-game win probability** — a second forecaster, scored against ESPN's own curve rather than against the market
 
-The schedule is a **calendar, one NBA week at a time**, and every game opens
+The schedule leads with a **daily slate in Eastern time**, with shareable date
+and franchise filters that stay in sync through navigation, plus an expandable
+weekly calendar. Every game opens
 a match detail page: the last six meetings, both sides' recent form, who is
 unavailable, the forecast, and — once it is played — the scoring by period,
 ESPN's in-game win probability curve, the team totals and the full player box
-score. Completed playoff series get their own pages, reachable from any card
+score. Upcoming previews render on the server without sending the full season's
+forecast to the browser; section navigation preserves the return slate, and
+failed pages offer a retry that refreshes the server response. Completed playoff
+series get their own pages, reachable from any card
 on the bracket.
 
 Plus **All-Star weekend**: 31 games over 23 seasons, through every format the

@@ -1,0 +1,289 @@
+{
+  "before_head": "28c1c33e629fa484b1420f9d35e2d1db7ec345ee",
+  "browser": "Chromium, local production build, reduced motion",
+  "before": [
+    {
+      "width": 1440,
+      "arrival": "cold",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "arrival": "controls",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "arrival": "cold",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "arrival": "controls",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "after": [
+    {
+      "width": 1440,
+      "arrival": "cold",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "arrival": "controls",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "arrival": "cold",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "arrival": "controls",
+      "states": [
+        {
+          "label": "initial",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "games link",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        },
+        {
+          "label": "back",
+          "url": "/games?date=2026-10-21&team=BOS",
+          "date": "2026-10-21",
+          "team": "BOS",
+          "empty": true
+        },
+        {
+          "label": "forward",
+          "url": "/games",
+          "date": "2026-10-20",
+          "team": "",
+          "empty": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "after_all_filters_match_url": true
+}
