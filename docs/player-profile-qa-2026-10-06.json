@@ -1,0 +1,100 @@
+{
+  "flows": {
+    "basis": "Synthetic ESPN box-score fixture; committed game/team context",
+    "widths": [
+      {
+        "width": 320,
+        "keyboardTeamGamePlayer": true,
+        "leaderIdentity": true,
+        "dnp": true,
+        "filteredOriginBackForward": true,
+        "unavailableAndMissingContext": true,
+        "warehouseTeamRejected": true,
+        "nbaNamespaceRejected": true,
+        "noOverflow": true,
+        "profileAccessibility": [],
+        "unavailableAccessibility": [],
+        "portraitRequests": [],
+        "browserErrors": []
+      },
+      {
+        "width": 390,
+        "keyboardTeamGamePlayer": true,
+        "leaderIdentity": true,
+        "dnp": true,
+        "filteredOriginBackForward": true,
+        "unavailableAndMissingContext": true,
+        "warehouseTeamRejected": true,
+        "nbaNamespaceRejected": true,
+        "noOverflow": true,
+        "profileAccessibility": [],
+        "unavailableAccessibility": [],
+        "portraitRequests": [],
+        "browserErrors": []
+      },
+      {
+        "width": 768,
+        "keyboardTeamGamePlayer": true,
+        "leaderIdentity": true,
+        "dnp": true,
+        "filteredOriginBackForward": true,
+        "unavailableAndMissingContext": true,
+        "warehouseTeamRejected": true,
+        "nbaNamespaceRejected": true,
+        "noOverflow": true,
+        "profileAccessibility": [],
+        "unavailableAccessibility": [],
+        "portraitRequests": [],
+        "browserErrors": []
+      },
+      {
+        "width": 1440,
+        "keyboardTeamGamePlayer": true,
+        "leaderIdentity": true,
+        "dnp": true,
+        "filteredOriginBackForward": true,
+        "unavailableAndMissingContext": true,
+        "warehouseTeamRejected": true,
+        "nbaNamespaceRejected": true,
+        "noOverflow": true,
+        "profileAccessibility": [],
+        "unavailableAccessibility": [],
+        "portraitRequests": [],
+        "browserErrors": []
+      }
+    ],
+    "coldGameFallback": true
+  },
+  "states": {
+    "basis": "Production builds: unmodified app with unavailable ESPN; isolated copy with controlled delay/failure",
+    "widths": [
+      {
+        "width": 320,
+        "unmodifiedProductionUnavailable": true,
+        "noInventedIdentity": true,
+        "loadingAnnounced": true,
+        "errorBoundary": true,
+        "keyboardRetry": true,
+        "noOverflow": true
+      },
+      {
+        "width": 390,
+        "unmodifiedProductionUnavailable": true,
+        "noInventedIdentity": true,
+        "loadingAnnounced": true,
+        "errorBoundary": true,
+        "keyboardRetry": true,
+        "noOverflow": true
+      },
+      {
+        "width": 1440,
+        "unmodifiedProductionUnavailable": true,
+        "noInventedIdentity": true,
+        "loadingAnnounced": true,
+        "errorBoundary": true,
+        "keyboardRetry": true,
+        "noOverflow": true
+      }
+    ]
+  }
+}

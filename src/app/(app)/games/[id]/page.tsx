@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { PlayerBoxScores } from '@/components/players/PlayerBoxScores'
 import { WinProbabilityChart } from '@/components/charts/WinProbabilityChart'
 import { LiveGameStrip } from '@/components/live/LiveGameStrip'
 import { BackLink } from '@/components/primitives/BackLink'
@@ -217,9 +218,9 @@ function AllStarGame({
       </section>
 
       {box ? (
-        <PlayerBoxScores box={box} />
+        <PlayerBoxScores box={box} enableProfiles={false} />
       ) : (
-        <section className="card p-4">
+        <section id="player-box-scores" className="card scroll-mt-20 p-4">
           <h2 className="text-sm">No player box score</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             Player lines are read from ESPN when this page is built, and the
@@ -357,7 +358,7 @@ function PlayedGame({
         </>
       ) : (
         <>
-          <section className="card mb-6 p-4">
+          <section id="player-box-scores" className="card mb-6 scroll-mt-20 p-4">
             <h2 className="text-sm">No player box score</h2>
             <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
               Player lines are read from ESPN when this page is built and the
@@ -375,126 +376,6 @@ function PlayedGame({
 
       <SeriesHistory away={game.away} home={game.home} excludeId={game.id} />
     </div>
-  )
-}
-
-/* ---------------------------------------------------------- player lines */
-
-/**
- * Every player, every column ESPN publishes, plus the three lines a reader
- * asks for first.
- *
- * **Columns come from the response, not from a list typed here.** ESPN's
- * box-score schema has changed before (the plus/minus column is not in every
- * era) and a hard-coded header would silently mislabel the whole table the
- * season it changes again. The leaders strip is computed from these same
- * parsed rows rather than from ESPN's separate `leaders` block, so the
- * headline and the table can never disagree.
- *
- * **A DNP is a row, not an omission.** Who was unavailable is a fact about
- * the game, and dropping those players makes a nine-man rotation look like a
- * choice rather than an injury list.
- */
-function PlayerBoxScores({ box }: { box: GameBoxScore }) {
-  return (
-    <div className="mb-6 space-y-6">
-      {box.teams.map((team) => (
-        <TeamPlayers key={team.teamId} team={team} />
-      ))}
-    </div>
-  )
-}
-
-function TeamPlayers({ team }: { team: TeamBoxScore }) {
-  const played = team.players.filter((p) => !p.didNotPlay)
-  const out = team.players.filter((p) => p.didNotPlay)
-
-  return (
-    <section>
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="flex items-center gap-2.5 text-sm">
-          <TeamLogo
-            logo={team.logo}
-            abbreviation={team.abbreviation}
-            name={team.displayName}
-            size={24}
-          />
-          {team.displayName ?? team.abbreviation}
-        </h2>
-        <div className="flex flex-wrap gap-x-5 gap-y-1">
-          {team.leaders.map((leader) => (
-            <span key={leader.label} className="text-[11px]">
-              <span className="text-[var(--text-tertiary)]">{leader.label} </span>
-              <span className="text-[var(--text-secondary)]">{leader.player} </span>
-              <span className="numeric text-[var(--text-primary)]">
-                {leader.value}
-              </span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="card overflow-x-auto">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Player</th>
-              {team.labels.map((label) => (
-                <th key={label} scope="col" className="numeric text-right">
-                  {label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {played.map((player) => (
-              <tr key={player.id || player.name}>
-                <td className="whitespace-nowrap">
-                  <span className="text-[var(--text-primary)]">{player.name}</span>
-                  {player.position ? (
-                    <span className="ml-1.5 font-numeric text-[10px] text-[var(--text-tertiary)]">
-                      {player.position}
-                    </span>
-                  ) : null}
-                  {player.starter ? (
-                    <span className="ml-1.5 font-numeric text-[9px] uppercase tracking-[0.1em] text-[var(--accent-primary)]">
-                      st
-                    </span>
-                  ) : null}
-                </td>
-                {team.labels.map((label) => (
-                  <td key={label} className="numeric text-right">
-                    {player.stats[label] ?? '—'}
-                  </td>
-                ))}
-              </tr>
-            ))}
-            {Object.keys(team.totals).length ? (
-              <tr>
-                <td className="text-[var(--text-secondary)]">Team</td>
-                {team.labels.map((label) => (
-                  <td
-                    key={label}
-                    className="numeric text-right text-[var(--text-primary)]"
-                  >
-                    {team.totals[label] ?? '—'}
-                  </td>
-                ))}
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
-
-      {out.length ? (
-        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          Did not play:{' '}
-          {out
-            .map((p) => `${p.name}${p.reason ? ` (${p.reason})` : ''}`)
-            .join(' · ')}
-        </p>
-      ) : null}
-    </section>
   )
 }
 

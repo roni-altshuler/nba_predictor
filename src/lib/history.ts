@@ -72,6 +72,8 @@ export interface ArchiveGame {
 
 export interface StandingRow {
   team_id: number
+  /** ESPN ID is distinct from the warehouse's internal team_id. */
+  espn_id?: string
   name: string
   abbreviation: string
   conference: string

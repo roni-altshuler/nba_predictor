@@ -112,9 +112,9 @@ describe('getEspnBoxScore', () => {
     mockFetch(RESPONSE)
     const box = await getEspnBoxScore('401859967')
     expect(box?.teams[0].leaders).toEqual([
-      { label: 'Points', player: 'J. Brunson', value: '29' },
-      { label: 'Rebounds', player: 'O. Anunoby', value: '8' },
-      { label: 'Assists', player: 'J. Brunson', value: '7' },
+      { label: 'Points', player: 'J. Brunson', fullName: 'Jalen Brunson', identity: { provider: 'espn', id: '2' }, value: '29' },
+      { label: 'Rebounds', player: 'O. Anunoby', fullName: 'OG Anunoby', identity: { provider: 'espn', id: '1' }, value: '8' },
+      { label: 'Assists', player: 'J. Brunson', fullName: 'Jalen Brunson', identity: { provider: 'espn', id: '2' }, value: '7' },
     ])
   })
 
@@ -148,6 +148,21 @@ describe('getEspnBoxScore', () => {
     expect(box?.teams[0].leaders[0].player).toBe('Played')
   })
 
+  it('preserves provider IDs and never derives a portrait from an athlete ID', async () => {
+    mockFetch(RESPONSE)
+    const box = await getEspnBoxScore('401859967')
+    expect(box?.teams[0].players[0]).toMatchObject({ id: '1', provider: 'espn' })
+    expect(box?.teams[0].players[0]).not.toHaveProperty('image')
+  })
+
+  it('keeps a named leader visible when its athlete ID is invalid', async () => {
+    const payload = JSON.parse(JSON.stringify(RESPONSE)) as typeof RESPONSE
+    payload.boxscore.players[0].statistics[0].athletes[1].athlete.id = '../2'
+    mockFetch(payload)
+    const box = await getEspnBoxScore('401859967')
+    expect(box?.teams[0].leaders[0]).toMatchObject({ fullName: 'Jalen Brunson', identity: null, value: '29' })
+  })
+
   it('drops the empty cells in the totals row instead of printing blanks', async () => {
     mockFetch(RESPONSE)
     const box = await getEspnBoxScore('401859967')
@@ -170,5 +185,10 @@ describe('getEspnBoxScore', () => {
   it('returns null when the payload carries no player block', async () => {
     mockFetch({ boxscore: { players: [] } })
     expect(await getEspnBoxScore('1')).toBeNull()
+  })
+
+  it('refuses player identities from a summary identifying another game', async () => {
+    mockFetch({ ...RESPONSE, header: { id: '999' } })
+    expect(await getEspnBoxScore('401859967')).toBeNull()
   })
 })

@@ -20,6 +20,8 @@
  * take them down with it.
  */
 
+import { providerId, type AthleteIdentity } from '@/lib/athleteIdentity'
+
 const SUMMARY =
   'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/summary'
 /* `/injuries`, NOT `/teams/injuries` — the latter answers 400 "Failed to get
@@ -82,6 +84,7 @@ async function summary(gameId: string): Promise<any | null> {
 
 export interface PlayerLine {
   id: string
+  provider: 'espn'
   name: string
   shortName: string
   position: string | null
@@ -102,7 +105,7 @@ export interface TeamBoxScore {
   labels: string[]
   players: PlayerLine[]
   totals: Record<string, string>
-  leaders: Array<{ label: string; player: string; value: string }>
+  leaders: Array<{ label: string; player: string; fullName: string; identity: AthleteIdentity | null; value: string }>
 }
 
 export interface GameBoxScore {
@@ -124,6 +127,7 @@ export async function getEspnBoxScore(
   gameId: string,
 ): Promise<GameBoxScore | null> {
   const payload = await summary(gameId)
+  if (payload?.header?.id && String(payload.header.id) !== gameId) return null
   const blocks = payload?.boxscore?.players
   if (!Array.isArray(blocks) || !blocks.length) return null
 
@@ -137,7 +141,8 @@ export async function getEspnBoxScore(
 
     const players: PlayerLine[] = (statistics.athletes ?? []).map(
       (entry: any) => ({
-        id: String(entry?.athlete?.id ?? ''),
+        id: providerId(entry?.athlete?.id) ?? '',
+        provider: 'espn',
         name: entry?.athlete?.displayName ?? 'Unknown',
         shortName: entry?.athlete?.shortName ?? entry?.athlete?.displayName ?? '',
         position: entry?.athlete?.position?.abbreviation ?? null,
@@ -473,6 +478,8 @@ function leadersFrom(players: PlayerLine[]): TeamBoxScore['leaders'] {
       out.push({
         label,
         player: best.player.shortName || best.player.name,
+        fullName: best.player.name,
+        identity: best.player.id ? { provider: best.player.provider, id: best.player.id } : null,
         value: String(best.value),
       })
     }

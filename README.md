@@ -45,6 +45,17 @@ one.
 Also: per-team pages with rating history against the league band, and a
 head-to-head surface over all 870 ordered matchups.
 
+**Player exploration** starts on a team’s completed games or a game’s box score.
+Names and game leaders with usable ESPN athlete IDs open
+`/players/espn/[id]?game=[event]&team=[espn-team]`, showing that game’s line,
+team assignment, position and jersey when supplied. The existing ESPN game-summary
+reader supplies these details; the committed archive contains team results and
+an explicit ESPN team-ID mapping. Player lines are unavailable when that reader
+fails. Bare player URLs explain the missing game context. Current rosters,
+season averages and career stats remain unavailable. No permitted athlete
+portraits are recorded, so names remain visible beside initials/jersey fallbacks.
+See the [profile coverage and browser audit](docs/PLAYER_PROFILES_2026-10.md).
+
 ## Measured state
 
 Corpus: **31,844 games, 2004–2026**, from ESPN. The 2026-27 season tips off **20 October 2026**.
