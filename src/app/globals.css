@@ -151,7 +151,7 @@
   /* Team logos are authored for light backgrounds — several NBA marks go
      invisible on pure black. Every product of this class (ESPN, FotMob)
      seats them on a light tile for exactly this reason. */
-  --logo-plate: #ffffff;
+  --logo-plate: #fdf6ee;
   --logo-plate-ring: rgba(19, 19, 22, 0.12);
 
   /* ────────────────────────────────────────────────────────────

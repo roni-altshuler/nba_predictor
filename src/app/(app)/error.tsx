@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 
 /**
  * The app-wide error boundary. Before it existed, a failed request-time
@@ -13,26 +15,33 @@ export default function AppError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const router = useRouter()
+  const [pending, startTransition] = useTransition()
+
   return (
     <div className="card mx-auto mt-12 max-w-md p-6 text-center">
-      <p className="eyebrow">Something broke</p>
+      <h1 className="text-lg">This page couldn&apos;t load</h1>
       <p className="mt-2 text-sm text-[var(--text-secondary)]">
-        This page failed to load. Usually that is a source feed timing out,
-        and trying again fixes it.
+        Try loading it again, or browse another published slate.
       </p>
-      <div className="mt-5 flex items-center justify-center gap-3">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
         <button
           type="button"
-          onClick={reset}
-          className="min-h-[36px] rounded-sm border border-[var(--border-color)] px-4 font-numeric text-[11px] uppercase tracking-[0.1em] text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)]"
+          disabled={pending}
+          onClick={() => startTransition(() => {
+            // Resetting alone reuses the failed Server Component response.
+            router.refresh()
+            reset()
+          })}
+          className="min-h-[44px] rounded-sm border border-[var(--border-color)] px-4 font-numeric text-[11px] uppercase tracking-[0.1em] text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)]"
         >
-          Try again
+          {pending ? 'Retrying…' : 'Try again'}
         </button>
         <Link
-          href="/"
-          className="min-h-[36px] rounded-sm px-4 py-2 font-numeric text-[11px] uppercase tracking-[0.1em] text-[var(--accent-info)] hover:underline"
+          href="/games"
+          className="inline-flex min-h-[44px] items-center rounded-sm px-4 py-2 font-numeric text-[11px] uppercase tracking-[0.1em] text-[var(--accent-info)] hover:underline"
         >
-          Today&apos;s slate
+          Browse games
         </Link>
       </div>
     </div>

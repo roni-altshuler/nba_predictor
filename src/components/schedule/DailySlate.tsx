@@ -69,13 +69,13 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
   return (
     <section aria-label="Daily slate" data-ready={ready}>
       <div className="card mb-5 p-3 sm:p-4">
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="flex min-w-0 flex-1 flex-col gap-2">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="flex min-w-0 flex-col gap-2">
             <span className="eyebrow">Game date · Eastern time</span>
             <input type="date" aria-label="Game date" value={selection.day} className={control} style={{ colorScheme: 'dark' }}
               onChange={event => { if (validSlateDay(event.target.value)) select(event.target.value) }} />
           </label>
-          <label className="flex min-w-0 flex-1 flex-col gap-2">
+          <label className="flex min-w-0 flex-col gap-2">
             <span className="eyebrow">Franchise</span>
             <select aria-label="Filter by franchise" value={selection.team} className={`${control} max-w-full`}
               onChange={event => select(selection.day, event.target.value)}>
@@ -84,14 +84,15 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
             </select>
           </label>
         </div>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <button type="button" className={control} disabled={!previous}
-            onClick={() => previous && select(previous)}>← Previous slate</button>
+        <div className="mt-3 grid grid-cols-[1fr_auto_1fr] gap-2 sm:flex">
+          <button type="button" aria-label="Previous published slate" className={control} disabled={!previous}
+            onClick={() => previous && select(previous)}>← Previous</button>
           <button type="button" className={control} onClick={() => select(easternDay(new Date().toISOString()))}>Today</button>
-          <button type="button" className={control} disabled={!next}
-            onClick={() => next && select(next)}>Next slate →</button>
+          <button type="button" aria-label="Next published slate" className={control} disabled={!next}
+            onClick={() => next && select(next)}>Next →</button>
         </div>
-        <nav aria-label="Dates near selected day" className="mt-4 grid grid-cols-7 gap-1 border-t border-[var(--border-color)] pt-3">
+        <p className="eyebrow mt-4 border-t border-[var(--border-color)] pt-3">Published games by date</p>
+        <nav aria-label="Dates near selected day" className="mt-2 grid grid-cols-7 gap-1">
           {rail.map(day => {
             const count = byDay.get(day)?.length ?? 0
             const date = new Date(`${day}T12:00:00Z`)
@@ -102,7 +103,7 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
                   : 'border-transparent text-[var(--text-secondary)] hover:border-[var(--border-hover)]')}>
               <span className="block text-[10px]">{date.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' })}</span>
               <span className="numeric my-1 block text-lg">{date.getUTCDate()}</span>
-              <span className="block text-[10px] text-[var(--text-tertiary)]">{count} {count === 1 ? 'game' : 'games'}</span>
+              <span aria-hidden="true" className="block text-[10px] text-[var(--text-tertiary)]">{count}</span>
             </button>
           })}
         </nav>

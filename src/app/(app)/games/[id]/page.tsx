@@ -7,7 +7,7 @@ import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { MatchupHeader } from '@/components/schedule/MatchupHeader'
-import { getGameForecasts, type GameForecasts } from '@/lib/artifacts'
+import { getGameForecasts } from '@/lib/artifacts'
 import {
   getEspnBoxScore,
   getEspnInjuries,
@@ -126,7 +126,8 @@ export default async function GamePage({
       upcoming.home.name,
       upcoming.away.name,
     ])
-    return <UpcomingGame game={upcoming} injuries={injuries} forecasts={forecasts} />
+    return <UpcomingGame game={upcoming} injuries={injuries}
+      generatedAt={forecasts.generated_at} trainedThrough={forecasts.trained_through} />
   }
 
   notFound()
@@ -745,15 +746,18 @@ function BoxScore({ game }: { game: ArchiveGame }) {
 function UpcomingGame({
   game,
   injuries = [],
-  forecasts,
+  generatedAt,
+  trainedThrough,
 }: {
   game: NonNullable<ReturnType<typeof getGameForecasts>>['games'][number]
   injuries?: TeamInjuries[]
-  forecasts: GameForecasts
+  generatedAt: string
+  trainedThrough?: string | null
 }) {
   return (
     <div>
-      <MatchupHeader game={game} forecasts={forecasts} records={{ home: recordLine(game.home.abbreviation), away: recordLine(game.away.abbreviation) }} />
+      <MatchupHeader game={game} generatedAt={generatedAt} trainedThrough={trainedThrough}
+        records={{ home: recordLine(game.home.abbreviation), away: recordLine(game.away.abbreviation) }} />
 
       {/* Client island: silent until this event is actually happening, then
           score, period, clock and ESPN's own win probability, labelled as
@@ -1301,4 +1305,3 @@ function PeriodTable({
     </section>
   )
 }
-

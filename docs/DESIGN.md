@@ -166,6 +166,10 @@ Two families, and the split is functional:
 | `CalibrationChart` | Dot area = sample size. Ships a `<details>` table view. |
 | `PlayoffBracket` | Geometry is computed in `bracketLayout.ts` and asserted by tests. Never nested flexbox. Pans; never scaled down. |
 
+Team-mark plates use warm cream (`--logo-plate: #fdf6ee`), aligned with Hardwood's
+primary ink, rather than pure white. This keeps dark marks readable without
+introducing a light theme or changing the semantic data colours.
+
 ---
 
 ## 6. Motion

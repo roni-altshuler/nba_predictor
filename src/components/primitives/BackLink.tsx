@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { canGoBack } from '@/lib/navstack'
+import { canGoBack, NAVSTACK_CHANGE } from '@/lib/navstack'
 
 /**
  * The one back control, used at the top of every detail page.
@@ -39,7 +39,11 @@ export function BackLink({
   const [hasHistory, setHasHistory] = useState(false)
 
   useEffect(() => {
-    setHasHistory(canGoBack())
+    // Child effects can run before the shell records the new pathname.
+    const update = () => setHasHistory(canGoBack())
+    window.addEventListener(NAVSTACK_CHANGE, update)
+    update()
+    return () => window.removeEventListener(NAVSTACK_CHANGE, update)
   }, [])
 
   const classes =
