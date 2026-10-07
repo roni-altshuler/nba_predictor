@@ -58,6 +58,17 @@ season averages and career stats remain unavailable. No permitted athlete
 portraits are recorded, so names remain visible beside initials/jersey fallbacks.
 See the [profile coverage and browser audit](docs/PLAYER_PROFILES_2026-10.md).
 
+**Compare game lines** sits above the player box score in a completed franchise
+game. Choose two supplied ESPN athlete IDs, swap the columns, or open either
+single-game profile. The dated comparison uses the same summary already read by
+the game page; selections survive shared links, reload and browser back/forward.
+Reported shooting strings and zeros stay intact, missing cells stay absent, and
+DNP rows show their reason without zero-filled stats. The sample is one game per
+player, with game-reported team names. No pace adjustment, roster or career
+inference is made. Fewer than two usable identities leaves the original box score
+available; a source outage retains the existing unavailable state.
+See [comparison scope, QA and dependency review](docs/GAME_COMPARISON_2026-10.md).
+
 ## Measured state
 
 Corpus: **31,844 games, 2004–2026**, from ESPN. The 2026-27 season tips off **20 October 2026**.

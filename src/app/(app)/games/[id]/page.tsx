@@ -218,7 +218,7 @@ function AllStarGame({
       </section>
 
       {box ? (
-        <PlayerBoxScores box={box} enableProfiles={false} />
+        <PlayerBoxScores box={box} gameDate={event.date} enableProfiles={false} />
       ) : (
         <section id="player-box-scores" className="card scroll-mt-20 p-4">
           <h2 className="text-sm">No player box score</h2>
@@ -354,7 +354,7 @@ function PlayedGame({
       {box ? (
         <>
           <TeamComparison box={box} />
-          <PlayerBoxScores box={box} />
+          <PlayerBoxScores box={box} gameDate={game.date} />
         </>
       ) : (
         <>
@@ -474,7 +474,7 @@ function RecordedForecast({
         — the model never saw the result, but nobody read this number before
         tip-off either, and one game is no evidence either way; the record is
         on{' '}
-        <Link href="/accuracy" className="text-[var(--accent-info)] hover:underline">
+        <Link href="/accuracy" className="text-[var(--accent-info)] underline underline-offset-4">
           the accuracy page
         </Link>
         .
