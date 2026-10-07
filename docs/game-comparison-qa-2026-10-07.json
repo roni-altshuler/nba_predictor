@@ -1,0 +1,151 @@
+{
+  "basis": "Synthetic player lines; real committed dated game context. Unmodified production build for source-outage cases.",
+  "widths": [
+    {
+      "width": 320,
+      "nativeKeyboardSelectionAndSwap": true,
+      "focusVisible": true,
+      "repeatedSelection": true,
+      "shareReloadBackForward": true,
+      "profileBackForward": true,
+      "historicalReportedTeam": true,
+      "missingStatAndDnp": true,
+      "emptyIdentityFallback": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "portraitRequests": [],
+      "browserErrors": []
+    },
+    {
+      "width": 390,
+      "nativeKeyboardSelectionAndSwap": true,
+      "focusVisible": true,
+      "repeatedSelection": true,
+      "shareReloadBackForward": true,
+      "profileBackForward": true,
+      "historicalReportedTeam": true,
+      "missingStatAndDnp": true,
+      "emptyIdentityFallback": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "portraitRequests": [],
+      "browserErrors": []
+    },
+    {
+      "width": 768,
+      "nativeKeyboardSelectionAndSwap": true,
+      "focusVisible": true,
+      "repeatedSelection": true,
+      "shareReloadBackForward": true,
+      "profileBackForward": true,
+      "historicalReportedTeam": true,
+      "missingStatAndDnp": true,
+      "emptyIdentityFallback": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "portraitRequests": [],
+      "browserErrors": []
+    },
+    {
+      "width": 1440,
+      "nativeKeyboardSelectionAndSwap": true,
+      "focusVisible": true,
+      "repeatedSelection": true,
+      "shareReloadBackForward": true,
+      "profileBackForward": true,
+      "historicalReportedTeam": true,
+      "missingStatAndDnp": true,
+      "emptyIdentityFallback": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "portraitRequests": [],
+      "browserErrors": []
+    }
+  ],
+  "states": [
+    {
+      "width": 320,
+      "source503": true,
+      "noInventedLines": true,
+      "resultStillAvailable": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "source503": true,
+      "noInventedLines": true,
+      "resultStillAvailable": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "source503": true,
+      "noInventedLines": true,
+      "resultStillAvailable": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 320,
+      "controlledRouteError": true,
+      "keyboardRetryInitiatedAtWidth": 320,
+      "recoveryVisible": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "controlledRouteError": true,
+      "keyboardRetryInitiatedAtWidth": 320,
+      "recoveryVisible": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "controlledRouteError": true,
+      "keyboardRetryInitiatedAtWidth": 320,
+      "recoveryVisible": true,
+      "axeViolations": [],
+      "horizontalOverflow": false
+    },
+    {
+      "width": 320,
+      "actualProfileRouteLoading": true,
+      "reducedMotionSkeleton": true,
+      "resolvesToExplicitProfileUnavailable": true,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "actualProfileRouteLoading": true,
+      "reducedMotionSkeleton": true,
+      "resolvesToExplicitProfileUnavailable": true,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "actualProfileRouteLoading": true,
+      "reducedMotionSkeleton": true,
+      "resolvesToExplicitProfileUnavailable": true,
+      "horizontalOverflow": false
+    }
+  ],
+  "sourceBase": "a6bbbfb7fdda52e8ebea5b8d5c33318f36e5f3ef",
+  "localChecks": {
+    "frontendTests": 255,
+    "backendTests": 353,
+    "lint": "pass",
+    "typecheck": "pass",
+    "buildRoutes": 504,
+    "sharp": "0.35.5",
+    "librsvg": "2.63.2",
+    "nativeSvgConversion": "pass"
+  }
+}

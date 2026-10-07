@@ -7,7 +7,7 @@ import PlayerLoading from '@/app/(app)/players/[provider]/[id]/loading'
 import type { AthleteImageAsset } from '@/lib/athleteIdentity'
 import type { PlayerProfile } from '@/lib/playerProfile'
 
-jest.mock('next/navigation', () => ({ useRouter: () => ({ back: jest.fn() }) }))
+jest.mock('next/navigation', () => ({ useRouter: () => ({ back: jest.fn() }), useSearchParams: () => new URLSearchParams() }))
 const identity = { provider: 'espn', id: '900000001' } as const
 const available: PlayerProfile = {
   identity, status: 'available',
@@ -44,7 +44,7 @@ test('DNP retains identity and reason without a statistics panel', () => {
 })
 
 test('links both leaders and box-score names to the same provider-qualified profile', () => {
-  render(<PlayerBoxScores box={{ gameId: '401859967', teams: [{ teamId: '18', abbreviation: 'NY', displayName: 'New York Knicks', logo: null, labels: available.labels, players: [available.player], totals: {}, leaders: [{ label: 'Points', player: 'Q. Guard', fullName: available.player.name, identity, value: '29' }] }] }} />)
+  render(<PlayerBoxScores gameDate={available.game!.date} box={{ gameId: '401859967', teams: [{ teamId: '18', abbreviation: 'NY', displayName: 'New York Knicks', logo: null, labels: available.labels, players: [available.player], totals: {}, leaders: [{ label: 'Points', player: 'Q. Guard', fullName: available.player.name, identity, value: '29' }] }] }} />)
   const links = screen.getAllByRole('link', { name: 'QA Guard' })
   expect(links).toHaveLength(2)
   links.forEach(link => expect(link).toHaveAttribute('href', '/players/espn/900000001?game=401859967&team=18'))

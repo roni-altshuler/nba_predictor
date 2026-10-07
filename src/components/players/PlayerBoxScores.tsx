@@ -1,5 +1,7 @@
 import { PlayerName } from '@/components/players/PlayerName'
+import { GameLineComparison } from '@/components/players/GameLineComparison'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
+import { comparisonLines } from '@/lib/gameLineComparison'
 import type { GameBoxScore, TeamBoxScore } from '@/lib/espn'
 
 /* ---------------------------------------------------------- player lines */
@@ -19,9 +21,10 @@ import type { GameBoxScore, TeamBoxScore } from '@/lib/espn'
  * the game, and dropping those players makes a nine-man rotation look like a
  * choice rather than an injury list.
  */
-export function PlayerBoxScores({ box, enableProfiles = true }: { box: GameBoxScore; enableProfiles?: boolean }) {
+export function PlayerBoxScores({ box, gameDate, enableProfiles = true }: { box: GameBoxScore; gameDate: string; enableProfiles?: boolean }) {
   return (
     <div id="player-box-scores" className="mb-6 scroll-mt-20 space-y-6">
+      {enableProfiles ? <GameLineComparison lines={comparisonLines(box)} gameDate={gameDate} /> : null}
       {box.teams.map((team) => (
         <TeamPlayers key={team.teamId} team={team} gameId={box.gameId} enableProfiles={enableProfiles} />
       ))}
@@ -58,7 +61,7 @@ function TeamPlayers({ team, gameId, enableProfiles }: { team: TeamBoxScore; gam
         </div>
       </div>
 
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" role="region" aria-label={`${team.displayName ?? team.abbreviation ?? 'Team'} player box score`} tabIndex={0}>
         <table>
           <thead>
             <tr>
