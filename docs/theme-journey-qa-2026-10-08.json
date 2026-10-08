@@ -1,0 +1,2922 @@
+{
+  "auditedAt": "2026-10-08T09:06:28.678Z",
+  "chromium": "151.0.7922.173",
+  "baseCommit": "5bb550c43446ce24f594b8e6a85294a7294241b3",
+  "basis": "Saved cloud Chromium. Connected production fixture journey: real committed team/forecast data; synthetic player lines through the existing ESPN-only preload. ESPN CDN logos deliberately unavailable; original abbreviation fallbacks checked after images settle. Product production server for source-unavailable and cold-paint checks. One isolated route/link for controlled boundaries.",
+  "journeys": [
+    {
+      "width": 320,
+      "system": "light",
+      "steps": [
+        {
+          "label": "home",
+          "path": "/",
+          "title": "Today · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "path": "/games?date=2026-10-21&team=BOS",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "path": "/teams/NY",
+          "title": "New York Knicks · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "path": "/games/401859967",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "path": "/predict",
+          "title": "Head to head · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "path": "/lab",
+          "title": "Forecast Lab · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "path": "/ratings",
+          "title": "Power ratings · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "path": "/about",
+          "title": "How it works · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "path": "/accuracy",
+          "title": "Accuracy · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "path": "/seasons",
+          "title": "Seasons · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "path": "/season",
+          "title": "Season projection · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "path": "/bracket",
+          "title": "Playoff bracket · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "path": "/allstar",
+          "title": "All-Star weekend · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)",
+            "rgb(33, 23, 17)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "path": "/upsets",
+          "title": "Upsets · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "path": "/preview",
+          "title": "Season preview · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "path": "/playoffs",
+          "title": "Playoff picture · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "path": "/players/espn/900000001",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "path": "/games/unknown-theme",
+          "title": "Game · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "controlledErrorMessages": []
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "steps": [
+        {
+          "label": "home",
+          "path": "/",
+          "title": "Today · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "path": "/games?date=2026-10-21&team=BOS",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "path": "/teams/NY",
+          "title": "New York Knicks · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "path": "/games/401859967",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "path": "/predict",
+          "title": "Head to head · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "path": "/lab",
+          "title": "Forecast Lab · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "path": "/ratings",
+          "title": "Power ratings · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "path": "/about",
+          "title": "How it works · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "path": "/accuracy",
+          "title": "Accuracy · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "path": "/seasons",
+          "title": "Seasons · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "path": "/seasons/2026/series/18v24",
+          "title": "SA v NY · NBA Finals · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "path": "/season",
+          "title": "Season projection · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "path": "/bracket",
+          "title": "Playoff bracket · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "path": "/allstar",
+          "title": "All-Star weekend · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)",
+            "rgb(33, 23, 17)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "path": "/upsets",
+          "title": "Upsets · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "path": "/preview",
+          "title": "Season preview · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "path": "/playoffs",
+          "title": "Playoff picture · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "path": "/players/espn/900000001",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "path": "/games/unknown-theme",
+          "title": "Game · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "controlledErrorMessages": []
+    },
+    {
+      "width": 1440,
+      "system": "light",
+      "steps": [
+        {
+          "label": "home",
+          "path": "/",
+          "title": "Today · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "path": "/games?date=2026-10-21&team=BOS",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "path": "/teams/NY",
+          "title": "New York Knicks · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "path": "/games/401859967",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "path": "/predict",
+          "title": "Head to head · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "path": "/lab",
+          "title": "Forecast Lab · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "path": "/ratings",
+          "title": "Power ratings · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "path": "/about",
+          "title": "How it works · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "path": "/accuracy",
+          "title": "Accuracy · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "path": "/seasons",
+          "title": "Seasons · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "path": "/seasons/2026/series/18v24",
+          "title": "SA v NY · NBA Finals · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "path": "/season",
+          "title": "Season projection · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "path": "/bracket",
+          "title": "Playoff bracket · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "path": "/allstar",
+          "title": "All-Star weekend · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "path": "/upsets",
+          "title": "Upsets · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "path": "/preview",
+          "title": "Season preview · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "path": "/playoffs",
+          "title": "Playoff picture · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "path": "/players/espn/900000001",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "path": "/games/unknown-theme",
+          "title": "Game · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "controlledErrorMessages": []
+    },
+    {
+      "width": 1440,
+      "system": "dark",
+      "steps": [
+        {
+          "label": "home",
+          "path": "/",
+          "title": "Today · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "path": "/games?date=2026-10-21&team=BOS",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "path": "/games/401909088",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "title": "BOS at DET · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "path": "/teams/NY",
+          "title": "New York Knicks · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "path": "/games/401859967",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "title": "NY 94 – 90 SA · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "path": "/predict",
+          "title": "Head to head · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "path": "/lab",
+          "title": "Forecast Lab · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "path": "/ratings",
+          "title": "Power ratings · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "path": "/about",
+          "title": "How it works · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "path": "/accuracy",
+          "title": "Accuracy · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "path": "/seasons",
+          "title": "Seasons · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "path": "/seasons/2026/series/18v24",
+          "title": "SA v NY · NBA Finals · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "path": "/seasons/2026",
+          "title": "2025-26 season · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "path": "/season",
+          "title": "Season projection · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "path": "/bracket",
+          "title": "Playoff bracket · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "path": "/allstar",
+          "title": "All-Star weekend · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "path": "/upsets",
+          "title": "Upsets · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "path": "/preview",
+          "title": "Season preview · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "path": "/playoffs",
+          "title": "Playoff picture · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "path": "/players/espn/900000001",
+          "title": "Player game profile · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "path": "/games/unknown-theme",
+          "title": "Game · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "path": "/games",
+          "title": "Games · Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "path": "/qa-theme",
+          "title": "Hardwood — Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "controlledErrorMessages": []
+    }
+  ],
+  "coldPaint": [
+    {
+      "preference": "off",
+      "initial": {
+        "ambient": "off",
+        "selectedBackground": "rgb(33, 23, 17)",
+        "pressed": [],
+        "busy": "true"
+      },
+      "sampledFrames": 101,
+      "stableBackgroundAndPreference": true
+    },
+    {
+      "preference": "vivid",
+      "initial": {
+        "ambient": "vivid",
+        "selectedBackground": "rgb(33, 23, 17)",
+        "pressed": [],
+        "busy": "true"
+      },
+      "sampledFrames": 100,
+      "stableBackgroundAndPreference": true
+    }
+  ],
+  "product": [
+    {
+      "label": "provider-unavailable",
+      "path": "/games/401859967",
+      "title": "NY 94 – 90 SA · Hardwood",
+      "ambient": "soft",
+      "background": "rgb(12, 7, 5)",
+      "scheme": "dark",
+      "tokens": {
+        "--card-bg": "#17100a",
+        "--logo-plate": "#fdf6ee",
+        "--text-primary": "#fdf6ee",
+        "--accent-brand": "#e2682a"
+      },
+      "cardBackgrounds": [
+        "rgb(23, 16, 10)"
+      ],
+      "nativeSchemes": [
+        "dark"
+      ],
+      "headingFont": null,
+      "headingTransform": null,
+      "overflow": false,
+      "violations": []
+    }
+  ],
+  "preferenceRecovery": {
+    "controlledMissingRootAttribute": true,
+    "restoredPreference": "off",
+    "storageUnchanged": true,
+    "unexpectedErrors": []
+  }
+}

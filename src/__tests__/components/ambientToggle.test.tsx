@@ -23,6 +23,18 @@ describe('AmbientToggle', () => {
     expect(screen.getByRole('button', { name: 'off' })).toHaveAttribute('aria-pressed', 'false')
   })
 
+  it('does not announce an invented soft selection when the server cannot know a saved preference', () => {
+    const { renderToString } = jest.requireActual('react-dom/server.node') as typeof import('react-dom/server')
+    document.documentElement.dataset.ambient = 'off'
+    const html = renderToString(<AmbientToggle />)
+    expect(html).toContain('aria-busy="true"')
+    expect(html).not.toContain('aria-pressed="true"')
+    expect(html).toContain('data-ambient-option="off"')
+    render(<AmbientToggle />)
+    expect(screen.getByRole('button', { name: 'off' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('group')).toHaveAttribute('aria-busy', 'false')
+  })
+
   it('writes the attribute, the storage key and the event together', () => {
     const heard = jest.fn()
     const listener = (event: Event) => heard((event as CustomEvent).detail)
@@ -35,6 +47,23 @@ describe('AmbientToggle', () => {
     expect(heard).toHaveBeenCalledWith('off')
     expect(screen.getByRole('button', { name: 'off' })).toHaveAttribute('aria-pressed', 'true')
 
+    window.removeEventListener('ambientchange', listener)
+  })
+
+  it('restores a saved choice and both dials if a recreated root loses the pre-paint attribute', () => {
+    document.documentElement.removeAttribute('data-ambient')
+    localStorage.setItem('hardwood-ambient', 'off')
+    const heard = jest.fn()
+    const listener = (event: Event) => heard((event as CustomEvent).detail)
+    window.addEventListener('ambientchange', listener)
+    render(<><AmbientToggle /><AmbientToggle /></>)
+    expect(document.documentElement.dataset.ambient).toBe('off')
+    expect(localStorage.getItem('hardwood-ambient')).toBe('off')
+    expect(heard).toHaveBeenCalledTimes(1)
+    expect(heard).toHaveBeenCalledWith('off')
+    for (const button of screen.getAllByRole('button', { name: 'off' })) {
+      expect(button).toHaveAttribute('aria-pressed', 'true')
+    }
     window.removeEventListener('ambientchange', listener)
   })
 

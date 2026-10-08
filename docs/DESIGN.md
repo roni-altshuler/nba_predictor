@@ -64,6 +64,15 @@ the four semantic signals below own the data.
 | `--accent-loss` | `#c1443c` | negative, eliminated, a miss |
 | `--accent-info` | `#c3d9f3` | links and informational text **only** |
 
+For small negative text use the existing `--accent-loss-soft` (`#d4655e`).
+The darker loss token remains the fill/large-number signal: on a walnut card,
+its contrast is below the 4.5:1 requirement for small text. Inline links in
+prose and section headings keep a visible underline, including footers.
+
+The root declares `color-scheme: dark` so native date/select controls inherit
+the same theme on every page under either system preference. Wide evidence
+tables use labeled focusable scroll regions for keyboard readers on phones.
+
 **Colour carries meaning only, never decoration.** A hue that is not one of
 these four is not saying anything, and should be a shade of grey. If a new
 state needs a colour, first ask whether it is really one of these four.
@@ -287,6 +296,15 @@ provenance line, section footnotes are one sentence, and the home page's
 title odds and power ratings are bar ladders (`BarLadder`, `--viz-model`,
 numbers as text) beside a team explorer and quick-pick chips into `/predict`,
 which now takes `?home=&away=`.
+
+**2026-10-08 — the dial agrees before hydration.** The root's pre-paint
+`data-ambient` attribute now owns the selected button's CSS highlight as well
+as the court. A returning reader's stored `off` or `vivid` choice therefore
+never briefly highlights `soft`. The server cannot read storage, so the group
+announces busy with no invented pressed selection until the hydrated client
+reads the attribute. The original three choices and storage key are retained.
+If a root recreated during hydration loses the attribute, the subscription
+restores the stored preference and signals the canvas without rewriting storage.
 
 ## 7. The honesty rules that are also design rules
 

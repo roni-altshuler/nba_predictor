@@ -311,7 +311,7 @@ export default function AboutPage() {
                     <td className="numeric text-right">
                       {num(paired.model?.brier, 4)}
                     </td>
-                    <td className="numeric text-right text-[var(--accent-loss)]">
+                    <td className="numeric text-right text-[var(--accent-loss-soft)]">
                       +{num(paired.model_gap_to_market, 4)}
                     </td>
                   </tr>

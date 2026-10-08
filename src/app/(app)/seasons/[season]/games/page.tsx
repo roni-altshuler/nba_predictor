@@ -167,7 +167,7 @@ function GameRow({
         <span
           className={cn(
             'w-16 shrink-0 text-right font-numeric text-[11px]',
-            called ? 'text-[var(--accent-primary)]' : 'text-[var(--accent-loss)]',
+            called ? 'text-[var(--accent-primary)]' : 'text-[var(--accent-loss-soft)]',
           )}
           title={
             called

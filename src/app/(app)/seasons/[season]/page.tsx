@@ -162,7 +162,7 @@ export default async function SeasonPage({
                 <span className="text-sm text-[var(--text-primary)]">
                   {game.away} {game.away_score} @ {game.home} {game.home_score}
                 </span>
-                <span className="ml-auto font-numeric text-xs text-[var(--accent-loss)]">
+                <span className="ml-auto font-numeric text-xs text-[var(--accent-loss-soft)]">
                   gave the winner {pct(said, 1)}
                 </span>
               </Link>
@@ -253,7 +253,7 @@ function Row({ team }: { team: StandingRow }) {
         className={`numeric text-right ${
           team.net_rating >= 0
             ? 'text-[var(--accent-primary)]'
-            : 'text-[var(--accent-loss)]'
+            : 'text-[var(--accent-loss-soft)]'
         }`}
       >
         {team.net_rating > 0 ? '+' : ''}

@@ -20,6 +20,7 @@
    intentionally empty so the hardcoded class stays harmless.
    ──────────────────────────────────────────────────────────── */
 :root {
+  color-scheme: dark;
   --background: #0c0705;
   --background-secondary: #17100a;
   --background-tertiary: #211711;
@@ -256,6 +257,9 @@ a.card:hover,
   color: var(--text-tertiary);
 }
 
+/* Inline text links need a non-colour cue, including headings and footers. */
+p a[href], h2 a[href] { text-decoration: underline; text-underline-offset: 3px; }
+
 /* A probability bar. The value is ALWAYS also rendered as text beside it —
    colour alone never carries the number, both for accessibility and because
    a reader cannot read 63% off a bar. */
@@ -387,6 +391,15 @@ html[data-ambient='soft'] .ambient-canvas {
 html[data-ambient='soft'] .ambient-court { opacity: 0.6; }
 html[data-ambient='off'] .ambient-court,
 html[data-ambient='off'] .ambient-canvas { display: none; }
+
+/* The pre-paint attribute owns the dial's highlight as well as the court.
+   A stored off/vivid choice must not paint the server's default soft first. */
+html[data-ambient='soft'] .ambient-option[data-ambient-option='soft'],
+html[data-ambient='vivid'] .ambient-option[data-ambient-option='vivid'],
+html[data-ambient='off'] .ambient-option[data-ambient-option='off'] {
+  background-color: var(--card-hover);
+  color: var(--text-primary);
+}
 
 table { border-collapse: collapse; width: 100%; }
 th {

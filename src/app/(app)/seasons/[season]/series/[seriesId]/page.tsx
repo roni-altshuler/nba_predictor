@@ -317,7 +317,7 @@ function SeriesGame({
             ? 'text-[var(--text-tertiary)]'
             : said >= 0.5
               ? 'text-[var(--accent-primary)]'
-              : 'text-[var(--accent-loss)]',
+              : 'text-[var(--accent-loss-soft)]',
         )}
         title={
           said === null

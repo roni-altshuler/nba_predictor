@@ -80,6 +80,14 @@ visible. This is reconstructed team context, without pace, roster or opponent
 adjustment; it does not change probabilities or estimate player talent, value or
 shot quality. See [scope and verification](docs/SHOOTING_CONTEXT_2026-10.md).
 
+**A consistent Hardwood theme** follows the full journey, including player
+profiles, shooting context, comparisons and evidence. Walnut surfaces, cream
+logo plates and orange navigation retain the original dark design under either
+system color preference. Native controls inherit that scheme; the saved Court
+dial paints its choice before hydration. Inline links have visible underlines,
+small negative labels use readable red ink, and narrow evidence tables accept
+keyboard focus. See the [connected browser audit](docs/THEME_JOURNEY_2026-10.md).
+
 ## Measured state
 
 Corpus: **31,844 games, 2004–2026**, from ESPN. The 2026-27 season tips off **20 October 2026**.

@@ -82,7 +82,7 @@ export function DailySlate({ games, initialDay }: { games: GameForecast[]; initi
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="flex min-w-0 flex-col gap-2">
             <span className="eyebrow">Game date · Eastern time</span>
-            <input type="date" aria-label="Game date" value={selection.day} className={control} style={{ colorScheme: 'dark' }}
+            <input type="date" aria-label="Game date" value={selection.day} className={control}
               onChange={event => { if (validSlateDay(event.target.value)) select(event.target.value) }} />
           </label>
           <label className="flex min-w-0 flex-col gap-2">
