@@ -31,6 +31,12 @@ one dark theme. System light/dark preferences do not switch that identity.
 - Four homepage text links showed missing-font boxes in place of decorative
   arrows in cloud Chromium. Small SVG marks retain the same cue without a
   font dependency and are hidden from the accessible link names.
+- Reaching the actual archive series page exposed overlapping score and
+  quarter text at 390 and 768 px. Mobile rows now put game/date/probability,
+  the score and quarter totals on separate lines. Wider rows reserve enough
+  room for the score before wrapping. Team-name links can truncate inside
+  the header while retaining their full accessible names. Browser text-range
+  checks found no collisions at 320, 390, 640, 768 or 1440 px after the fix.
 
 No model, forecast, archive, ingestion, workflow, dependency or access setting
 is changed. This improves readability and preference consistency; it makes no
@@ -50,15 +56,29 @@ season → playoff series → archive games → current season → bracket → A
 upsets → season preview → playoff picture → bare-profile empty state → unknown
 game/404 → schedule recovery → controlled loading → error → keyboard retry.
 
+The original audit at `e64f511` could accept the outgoing page: all four
+`archive-games` records still pointed to the season page, as did the 320 px
+`archive-series` record. That report did **not** prove those destinations.
+Coverage version 2 replaces it. Every transition now waits for its explicitly
+expected URL and visible destination heading/content. Snapshots repeat those
+assertions and record both the expected destination and the actual URL.
+
 Every recorded state checks the root dark scheme, walnut backgrounds, existing
 tokens, native control schemes, heading font/case, horizontal overflow and
 full-document axe WCAG 2 A/AA. Keyboard activation checks the Court dial and
-retry; an evidence table accepts focus and horizontal arrow input. Shooting
+retry; an evidence table accepts focus and its `scrollLeft` must move after
+ArrowRight whenever it overflows. Shooting
 scope/window selections survive reload; comparison pairs survive the profile
 round trip and browser history. Court `off` persists across the journey.
-The four journeys record 124 states; the separate source-outage state brings
-the full-document accessibility checks to 125, with zero final violations or
-horizontal overflow and zero unexpected errors in the accepted journeys.
+The four completed corrected journeys record 124 states; the separate
+source-outage state brings the full-document accessibility checks to 125.
+The final series-layout source at `bc7dd0427760d2c9628df4dad56945dc2b652f27`
+completed that whole set with zero axe violations, document overflow or
+unexpected runtime errors. The 320/390 px table scrollers moved from zero
+after ArrowRight, and every series row passed its text-bounds check.
+The report records all expected console failures separately from unexpected
+errors. These completed journeys do not erase the failed repetitions described
+below or establish that the intermittent hydration issue is fixed.
 
 Separate cold-load checks delay client scripts and prepopulate stored `off` and
 `vivid` choices under a light system preference. They inspect the dial before
@@ -85,23 +105,72 @@ system preference, accessibility result and cold-paint observation.
 [Saved Court off before](screenshots/theme-cold-off-before.png) ·
 [Saved Court off after](screenshots/theme-cold-off-after.png).
 
+[Archive series](screenshots/theme-archive-series-mobile.png) ·
+[Archive results](screenshots/theme-archive-games-mobile.png).
+
 ## Evidence and limits
 
 The connected player/comparison journey uses the existing ESPN-only preload
 with explicitly synthetic QA Guard/Reserve/Forward lines. Team results,
 forecasts and shooting rates use the committed real artifacts. CDN logos are
 deliberately unavailable so the original abbreviation fallbacks can settle
-before measurements. The outage build controls the ESPN reader to HTTP 503.
+before measurements. Acceptance journeys explicitly return HTTP 503 for the
+browser scoreboard as well; the outage build controls the ESPN summary reader
+to HTTP 503. All contexts, including cold paint, source outage and controlled
+root recovery, capture page errors and console warnings/errors with route,
+stage, UTC time, stack/location and raw document responses. Diagnostic runs
+leave the scoreboard request uncontrolled and retain its cloud certificate
+failure. No TLS setting was changed.
 These checks establish interaction and theme behavior, not live feed coverage.
 
-One exploratory 390 px hard profile load triggered a React #418 hydration
-recovery and lost the root Court attribute. Sixteen isolated cold loads and
-subsequent complete journeys did not reproduce it. The missing-attribute
-recovery now has a two-dial regression test and a controlled browser check;
-the origin of the intermittent React warning remains an independent review
-item. No dependency upgrade or blanket warning suppression is introduced.
-The [exploratory observation](theme-hydration-observation-2026-10-08.json)
-retains the failed state separately from the acceptance results.
+The first exploratory 390 px hard profile load triggered React #418 and lost
+the root Court attribute. Its collector saved only the message and failing
+state. The historical stack, event timestamp and exact event URL were never
+captured and cannot be recovered. The profile route is an association from the
+failed state, not a reconstructed event URL. Original known conditions and
+these missing fields are preserved in the
+[investigation record](theme-hydration-investigation-2026-10-08.json), alongside
+the unchanged [initial observation](theme-hydration-observation-2026-10-08.json).
+
+New diagnostic runs reproduce the same production #418 signature on main
+`5bb550c`, including a control with **no axe injection**. It also occurs on the
+PR build. This establishes a pre-existing runtime race, rather than evidence
+of a PR-only regression or an axe-only artifact. The exact mismatched element
+and trigger remain unknown; it does not prove the cause of the historical
+event. A new normal full-journey run also failed at 1440/light during the
+shooting-selection reload, with **no artificial script delay**. Its stack,
+route, timestamp and failed assertion are retained, and its unvisited later
+states are not counted as completed coverage.
+
+The initial, timing-comparison and no-axe control matrices retain every case:
+
+| Production source | Cases | React #418 cases | Lost saved preference |
+| --- | ---: | ---: | ---: |
+| Main `5bb550c` | 58 | 4 | 4 |
+| Reconstructed pre-recovery PR source | 53 | 1 | 1 |
+| PR source `e64f511` | 58 | 1 | 0 |
+
+Cases include new contexts, light/dark system settings, soft/off/vivid stored
+choices, normal and delayed scripts, navigation, and normal/early axe timing.
+The early probe is explicitly earlier than the original audit timing.
+Reconstructed source is not the original built chunks. Later targeted runs,
+including debugger-instrumented controls, are recorded separately; a clean
+repeat is never treated as resolving an earlier failure. Development runs also
+found a nonfatal Court `useId`/`aria-labelledby` mismatch on both main and PR
+source. It is not proven to cause production #418; four initial development
+menu-readiness timeouts are retained rather than silently rerun.
+
+After the series-layout fix, 12 additional final-production cases captured no
+#418, lost preference or harness failure. Their nine homepage/navigation cases
+retained the uncontrolled ESPN scoreboard certificate error. Twenty separate
+debugger-instrumented baseline/final controls captured no #418 and did not
+identify a mismatched element; debugger timing makes them unsuitable as proof
+that the underlying race is absent.
+
+The missing-attribute guard has unit and controlled-browser coverage and kept
+the final saved preference after the observed recovery. It **does not prevent
+#418**. Hydration remains an independent review blocker. No dependency upgrade,
+blanket warning suppression, merge or manual workflow dispatch is introduced.
 
 Loading and error screenshots use an isolated `/tmp` copy. Its temporary route
 delegates to the product game page after a short delay, conditionally fails via
@@ -127,7 +196,14 @@ preload and a mode file containing `unavailable` on port 3192. Use a fresh build
 and free ports for each server; then run:
 
 ```sh
-QA_BASE=http://127.0.0.1:3191 QA_PRODUCT_BASE=http://127.0.0.1:3192 node scripts/theme_journey_audit.mjs
+QA_BASE=http://127.0.0.1:3191 QA_PRODUCT_BASE=http://127.0.0.1:3192 \
+QA_PRODUCT_SOURCE_COMMIT="$(git rev-parse HEAD)" node scripts/theme_journey_audit.mjs
 ```
 
-The audit writes its report and screenshots under `/tmp/nba-theme-journey-qa`.
+The audit writes its full report, raw diagnostics and screenshots under
+`/tmp/nba-theme-journey-qa`. The committed report groups repeated deliberate
+CDN failures by URL/count and retains all other console and page errors.
+The diagnostic runner `scripts/hydration_risk_audit.mjs` accepts `QA_BUILDS`,
+`QA_SCENARIOS` and `QA_OUT`; its report retains all failed cases and harness
+errors. It is diagnostic and does not report a passing exit status as product
+acceptance.

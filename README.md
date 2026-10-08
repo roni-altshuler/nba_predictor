@@ -86,7 +86,10 @@ logo plates and orange navigation retain the original dark design under either
 system color preference. Native controls inherit that scheme; the saved Court
 dial paints its choice before hydration. Inline links have visible underlines,
 small negative labels use readable red ink, and narrow evidence tables accept
-keyboard focus. See the [connected browser audit](docs/THEME_JOURNEY_2026-10.md).
+keyboard focus and horizontal arrow scrolling. Archive series scores keep their
+own space on phones. The [connected browser audit](docs/THEME_JOURNEY_2026-10.md)
+verifies destination URLs and content and retains an intermittent hydration
+failure reproduced on main; that runtime issue remains under review.
 
 ## Measured state
 
