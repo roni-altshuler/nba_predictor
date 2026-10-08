@@ -37,6 +37,13 @@ one dark theme. System light/dark preferences do not switch that identity.
   room for the score before wrapping. Team-name links can truncate inside
   the header while retaining their full accessible names. Browser text-range
   checks found no collisions at 320, 390, 640, 768 or 1440 px after the fix.
+- A streamed route child could suspend after the page-transition wrapper
+  claimed its server DOM, then resolve during React's hydration yield. The
+  installed renderer replayed that host wrapper against its own contents,
+  reporting #418 and replacing the page despite matching markup. A private
+  component now resolves the child before reconciliation reaches the wrapper's
+  contents. It adds no DOM, fallback, delay or warning suppression. The existing
+  pathname key, animation and navigation behavior remain intact.
 
 No model, forecast, archive, ingestion, workflow, dependency or access setting
 is changed. This improves readability and preference consistency; it makes no
@@ -72,13 +79,13 @@ scope/window selections survive reload; comparison pairs survive the profile
 round trip and browser history. Court `off` persists across the journey.
 The four completed corrected journeys record 124 states; the separate
 source-outage state brings the full-document accessibility checks to 125.
-The final series-layout source at `bc7dd0427760d2c9628df4dad56945dc2b652f27`
+The repaired product source at `0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531`
 completed that whole set with zero axe violations, document overflow or
 unexpected runtime errors. The 320/390 px table scrollers moved from zero
 after ArrowRight, and every series row passed its text-bounds check.
 The report records all expected console failures separately from unexpected
 errors. These completed journeys do not erase the failed repetitions described
-below or establish that the intermittent hydration issue is fixed.
+below. The replay repair also has deterministic before/after evidence.
 
 Separate cold-load checks delay client scripts and prepopulate stored `off` and
 `vivid` choices under a light system preference. They inspect the dial before
@@ -89,7 +96,7 @@ also ensures the server never invents a pressed `soft` selection.
 The unmodified product production build separately verifies the source-outage
 state on a completed game. Product and isolated fixture builds generate all
 504 static pages; the fixture adds only its temporary controlled route.
-All 268 frontend tests, lint and TypeScript pass.
+All 270 frontend tests in 34 suites, lint and TypeScript pass.
 
 [Machine-readable results](theme-journey-qa-2026-10-08.json) record each state,
 system preference, accessibility result and cold-paint observation.
@@ -132,12 +139,12 @@ these missing fields are preserved in the
 [investigation record](theme-hydration-investigation-2026-10-08.json), alongside
 the unchanged [initial observation](theme-hydration-observation-2026-10-08.json).
 
-New diagnostic runs reproduce the same production #418 signature on main
+Earlier diagnostic runs reproduce the same production #418 signature on main
 `5bb550c`, including a control with **no axe injection**. It also occurs on the
 PR build. This establishes a pre-existing runtime race, rather than evidence
-of a PR-only regression or an axe-only artifact. The exact mismatched element
-and trigger remain unknown; it does not prove the cause of the historical
-event. A new normal full-journey run also failed at 1440/light during the
+of a PR-only regression or an axe-only artifact. At that stage the exact
+mismatched element and trigger were unknown. A normal full-journey run also
+failed at 1440/light during the
 shooting-selection reload, with **no artificial script delay**. Its stack,
 route, timestamp and failed assertion are retained, and its unvisited later
 states are not counted as completed coverage.
@@ -169,8 +176,56 @@ that the underlying race is absent.
 
 The missing-attribute guard has unit and controlled-browser coverage and kept
 the final saved preference after the observed recovery. It **does not prevent
-#418**. Hydration remains an independent review blocker. No dependency upgrade,
-blanket warning suppression, merge or manual workflow dispatch is introduced.
+#418**. The separate replay repair below addresses the captured failure;
+the draft remains held for independent review. No dependency upgrade, blanket
+warning suppression, merge or manual workflow dispatch is introduced.
+
+## Captured replay root cause and repair
+
+An observer at the production mismatch throw point localized five normal
+game-load failures: two of 30 on main and three of 30 on the pre-repair PR.
+React expected `div.page-enter`; its hydration cursor instead pointed at the
+`<!--$-->` comment inside that same wrapper. The hydration parent was the
+wrapper fiber, the streamed child was fulfilled, and Court was still `off`
+before the error. Head rebuilding and lost ambient attributes followed the
+error; they are recovery effects. Earlier chunk removal is correlation, not
+proof that it caused the mismatch.
+
+The deterministic regression compiles the actual `PageTransition.tsx` and uses
+Next's installed React `19.2.0-canary-0bdb9206-20250818` renderer. Ordinary Jest
+components use package React 18. Its mocked scheduler pins the lazy route
+child's resolution during hydration's yield. Before repair, matching server
+and client markup still produces #418, a development diff of the wrapper
+against `<Suspense>`, and a `replaySuspendedUnitOfWork` stack. React replaces
+both server wrapper and page. After repair, both production and development
+probes keep those nodes with no error. Deliberately changing the server text
+still reports #418 and replaces that content: the repair does not mask a real
+mismatch. [Exact evidence](theme-hydration-root-cause-2026-10-08.json) includes
+source hashes, full diagnostic stacks and all captured failures.
+
+The installed renderer's host replay path does not restore its hydration
+cursor. This mechanism matches the upstream
+[React reproduction](https://github.com/react/react/issues/37584) and
+[hydration replay fix](https://github.com/react/react/pull/35494). This branch
+uses a local component boundary with the existing dependencies.
+
+The repaired, unmodified production renderer then completed 60 normal game
+loads/reloads at 1440 px: 30 light/reduced-motion and 30 dark/normal-motion,
+without axe injection or artificial script delays. All retained their full
+shooting URL and stored Court `off`; no hydration or unexpected page/console
+errors were captured. Deliberate CDN failures remain recorded.
+Observer-only diagnostics remained enabled. Another 33 cold/navigation profile
+cases covered both system preferences, all three stored Court choices, normal
+and delayed scripts, and no/ready/early axe injection. No #418, lost preference
+or harness failure occurred. Their nine homepage/navigation cases still
+captured the uncontrolled ESPN scoreboard certificate error. Those errors
+remain recorded; this diagnostic matrix is not claimed as error-free.
+
+Eight fresh development game/profile loads captured no #418 or Court
+`useId` attribute warning; all eight retained Framer Motion's reduced-motion
+notice. The earlier nonfatal attribute mismatch remains separate evidence,
+not a proven cause of production #418. The original exploratory failure's
+missing event fields still prevent assigning its exact cause retrospectively.
 
 Loading and error screenshots use an isolated `/tmp` copy. Its temporary route
 delegates to the product game page after a short delay, conditionally fails via
@@ -183,6 +238,17 @@ remain unverified. No production job or workflow was manually dispatched, and
 the draft awaits independent review before merge.
 
 ## Reproduce
+
+The deterministic regression runs against the installed Next renderer:
+
+```sh
+npm test -- --runInBand src/__tests__/components/pageTransitionHydration.test.ts
+NODE_ENV=production node scripts/qa/hydration_replay.cjs
+NODE_ENV=production node scripts/qa/hydration_replay.cjs --different-server-text
+```
+
+The last command deliberately reports #418; the test asserts that this real
+content mismatch remains visible. The positive probe checks DOM reuse.
 
 ```sh
 QA_COPY=/tmp/nba-theme-new-fixture node scripts/qa/prepare_theme_journey.mjs

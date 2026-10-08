@@ -1,9 +1,9 @@
 {
   "coverageVersion": 2,
-  "auditedAt": "2026-10-08T10:05:14.818Z",
+  "auditedAt": "2026-10-08T10:46:53.007Z",
   "chromium": "151.0.7922.173",
   "baseCommit": "5bb550c43446ce24f594b8e6a85294a7294241b3",
-  "productSourceCommit": "bc7dd0427760d2c9628df4dad56945dc2b652f27",
+  "productSourceCommit": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
   "basis": "Saved cloud Chromium. Every transition asserts its expected URL and destination content. Connected production fixture journey: real committed team/forecast data; synthetic player lines through the existing ESPN-only preload. ESPN CDN logos deliberately unavailable; original abbreviation fallbacks checked after images settle. The browser scoreboard is explicitly HTTP 503, with errors retained. Product production server for source-unavailable and cold-paint checks. One isolated route/link for controlled boundaries.",
   "journeys": [
     {
@@ -956,11 +956,11 @@
         "consoleErrors": [
           {
             "sequence": 9,
-            "at": "2026-10-08T10:05:15.446Z",
-            "elapsedMs": 501,
+            "at": "2026-10-08T10:46:53.911Z",
+            "elapsedMs": 753,
             "id": "journey-320-light",
             "stage": "initial",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -976,11 +976,11 @@
           },
           {
             "sequence": 70,
-            "at": "2026-10-08T10:05:20.763Z",
-            "elapsedMs": 5818,
+            "at": "2026-10-08T10:46:59.647Z",
+            "elapsedMs": 6489,
             "id": "journey-320-light",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -996,11 +996,11 @@
           },
           {
             "sequence": 359,
-            "at": "2026-10-08T10:05:56.036Z",
-            "elapsedMs": 41091,
+            "at": "2026-10-08T10:47:37.540Z",
+            "elapsedMs": 44382,
             "id": "journey-320-light",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -1016,21 +1016,21 @@
           },
           {
             "sequence": 399,
-            "at": "2026-10-08T10:05:58.734Z",
-            "elapsedMs": 43789,
+            "at": "2026-10-08T10:47:40.569Z",
+            "elapsedMs": 47411,
             "id": "journey-320-light",
             "stage": "loading",
-            "route": "http://127.0.0.1:4298/qa-theme",
+            "route": "http://127.0.0.1:4301/qa-theme",
             "type": "console",
             "level": "error",
             "classification": "controlled-server-failure",
             "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
             "location": {
-              "url": "http://127.0.0.1:4298/_next/static/chunks/8058-829d361c54e89d56.js",
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
               "line": 0,
-              "column": 38448,
+              "column": 141585,
               "lineNumber": 0,
-              "columnNumber": 38448
+              "columnNumber": 141585
             },
             "args": [
               {
@@ -2017,7 +2017,7 @@
         "left": 0,
         "width": 356,
         "scrollWidth": 430,
-        "after": 5,
+        "after": 3,
         "movementRequired": true
       },
       "seriesTextLayout": {
@@ -2031,11 +2031,11 @@
         "consoleErrors": [
           {
             "sequence": 9,
-            "at": "2026-10-08T10:06:03.420Z",
-            "elapsedMs": 665,
+            "at": "2026-10-08T10:47:45.702Z",
+            "elapsedMs": 413,
             "id": "journey-390-dark",
             "stage": "initial",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -2051,11 +2051,11 @@
           },
           {
             "sequence": 70,
-            "at": "2026-10-08T10:06:09.166Z",
-            "elapsedMs": 6411,
+            "at": "2026-10-08T10:47:51.840Z",
+            "elapsedMs": 6551,
             "id": "journey-390-dark",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -2071,11 +2071,11 @@
           },
           {
             "sequence": 362,
-            "at": "2026-10-08T10:06:45.595Z",
-            "elapsedMs": 42840,
+            "at": "2026-10-08T10:48:33.848Z",
+            "elapsedMs": 48559,
             "id": "journey-390-dark",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -2091,21 +2091,21 @@
           },
           {
             "sequence": 404,
-            "at": "2026-10-08T10:06:48.417Z",
-            "elapsedMs": 45662,
+            "at": "2026-10-08T10:48:36.596Z",
+            "elapsedMs": 51307,
             "id": "journey-390-dark",
             "stage": "loading",
-            "route": "http://127.0.0.1:4298/qa-theme",
+            "route": "http://127.0.0.1:4301/qa-theme",
             "type": "console",
             "level": "error",
             "classification": "controlled-server-failure",
             "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
             "location": {
-              "url": "http://127.0.0.1:4298/_next/static/chunks/8058-829d361c54e89d56.js",
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
               "line": 0,
-              "column": 38448,
+              "column": 141585,
               "lineNumber": 0,
-              "columnNumber": 38448
+              "columnNumber": 141585
             },
             "args": [
               {
@@ -3105,11 +3105,11 @@
         "consoleErrors": [
           {
             "sequence": 10,
-            "at": "2026-10-08T10:06:52.972Z",
-            "elapsedMs": 447,
+            "at": "2026-10-08T10:48:41.378Z",
+            "elapsedMs": 437,
             "id": "journey-1440-light",
             "stage": "initial",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -3125,11 +3125,11 @@
           },
           {
             "sequence": 89,
-            "at": "2026-10-08T10:06:58.412Z",
-            "elapsedMs": 5887,
+            "at": "2026-10-08T10:48:46.904Z",
+            "elapsedMs": 5963,
             "id": "journey-1440-light",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -3145,11 +3145,11 @@
           },
           {
             "sequence": 413,
-            "at": "2026-10-08T10:07:33.906Z",
-            "elapsedMs": 41381,
+            "at": "2026-10-08T10:49:22.632Z",
+            "elapsedMs": 41691,
             "id": "journey-1440-light",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -3164,22 +3164,22 @@
             "args": []
           },
           {
-            "sequence": 455,
-            "at": "2026-10-08T10:07:36.625Z",
-            "elapsedMs": 44100,
+            "sequence": 449,
+            "at": "2026-10-08T10:49:25.390Z",
+            "elapsedMs": 44449,
             "id": "journey-1440-light",
             "stage": "loading",
-            "route": "http://127.0.0.1:4298/qa-theme",
+            "route": "http://127.0.0.1:4301/qa-theme",
             "type": "console",
             "level": "error",
             "classification": "controlled-server-failure",
             "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
             "location": {
-              "url": "http://127.0.0.1:4298/_next/static/chunks/8058-829d361c54e89d56.js",
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
               "line": 0,
-              "column": 38448,
+              "column": 141585,
               "lineNumber": 0,
-              "columnNumber": 38448
+              "columnNumber": 141585
             },
             "args": [
               {
@@ -3191,11 +3191,11 @@
         ],
         "unexpected": [],
         "controlledLogoFailures": {
-          "count": 353,
+          "count": 347,
           "byUrl": {
-            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 23,
-            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 22,
-            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 19,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 21,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 18,
             "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 22,
             "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 18,
             "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 20,
@@ -3203,16 +3203,16 @@
             "https://a.espncdn.com/i/teamlogos/nba/500/den.png": 9,
             "https://a.espncdn.com/i/teamlogos/nba/500/cle.png": 11,
             "https://a.espncdn.com/i/teamlogos/nba/500/tor.png": 12,
-            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 10,
             "https://a.espncdn.com/i/teamlogos/nba/500/min.png": 13,
             "https://a.espncdn.com/i/teamlogos/nba/500/por.png": 11,
             "https://a.espncdn.com/i/teamlogos/nba/500/utah.png": 8,
             "https://a.espncdn.com/i/teamlogos/nba/500/atl.png": 10,
-            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 11,
             "https://a.espncdn.com/i/teamlogos/nba/500/mil.png": 8,
             "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png": 8,
             "https://a.espncdn.com/i/teamlogos/nba/500/mia.png": 8,
-            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 9,
             "https://a.espncdn.com/i/teamlogos/nba/500/mem.png": 7,
             "https://a.espncdn.com/i/teamlogos/nba/500/ind.png": 8,
             "https://a.espncdn.com/i/teamlogos/nba/500/no.png": 7,
@@ -4179,11 +4179,11 @@
         "consoleErrors": [
           {
             "sequence": 10,
-            "at": "2026-10-08T10:07:41.087Z",
-            "elapsedMs": 371,
+            "at": "2026-10-08T10:49:30.003Z",
+            "elapsedMs": 425,
             "id": "journey-1440-dark",
             "stage": "initial",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -4199,11 +4199,11 @@
           },
           {
             "sequence": 89,
-            "at": "2026-10-08T10:07:46.513Z",
-            "elapsedMs": 5797,
+            "at": "2026-10-08T10:49:35.739Z",
+            "elapsedMs": 6161,
             "id": "journey-1440-dark",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -4219,11 +4219,11 @@
           },
           {
             "sequence": 413,
-            "at": "2026-10-08T10:08:22.470Z",
-            "elapsedMs": 41754,
+            "at": "2026-10-08T10:50:12.737Z",
+            "elapsedMs": 43159,
             "id": "journey-1440-dark",
             "stage": "navigate:/",
-            "route": "http://127.0.0.1:4298/",
+            "route": "http://127.0.0.1:4301/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -4239,21 +4239,21 @@
           },
           {
             "sequence": 455,
-            "at": "2026-10-08T10:08:25.193Z",
-            "elapsedMs": 44477,
+            "at": "2026-10-08T10:50:15.468Z",
+            "elapsedMs": 45890,
             "id": "journey-1440-dark",
             "stage": "loading",
-            "route": "http://127.0.0.1:4298/qa-theme",
+            "route": "http://127.0.0.1:4301/qa-theme",
             "type": "console",
             "level": "error",
             "classification": "controlled-server-failure",
             "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
             "location": {
-              "url": "http://127.0.0.1:4298/_next/static/chunks/8058-829d361c54e89d56.js",
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
               "line": 0,
-              "column": 38448,
+              "column": 141585,
               "lineNumber": 0,
-              "columnNumber": 38448
+              "columnNumber": 141585
             },
             "args": [
               {
@@ -4314,7 +4314,7 @@
         "pressed": [],
         "busy": "true"
       },
-      "sampledFrames": 100,
+      "sampledFrames": 104,
       "stableBackgroundAndPreference": true,
       "diagnostics": {
         "id": "cold-paint-off",
@@ -4322,11 +4322,11 @@
         "consoleErrors": [
           {
             "sequence": 11,
-            "at": "2026-10-08T10:08:31.507Z",
-            "elapsedMs": 1857,
+            "at": "2026-10-08T10:50:21.476Z",
+            "elapsedMs": 1891,
             "id": "cold-paint-off",
             "stage": "cold-paint-off",
-            "route": "http://127.0.0.1:4297/",
+            "route": "http://127.0.0.1:4300/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -4372,11 +4372,11 @@
         "consoleErrors": [
           {
             "sequence": 11,
-            "at": "2026-10-08T10:08:33.609Z",
-            "elapsedMs": 1856,
+            "at": "2026-10-08T10:50:23.632Z",
+            "elapsedMs": 1882,
             "id": "cold-paint-vivid",
             "stage": "cold-paint-vivid",
-            "route": "http://127.0.0.1:4297/",
+            "route": "http://127.0.0.1:4300/",
             "type": "console",
             "level": "error",
             "classification": "controlled-scoreboard-503",
@@ -4469,15 +4469,9 @@
       }
     }
   },
-  "metadataCorrection": {
-    "field": "productSourceCommit",
-    "reason": "Invocation metadata contained a mistyped commit identifier; corrected after comparing all product source files with the committed source. This metadata field does not affect browser behavior.",
-    "invocationValue": "bc7dd04b3d2a5428687892c5d7c9f3e15cf588bbd",
-    "verifiedCommit": "bc7dd0427760d2c9628df4dad56945dc2b652f27"
-  },
   "sourceVerification": {
     "sha256Algorithm": "Sorted src relative path + NUL + file bytes + NUL",
-    "productSrcSha256": "d44ed8f033c9b7c99d89730d6aa4e5f9090b21c4883825bc4f4832135c30d511",
+    "productSrcSha256": "62d1ae2566435403341bdb59d94fb80d3e5fb8014c7b64435c2729ffdf5d82a2",
     "productCopyMatches": true,
     "fixtureMatchesExcept": [
       "src/app/(app)/teams/[abbr]/page.tsx",
@@ -4488,11 +4482,11 @@
   },
   "supersedes": {
     "commit": "e64f5112b82a4a7cc6c872757460bec090e9c0e5",
-    "reason": "Original outgoing-page readiness falsely labeled archive destination coverage. This report asserts each expected URL and its destination content."
+    "reason": "Original outgoing-page readiness falsely labeled archive destination coverage. This report asserts each expected URL and destination content."
   },
   "rawReport": {
-    "path": "/tmp/nba-hydration-investigation/corrected-journey-5/results.json",
-    "sha256": "54dde2dfc496bc63b11fea759d880d17b1ffdbc3cc2f5833818be84c713adaaa",
-    "consolePresentation": "Only repeated deliberate CDN resource failures are grouped in this committed report; full events remain in saved-cloud raw diagnostics. All other console events and all page errors are retained."
+    "path": "/tmp/nba-hydration-fix-journey/results.json",
+    "sha256": "56ca4365e3437a1a59c7ec0539099c8dda638cd09ff477f858998867ac4e46c4",
+    "consolePresentation": "Only repeated deliberate CDN resource failures are grouped here; full events remain in saved-cloud raw diagnostics. All other console events and all page errors are retained."
   }
 }

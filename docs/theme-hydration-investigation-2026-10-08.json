@@ -28493,5 +28493,10 @@
       "notes": "All four strict destination journeys completed. A later repetition still caught #418 and is preserved separately.",
       "unexpectedEvents": []
     }
-  ]
+  ],
+  "subsequentRootCauseRecord": {
+    "path": "theme-hydration-root-cause-2026-10-08.json",
+    "sourceCommit": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+    "note": "Later throw-point and deterministic evidence identifies and repairs a host hydration replay defect. All historical failures and limits in this record are retained."
+  }
 }

@@ -1,0 +1,2866 @@
+{
+  "recordedAt": "2026-10-08T10:54:43.370317+00:00",
+  "repository": "roni-altshuler/nba_predictor",
+  "baselineSource": "5bb550c43446ce24f594b8e6a85294a7294241b3",
+  "beforeRepairSource": "beacbd16dd1236df41ac0457402c7c16aaabab9b",
+  "repairedProductSource": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+  "runtime": {
+    "next": "15.5.24",
+    "appRouterReact": "19.2.0-canary-0bdb9206-20250818",
+    "ordinaryJestReact": "18.3.1"
+  },
+  "sourceVerification": {
+    "sha256Algorithm": "Sorted src relative path + NUL + file bytes + NUL",
+    "productSrcSha256": "62d1ae2566435403341bdb59d94fb80d3e5fb8014c7b64435c2729ffdf5d82a2",
+    "productCopyMatches": true,
+    "fixtureMatchesExcept": [
+      "src/app/(app)/teams/[abbr]/page.tsx",
+      "src/app/(app)/qa-theme/page.tsx",
+      "src/app/(app)/qa-theme/loading.tsx"
+    ],
+    "fixtureDifferences": "Only the team-page QA link plus temporary QA route/loading; next.config devIndicators disabled in fixture only."
+  },
+  "rootCause": {
+    "capturedMismatch": "Host div.page-enter is compared against its own inner Suspense comment after its Flight lazy child becomes fulfilled during hydration replay.",
+    "confirmedMechanism": "The installed renderer replays the suspended host fiber without restoring the hydration cursor. Identical markup fails deterministically with the actual pre-repair PageTransition source; a component fiber can replay without claiming the wrapper again.",
+    "repair": "Resolve the route child inside a private PageContent component. No DOM, fallback, dependency upgrade, delay, retry or warning suppression.",
+    "recoveryEffects": "Court is still off at the captured throw point. Later head rebuilding and root attribute loss are recovery fallout, not evidence that the ambient script caused the mismatch.",
+    "correlationOnly": "Earlier head chunk removal is a timing correlation; no evidence establishes it as the cause.",
+    "historicalLimit": "The original exploratory collector lacked event stack, timestamp and exact URL. These new localized failures do not reconstruct that missing evidence or prove the original event had precisely this cause.",
+    "upstreamPrimarySources": [
+      "https://github.com/react/react/issues/37584",
+      "https://github.com/react/react/pull/35494"
+    ]
+  },
+  "productionLocalization": {
+    "browser": "151.0.7922.173",
+    "conditions": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "colorScheme": "light",
+      "reducedMotion": "reduce",
+      "storedCourt": "off",
+      "artificialScriptDelay": false,
+      "axeInjection": false
+    },
+    "instrumentation": "Observer inserted only at the production throw point; captures fiber/cursor fields. No DOM mutation, suppression or scheduler modification. It may affect timing; deterministic scheduler evidence independently verifies the replay mechanism.",
+    "rawReport": {
+      "path": "/tmp/nba-hydration-investigation/fiber-reload-detailed/results.json",
+      "sha256": "142185378236566bf3fab53a8224d3d3717c71ef68bac2eaca905e6d3fc20d7b"
+    },
+    "builds": [
+      {
+        "base": "http://127.0.0.1:4299",
+        "source": "5bb550c43446ce24f594b8e6a85294a7294241b3",
+        "loads": 30,
+        "localizedErrorCases": 2,
+        "cases": [
+          {
+            "reload": 3,
+            "snapshots": [
+              {
+                "at": "2026-10-08T10:32:31.293Z",
+                "ms": 103,
+                "url": "http://127.0.0.1:4299/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "expectedType": "div",
+                "props": {
+                  "className": "page-enter",
+                  "children": "object"
+                },
+                "hydrationParentIsFiber": true,
+                "cursorType": 8,
+                "cursorData": "$",
+                "childrenPayloadStatus": "fulfilled",
+                "hydratingNode": "[object Comment]",
+                "parent": "DIV",
+                "next": "<div><header class=\"mb-6\"><a class=\"inline-flex min-h-[44px] items-center gap-2 font-numeric text-xs text-[var(--accent-info)] hover:underline\" href=\"/games?date=2026-10-20\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>Daily slate</a><div class=\"card mt-2 p-4 sm:p-6\"><p class=\"eyebrow\">Matchup preview \u00b7 <!-- -->Tuesday, October 20<!-- -->",
+                "ambient": "off",
+                "ancestors": [
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "x"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "main"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 7,
+                    "type": null
+                  },
+                  {
+                    "tag": 10,
+                    "type": null
+                  },
+                  {
+                    "tag": 0,
+                    "type": "T"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "c"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "S"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "j"
+                  }
+                ]
+              }
+            ],
+            "events": [
+              {
+                "sequence": 21,
+                "at": "2026-10-08T10:32:31.318Z",
+                "elapsedMs": 2903,
+                "id": "reload-4299",
+                "stage": "reload-3",
+                "route": "http://127.0.0.1:4299/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "type": "pageerror",
+                "classification": "unexpected",
+                "name": "Error",
+                "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+                "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:36263)\n    at oq (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:85767)\n    at iw (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:116162)\n    at http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:111523\n    at iu (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:112032)\n    at iX (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:134135)\n    at MessagePort.w (http://127.0.0.1:4299/_next/static/chunks/8058-829d361c54e89d56.js:1:131427)"
+              }
+            ]
+          },
+          {
+            "reload": 14,
+            "snapshots": [
+              {
+                "at": "2026-10-08T10:32:40.558Z",
+                "ms": 101.5,
+                "url": "http://127.0.0.1:4299/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "expectedType": "div",
+                "props": {
+                  "className": "page-enter",
+                  "children": "object"
+                },
+                "hydrationParentIsFiber": true,
+                "cursorType": 8,
+                "cursorData": "$",
+                "childrenPayloadStatus": "fulfilled",
+                "hydratingNode": "[object Comment]",
+                "parent": "DIV",
+                "next": "<div><header class=\"mb-6\"><a class=\"inline-flex min-h-[44px] items-center gap-2 font-numeric text-xs text-[var(--accent-info)] hover:underline\" href=\"/games?date=2026-10-20\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>Daily slate</a><div class=\"card mt-2 p-4 sm:p-6\"><p class=\"eyebrow\">Matchup preview \u00b7 <!-- -->Tuesday, October 20<!-- -->",
+                "ambient": "off",
+                "ancestors": [
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "x"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "main"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 7,
+                    "type": null
+                  },
+                  {
+                    "tag": 10,
+                    "type": null
+                  },
+                  {
+                    "tag": 0,
+                    "type": "T"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "c"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "S"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "j"
+                  }
+                ]
+              }
+            ],
+            "events": [
+              {
+                "sequence": 79,
+                "at": "2026-10-08T10:32:40.575Z",
+                "elapsedMs": 12160,
+                "id": "reload-4299",
+                "stage": "reload-14",
+                "route": "http://127.0.0.1:4299/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "type": "pageerror",
+                "classification": "unexpected",
+                "name": "Error",
+                "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+                "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:36263)\n    at oq (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:85767)\n    at iw (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:116162)\n    at http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:111523\n    at iu (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:112032)\n    at iX (http://127.0.0.1:4299/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:134135)\n    at MessagePort.w (http://127.0.0.1:4299/_next/static/chunks/8058-829d361c54e89d56.js:1:131427)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "base": "http://127.0.0.1:4297",
+        "source": "beacbd16dd1236df41ac0457402c7c16aaabab9b",
+        "loads": 30,
+        "localizedErrorCases": 3,
+        "cases": [
+          {
+            "reload": 2,
+            "snapshots": [
+              {
+                "at": "2026-10-08T10:32:56.084Z",
+                "ms": 128.5,
+                "url": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "expectedType": "div",
+                "props": {
+                  "className": "page-enter",
+                  "children": "object"
+                },
+                "hydrationParentIsFiber": true,
+                "cursorType": 8,
+                "cursorData": "$",
+                "childrenPayloadStatus": "fulfilled",
+                "hydratingNode": "[object Comment]",
+                "parent": "DIV",
+                "next": "<div><header class=\"mb-6\"><a class=\"inline-flex min-h-[44px] items-center gap-2 font-numeric text-xs text-[var(--accent-info)] hover:underline\" href=\"/games?date=2026-10-20\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>Daily slate</a><div class=\"card mt-2 p-4 sm:p-6\"><p class=\"eyebrow\">Matchup preview \u00b7 <!-- -->Tuesday, October 20<!-- -->",
+                "ambient": "off",
+                "ancestors": [
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "x"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "main"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "A"
+                  },
+                  {
+                    "tag": 7,
+                    "type": null
+                  },
+                  {
+                    "tag": 10,
+                    "type": null
+                  },
+                  {
+                    "tag": 0,
+                    "type": "T"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "c"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "S"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "j"
+                  }
+                ]
+              }
+            ],
+            "events": [
+              {
+                "sequence": 16,
+                "at": "2026-10-08T10:32:56.110Z",
+                "elapsedMs": 1918,
+                "id": "reload-4297",
+                "stage": "reload-2",
+                "route": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "type": "pageerror",
+                "classification": "unexpected",
+                "name": "Error",
+                "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+                "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:36263)\n    at oq (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:85767)\n    at iw (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:116162)\n    at http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:111523\n    at iu (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:112032)\n    at iX (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:134135)\n    at MessagePort.w (http://127.0.0.1:4297/_next/static/chunks/8058-829d361c54e89d56.js:1:131427)"
+              }
+            ]
+          },
+          {
+            "reload": 9,
+            "snapshots": [
+              {
+                "at": "2026-10-08T10:33:01.858Z",
+                "ms": 119.2000000178814,
+                "url": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "expectedType": "div",
+                "props": {
+                  "className": "page-enter",
+                  "children": "object"
+                },
+                "hydrationParentIsFiber": true,
+                "cursorType": 8,
+                "cursorData": "$",
+                "childrenPayloadStatus": "fulfilled",
+                "hydratingNode": "[object Comment]",
+                "parent": "DIV",
+                "next": "<div><header class=\"mb-6\"><a class=\"inline-flex min-h-[44px] items-center gap-2 font-numeric text-xs text-[var(--accent-info)] hover:underline\" href=\"/games?date=2026-10-20\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>Daily slate</a><div class=\"card mt-2 p-4 sm:p-6\"><p class=\"eyebrow\">Matchup preview \u00b7 <!-- -->Tuesday, October 20<!-- -->",
+                "ambient": "off",
+                "ancestors": [
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "x"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "main"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "A"
+                  },
+                  {
+                    "tag": 7,
+                    "type": null
+                  },
+                  {
+                    "tag": 10,
+                    "type": null
+                  },
+                  {
+                    "tag": 0,
+                    "type": "T"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "c"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "S"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "j"
+                  }
+                ]
+              }
+            ],
+            "events": [
+              {
+                "sequence": 54,
+                "at": "2026-10-08T10:33:01.877Z",
+                "elapsedMs": 7685,
+                "id": "reload-4297",
+                "stage": "reload-9",
+                "route": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "type": "pageerror",
+                "classification": "unexpected",
+                "name": "Error",
+                "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+                "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:36263)\n    at oq (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:85767)\n    at iw (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:116162)\n    at http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:111523\n    at iu (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:112032)\n    at iX (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:134135)\n    at MessagePort.w (http://127.0.0.1:4297/_next/static/chunks/8058-829d361c54e89d56.js:1:131427)"
+              }
+            ]
+          },
+          {
+            "reload": 18,
+            "snapshots": [
+              {
+                "at": "2026-10-08T10:33:09.511Z",
+                "ms": 105.7999999821186,
+                "url": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "expectedType": "div",
+                "props": {
+                  "className": "page-enter",
+                  "children": "object"
+                },
+                "hydrationParentIsFiber": true,
+                "cursorType": 8,
+                "cursorData": "$",
+                "childrenPayloadStatus": "fulfilled",
+                "hydratingNode": "[object Comment]",
+                "parent": "DIV",
+                "next": "<div><header class=\"mb-6\"><a class=\"inline-flex min-h-[44px] items-center gap-2 font-numeric text-xs text-[var(--accent-info)] hover:underline\" href=\"/games?date=2026-10-20\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>Daily slate</a><div class=\"card mt-2 p-4 sm:p-6\"><p class=\"eyebrow\">Matchup preview \u00b7 <!-- -->Tuesday, October 20<!-- -->",
+                "ambient": "off",
+                "ancestors": [
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "x"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "main"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 5,
+                    "type": "div"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "A"
+                  },
+                  {
+                    "tag": 7,
+                    "type": null
+                  },
+                  {
+                    "tag": 10,
+                    "type": null
+                  },
+                  {
+                    "tag": 0,
+                    "type": "T"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "c"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "s"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "S"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "f"
+                  },
+                  {
+                    "tag": 1,
+                    "type": "P"
+                  },
+                  {
+                    "tag": 0,
+                    "type": "j"
+                  }
+                ]
+              }
+            ],
+            "events": [
+              {
+                "sequence": 102,
+                "at": "2026-10-08T10:33:09.530Z",
+                "elapsedMs": 15338,
+                "id": "reload-4297",
+                "stage": "reload-18",
+                "route": "http://127.0.0.1:4297/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+                "type": "pageerror",
+                "classification": "unexpected",
+                "name": "Error",
+                "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+                "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at rD (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:36263)\n    at oq (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:85767)\n    at iw (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:116162)\n    at http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:111523\n    at iu (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:112032)\n    at iX (http://127.0.0.1:4297/_next/static/chunks/31bb1282-473e0e3faa5133de.js:1:134135)\n    at MessagePort.w (http://127.0.0.1:4297/_next/static/chunks/8058-829d361c54e89d56.js:1:131427)"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "invalidFieldExcluded": "The first observer used a String.replace replacement string containing $$typeof, which was interpreted as $typeof. Its childrenType value is invalid and excluded. Payload status, cursor, expected type, props and parent fields are unaffected. The observer helper was then corrected to a replacement callback.",
+    "olderDebuggerLimit": "The original breakpoint URL regex matched no chunks, so that earlier run was not a localized breakpoint experiment. Corrected controls recorded breakpointResolved but captured no hit; clean debugger runs are unsuitable as absence proof."
+  },
+  "deterministicRegression": {
+    "helper": "scripts/qa/hydration_replay.cjs",
+    "test": "src/__tests__/components/pageTransitionHydration.test.ts",
+    "basis": "Compiles actual source, isolates the installed Next App Router renderer, mocks its scheduler, and fulfills a Flight-compatible lazy node during the pinned hydration yield. Before repair the test was red; after repair both regression tests pass.",
+    "negativeControl": "Server DOM text is deliberately changed before hydration. It still reports #418; matchingMarkup denotes the identical intended server/client tree before that deliberate mutation.",
+    "probes": {
+      "regression-before-production": {
+        "react": "19.2.0-canary-0bdb9206-20250818",
+        "matchingMarkup": true,
+        "sourceSha256": "13b088c91bceee1e26d1d75ffd5f11dc71f57ebac0deb23c5a496ba1ba0fd58c",
+        "route": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+        "pendingLog": [
+          "read:pending"
+        ],
+        "settledLog": [
+          "read:fulfilled"
+        ],
+        "errors": [
+          {
+            "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+            "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at throwOnHydrationMismatch (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:2740:15)\n    at beginWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:7622:21)\n    at replaySuspendedUnitOfWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11217:17)\n    at renderRootConcurrent (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11112:17)\n    at performWorkOnRoot (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:10591:9)\n    at performWorkOnRootViaSchedulerTask (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11955:3)\n    at flushWork (/workspace/nba_predictor/node_modules/next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production.js:126:38)\n    at Object.unstable_flushAllWithoutAsserting (/workspace/nba_predictor/node_modules/next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production.js:179:24)\n    at run (/workspace/nba_predictor/scripts/qa/hydration_replay.cjs:31:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+          }
+        ],
+        "wrapperReused": false,
+        "contentReused": false,
+        "rawReport": {
+          "path": "/tmp/nba-hydration-investigation/deterministic/regression-before-production.json",
+          "sha256": "7b81fe2087d59ab574eb59e493756df0819bf868454b021d573a0f9c5c036a77"
+        }
+      },
+      "regression-before-development": {
+        "react": "19.2.0-canary-0bdb9206-20250818",
+        "matchingMarkup": true,
+        "sourceSha256": "13b088c91bceee1e26d1d75ffd5f11dc71f57ebac0deb23c5a496ba1ba0fd58c",
+        "route": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+        "pendingLog": [
+          "read:pending"
+        ],
+        "settledLog": [
+          "read:fulfilled"
+        ],
+        "errors": [
+          {
+            "message": "Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  <html lang=\"en\">\n    <head>\n    <body>\n      <a>\n      <main id=\"main\">\n        <PageTransition>\n+         <div className=\"page-enter\">\n-         <Suspense>\n",
+            "stack": "Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  <html lang=\"en\">\n    <head>\n    <body>\n      <a>\n      <main id=\"main\">\n        <PageTransition>\n+         <div className=\"page-enter\">\n-         <Suspense>\n\n    at throwOnHydrationMismatch (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:4505:11)\n    at beginWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:11106:17)\n    at replayBeginWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15783:24)\n    at runWithFiberInDEV (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:871:30)\n    at replaySuspendedUnitOfWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15747:18)\n    at renderRootConcurrent (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15623:21)\n    at performWorkOnRoot (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14989:13)\n    at performWorkOnRootViaSchedulerTask (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16815:7)\n    at flushWork (/workspace/nba_predictor/node_modules/next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.development.js:113:42)\n    at Object.unstable_flushAllWithoutAsserting (/workspace/nba_predictor/node_modules/next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.development.js:166:28)"
+          }
+        ],
+        "wrapperReused": false,
+        "contentReused": false,
+        "rawReport": {
+          "path": "/tmp/nba-hydration-investigation/deterministic/regression-before-development.json",
+          "sha256": "68b7cb37d25a347806eef3b0a4dbd0037637c475e1ee9a01aa6fef259c3a1c85"
+        }
+      },
+      "regression-after-production": {
+        "react": "19.2.0-canary-0bdb9206-20250818",
+        "matchingMarkup": true,
+        "sourceSha256": "2204249649852d3fa0c7d8c3c6fc81d8a8d9485c06516eff05ddd55b7c6d562a",
+        "route": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+        "pendingLog": [
+          "read:pending"
+        ],
+        "settledLog": [
+          "read:fulfilled"
+        ],
+        "errors": [],
+        "wrapperReused": true,
+        "contentReused": true,
+        "rawReport": {
+          "path": "/tmp/nba-hydration-investigation/deterministic/regression-after-production.json",
+          "sha256": "358eb8e35e1f80e79ff2a13e155b55b2ca2934d79080fa9aa83c09a01e900654"
+        }
+      },
+      "regression-after-development": {
+        "react": "19.2.0-canary-0bdb9206-20250818",
+        "matchingMarkup": true,
+        "sourceSha256": "2204249649852d3fa0c7d8c3c6fc81d8a8d9485c06516eff05ddd55b7c6d562a",
+        "route": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+        "pendingLog": [
+          "read:pending"
+        ],
+        "settledLog": [
+          "read:fulfilled"
+        ],
+        "errors": [],
+        "wrapperReused": true,
+        "contentReused": true,
+        "rawReport": {
+          "path": "/tmp/nba-hydration-investigation/deterministic/regression-after-development.json",
+          "sha256": "358eb8e35e1f80e79ff2a13e155b55b2ca2934d79080fa9aa83c09a01e900654"
+        }
+      },
+      "regression-real-mismatch-control": {
+        "react": "19.2.0-canary-0bdb9206-20250818",
+        "matchingMarkup": true,
+        "sourceSha256": "2204249649852d3fa0c7d8c3c6fc81d8a8d9485c06516eff05ddd55b7c6d562a",
+        "route": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+        "pendingLog": [
+          "read:pending"
+        ],
+        "settledLog": [
+          "read:fulfilled"
+        ],
+        "errors": [
+          {
+            "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+            "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at throwOnHydrationMismatch (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:2740:15)\n    at prepareToHydrateHostInstance (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:2821:15)\n    at completeWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:8018:11)\n    at completeUnitOfWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11293:16)\n    at performUnitOfWork (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11184:19)\n    at workLoopConcurrentByScheduler (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11179:5)\n    at renderRootConcurrent (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11161:7)\n    at performWorkOnRoot (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:10591:9)\n    at performWorkOnRootViaSchedulerTask (/workspace/nba_predictor/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js:11955:3)\n    at flushWork (/workspace/nba_predictor/node_modules/next/dist/compiled/scheduler/cjs/scheduler-unstable_mock.production.js:126:38)"
+          }
+        ],
+        "wrapperReused": true,
+        "contentReused": false,
+        "rawReport": {
+          "path": "/tmp/nba-hydration-investigation/deterministic/regression-real-mismatch-control.json",
+          "sha256": "e59b05c01ccab6f9893f0274d012d800abd69b3fc590a5e1477cbcef7170999e"
+        }
+      }
+    }
+  },
+  "fixedNormalReloads": {
+    "startedAt": "2026-10-08T10:47:33.226Z",
+    "finishedAt": "2026-10-08T10:48:31.532Z",
+    "browser": "151.0.7922.173",
+    "basis": "Unmodified production renderer; observer-only browser diagnostics, no renderer edits, axe injection or script delays. Every reload retained, no retries. CDN logos aborted consistently.",
+    "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+    "summary": {
+      "reloads": 60,
+      "hydrationErrors": [],
+      "unexpected": [],
+      "failures": []
+    },
+    "metadataCorrection": {
+      "reason": "The initial summary inspected a nonexistent checkpoint url field. The checkpoint schema uses route; each reload had already asserted the full URL with waitForURL. Recomputed summary from the retained actual route and preferences without rerunning any case.",
+      "originalReportSha256": "b9de6e9f9cadedd6e24869d5bd03169e0d5d62ba1e4299f23a38de093eae0132",
+      "originalReportPath": "/tmp/nba-hydration-fix-reloads/results-original-harness-field-error.json",
+      "originalSummaryFailures": 60,
+      "correctedSummaryFailures": 0
+    },
+    "rawReport": {
+      "path": "/tmp/nba-hydration-fix-reloads/results.json",
+      "sha256": "634a91c7aa84b99ad6820665f8c79364b3d612aef534b631cfde373552a8b3f5"
+    },
+    "cases": [
+      {
+        "scenario": {
+          "colorScheme": "light",
+          "reducedMotion": "reduce"
+        },
+        "loads": 30,
+        "states": [
+          {
+            "i": 0,
+            "startedAt": "2026-10-08T10:47:33.372Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 1,
+            "startedAt": "2026-10-08T10:47:34.590Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 2,
+            "startedAt": "2026-10-08T10:47:35.699Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 3,
+            "startedAt": "2026-10-08T10:47:36.649Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 4,
+            "startedAt": "2026-10-08T10:47:37.598Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 5,
+            "startedAt": "2026-10-08T10:47:38.672Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 6,
+            "startedAt": "2026-10-08T10:47:39.594Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 7,
+            "startedAt": "2026-10-08T10:47:40.485Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 8,
+            "startedAt": "2026-10-08T10:47:41.406Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 9,
+            "startedAt": "2026-10-08T10:47:42.302Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 10,
+            "startedAt": "2026-10-08T10:47:43.187Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 11,
+            "startedAt": "2026-10-08T10:47:44.105Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 12,
+            "startedAt": "2026-10-08T10:47:44.974Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 13,
+            "startedAt": "2026-10-08T10:47:45.890Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 14,
+            "startedAt": "2026-10-08T10:47:46.779Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 15,
+            "startedAt": "2026-10-08T10:47:47.707Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 16,
+            "startedAt": "2026-10-08T10:47:48.692Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 17,
+            "startedAt": "2026-10-08T10:47:49.615Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 18,
+            "startedAt": "2026-10-08T10:47:50.587Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 19,
+            "startedAt": "2026-10-08T10:47:51.705Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 20,
+            "startedAt": "2026-10-08T10:47:52.692Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 21,
+            "startedAt": "2026-10-08T10:47:53.611Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 22,
+            "startedAt": "2026-10-08T10:47:54.620Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 23,
+            "startedAt": "2026-10-08T10:47:55.550Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 24,
+            "startedAt": "2026-10-08T10:47:56.446Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 25,
+            "startedAt": "2026-10-08T10:47:57.393Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 26,
+            "startedAt": "2026-10-08T10:47:58.434Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 27,
+            "startedAt": "2026-10-08T10:47:59.485Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 28,
+            "startedAt": "2026-10-08T10:48:00.443Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 29,
+            "startedAt": "2026-10-08T10:48:01.424Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          }
+        ],
+        "unexpected": [],
+        "consoleClassificationCounts": {
+          "controlled-logo-outage": 60
+        }
+      },
+      {
+        "scenario": {
+          "colorScheme": "dark",
+          "reducedMotion": "no-preference"
+        },
+        "loads": 30,
+        "states": [
+          {
+            "i": 0,
+            "startedAt": "2026-10-08T10:48:02.485Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 1,
+            "startedAt": "2026-10-08T10:48:03.628Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 2,
+            "startedAt": "2026-10-08T10:48:04.836Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 3,
+            "startedAt": "2026-10-08T10:48:05.796Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 4,
+            "startedAt": "2026-10-08T10:48:06.747Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 5,
+            "startedAt": "2026-10-08T10:48:07.770Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 6,
+            "startedAt": "2026-10-08T10:48:08.668Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 7,
+            "startedAt": "2026-10-08T10:48:09.601Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 8,
+            "startedAt": "2026-10-08T10:48:10.481Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 9,
+            "startedAt": "2026-10-08T10:48:11.511Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 10,
+            "startedAt": "2026-10-08T10:48:12.400Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 11,
+            "startedAt": "2026-10-08T10:48:13.322Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 12,
+            "startedAt": "2026-10-08T10:48:14.225Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 13,
+            "startedAt": "2026-10-08T10:48:15.248Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 14,
+            "startedAt": "2026-10-08T10:48:16.333Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 15,
+            "startedAt": "2026-10-08T10:48:17.251Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 16,
+            "startedAt": "2026-10-08T10:48:18.188Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 17,
+            "startedAt": "2026-10-08T10:48:19.143Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 18,
+            "startedAt": "2026-10-08T10:48:20.045Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 19,
+            "startedAt": "2026-10-08T10:48:20.965Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 20,
+            "startedAt": "2026-10-08T10:48:21.922Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 21,
+            "startedAt": "2026-10-08T10:48:22.901Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 22,
+            "startedAt": "2026-10-08T10:48:23.848Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 23,
+            "startedAt": "2026-10-08T10:48:24.790Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 24,
+            "startedAt": "2026-10-08T10:48:25.711Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 25,
+            "startedAt": "2026-10-08T10:48:26.798Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 26,
+            "startedAt": "2026-10-08T10:48:27.698Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 27,
+            "startedAt": "2026-10-08T10:48:28.644Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 28,
+            "startedAt": "2026-10-08T10:48:29.606Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 29,
+            "startedAt": "2026-10-08T10:48:30.522Z",
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          }
+        ],
+        "unexpected": [],
+        "consoleClassificationCounts": {
+          "controlled-logo-outage": 60
+        }
+      }
+    ]
+  },
+  "fixedProfileMatrix": {
+    "startedAt": "2026-10-08T10:46:53.068Z",
+    "finishedAt": "2026-10-08T10:48:45.332Z",
+    "browser": "151.0.7922.173",
+    "basis": "Saved cloud, production builds. New browser context per case. No automatic retries. All page/console errors, stacks, raw document responses and timeline traces retained. CDN logos aborted consistently.",
+    "summary": [
+      {
+        "build": "hydration-fix",
+        "cases": 33,
+        "unexpectedErrorCases": [
+          "hydration-fix-navigation-dark-off-none-0-1",
+          "hydration-fix-navigation-dark-off-none-0-2",
+          "hydration-fix-navigation-dark-off-none-0-3",
+          "hydration-fix-navigation-dark-off-at-ready-0-1",
+          "hydration-fix-navigation-dark-off-at-ready-0-2",
+          "hydration-fix-navigation-dark-off-at-ready-0-3",
+          "hydration-fix-navigation-dark-off-early-probe-600-1",
+          "hydration-fix-navigation-dark-off-early-probe-600-2",
+          "hydration-fix-navigation-dark-off-early-probe-600-3"
+        ],
+        "hydrationErrorCases": [],
+        "lostPreferenceCases": [],
+        "harnessFailures": []
+      }
+    ],
+    "rawReport": {
+      "path": "/tmp/nba-hydration-fix-profiles/results.json",
+      "sha256": "32b759db6d6e72c39b61e7848a15976e342970008804f08d23f9fed3d74a0630"
+    },
+    "cases": [
+      {
+        "id": "hydration-fix-cold-dark-soft-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "soft",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:46:53.229Z",
+        "finishedAt": "2026-10-08T10:46:55.961Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-soft-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "soft",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:46:56.095Z",
+        "finishedAt": "2026-10-08T10:46:58.481Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-soft-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "soft",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:46:58.625Z",
+        "finishedAt": "2026-10-08T10:47:01.034Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:01.174Z",
+        "finishedAt": "2026-10-08T10:47:03.557Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:03.717Z",
+        "finishedAt": "2026-10-08T10:47:06.326Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:06.443Z",
+        "finishedAt": "2026-10-08T10:47:08.798Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-vivid-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "vivid",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:08.940Z",
+        "finishedAt": "2026-10-08T10:47:11.292Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-vivid-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "vivid",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:11.426Z",
+        "finishedAt": "2026-10-08T10:47:13.866Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-vivid-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "vivid",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:14.052Z",
+        "finishedAt": "2026-10-08T10:47:16.419Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-soft-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "soft",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:16.541Z",
+        "finishedAt": "2026-10-08T10:47:18.907Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-soft-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "soft",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:19.081Z",
+        "finishedAt": "2026-10-08T10:47:21.432Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-soft-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "soft",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:21.565Z",
+        "finishedAt": "2026-10-08T10:47:24.112Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "soft",
+          "storedAmbient": "soft"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-off-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:24.273Z",
+        "finishedAt": "2026-10-08T10:47:26.603Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-off-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:26.750Z",
+        "finishedAt": "2026-10-08T10:47:29.136Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-off-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "off",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:29.274Z",
+        "finishedAt": "2026-10-08T10:47:31.618Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-vivid-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "vivid",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:31.777Z",
+        "finishedAt": "2026-10-08T10:47:34.103Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-vivid-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "vivid",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:34.265Z",
+        "finishedAt": "2026-10-08T10:47:37.249Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-light-vivid-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "light",
+          "preference": "vivid",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:37.464Z",
+        "finishedAt": "2026-10-08T10:47:40.154Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "vivid",
+          "storedAmbient": "vivid"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-none-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:40.280Z",
+        "finishedAt": "2026-10-08T10:47:43.377Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:47:40.835Z",
+            "elapsedMs": 556,
+            "id": "hydration-fix-navigation-dark-off-none-0-1",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-none-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:43.559Z",
+        "finishedAt": "2026-10-08T10:47:46.984Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:47:44.307Z",
+            "elapsedMs": 752,
+            "id": "hydration-fix-navigation-dark-off-none-0-2",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-none-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:47.165Z",
+        "finishedAt": "2026-10-08T10:47:50.565Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:47:47.784Z",
+            "elapsedMs": 624,
+            "id": "hydration-fix-navigation-dark-off-none-0-3",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-at-ready-0-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 0,
+          "injection": "at-ready",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:47:50.787Z",
+        "finishedAt": "2026-10-08T10:47:57.092Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:47:51.551Z",
+            "elapsedMs": 764,
+            "id": "hydration-fix-navigation-dark-off-at-ready-0-1",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-at-ready-0-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 0,
+          "injection": "at-ready",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:47:57.236Z",
+        "finishedAt": "2026-10-08T10:48:03.427Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:47:58.048Z",
+            "elapsedMs": 819,
+            "id": "hydration-fix-navigation-dark-off-at-ready-0-2",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-at-ready-0-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 3,
+          "jsDelay": 0,
+          "injection": "at-ready",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:03.586Z",
+        "finishedAt": "2026-10-08T10:48:09.836Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:48:04.338Z",
+            "elapsedMs": 765,
+            "id": "hydration-fix-navigation-dark-off-at-ready-0-3",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-early-probe-600-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 600,
+          "injection": "early-probe",
+          "trace": false
+        },
+        "startedAt": "2026-10-08T10:48:10.014Z",
+        "finishedAt": "2026-10-08T10:48:14.837Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:48:11.283Z",
+            "elapsedMs": 1269,
+            "id": "hydration-fix-navigation-dark-off-early-probe-600-1",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-early-probe-600-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 600,
+          "injection": "early-probe",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:15.012Z",
+        "finishedAt": "2026-10-08T10:48:20.539Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:48:16.062Z",
+            "elapsedMs": 1051,
+            "id": "hydration-fix-navigation-dark-off-early-probe-600-2",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-navigation-dark-off-early-probe-600-3",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "navigation",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 3,
+          "jsDelay": 600,
+          "injection": "early-probe",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:20.679Z",
+        "finishedAt": "2026-10-08T10:48:25.366Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:48:21.607Z",
+            "elapsedMs": 929,
+            "id": "hydration-fix-navigation-dark-off-early-probe-600-3",
+            "stage": "home-ui-preference",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "unexpected",
+            "message": "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ]
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-80-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 80,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:25.515Z",
+        "finishedAt": "2026-10-08T10:48:28.085Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-80-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 80,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:28.244Z",
+        "finishedAt": "2026-10-08T10:48:30.737Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-600-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 600,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:31.081Z",
+        "finishedAt": "2026-10-08T10:48:33.970Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-600-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 600,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:34.140Z",
+        "finishedAt": "2026-10-08T10:48:37.025Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-1600-1",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 1,
+          "jsDelay": 1600,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:37.186Z",
+        "finishedAt": "2026-10-08T10:48:41.080Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      },
+      {
+        "id": "hydration-fix-cold-dark-off-none-1600-2",
+        "build": {
+          "name": "hydration-fix",
+          "base": "http://127.0.0.1:4300",
+          "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+          "reader": "controlled-503"
+        },
+        "scenario": {
+          "kind": "cold",
+          "system": "dark",
+          "preference": "off",
+          "repeat": 2,
+          "jsDelay": 1600,
+          "injection": "none",
+          "trace": true
+        },
+        "startedAt": "2026-10-08T10:48:41.341Z",
+        "finishedAt": "2026-10-08T10:48:45.283Z",
+        "preferenceRetained": true,
+        "heading": "Player profile unavailable",
+        "harnessError": null,
+        "state": {
+          "route": "/players/espn/900000001",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "storedAmbient": "off"
+        },
+        "unexpectedEvents": []
+      }
+    ],
+    "limit": "Nine navigation cases retain the uncontrolled cloud scoreboard TLS certificate failure. No setting was changed and this matrix is not claimed as error-free."
+  },
+  "fixedDevelopmentLoads": {
+    "startedAt": "2026-10-08T10:49:17.415Z",
+    "finishedAt": "2026-10-08T10:49:49.207Z",
+    "browser": "151.0.7922.173",
+    "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+    "rawReport": {
+      "path": "/tmp/nba-hydration-fix-development/results.json",
+      "sha256": "aa9b23a9d458ad7fa7713e0f27ac6d184bf61203c106374483e287f15717e2ef"
+    },
+    "cases": [
+      {
+        "path": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+        "loads": 4,
+        "states": [
+          {
+            "i": 0,
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 1,
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 2,
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 3,
+            "route": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "title": "BOS at DET \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          }
+        ],
+        "unexpectedEvents": [
+          {
+            "sequence": 5,
+            "at": "2026-10-08T10:49:25.252Z",
+            "elapsedMs": 7695,
+            "id": "game",
+            "stage": "load-0",
+            "route": "http://127.0.0.1:4302/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 11,
+            "at": "2026-10-08T10:49:28.189Z",
+            "elapsedMs": 10632,
+            "id": "game",
+            "stage": "load-1",
+            "route": "http://127.0.0.1:4302/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 17,
+            "at": "2026-10-08T10:49:31.048Z",
+            "elapsedMs": 13491,
+            "id": "game",
+            "stage": "load-2",
+            "route": "http://127.0.0.1:4302/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 23,
+            "at": "2026-10-08T10:49:34.024Z",
+            "elapsedMs": 16467,
+            "id": "game",
+            "stage": "load-3",
+            "route": "http://127.0.0.1:4302/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          }
+        ]
+      },
+      {
+        "path": "/players/espn/900000001",
+        "loads": 4,
+        "states": [
+          {
+            "i": 0,
+            "route": "/players/espn/900000001",
+            "title": "Player game profile \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 1,
+            "route": "/players/espn/900000001",
+            "title": "Player game profile \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 2,
+            "route": "/players/espn/900000001",
+            "title": "Player game profile \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          },
+          {
+            "i": 3,
+            "route": "/players/espn/900000001",
+            "title": "Player game profile \u00b7 Hardwood",
+            "ambient": "off",
+            "storedAmbient": "off",
+            "harnessError": null
+          }
+        ],
+        "unexpectedEvents": [
+          {
+            "sequence": 3,
+            "at": "2026-10-08T10:49:38.484Z",
+            "elapsedMs": 2264,
+            "id": "profile",
+            "stage": "load-0",
+            "route": "http://127.0.0.1:4302/players/espn/900000001",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 7,
+            "at": "2026-10-08T10:49:41.373Z",
+            "elapsedMs": 5153,
+            "id": "profile",
+            "stage": "load-1",
+            "route": "http://127.0.0.1:4302/players/espn/900000001",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 11,
+            "at": "2026-10-08T10:49:44.201Z",
+            "elapsedMs": 7981,
+            "id": "profile",
+            "stage": "load-2",
+            "route": "http://127.0.0.1:4302/players/espn/900000001",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          },
+          {
+            "sequence": 15,
+            "at": "2026-10-08T10:49:47.123Z",
+            "elapsedMs": 10903,
+            "id": "profile",
+            "stage": "load-3",
+            "route": "http://127.0.0.1:4302/players/espn/900000001",
+            "type": "console",
+            "level": "warning",
+            "classification": "unexpected",
+            "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.",
+            "location": {
+              "url": "webpack-internal:///(app-pages-browser)/../../workspace/nba_predictor/node_modules/framer-motion/dist/es/utils/warn-once.mjs",
+              "line": 8,
+              "column": 12,
+              "lineNumber": 8,
+              "columnNumber": 12
+            },
+            "args": [
+              "You have Reduced Motion enabled on your device. Animations may not appear as expected."
+            ]
+          }
+        ]
+      }
+    ],
+    "limit": "No #418 or Court useId attribute warning observed in these eight loads. All eight recorded Framer Motion reduced-motion notices. Earlier useId warnings remain a separate nonfatal observation, not a proven cause."
+  },
+  "destinationAwareJourney": {
+    "source": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+    "rawReport": {
+      "path": "/tmp/nba-hydration-fix-journey/results.json",
+      "sha256": "56ca4365e3437a1a59c7ec0539099c8dda638cd09ff477f858998867ac4e46c4"
+    },
+    "states": 125,
+    "unexpectedErrors": 0,
+    "axeViolations": 0,
+    "seriesTextGeometry": [
+      {
+        "width": 320,
+        "overlaps": []
+      },
+      {
+        "width": 390,
+        "overlaps": []
+      },
+      {
+        "width": 640,
+        "overlaps": []
+      },
+      {
+        "width": 768,
+        "overlaps": []
+      },
+      {
+        "width": 1440,
+        "overlaps": []
+      }
+    ],
+    "seriesTextGeometryRaw": {
+      "path": "/tmp/nba-hydration-fix-series-geometry.jsonl",
+      "sha256": "1b6a126beae3c7e3f5ef7823ae3806651c759bbc28e2a24ce366d32d43f887b4"
+    }
+  },
+  "remainingLimits": [
+    "Draft held for independent parent review; no merge or manual workflow dispatch.",
+    "Public deployment/proxy browser access restriction was not retried or bypassed; public rendering and live ESPN success remain unverified.",
+    "No model/data/backend/dependency/access/credential/TLS changes."
+  ]
+}
