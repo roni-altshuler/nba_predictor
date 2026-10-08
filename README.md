@@ -69,6 +69,17 @@ inference is made. Fewer than two usable identities leaves the original box scor
 available; a source outage retains the existing unavailable state.
 See [comparison scope, QA and dependency review](docs/GAME_COMPARISON_2026-10.md).
 
+**Shooting context** adds a team evidence panel to completed and upcoming franchise
+games. Select the last 5 or 10 earlier games within the game season or an explicit
+prior-season reference. Effective field-goal percentage, three-point attempt
+share and free-throw attempts per 100 field-goal attempts compare each team with
+its opponents. Rates sum valid counts before division, show metric-specific game
+coverage and attempts, and link every included result. The selected game and equal
+or later tip-offs are excluded. Missing season files and shooting columns remain
+visible. This is reconstructed team context, without pace, roster or opponent
+adjustment; it does not change probabilities or estimate player talent, value or
+shot quality. See [scope and verification](docs/SHOOTING_CONTEXT_2026-10.md).
+
 ## Measured state
 
 Corpus: **31,844 games, 2004–2026**, from ESPN. The 2026-27 season tips off **20 October 2026**.

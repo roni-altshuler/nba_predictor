@@ -8,6 +8,7 @@ import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { MatchupHeader } from '@/components/schedule/MatchupHeader'
+import { ShootingContextSection } from '@/components/scouting/ShootingContextSection'
 import { getGameForecasts } from '@/lib/artifacts'
 import {
   getEspnBoxScore,
@@ -31,6 +32,7 @@ import {
   type AllStarEvent,
   type ArchiveGame,
   type Meeting,
+  type SeasonFile,
 } from '@/lib/history'
 import { cn } from '@/lib/utils'
 
@@ -100,6 +102,7 @@ export default async function GamePage({
       <PlayedGame
         game={archived.game}
         standings={archived.season.standings}
+        seasonFile={archived.season}
         box={box}
         winProbability={winProbability}
       />
@@ -128,6 +131,7 @@ export default async function GamePage({
       upcoming.away.name,
     ])
     return <UpcomingGame game={upcoming} injuries={injuries}
+      gameSeason={forecasts.season}
       generatedAt={forecasts.generated_at} trainedThrough={forecasts.trained_through} />
   }
 
@@ -237,11 +241,13 @@ function AllStarGame({
 function PlayedGame({
   game,
   standings,
+  seasonFile,
   box,
   winProbability,
 }: {
   game: ArchiveGame
   standings: Parameters<typeof teamMetaFromStandings>[0]
+  seasonFile: SeasonFile
   box: GameBoxScore | null
   winProbability?: WinProbability | null
 }) {
@@ -350,6 +356,10 @@ function PlayedGame({
           </p>
         </section>
       )}
+
+      <ShootingContextSection gameDate={game.date} gameSeason={game.season} gameId={game.id} seasonFile={seasonFile}
+        teams={[{ id: game.away_id, abbreviation: game.away, name: teams[game.away]?.name ?? game.away },
+          { id: game.home_id, abbreviation: game.home, name: teams[game.home]?.name ?? game.home }]} />
 
       {box ? (
         <>
@@ -524,7 +534,7 @@ function TeamComparison({ box }: { box: GameBoxScore }) {
   return (
     <section className="mb-6">
       <h2 className="mb-3 text-sm">Team totals</h2>
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Game team totals">
         <table>
           <thead>
             <tr>
@@ -589,7 +599,7 @@ function BoxScore({ game }: { game: ArchiveGame }) {
   return (
     <section>
       <h2 className="mb-3 text-sm">Team box score</h2>
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Stored team box score">
         <table>
           <thead>
             <tr>
@@ -626,11 +636,13 @@ function BoxScore({ game }: { game: ArchiveGame }) {
 
 function UpcomingGame({
   game,
+  gameSeason,
   injuries = [],
   generatedAt,
   trainedThrough,
 }: {
   game: NonNullable<ReturnType<typeof getGameForecasts>>['games'][number]
+  gameSeason: number
   injuries?: TeamInjuries[]
   generatedAt: string
   trainedThrough?: string | null
@@ -685,6 +697,10 @@ function UpcomingGame({
           </p>
         </section>
       )}
+
+      <ShootingContextSection gameDate={game.date_utc} gameSeason={gameSeason} gameId={game.game_id}
+        teams={[{ id: game.away.team_id, abbreviation: game.away.abbreviation, name: game.away.name },
+          { id: game.home.team_id, abbreviation: game.home.abbreviation, name: game.home.name }]} />
 
       <div id="availability" className="scroll-mt-20"><InjuryReport
         injuries={injuries}
@@ -1114,7 +1130,7 @@ function PeriodTable({
   return (
     <section>
       <h2 className="mb-3 text-sm">Scoring by period</h2>
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Game period scores">
         <table>
           <thead>
             <tr>
