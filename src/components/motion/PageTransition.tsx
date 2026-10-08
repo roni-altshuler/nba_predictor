@@ -18,7 +18,15 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 
   return (
     <div key={pathname} className="page-enter">
-      {children}
+      <PageContent>{children}</PageContent>
     </div>
   )
+}
+
+// Resolve Flight's lazy route child in a component fiber. The React runtime
+// bundled with Next 15 can replay a host fiber after that child suspends without
+// rewinding its hydration cursor, then compare this div with its own content.
+// A component can replay without claiming the DOM wrapper a second time.
+function PageContent({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }
