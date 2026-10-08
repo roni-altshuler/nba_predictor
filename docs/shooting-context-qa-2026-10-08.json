@@ -1,0 +1,115 @@
+{
+  "basis": "Real committed team archive; unmodified production app with ESPN responses controlled to HTTP 503. Isolated development copy for delayed/error shared boundaries only.",
+  "widths": [
+    {
+      "width": 320,
+      "realArchiveRates": true,
+      "keyboardFocus": true,
+      "shareReloadBackForward": true,
+      "repeatedSelection": true,
+      "includedGameLinksAndContextualBack": true,
+      "currentSeasonEmptyAndPriorReference": true,
+      "firstGameEmpty": true,
+      "source503StillHasTeamContext": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "browserErrors": [],
+      "sectionJumpFocusWithoutHistoryEntry": true
+    },
+    {
+      "width": 390,
+      "realArchiveRates": true,
+      "keyboardFocus": true,
+      "shareReloadBackForward": true,
+      "repeatedSelection": true,
+      "includedGameLinksAndContextualBack": true,
+      "currentSeasonEmptyAndPriorReference": true,
+      "firstGameEmpty": true,
+      "source503StillHasTeamContext": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "browserErrors": [],
+      "sectionJumpFocusWithoutHistoryEntry": true
+    },
+    {
+      "width": 768,
+      "realArchiveRates": true,
+      "keyboardFocus": true,
+      "shareReloadBackForward": true,
+      "repeatedSelection": true,
+      "includedGameLinksAndContextualBack": true,
+      "currentSeasonEmptyAndPriorReference": true,
+      "firstGameEmpty": true,
+      "source503StillHasTeamContext": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "browserErrors": [],
+      "sectionJumpFocusWithoutHistoryEntry": true
+    },
+    {
+      "width": 1440,
+      "realArchiveRates": true,
+      "keyboardFocus": true,
+      "shareReloadBackForward": true,
+      "repeatedSelection": true,
+      "includedGameLinksAndContextualBack": true,
+      "currentSeasonEmptyAndPriorReference": true,
+      "firstGameEmpty": true,
+      "source503StillHasTeamContext": true,
+      "reducedMotion": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "browserErrors": [],
+      "sectionJumpFocusWithoutHistoryEntry": true
+    }
+  ],
+  "states": [
+    {
+      "realPartialArchiveGame": "400828031",
+      "missingCoverageVisible": true
+    },
+    {
+      "width": 320,
+      "actualSharedLoadingAndErrorBoundary": true,
+      "keyboardRetryToShootingContext": true,
+      "reducedMotionLoading": true,
+      "horizontalOverflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "actualSharedLoadingAndErrorBoundary": true,
+      "keyboardRetryToShootingContext": true,
+      "reducedMotionLoading": true,
+      "horizontalOverflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "actualSharedLoadingAndErrorBoundary": true,
+      "keyboardRetryToShootingContext": true,
+      "reducedMotionLoading": true,
+      "horizontalOverflow": false,
+      "axeViolations": []
+    }
+  ],
+  "serialization": {
+    "upcomingHtmlBytes": 80317,
+    "upcomingRscBytes": 40429,
+    "unrelatedForecastIds": 0,
+    "shootingClientDataBytes": 8512
+  },
+  "verified_date": "2026-10-08",
+  "base_main": "a574334bb5ba1bf4b4562335d48a187ae2084e8b",
+  "local_checks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "frontend_tests": 266,
+    "new_tests": 11,
+    "production_build": "passed",
+    "static_pages": 504
+  }
+}

@@ -5,6 +5,7 @@ import Link from 'next/link'
 const sections = [
   ['forecast', 'Projection'],
   ['market', 'Market'],
+  ['shooting-context', 'Shooting context'],
   ['availability', 'Availability'],
   ['context', 'Recent meetings'],
 ] as const
