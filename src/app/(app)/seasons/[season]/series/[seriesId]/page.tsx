@@ -216,7 +216,7 @@ function SeriesSide({
         {abbreviation ? (
           <Link
             href={`/teams/${abbreviation}`}
-            className="truncate text-sm text-[var(--text-primary)] hover:underline"
+            className="block truncate text-sm text-[var(--text-primary)] hover:underline"
           >
             {meta?.name ?? abbreviation}
           </Link>
@@ -256,18 +256,18 @@ function SeriesGame({
   return (
     <Link
       href={`/games/${game.id}`}
-      className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2.5 transition-colors hover:bg-[var(--card-hover)]"
+      className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 px-3 py-2.5 transition-colors hover:bg-[var(--card-hover)] sm:flex sm:flex-wrap sm:gap-y-1"
     >
-      <span className="w-14 shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)]">
+      <span className="shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)] sm:w-14">
         Game {number}
       </span>
-      <span className="w-16 shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)]">
+      <span className="shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)] sm:w-16">
         {new Date(game.date).toLocaleDateString('en-US', {
           month: 'short', day: 'numeric', timeZone: 'America/New_York',
         })}
       </span>
 
-      <span className="flex min-w-0 flex-1 items-center gap-2">
+      <span className="col-span-3 row-start-2 flex min-w-0 items-center gap-2 sm:min-w-[12rem] sm:flex-1">
         <TeamLogo
           logo={teams[game.away]?.logo}
           abbreviation={game.away}
@@ -276,7 +276,7 @@ function SeriesGame({
         />
         <span
           className={cn(
-            'numeric text-xs',
+            'numeric whitespace-nowrap text-xs',
             homeWon ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]',
           )}
         >
@@ -291,7 +291,7 @@ function SeriesGame({
         />
         <span
           className={cn(
-            'numeric text-xs',
+            'numeric whitespace-nowrap text-xs',
             homeWon ? 'text-[var(--text-primary)]' : 'text-[var(--text-tertiary)]',
           )}
         >
@@ -305,19 +305,19 @@ function SeriesGame({
       </span>
 
       {game.q_away && game.q_home ? (
-        <span className="font-numeric text-[10px] text-[var(--text-tertiary)]">
+        <span className="col-span-3 row-start-3 font-numeric text-[10px] text-[var(--text-tertiary)]">
           {game.q_away.join('·')} / {game.q_home.join('·')}
         </span>
       ) : null}
 
       <span
         className={cn(
-          'w-14 shrink-0 text-right font-numeric text-[11px]',
+          'col-start-3 row-start-1 shrink-0 text-right font-numeric text-[11px] sm:w-14',
           said === null
             ? 'text-[var(--text-tertiary)]'
             : said >= 0.5
               ? 'text-[var(--accent-primary)]'
-              : 'text-[var(--accent-loss)]',
+              : 'text-[var(--accent-loss-soft)]',
         )}
         title={
           said === null

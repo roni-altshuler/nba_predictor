@@ -1,0 +1,4492 @@
+{
+  "coverageVersion": 2,
+  "auditedAt": "2026-10-08T10:46:53.007Z",
+  "chromium": "151.0.7922.173",
+  "baseCommit": "5bb550c43446ce24f594b8e6a85294a7294241b3",
+  "productSourceCommit": "0b0e727dc9cda44a70f5c923ba1a5fdedc3b6531",
+  "basis": "Saved cloud Chromium. Every transition asserts its expected URL and destination content. Connected production fixture journey: real committed team/forecast data; synthetic player lines through the existing ESPN-only preload. ESPN CDN logos deliberately unavailable; original abbreviation fallbacks checked after images settle. The browser scoreboard is explicitly HTTP 503, with errors retained. Product production server for source-unavailable and cold-paint checks. One isolated route/link for controlled boundaries.",
+  "journeys": [
+    {
+      "width": 320,
+      "system": "light",
+      "steps": [
+        {
+          "label": "home",
+          "verifiedDestination": {
+            "expected": "/",
+            "content": {
+              "heading": "Your front row to the forecast."
+            }
+          },
+          "path": "/",
+          "hash": "",
+          "title": "Today \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "verifiedDestination": {
+            "expected": "/games?date=2026-10-21&team=BOS",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games?date=2026-10-21&team=BOS",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "verifiedDestination": {
+            "expected": "/games/401909088",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "verifiedDestination": {
+            "expected": "/teams/NY",
+            "content": {
+              "heading": "New York Knicks"
+            }
+          },
+          "path": "/teams/NY",
+          "hash": "",
+          "title": "New York Knicks \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967",
+          "hash": "#player-box-scores",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000003?game=401859967&team=24",
+            "content": {
+              "heading": "QA Forward"
+            }
+          },
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "hash": "#game-line-comparison",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "verifiedDestination": {
+            "expected": "/predict",
+            "content": {
+              "heading": "Any two teams"
+            }
+          },
+          "path": "/predict",
+          "hash": "",
+          "title": "Head to head \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "verifiedDestination": {
+            "expected": "/lab",
+            "content": {
+              "heading": "The game, before the game."
+            }
+          },
+          "path": "/lab",
+          "hash": "",
+          "title": "Forecast Lab \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "verifiedDestination": {
+            "expected": "/ratings",
+            "content": {
+              "heading": "Power ratings"
+            }
+          },
+          "path": "/ratings",
+          "hash": "",
+          "title": "Power ratings \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "verifiedDestination": {
+            "expected": "/about#regression",
+            "content": {
+              "heading": "How it works"
+            }
+          },
+          "path": "/about",
+          "hash": "#regression",
+          "title": "How it works \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "verifiedDestination": {
+            "expected": "/accuracy",
+            "content": {
+              "heading": "How right has it been"
+            }
+          },
+          "path": "/accuracy",
+          "hash": "",
+          "title": "Accuracy \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "verifiedDestination": {
+            "expected": "/seasons",
+            "content": {
+              "heading": "Every season since 2004"
+            }
+          },
+          "path": "/seasons",
+          "hash": "",
+          "title": "Seasons \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "verifiedDestination": {
+            "expected": "/seasons/2026",
+            "content": {
+              "heading": "2025-26 season"
+            }
+          },
+          "path": "/seasons/2026",
+          "hash": "",
+          "title": "2025-26 season \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/series/18v24",
+            "content": {
+              "heading": "Every game",
+              "selector": "#main header a[href=\"/teams/NY\"]"
+            }
+          },
+          "path": "/seasons/2026/series/18v24",
+          "hash": "",
+          "title": "SA v NY \u00b7 NBA Finals \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/games",
+            "content": {
+              "heading": "2025-26 results"
+            }
+          },
+          "path": "/seasons/2026/games",
+          "hash": "",
+          "title": "2025-26 results \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "verifiedDestination": {
+            "expected": "/season",
+            "content": {
+              "heading": "Projected standings"
+            }
+          },
+          "path": "/season",
+          "hash": "",
+          "title": "Season projection \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "verifiedDestination": {
+            "expected": "/bracket",
+            "content": {
+              "heading": "The road to the title"
+            }
+          },
+          "path": "/bracket",
+          "hash": "",
+          "title": "Playoff bracket \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "verifiedDestination": {
+            "expected": "/allstar",
+            "content": {
+              "heading": "All-Star weekend"
+            }
+          },
+          "path": "/allstar",
+          "hash": "",
+          "title": "All-Star weekend \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)",
+            "rgb(33, 23, 17)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "verifiedDestination": {
+            "expected": "/upsets",
+            "content": {
+              "heading": "The games nobody saw coming"
+            }
+          },
+          "path": "/upsets",
+          "hash": "",
+          "title": "Upsets \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "verifiedDestination": {
+            "expected": "/preview",
+            "content": {
+              "heading": "2026-27, before it starts"
+            }
+          },
+          "path": "/preview",
+          "hash": "",
+          "title": "Season preview \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "verifiedDestination": {
+            "expected": "/playoffs",
+            "content": {
+              "heading": "Playoff picture"
+            }
+          },
+          "path": "/playoffs",
+          "hash": "",
+          "title": "Playoff picture \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000001",
+            "content": {
+              "heading": "Player profile unavailable"
+            }
+          },
+          "path": "/players/espn/900000001",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "verifiedDestination": {
+            "expected": "/games/unknown-theme",
+            "content": {
+              "selector": "#main p.eyebrow",
+              "text": "Not found"
+            }
+          },
+          "path": "/games/unknown-theme",
+          "hash": "",
+          "title": "Game \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "selector": "[aria-label=\"Loading game\"]"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "This page couldn't load"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "tableScroll": {
+        "left": 0,
+        "width": 286,
+        "scrollWidth": 430,
+        "after": 3,
+        "movementRequired": true
+      },
+      "seriesTextLayout": {
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      "controlledErrorMessages": [],
+      "diagnostics": {
+        "id": "journey-320-light",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 9,
+            "at": "2026-10-08T10:46:53.911Z",
+            "elapsedMs": 753,
+            "id": "journey-320-light",
+            "stage": "initial",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 70,
+            "at": "2026-10-08T10:46:59.647Z",
+            "elapsedMs": 6489,
+            "id": "journey-320-light",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 359,
+            "at": "2026-10-08T10:47:37.540Z",
+            "elapsedMs": 44382,
+            "id": "journey-320-light",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 399,
+            "at": "2026-10-08T10:47:40.569Z",
+            "elapsedMs": 47411,
+            "id": "journey-320-light",
+            "stage": "loading",
+            "route": "http://127.0.0.1:4301/qa-theme",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-server-failure",
+            "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+            "location": {
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
+              "line": 0,
+              "column": 141585,
+              "lineNumber": 0,
+              "columnNumber": 141585
+            },
+            "args": [
+              {
+                "message": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+                "stack": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error."
+              }
+            ]
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 297,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 23,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 21,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 16,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/den.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cle.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/atl.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mil.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/min.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mia.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/tor.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ind.png": 5,
+            "https://a.espncdn.com/i/teamlogos/nba/500/por.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/utah.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lal.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lac.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phx.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/gs.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sac.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/hou.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/no.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/dal.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mem.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/world.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stars.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stripes.png": 1
+          }
+        }
+      }
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "steps": [
+        {
+          "label": "home",
+          "verifiedDestination": {
+            "expected": "/",
+            "content": {
+              "heading": "Your front row to the forecast."
+            }
+          },
+          "path": "/",
+          "hash": "",
+          "title": "Today \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "verifiedDestination": {
+            "expected": "/games?date=2026-10-21&team=BOS",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games?date=2026-10-21&team=BOS",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "verifiedDestination": {
+            "expected": "/games/401909088",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "verifiedDestination": {
+            "expected": "/teams/NY",
+            "content": {
+              "heading": "New York Knicks"
+            }
+          },
+          "path": "/teams/NY",
+          "hash": "",
+          "title": "New York Knicks \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967",
+          "hash": "#player-box-scores",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000003?game=401859967&team=24",
+            "content": {
+              "heading": "QA Forward"
+            }
+          },
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "hash": "#game-line-comparison",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "verifiedDestination": {
+            "expected": "/predict",
+            "content": {
+              "heading": "Any two teams"
+            }
+          },
+          "path": "/predict",
+          "hash": "",
+          "title": "Head to head \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "verifiedDestination": {
+            "expected": "/lab",
+            "content": {
+              "heading": "The game, before the game."
+            }
+          },
+          "path": "/lab",
+          "hash": "",
+          "title": "Forecast Lab \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "verifiedDestination": {
+            "expected": "/ratings",
+            "content": {
+              "heading": "Power ratings"
+            }
+          },
+          "path": "/ratings",
+          "hash": "",
+          "title": "Power ratings \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "verifiedDestination": {
+            "expected": "/about#regression",
+            "content": {
+              "heading": "How it works"
+            }
+          },
+          "path": "/about",
+          "hash": "#regression",
+          "title": "How it works \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "verifiedDestination": {
+            "expected": "/accuracy",
+            "content": {
+              "heading": "How right has it been"
+            }
+          },
+          "path": "/accuracy",
+          "hash": "",
+          "title": "Accuracy \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "verifiedDestination": {
+            "expected": "/seasons",
+            "content": {
+              "heading": "Every season since 2004"
+            }
+          },
+          "path": "/seasons",
+          "hash": "",
+          "title": "Seasons \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "verifiedDestination": {
+            "expected": "/seasons/2026",
+            "content": {
+              "heading": "2025-26 season"
+            }
+          },
+          "path": "/seasons/2026",
+          "hash": "",
+          "title": "2025-26 season \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/series/18v24",
+            "content": {
+              "heading": "Every game",
+              "selector": "#main header a[href=\"/teams/NY\"]"
+            }
+          },
+          "path": "/seasons/2026/series/18v24",
+          "hash": "",
+          "title": "SA v NY \u00b7 NBA Finals \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/games",
+            "content": {
+              "heading": "2025-26 results"
+            }
+          },
+          "path": "/seasons/2026/games",
+          "hash": "",
+          "title": "2025-26 results \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "verifiedDestination": {
+            "expected": "/season",
+            "content": {
+              "heading": "Projected standings"
+            }
+          },
+          "path": "/season",
+          "hash": "",
+          "title": "Season projection \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "verifiedDestination": {
+            "expected": "/bracket",
+            "content": {
+              "heading": "The road to the title"
+            }
+          },
+          "path": "/bracket",
+          "hash": "",
+          "title": "Playoff bracket \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "verifiedDestination": {
+            "expected": "/allstar",
+            "content": {
+              "heading": "All-Star weekend"
+            }
+          },
+          "path": "/allstar",
+          "hash": "",
+          "title": "All-Star weekend \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)",
+            "rgb(33, 23, 17)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "verifiedDestination": {
+            "expected": "/upsets",
+            "content": {
+              "heading": "The games nobody saw coming"
+            }
+          },
+          "path": "/upsets",
+          "hash": "",
+          "title": "Upsets \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "verifiedDestination": {
+            "expected": "/preview",
+            "content": {
+              "heading": "2026-27, before it starts"
+            }
+          },
+          "path": "/preview",
+          "hash": "",
+          "title": "Season preview \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "verifiedDestination": {
+            "expected": "/playoffs",
+            "content": {
+              "heading": "Playoff picture"
+            }
+          },
+          "path": "/playoffs",
+          "hash": "",
+          "title": "Playoff picture \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000001",
+            "content": {
+              "heading": "Player profile unavailable"
+            }
+          },
+          "path": "/players/espn/900000001",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "verifiedDestination": {
+            "expected": "/games/unknown-theme",
+            "content": {
+              "selector": "#main p.eyebrow",
+              "text": "Not found"
+            }
+          },
+          "path": "/games/unknown-theme",
+          "hash": "",
+          "title": "Game \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "selector": "[aria-label=\"Loading game\"]"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "This page couldn't load"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "tableScroll": {
+        "left": 0,
+        "width": 356,
+        "scrollWidth": 430,
+        "after": 3,
+        "movementRequired": true
+      },
+      "seriesTextLayout": {
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      "controlledErrorMessages": [],
+      "diagnostics": {
+        "id": "journey-390-dark",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 9,
+            "at": "2026-10-08T10:47:45.702Z",
+            "elapsedMs": 413,
+            "id": "journey-390-dark",
+            "stage": "initial",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 70,
+            "at": "2026-10-08T10:47:51.840Z",
+            "elapsedMs": 6551,
+            "id": "journey-390-dark",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 362,
+            "at": "2026-10-08T10:48:33.848Z",
+            "elapsedMs": 48559,
+            "id": "journey-390-dark",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 404,
+            "at": "2026-10-08T10:48:36.596Z",
+            "elapsedMs": 51307,
+            "id": "journey-390-dark",
+            "stage": "loading",
+            "route": "http://127.0.0.1:4301/qa-theme",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-server-failure",
+            "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+            "location": {
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
+              "line": 0,
+              "column": 141585,
+              "lineNumber": 0,
+              "columnNumber": 141585
+            },
+            "args": [
+              {
+                "message": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+                "stack": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error."
+              }
+            ]
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 302,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 23,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 21,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 16,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/den.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cle.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/atl.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mil.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/min.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mia.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/tor.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ind.png": 5,
+            "https://a.espncdn.com/i/teamlogos/nba/500/por.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/utah.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lal.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lac.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phx.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/gs.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sac.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/hou.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/no.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/dal.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mem.png": 6,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/world.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stars.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stripes.png": 1
+          }
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "system": "light",
+      "steps": [
+        {
+          "label": "home",
+          "verifiedDestination": {
+            "expected": "/",
+            "content": {
+              "heading": "Your front row to the forecast."
+            }
+          },
+          "path": "/",
+          "hash": "",
+          "title": "Today \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "verifiedDestination": {
+            "expected": "/games?date=2026-10-21&team=BOS",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games?date=2026-10-21&team=BOS",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "verifiedDestination": {
+            "expected": "/games/401909088",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "verifiedDestination": {
+            "expected": "/teams/NY",
+            "content": {
+              "heading": "New York Knicks"
+            }
+          },
+          "path": "/teams/NY",
+          "hash": "",
+          "title": "New York Knicks \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967",
+          "hash": "#player-box-scores",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000003?game=401859967&team=24",
+            "content": {
+              "heading": "QA Forward"
+            }
+          },
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "hash": "#game-line-comparison",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "verifiedDestination": {
+            "expected": "/predict",
+            "content": {
+              "heading": "Any two teams"
+            }
+          },
+          "path": "/predict",
+          "hash": "",
+          "title": "Head to head \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "verifiedDestination": {
+            "expected": "/lab",
+            "content": {
+              "heading": "The game, before the game."
+            }
+          },
+          "path": "/lab",
+          "hash": "",
+          "title": "Forecast Lab \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "verifiedDestination": {
+            "expected": "/ratings",
+            "content": {
+              "heading": "Power ratings"
+            }
+          },
+          "path": "/ratings",
+          "hash": "",
+          "title": "Power ratings \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "verifiedDestination": {
+            "expected": "/about#regression",
+            "content": {
+              "heading": "How it works"
+            }
+          },
+          "path": "/about",
+          "hash": "#regression",
+          "title": "How it works \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "verifiedDestination": {
+            "expected": "/accuracy",
+            "content": {
+              "heading": "How right has it been"
+            }
+          },
+          "path": "/accuracy",
+          "hash": "",
+          "title": "Accuracy \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "verifiedDestination": {
+            "expected": "/seasons",
+            "content": {
+              "heading": "Every season since 2004"
+            }
+          },
+          "path": "/seasons",
+          "hash": "",
+          "title": "Seasons \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "verifiedDestination": {
+            "expected": "/seasons/2026",
+            "content": {
+              "heading": "2025-26 season"
+            }
+          },
+          "path": "/seasons/2026",
+          "hash": "",
+          "title": "2025-26 season \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/series/18v24",
+            "content": {
+              "heading": "Every game",
+              "selector": "#main header a[href=\"/teams/NY\"]"
+            }
+          },
+          "path": "/seasons/2026/series/18v24",
+          "hash": "",
+          "title": "SA v NY \u00b7 NBA Finals \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/games",
+            "content": {
+              "heading": "2025-26 results"
+            }
+          },
+          "path": "/seasons/2026/games",
+          "hash": "",
+          "title": "2025-26 results \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "verifiedDestination": {
+            "expected": "/season",
+            "content": {
+              "heading": "Projected standings"
+            }
+          },
+          "path": "/season",
+          "hash": "",
+          "title": "Season projection \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "verifiedDestination": {
+            "expected": "/bracket",
+            "content": {
+              "heading": "The road to the title"
+            }
+          },
+          "path": "/bracket",
+          "hash": "",
+          "title": "Playoff bracket \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "verifiedDestination": {
+            "expected": "/allstar",
+            "content": {
+              "heading": "All-Star weekend"
+            }
+          },
+          "path": "/allstar",
+          "hash": "",
+          "title": "All-Star weekend \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "verifiedDestination": {
+            "expected": "/upsets",
+            "content": {
+              "heading": "The games nobody saw coming"
+            }
+          },
+          "path": "/upsets",
+          "hash": "",
+          "title": "Upsets \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "verifiedDestination": {
+            "expected": "/preview",
+            "content": {
+              "heading": "2026-27, before it starts"
+            }
+          },
+          "path": "/preview",
+          "hash": "",
+          "title": "Season preview \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "verifiedDestination": {
+            "expected": "/playoffs",
+            "content": {
+              "heading": "Playoff picture"
+            }
+          },
+          "path": "/playoffs",
+          "hash": "",
+          "title": "Playoff picture \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000001",
+            "content": {
+              "heading": "Player profile unavailable"
+            }
+          },
+          "path": "/players/espn/900000001",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "verifiedDestination": {
+            "expected": "/games/unknown-theme",
+            "content": {
+              "selector": "#main p.eyebrow",
+              "text": "Not found"
+            }
+          },
+          "path": "/games/unknown-theme",
+          "hash": "",
+          "title": "Game \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "selector": "[aria-label=\"Loading game\"]"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "This page couldn't load"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "tableScroll": {
+        "left": 0,
+        "width": 1154,
+        "scrollWidth": 1154,
+        "after": 0,
+        "movementRequired": false
+      },
+      "seriesTextLayout": {
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      "controlledErrorMessages": [],
+      "diagnostics": {
+        "id": "journey-1440-light",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:48:41.378Z",
+            "elapsedMs": 437,
+            "id": "journey-1440-light",
+            "stage": "initial",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 89,
+            "at": "2026-10-08T10:48:46.904Z",
+            "elapsedMs": 5963,
+            "id": "journey-1440-light",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 413,
+            "at": "2026-10-08T10:49:22.632Z",
+            "elapsedMs": 41691,
+            "id": "journey-1440-light",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 449,
+            "at": "2026-10-08T10:49:25.390Z",
+            "elapsedMs": 44449,
+            "id": "journey-1440-light",
+            "stage": "loading",
+            "route": "http://127.0.0.1:4301/qa-theme",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-server-failure",
+            "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+            "location": {
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
+              "line": 0,
+              "column": 141585,
+              "lineNumber": 0,
+              "columnNumber": 141585
+            },
+            "args": [
+              {
+                "message": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+                "stack": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error."
+              }
+            ]
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 347,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 21,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 20,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 13,
+            "https://a.espncdn.com/i/teamlogos/nba/500/den.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cle.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/tor.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/min.png": 13,
+            "https://a.espncdn.com/i/teamlogos/nba/500/por.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/utah.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/atl.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mil.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mia.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mem.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ind.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/no.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/dal.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/hou.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/gs.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lal.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phx.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sac.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lac.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/world.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stars.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stripes.png": 1
+          }
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "system": "dark",
+      "steps": [
+        {
+          "label": "home",
+          "verifiedDestination": {
+            "expected": "/",
+            "content": {
+              "heading": "Your front row to the forecast."
+            }
+          },
+          "path": "/",
+          "hash": "",
+          "title": "Today \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "slate",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-slate",
+          "verifiedDestination": {
+            "expected": "/games?date=2026-10-21&team=BOS",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games?date=2026-10-21&team=BOS",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upcoming",
+          "verifiedDestination": {
+            "expected": "/games/401909088",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "prior-shooting",
+          "verifiedDestination": {
+            "expected": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context",
+            "content": {
+              "heading": "Boston Celtics at Detroit Pistons"
+            }
+          },
+          "path": "/games/401909088?scoutSeason=2026&scoutWindow=5",
+          "hash": "#shooting-context",
+          "title": "BOS at DET \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "team",
+          "verifiedDestination": {
+            "expected": "/teams/NY",
+            "content": {
+              "heading": "New York Knicks"
+            }
+          },
+          "path": "/teams/NY",
+          "hash": "",
+          "title": "New York Knicks \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archived-comparison",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967",
+          "hash": "#player-box-scores",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "player",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000003?game=401859967&team=24",
+            "content": {
+              "heading": "QA Forward"
+            }
+          },
+          "path": "/players/espn/900000003?game=401859967&team=24",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "comparison-return",
+          "verifiedDestination": {
+            "expected": "/games/401859967",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/games/401859967?compareLeft=24%3Aespn%3A900000003&compareRight=18%3Aespn%3A900000002",
+          "hash": "#game-line-comparison",
+          "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "head-to-head",
+          "verifiedDestination": {
+            "expected": "/predict",
+            "content": {
+              "heading": "Any two teams"
+            }
+          },
+          "path": "/predict",
+          "hash": "",
+          "title": "Head to head \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "lab",
+          "verifiedDestination": {
+            "expected": "/lab",
+            "content": {
+              "heading": "The game, before the game."
+            }
+          },
+          "path": "/lab",
+          "hash": "",
+          "title": "Forecast Lab \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "ratings",
+          "verifiedDestination": {
+            "expected": "/ratings",
+            "content": {
+              "heading": "Power ratings"
+            }
+          },
+          "path": "/ratings",
+          "hash": "",
+          "title": "Power ratings \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "methodology",
+          "verifiedDestination": {
+            "expected": "/about#regression",
+            "content": {
+              "heading": "How it works"
+            }
+          },
+          "path": "/about",
+          "hash": "#regression",
+          "title": "How it works \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "evidence",
+          "verifiedDestination": {
+            "expected": "/accuracy",
+            "content": {
+              "heading": "How right has it been"
+            }
+          },
+          "path": "/accuracy",
+          "hash": "",
+          "title": "Accuracy \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-list",
+          "verifiedDestination": {
+            "expected": "/seasons",
+            "content": {
+              "heading": "Every season since 2004"
+            }
+          },
+          "path": "/seasons",
+          "hash": "",
+          "title": "Seasons \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-season",
+          "verifiedDestination": {
+            "expected": "/seasons/2026",
+            "content": {
+              "heading": "2025-26 season"
+            }
+          },
+          "path": "/seasons/2026",
+          "hash": "",
+          "title": "2025-26 season \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-series",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/series/18v24",
+            "content": {
+              "heading": "Every game",
+              "selector": "#main header a[href=\"/teams/NY\"]"
+            }
+          },
+          "path": "/seasons/2026/series/18v24",
+          "hash": "",
+          "title": "SA v NY \u00b7 NBA Finals \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "archive-games",
+          "verifiedDestination": {
+            "expected": "/seasons/2026/games",
+            "content": {
+              "heading": "2025-26 results"
+            }
+          },
+          "path": "/seasons/2026/games",
+          "hash": "",
+          "title": "2025-26 results \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "current-season",
+          "verifiedDestination": {
+            "expected": "/season",
+            "content": {
+              "heading": "Projected standings"
+            }
+          },
+          "path": "/season",
+          "hash": "",
+          "title": "Season projection \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "bracket",
+          "verifiedDestination": {
+            "expected": "/bracket",
+            "content": {
+              "heading": "The road to the title"
+            }
+          },
+          "path": "/bracket",
+          "hash": "",
+          "title": "Playoff bracket \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "allstar",
+          "verifiedDestination": {
+            "expected": "/allstar",
+            "content": {
+              "heading": "All-Star weekend"
+            }
+          },
+          "path": "/allstar",
+          "hash": "",
+          "title": "All-Star weekend \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "upsets",
+          "verifiedDestination": {
+            "expected": "/upsets",
+            "content": {
+              "heading": "The games nobody saw coming"
+            }
+          },
+          "path": "/upsets",
+          "hash": "",
+          "title": "Upsets \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "season-preview",
+          "verifiedDestination": {
+            "expected": "/preview",
+            "content": {
+              "heading": "2026-27, before it starts"
+            }
+          },
+          "path": "/preview",
+          "hash": "",
+          "title": "Season preview \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "playoff-picture",
+          "verifiedDestination": {
+            "expected": "/playoffs",
+            "content": {
+              "heading": "Playoff picture"
+            }
+          },
+          "path": "/playoffs",
+          "hash": "",
+          "title": "Playoff picture \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "empty-profile",
+          "verifiedDestination": {
+            "expected": "/players/espn/900000001",
+            "content": {
+              "heading": "Player profile unavailable"
+            }
+          },
+          "path": "/players/espn/900000001",
+          "hash": "",
+          "title": "Player game profile \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found",
+          "verifiedDestination": {
+            "expected": "/games/unknown-theme",
+            "content": {
+              "selector": "#main p.eyebrow",
+              "text": "Not found"
+            }
+          },
+          "path": "/games/unknown-theme",
+          "hash": "",
+          "title": "Game \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "not-found-recovery",
+          "verifiedDestination": {
+            "expected": "/games",
+            "content": {
+              "heading": "Games, one night at a time."
+            }
+          },
+          "path": "/games",
+          "hash": "",
+          "title": "Games \u00b7 Hardwood",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "loading",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "selector": "[aria-label=\"Loading game\"]"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "error",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "This page couldn't load"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [],
+          "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+          "headingTransform": "uppercase",
+          "overflow": false,
+          "violations": []
+        },
+        {
+          "label": "retry-recovery",
+          "verifiedDestination": {
+            "expected": "/qa-theme",
+            "content": {
+              "heading": "Scoring by period"
+            }
+          },
+          "path": "/qa-theme",
+          "hash": "",
+          "title": "Hardwood \u2014 Calibrated NBA forecasting",
+          "ambient": "off",
+          "background": "rgb(12, 7, 5)",
+          "scheme": "dark",
+          "tokens": {
+            "--card-bg": "#17100a",
+            "--logo-plate": "#fdf6ee",
+            "--text-primary": "#fdf6ee",
+            "--accent-brand": "#e2682a"
+          },
+          "cardBackgrounds": [
+            "rgb(23, 16, 10)"
+          ],
+          "nativeSchemes": [
+            "dark"
+          ],
+          "headingFont": null,
+          "headingTransform": null,
+          "overflow": false,
+          "violations": []
+        }
+      ],
+      "unexpectedErrors": [],
+      "tableScroll": {
+        "left": 0,
+        "width": 1154,
+        "scrollWidth": 1154,
+        "after": 0,
+        "movementRequired": false
+      },
+      "seriesTextLayout": {
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      "controlledErrorMessages": [],
+      "diagnostics": {
+        "id": "journey-1440-dark",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 10,
+            "at": "2026-10-08T10:49:30.003Z",
+            "elapsedMs": 425,
+            "id": "journey-1440-dark",
+            "stage": "initial",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 89,
+            "at": "2026-10-08T10:49:35.739Z",
+            "elapsedMs": 6161,
+            "id": "journey-1440-dark",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 413,
+            "at": "2026-10-08T10:50:12.737Z",
+            "elapsedMs": 43159,
+            "id": "journey-1440-dark",
+            "stage": "navigate:/",
+            "route": "http://127.0.0.1:4301/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          },
+          {
+            "sequence": 455,
+            "at": "2026-10-08T10:50:15.468Z",
+            "elapsedMs": 45890,
+            "id": "journey-1440-dark",
+            "stage": "loading",
+            "route": "http://127.0.0.1:4301/qa-theme",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-server-failure",
+            "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+            "location": {
+              "url": "http://127.0.0.1:4301/_next/static/chunks/2169-c596142be2d22a9b.js",
+              "line": 0,
+              "column": 141585,
+              "lineNumber": 0,
+              "columnNumber": 141585
+            },
+            "args": [
+              {
+                "message": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+                "stack": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error."
+              }
+            ]
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 353,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 23,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 19,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 22,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 18,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 20,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 13,
+            "https://a.espncdn.com/i/teamlogos/nba/500/den.png": 9,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cle.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/tor.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/min.png": 13,
+            "https://a.espncdn.com/i/teamlogos/nba/500/por.png": 11,
+            "https://a.espncdn.com/i/teamlogos/nba/500/utah.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/atl.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/orl.png": 12,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mil.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mia.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/chi.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/mem.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ind.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/no.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/dal.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/hou.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/gs.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lal.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phx.png": 10,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sac.png": 7,
+            "https://a.espncdn.com/i/teamlogos/nba/500/lac.png": 8,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/world.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stars.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/stripes.png": 1
+          }
+        }
+      }
+    }
+  ],
+  "coldPaint": [
+    {
+      "preference": "off",
+      "initial": {
+        "ambient": "off",
+        "selectedBackground": "rgb(33, 23, 17)",
+        "pressed": [],
+        "busy": "true"
+      },
+      "sampledFrames": 104,
+      "stableBackgroundAndPreference": true,
+      "diagnostics": {
+        "id": "cold-paint-off",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 11,
+            "at": "2026-10-08T10:50:21.476Z",
+            "elapsedMs": 1891,
+            "id": "cold-paint-off",
+            "stage": "cold-paint-off",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 7,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 1
+          }
+        }
+      }
+    },
+    {
+      "preference": "vivid",
+      "initial": {
+        "ambient": "vivid",
+        "selectedBackground": "rgb(33, 23, 17)",
+        "pressed": [],
+        "busy": "true"
+      },
+      "sampledFrames": 103,
+      "stableBackgroundAndPreference": true,
+      "diagnostics": {
+        "id": "cold-paint-vivid",
+        "pageErrors": [],
+        "consoleErrors": [
+          {
+            "sequence": 11,
+            "at": "2026-10-08T10:50:23.632Z",
+            "elapsedMs": 1882,
+            "id": "cold-paint-vivid",
+            "stage": "cold-paint-vivid",
+            "route": "http://127.0.0.1:4300/",
+            "type": "console",
+            "level": "error",
+            "classification": "controlled-scoreboard-503",
+            "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+            "location": {
+              "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+              "line": 0,
+              "column": 0,
+              "lineNumber": 0,
+              "columnNumber": 0
+            },
+            "args": []
+          }
+        ],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 7,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/bos.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/det.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/phi.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/okc.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/cha.png": 1
+          }
+        }
+      }
+    }
+  ],
+  "product": [
+    {
+      "label": "provider-unavailable",
+      "verifiedDestination": {
+        "expected": "/games/401859967",
+        "content": {
+          "heading": "Scoring by period"
+        }
+      },
+      "path": "/games/401859967",
+      "hash": "",
+      "title": "NY 94 \u2013 90 SA \u00b7 Hardwood",
+      "ambient": "soft",
+      "background": "rgb(12, 7, 5)",
+      "scheme": "dark",
+      "tokens": {
+        "--card-bg": "#17100a",
+        "--logo-plate": "#fdf6ee",
+        "--text-primary": "#fdf6ee",
+        "--accent-brand": "#e2682a"
+      },
+      "cardBackgrounds": [
+        "rgb(23, 16, 10)"
+      ],
+      "nativeSchemes": [
+        "dark"
+      ],
+      "headingFont": null,
+      "headingTransform": null,
+      "overflow": false,
+      "violations": [],
+      "diagnostics": {
+        "id": "provider-unavailable",
+        "pageErrors": [],
+        "consoleErrors": [],
+        "unexpected": [],
+        "controlledLogoFailures": {
+          "count": 2,
+          "byUrl": {
+            "https://a.espncdn.com/i/teamlogos/nba/500/ny.png": 1,
+            "https://a.espncdn.com/i/teamlogos/nba/500/sa.png": 1
+          }
+        }
+      }
+    }
+  ],
+  "preferenceRecovery": {
+    "controlledMissingRootAttribute": true,
+    "restoredPreference": "off",
+    "storageUnchanged": true,
+    "unexpectedErrors": [],
+    "diagnostics": {
+      "id": "controlled-root-recovery",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "unexpected": [],
+      "controlledLogoFailures": {
+        "count": 0,
+        "byUrl": {}
+      }
+    }
+  },
+  "sourceVerification": {
+    "sha256Algorithm": "Sorted src relative path + NUL + file bytes + NUL",
+    "productSrcSha256": "62d1ae2566435403341bdb59d94fb80d3e5fb8014c7b64435c2729ffdf5d82a2",
+    "productCopyMatches": true,
+    "fixtureMatchesExcept": [
+      "src/app/(app)/teams/[abbr]/page.tsx",
+      "src/app/(app)/qa-theme/page.tsx",
+      "src/app/(app)/qa-theme/loading.tsx"
+    ],
+    "fixtureDifferences": "Only the team-page QA link plus temporary QA route/loading; next.config devIndicators disabled in fixture only."
+  },
+  "supersedes": {
+    "commit": "e64f5112b82a4a7cc6c872757460bec090e9c0e5",
+    "reason": "Original outgoing-page readiness falsely labeled archive destination coverage. This report asserts each expected URL and destination content."
+  },
+  "rawReport": {
+    "path": "/tmp/nba-hydration-fix-journey/results.json",
+    "sha256": "56ca4365e3437a1a59c7ec0539099c8dda638cd09ff477f858998867ac4e46c4",
+    "consolePresentation": "Only repeated deliberate CDN resource failures are grouped here; full events remain in saved-cloud raw diagnostics. All other console events and all page errors are retained."
+  }
+}

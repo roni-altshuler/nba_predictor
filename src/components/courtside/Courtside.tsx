@@ -15,6 +15,10 @@ const active = 'border-[var(--accent-brand)] bg-[var(--muted-bg)] text-[var(--te
 const dateLabel = (day: string) => new Date(`${day}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
 const tipLabel = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York', timeZoneName: 'short' })
 
+function LinkArrow() {
+  return <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" className="inline-block h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.25"><path d="M4 12 12 4M4 4h8v8" /></svg>
+}
+
 export function Courtside({ initial, projections = [], directory = [], compact = false }: {
   initial: GameForecasts | null; projections?: TeamProjection[]; directory?: GameSide[]; compact?: boolean
 }) {
@@ -197,8 +201,8 @@ export function Courtside({ initial, projections = [], directory = [], compact =
                 <span className="flex items-center gap-2"><TeamLogo {...g.away} size={24} /><span className="font-numeric text-sm">{g.away.abbreviation} <span className="text-[var(--text-tertiary)]">at</span> {g.home.abbreviation}</span><TeamLogo {...g.home} size={24} /></span>
                 <span className="mt-2 flex justify-between gap-2 font-numeric text-xs"><span>{pct(g.p_away)} / {pct(g.p_home)}</span><span className="text-[var(--text-tertiary)]">{new Date(g.date_utc).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' })} ET</span></span>
               </button>)}</div>
-              <div className="mt-4 border-t border-[var(--border-color)] pt-4"><p className="eyebrow">Beyond tonight</p><div className="mt-3 flex flex-wrap gap-3 text-sm text-[var(--accent-info)]"><Link href="/season">Season outlook ↗</Link><Link href="/bracket">Playoff paths ↗</Link><Link href="/predict">Any matchup ↗</Link></div></div>
-              <div className="mt-5 text-xs leading-relaxed text-[var(--text-secondary)]"><p>Ratings, recent form and schedule features inform this forecast. Confirmed lineups and injuries are not included.</p><Link href="/accuracy" className="mt-2 inline-block text-[var(--accent-info)]">See how the model measures up ↗</Link></div>
+              <div className="mt-4 border-t border-[var(--border-color)] pt-4"><p className="eyebrow">Beyond tonight</p><div className="mt-3 flex flex-wrap gap-3 text-sm text-[var(--accent-info)]"><Link href="/season">Season outlook <LinkArrow /></Link><Link href="/bracket">Playoff paths <LinkArrow /></Link><Link href="/predict">Any matchup <LinkArrow /></Link></div></div>
+              <div className="mt-5 text-xs leading-relaxed text-[var(--text-secondary)]"><p>Ratings, recent form and schedule features inform this forecast. Confirmed lineups and injuries are not included.</p><Link href="/accuracy" className="mt-2 inline-block text-[var(--accent-info)]">See how the model measures up <LinkArrow /></Link></div>
             </div>
           </div>}
         <div className="mt-4 text-xs leading-relaxed text-[var(--text-tertiary)]">

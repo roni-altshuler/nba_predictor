@@ -93,7 +93,7 @@ export default function AccuracyPage() {
 
       <section className="mb-8">
         <h2 className="mb-3 text-sm">Against the closing line</h2>
-        <div className="card overflow-x-auto">
+        <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Closing-line forecast comparison">
           <table>
             <thead>
               <tr>
@@ -147,7 +147,7 @@ export default function AccuracyPage() {
 
       <section className="mb-8">
         <h2 className="mb-3 text-sm">On every game, priced or not</h2>
-        <div className="card overflow-x-auto">
+        <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="All-game forecast comparison">
           <table>
             <thead>
               <tr>
@@ -504,7 +504,7 @@ function ContinuousSection({ continuous }: { continuous?: Record<string, any> })
   return (
     <section className="mb-8">
       <h2 className="mb-3 text-sm">The numbers beside the probability</h2>
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Margin and total error comparison">
         <table>
           <thead>
             <tr>
@@ -687,7 +687,7 @@ function SeriesSection({ series }: { series: Record<string, any> }) {
   return (
     <section className="mb-8">
       <h2 className="mb-3 text-sm">Playoff series</h2>
-      <div className="card overflow-x-auto">
+      <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Playoff series forecast comparison">
         <table>
           <thead>
             <tr>

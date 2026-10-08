@@ -1,0 +1,31 @@
+{
+  "basis": "Saved cloud Chromium. Connected production fixture journey: real committed team/forecast data; synthetic player lines through the existing ESPN-only preload. ESPN CDN logos deliberately unavailable; original abbreviation fallbacks checked after images settle. Product production server for source-unavailable and cold-paint checks. One isolated route/link for controlled boundaries.",
+  "baseCommit": "5bb550c43446ce24f594b8e6a85294a7294241b3",
+  "description": "One exploratory hard profile load: React recovered hydration and the root ambient attribute was absent. Saved preference recovery is now tested; the warning origin is unreproduced.",
+  "width": 390,
+  "system": "dark",
+  "step": {
+    "label": "empty-profile",
+    "path": "/players/espn/900000001",
+    "title": "Player game profile · Hardwood",
+    "background": "rgb(12, 7, 5)",
+    "scheme": "dark",
+    "tokens": {
+      "--card-bg": "#17100a",
+      "--logo-plate": "#fdf6ee",
+      "--text-primary": "#fdf6ee",
+      "--accent-brand": "#e2682a"
+    },
+    "cardBackgrounds": [
+      "rgb(23, 16, 10)"
+    ],
+    "nativeSchemes": [],
+    "headingFont": "Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif, sans-serif",
+    "headingTransform": "uppercase",
+    "overflow": false,
+    "violations": []
+  },
+  "unexpectedErrors": [
+    "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+  ]
+}

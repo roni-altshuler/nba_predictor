@@ -54,15 +54,25 @@ export function applyAmbient(value: Ambient) {
 
 function subscribe(onChange: () => void) {
   window.addEventListener('ambientchange', onChange)
+  // A document recreated during hydration recovery can lose the attribute
+  // written by the pre-paint script. Restore the saved choice before the
+  // dial/canvas settle on the default, without changing storage.
+  if (!document.documentElement.hasAttribute('data-ambient')) {
+    let value: Ambient = 'soft'
+    try { value = parseAmbient(localStorage.getItem(AMBIENT_KEY)) } catch { /* Storage may be blocked. */ }
+    document.documentElement.dataset.ambient = value
+    window.dispatchEvent(new CustomEvent<Ambient>('ambientchange', { detail: value }))
+  }
   return () => window.removeEventListener('ambientchange', onChange)
 }
 
-const serverSnapshot = (): Ambient => 'soft'
+// The server cannot know storage. Defer the pressed announcement until the
+// attribute can be read; CSS already paints that pre-paint choice correctly.
+const serverSnapshot = (): Ambient | null => null
 
 export function AmbientToggle({ className }: { className?: string }) {
-  // The attribute is the store; the server has no attribute and says
-  // `soft`, which is also what the pre-paint script writes when nothing is
-  // stored, so hydration and first paint agree.
+  // The attribute is the store. Its CSS highlight is correct before hydration,
+  // including returning readers whose preference is off or vivid.
   const value = useSyncExternalStore(subscribe, readAmbient, serverSnapshot)
   const labelId = useId()
 
@@ -74,20 +84,19 @@ export function AmbientToggle({ className }: { className?: string }) {
       <div
         role="group"
         aria-labelledby={labelId}
+        aria-busy={value === null}
         className="mt-1.5 flex border border-[var(--border-color)]"
       >
         {AMBIENT_OPTIONS.map((option, index) => (
           <button
             key={option}
             type="button"
+            data-ambient-option={option}
             aria-pressed={value === option}
             onClick={() => applyAmbient(option)}
             className={cn(
-              'flex min-h-[44px] flex-1 items-center justify-center px-2 text-[10px] uppercase tracking-[0.12em] transition-colors md:min-h-[30px]',
+              'ambient-option flex min-h-[44px] flex-1 items-center justify-center px-2 text-[10px] uppercase tracking-[0.12em] text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)] md:min-h-[30px]',
               index > 0 && 'border-l border-[var(--border-color)]',
-              value === option
-                ? 'bg-[var(--card-hover)] text-[var(--text-primary)]'
-                : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]',
             )}
           >
             {option}
