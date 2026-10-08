@@ -200,6 +200,22 @@ try {
     await snapshot(page, 'archive-season', journey.steps, true)
     await page.locator('#main a[href="/seasons/2026/series/18v24"]').first().click(); await ready(page, '/seasons/2026/series/18v24')
     await snapshot(page, 'archive-series', journey.steps)
+    // Document overflow misses text that collides inside a shrinking score row.
+    journey.seriesTextLayout = await page.locator('#main section').first().locator('a[href^="/games/"]').evaluateAll(links => ({
+      checkedRows: links.length,
+      overlaps: links.flatMap(link => {
+        const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT), fragments = []
+        while (walker.nextNode()) if (walker.currentNode.textContent.trim()) {
+          const range = document.createRange(); range.selectNode(walker.currentNode)
+          for (const rect of range.getClientRects()) if (rect.width && rect.height) fragments.push({ text: walker.currentNode.textContent.trim(), x: rect.x, y: rect.y, right: rect.right, bottom: rect.bottom })
+        }
+        return fragments.flatMap((a, index) => fragments.slice(index + 1)
+          .filter(b => Math.min(a.right, b.right) - Math.max(a.x, b.x) > 2 && Math.min(a.bottom, b.bottom) - Math.max(a.y, b.y) > 2)
+          .map(b => ({ game: link.getAttribute('href'), a, b })))
+      }),
+    }))
+    assert(journey.seriesTextLayout.checkedRows > 0)
+    assert.deepEqual(journey.seriesTextLayout.overlaps, [])
     await page.getByRole('button', { name: 'Back', exact: true }).click(); await ready(page, '/seasons/2026')
     await page.locator('#main a[href="/seasons/2026/games"]').first().click(); await ready(page, '/seasons/2026/games')
     await snapshot(page, 'archive-games', journey.steps)
