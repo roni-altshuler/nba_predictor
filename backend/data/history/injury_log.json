@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-10-07T17:42:56+00:00",
- "n_rows": 397,
+ "last_observed": "2026-10-08T17:45:08+00:00",
+ "n_rows": 430,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -3974,6 +3974,336 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-10-07T17:42:56+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Day'Ron Sharpe",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left shoulder",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T15:05Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Joshua Jefferson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T15:10Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Michael Porter Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left wrist",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T15:04Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Mikel Brown Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left ankle",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T15:07Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Jaylin Sellers",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-10-07T22:33Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Tre Jones",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left hip",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-10-07T22:32Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Zach Collins",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right toe surgery",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-10-07T22:53Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Kristaps Porzingis",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-21",
+   "espn_date": "2026-10-06T20:04Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Larry Nance Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-07T22:45Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "T.J. McConnell",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-07T22:43Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Isaiah Stewart",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-10-07T23:05Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Micah Peavy",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-09",
+   "espn_date": "2026-10-08T02:40Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Andrew Wiggins",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-07T18:01Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Pelle Larsson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-08",
+   "espn_date": "2026-10-07T18:01Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Milwaukee Bucks",
+   "player": "Nate Ament",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-08T01:35Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Chet Holmgren",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-07T22:24Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Isaiah Hartenstein",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-07T22:23Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jaylin Williams",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Heel",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-07T22:22Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Nikola Topic",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Back surgery",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-07T22:24Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Thomas Sorber",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right knee surgery",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-07T22:26Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Anthony Black",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle sprain",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-07T23:39Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jalen Suggs",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-07T23:36Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Noah Penda",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Hamstring",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-07T23:40Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Phoenix Suns",
+   "player": "Miles Bridges",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right ankle",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T05:12Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Maliq Brown",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T17:20Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Jusuf Nurkic",
+   "position": "C",
+   "status": "Out",
+   "detail": "Right foot",
+   "return_date": "2026-11-04",
+   "espn_date": "2026-10-07T23:07Z",
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Quenton Jackson",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Zach Edey",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Alex Caruso",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Cason Wallace",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jalen Williams",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Shai Gilgeous-Alexander",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "David Jones Garcia",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-08T17:45:08+00:00"
   }
  ]
 }
