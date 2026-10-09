@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-10-08T17:45:08+00:00",
- "n_rows": 430,
+ "last_observed": "2026-10-09T17:20:04+00:00",
+ "n_rows": 485,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -4304,6 +4304,556 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-10-08T17:45:08+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Jalen Johnson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:31Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Keshon Gilbert",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left knee tendinitis",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T02:30Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Luguentz Dort",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right knee bruise",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:33Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Derrick White",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:40Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Jayson Tatum",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:42Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Mitchell Robinson",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:59Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Neemias Queta",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:48Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Paul George",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:44Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Payton Pritchard",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T23:01Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Ron Harper Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Shoulder",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T23:02Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Boston Celtics",
+   "player": "Sam Hauser",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T23:14Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "James Harden",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right ankle soreness",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-08T22:42Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Khalifa Diop",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-08T22:49Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Nae'Qwan Tomlin",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-08T22:48Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Caleb Martin",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-09T12:05Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Dereck Lively II",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right foot surgery",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-09T12:03Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Marcus Sasser",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Hip",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-09T12:11Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "P.J. Washington",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-09T12:08Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Santi Aldama",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Knee",
+   "return_date": "2026-10-11",
+   "espn_date": "2026-10-09T12:01Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Kevin Durant",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Not injury related",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-09T15:03Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Arthur Kaluma",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Lower body",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T00:58Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Cameron Carr",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed bruise",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T00:53Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Collin Sexton",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Lower body",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T00:58Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Dalton Knecht",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed bruise",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T01:04Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Walker Kessler",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Finger",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T00:58Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Ziaire Williams",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed soreness",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-09T00:55Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Kylor Kelley",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right calf strain",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T03:40Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Pelle Larsson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T23:08Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New Orleans Pelicans",
+   "player": "Dejounte Murray",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right toe bruise",
+   "return_date": "2026-10-14",
+   "espn_date": "2026-10-08T22:28Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Drew Eubanks",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Coach's decision",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T22:06Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Kevin McCullar Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Coach's decision",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T22:13Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Ochai Agbaji",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Coach's decision",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T22:08Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Tony Bradley",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Coach's decision",
+   "return_date": "2026-10-12",
+   "espn_date": "2026-10-08T22:08Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Ben Simmons",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T01:36Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Domantas Sabonis",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T01:39Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Keegan Murray",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T01:38Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Leaky Black",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Face",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T05:26Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Malik Monk",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T01:37Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "De'Aaron Fox",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed soreness",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T23:18Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Malik Williams",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-09T01:42Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Alex Sarr",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right foot surgery",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:27Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Khris Middleton",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-10",
+   "espn_date": "2026-10-08T22:22Z",
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Aaron Wiggins",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "CJ McCollum",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Peyton Watson",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Morez Johnson Jr.",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Al Horford",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Austin Reaves",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Luka Doncic",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Los Angeles Lakers",
+   "player": "Matisse Thybulle",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Andrew Wiggins",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Jose Alvarado",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Joel Embiid",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "LeBron James",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Tyrese Maxey",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-09T17:20:04+00:00"
   }
  ]
 }
