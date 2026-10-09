@@ -59,11 +59,18 @@ def test_snapshots_are_append_only_across_generated_at(warehouse):
     assert len(rows) == 2, "a later run must add an observation, not replace one"
 
 
-def test_rerunning_the_same_second_overwrites_rather_than_duplicates(warehouse):
+def test_identical_snapshot_retries_do_not_replace_or_duplicate(warehouse):
+    rowid = None
     for _ in range(3):
         warehouse.record_predictions([
             snapshot("g1", "2027-01-01T12:00:00+00:00", "2027-01-02T00:00:00+00:00", 0.6),
         ])
+        stored_rowid = warehouse.conn.execute(
+            "SELECT rowid FROM prediction_snapshots"
+        ).fetchone()[0]
+        if rowid is None:
+            rowid = stored_rowid
+        assert stored_rowid == rowid, "an identical retry must not replace history"
     rows = list(warehouse.conn.execute("SELECT * FROM prediction_snapshots"))
     assert len(rows) == 1, "the publisher must be idempotent within one run"
 

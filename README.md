@@ -139,6 +139,15 @@ And the *shape* of the distribution they come from, which matters more — the w
 
 **The live record is empty**: the season has not started. Every forecast is stamped before its tip-off — to the warehouse and to a committed `forecast_log.json` that survives a warehouse rebuild — and scored from zero, in its own table, never merged with the walk-forward above.
 
+Warehouse snapshots keep each distinct fixture/timestamp/model claim. An
+identical retry leaves the stored row untouched; a conflicting payload fails
+and rolls back its full batch. Earliest selection compares timezone-aware UTC
+instants, requires a strictly pre-tipoff valid probability, and returns one row
+per fixture with deterministic ties. Invalid legacy rows remain stored but are
+excluded from selection. This hardens provenance; it does not establish that
+published results were corrupted or change the committed first-forecast log.
+See [snapshot rules and regression checks](docs/FORECAST_PROVENANCE_2026-10.md).
+
 ## Courtside and Forecast Lab
 
 The home page now provides an interactive matchup and team following. `/lab` adds

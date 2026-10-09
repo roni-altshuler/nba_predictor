@@ -55,6 +55,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Tuple
 
+from backend.services.forecast.history import utc
+
 logger = logging.getLogger(__name__)
 
 WAREHOUSE_PATH = (
@@ -713,8 +715,9 @@ class Warehouse:
     def record_predictions(self, rows: Iterable[Dict[str, Any]]) -> int:
         """Append what the model said, before the game was played.
 
-        **This is the only thing on disk that can distinguish a published
-        forecast from a backtest.** `game_forecasts.json` is overwritten
+        **These rows retain the claim history behind a live record.** The
+        committed first-forecast log is its separate durable safeguard.
+        `game_forecasts.json` is overwritten
         every morning, so without these rows the record of what was claimed
         in advance survives exactly one day. Everything else could be
         recomputed later from the corpus — and a recomputed forecast is a
@@ -723,9 +726,10 @@ class Warehouse:
 
         Append-only and idempotent: the primary key is
         `(fixture_uid, generated_at, model_version)`, so re-running the
-        publisher within the same second overwrites its own row and a run an
-        hour later adds a second observation of the same fixture. That is
-        wanted — the drift between them is how a forecast is seen to move as
+        publisher with identical stored values leaves its row untouched. A
+        conflicting payload under that key fails and rolls back the whole
+        batch. A run an hour later adds a second observation of the same
+        fixture. That is wanted — the drift between them shows how it moves as
         tip-off approaches, and `earliest_predictions` takes the first.
         """
         prepared = [
@@ -747,14 +751,31 @@ class Warehouse:
         ]
         if not prepared:
             return 0
+        columns = (
+            "fixture_uid", "generated_at", "model_version", "competition_id",
+            "season", "tipoff_utc", "home_team", "away_team", "p_home", "p_away",
+            "exp_margin", "exp_total",
+        )
+        # IS compares NULLs safely and applies the column's SQLite affinity,
+        # so an identical retry of e.g. season="2027" matches stored INTEGER 2027.
+        identical = "SELECT 1 FROM prediction_snapshots WHERE " + " AND ".join(
+            f"{column} IS ?" for column in columns
+        )
         with self.transaction() as conn:
-            conn.executemany(
-                "INSERT OR REPLACE INTO prediction_snapshots ("
-                "fixture_uid, generated_at, model_version, competition_id, "
-                "season, tipoff_utc, home_team, away_team, p_home, p_away, "
-                "exp_margin, exp_total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-                prepared,
-            )
+            for values in prepared:
+                inserted = conn.execute(
+                    "INSERT INTO prediction_snapshots ("
+                    "fixture_uid, generated_at, model_version, competition_id, "
+                    "season, tipoff_utc, home_team, away_team, p_home, p_away, "
+                    "exp_margin, exp_total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) "
+                    "ON CONFLICT (fixture_uid, generated_at, model_version) DO NOTHING",
+                    values,
+                )
+                # Insert first to acquire the writer lock before checking a
+                # duplicate. Conflicts within this batch take the same path.
+                if inserted.rowcount == 0:
+                    if conn.execute(identical, values).fetchone() is None:
+                        raise ValueError("Refusing to rewrite an immutable prediction snapshot")
         return len(prepared)
 
     def earliest_predictions(
@@ -772,29 +793,45 @@ class Warehouse:
         hardest number to be right about: it is the one published furthest
         from the game, with the least information, and it is the one nobody
         can accuse of having crept toward the market as the line moved.
+
+        Compare timezone-aware UTC instants at microsecond precision. Equal
+        publication instants break ties by model_version, then the original
+        timestamp spelling; neither is a claim about model quality. Invalid
+        dates/probabilities are excluded before selection, never deleted. The
+        original sqlite3.Row shape and stored timestamps are returned unchanged.
         """
-        where = ["tipoff_utc IS NOT NULL", "generated_at < tipoff_utc"]
+        sql = "SELECT * FROM prediction_snapshots"
         params: List[Any] = []
         if season is not None:
-            where.append("season = ?")
+            sql += " WHERE season = ?"
             params.append(season)
-        return list(
-            self.conn.execute(
-                f"""
-                SELECT s.* FROM prediction_snapshots AS s
-                JOIN (
-                    SELECT fixture_uid, MIN(generated_at) AS first_at
-                      FROM prediction_snapshots
-                     WHERE {' AND '.join(where)}
-                     GROUP BY fixture_uid
-                ) AS f
-                  ON f.fixture_uid = s.fixture_uid
-                 AND f.first_at = s.generated_at
-                ORDER BY s.tipoff_utc, s.fixture_uid
-                """,
-                params,
-            )
-        )
+        first: Dict[str, Tuple[Tuple[datetime, str, str], datetime, sqlite3.Row]] = {}
+        for row in self.conn.execute(sql, params):
+            try:
+                generated, tipoff = utc(row["generated_at"]), utc(row["tipoff_utc"])
+            except (ValueError, TypeError, OverflowError):
+                continue
+            if generated >= tipoff:
+                continue
+            p_home = _as_float(row["p_home"])
+            if p_home is None or not 0 <= p_home <= 1:
+                continue
+            if row["p_away"] is not None:
+                p_away = _as_float(row["p_away"])
+                # Both outcomes, when present, must form a binary probability
+                # distribution. Allow the publisher's decimal rounding.
+                if (p_away is None or not 0 <= p_away <= 1
+                        or abs(p_home + p_away - 1) > 1e-6):
+                    continue
+            key = (generated, row["model_version"], row["generated_at"])
+            previous = first.get(row["fixture_uid"])
+            if previous is None or key < previous[0]:
+                first[row["fixture_uid"]] = (key, tipoff, row)
+        # Stream all snapshots, retain only one winner per fixture, and keep
+        # the existing tipoff/fixture ordering using actual tipoff instants.
+        return [item[2] for item in sorted(
+            first.values(), key=lambda item: (item[1], item[2]["fixture_uid"])
+        )]
 
     def record_odds(self, rows: Iterable[Dict[str, Any]]) -> int:
         """A price, as it stood at a named moment.
