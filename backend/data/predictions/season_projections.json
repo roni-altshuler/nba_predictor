@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-10-09T17:19:31+00:00",
+  "generated_at": "2026-10-10T16:08:02+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -1005,17 +1005,17 @@
   "ingestion": {
     "source": "espn",
     "status": "ok",
-    "attempted_at": "2026-10-09T17:19:23+00:00",
+    "attempted_at": "2026-10-10T16:07:56+00:00",
     "seasons": [
       2027
     ],
-    "last_success_at": "2026-10-09T17:19:23+00:00",
+    "last_success_at": "2026-10-10T16:07:56+00:00",
     "event_count": 1273,
     "warehouse_updated": true,
     "error": null,
     "stats": {
-      "games": 24,
-      "scheduled": 1243,
+      "games": 25,
+      "scheduled": 1242,
       "skipped": 6
     }
   }
