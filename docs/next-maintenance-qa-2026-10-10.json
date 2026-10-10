@@ -1,0 +1,604 @@
+{
+  "checkedAt": "2026-10-10",
+  "baselineCommit": "a434088e808cd98cb72bf48430e32d292e35fbe5",
+  "patch": {
+    "next": "15.5.24 -> 15.5.27",
+    "eslint-config-next": "15.5.24 -> 15.5.27",
+    "packageLockSha256": "f6b52dd4b768dcff23c098ed650fe1a38272c29718f4fd9c331351cc839d4b0e",
+    "scope": "Next packages only; no application/data/model/workflow changes"
+  },
+  "audits": {
+    "before": {
+      "all": {
+        "exitCode": 1,
+        "counts": {
+          "info": 0,
+          "low": 0,
+          "moderate": 5,
+          "high": 11,
+          "critical": 0,
+          "total": 16
+        },
+        "rawSha256": "9c6255af3ffe71953d989b70f921844b1c452378a29e46109f0c65f169e9ecbd",
+        "nextVia": [
+          {
+            "url": "https://github.com/advisories/GHSA-4jqv-mc3x-m676",
+            "range": ">=15.0.0 <15.5.27",
+            "severity": "moderate"
+          },
+          {
+            "url": "https://github.com/advisories/GHSA-mcj8-r9mp-w47p",
+            "range": ">=15.0.0 <15.5.27",
+            "severity": "moderate"
+          },
+          "postcss"
+        ],
+        "packageNames": [
+          "@next/eslint-plugin-next",
+          "argparse",
+          "brace-expansion",
+          "braces",
+          "chokidar",
+          "eslint-config-next",
+          "fast-glob",
+          "js-yaml",
+          "micromatch",
+          "next",
+          "postcss",
+          "postcss-nested",
+          "postcss-selector-parser",
+          "source-map-js",
+          "sprintf-js",
+          "tailwindcss"
+        ]
+      },
+      "production": {
+        "exitCode": 1,
+        "counts": {
+          "info": 0,
+          "low": 0,
+          "moderate": 1,
+          "high": 2,
+          "critical": 0,
+          "total": 3
+        },
+        "rawSha256": "330228b31da82717f0c82df11fb28476718466215843cc6a649320b22154e3a3",
+        "nextVia": [
+          {
+            "url": "https://github.com/advisories/GHSA-4jqv-mc3x-m676",
+            "range": ">=15.0.0 <15.5.27",
+            "severity": "moderate"
+          },
+          {
+            "url": "https://github.com/advisories/GHSA-mcj8-r9mp-w47p",
+            "range": ">=15.0.0 <15.5.27",
+            "severity": "moderate"
+          },
+          "postcss"
+        ],
+        "packageNames": [
+          "next",
+          "postcss",
+          "source-map-js"
+        ]
+      }
+    },
+    "after": {
+      "all": {
+        "exitCode": 1,
+        "counts": {
+          "info": 0,
+          "low": 0,
+          "moderate": 5,
+          "high": 11,
+          "critical": 0,
+          "total": 16
+        },
+        "rawSha256": "e8605717f4f4036993bd0af0fe3c18966a742662b99545fedc2a8e40b6b68a6c",
+        "nextVia": [
+          "postcss"
+        ],
+        "packageNames": [
+          "@next/eslint-plugin-next",
+          "argparse",
+          "brace-expansion",
+          "braces",
+          "chokidar",
+          "eslint-config-next",
+          "fast-glob",
+          "js-yaml",
+          "micromatch",
+          "next",
+          "postcss",
+          "postcss-nested",
+          "postcss-selector-parser",
+          "source-map-js",
+          "sprintf-js",
+          "tailwindcss"
+        ]
+      },
+      "production": {
+        "exitCode": 1,
+        "counts": {
+          "info": 0,
+          "low": 0,
+          "moderate": 1,
+          "high": 2,
+          "critical": 0,
+          "total": 3
+        },
+        "rawSha256": "4beaa700577ba2a7e96167be8d68cb1fe86e3dadde57bb41ec02845e3185dbb1",
+        "nextVia": [
+          "postcss"
+        ],
+        "packageNames": [
+          "next",
+          "postcss",
+          "source-map-js"
+        ]
+      }
+    }
+  },
+  "gates": {
+    "npmCi": 0,
+    "backend": {
+      "exitCode": 0,
+      "tests": 409
+    },
+    "frontend": {
+      "exitCode": 0,
+      "tests": 270,
+      "suites": 34
+    },
+    "lint": 0,
+    "typecheck": 0,
+    "baselineBuild": {
+      "exitCode": 0,
+      "pages": 504
+    },
+    "patchedBuild": {
+      "exitCode": 0,
+      "pages": 504
+    },
+    "controlledFixtureBuild": {
+      "exitCode": 0,
+      "pages": 504
+    }
+  },
+  "buildComparison": {
+    "baseline": "a434088e808cd98cb72bf48430e32d292e35fbe5",
+    "css": [
+      {
+        "name": "15e06fd0766fd4d9.css",
+        "sha256": "d04da64d878434ed63d4ac51853e533162c019fb82a232db23a2db73779dfcb4"
+      }
+    ],
+    "appRouteCount": 29,
+    "routesIdentical": true,
+    "cssIdentical": true,
+    "catchAllRoutes": []
+  },
+  "renderer": {
+    "version": "19.2.0-canary-0bdb9206-20250818",
+    "baselineAndPatchedSha256": "9bcaacd92279559075407d2fb09b19893f03f9b93ad74eb0ef42b31b66f6053e",
+    "hydrationPositiveAndNegativeRegressionsPass": true
+  },
+  "screenshots": [
+    {
+      "screenshot": "accuracy-1440.png",
+      "beforeSha256": "6052c304aa16d171594a2489e6531e90cd1607652e35c20594df2768954be873",
+      "afterSha256": "6052c304aa16d171594a2489e6531e90cd1607652e35c20594df2768954be873",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "accuracy-320.png",
+      "beforeSha256": "918eff7b70a268630e641f29101ad761beef1720c84b8650f6e3c19e0974257f",
+      "afterSha256": "918eff7b70a268630e641f29101ad761beef1720c84b8650f6e3c19e0974257f",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "accuracy-390.png",
+      "beforeSha256": "e4a81aa085832673ea9b7e315dfd88a47b83a5358855ead7261c68044b1581ad",
+      "afterSha256": "e4a81aa085832673ea9b7e315dfd88a47b83a5358855ead7261c68044b1581ad",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "games-1440.png",
+      "beforeSha256": "19f149f7c6fd389b275cb71042bc02726da1f6b433f7d38ccfe1f13e3d369639",
+      "afterSha256": "19f149f7c6fd389b275cb71042bc02726da1f6b433f7d38ccfe1f13e3d369639",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "games-320.png",
+      "beforeSha256": "b560574cbd5f470bbae8950ef0f472b8fe7a94022393b3b3876dcee4473e8fe4",
+      "afterSha256": "b560574cbd5f470bbae8950ef0f472b8fe7a94022393b3b3876dcee4473e8fe4",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "games-390.png",
+      "beforeSha256": "783efc5d1f80cba9eab1669fdd13563e9cd00f879d4e33628004841d087cb778",
+      "afterSha256": "783efc5d1f80cba9eab1669fdd13563e9cd00f879d4e33628004841d087cb778",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "home-1440.png",
+      "beforeSha256": "16468c8a59536fb408b108b01a8694c5087c17e47f7525d8325456f5dab2fe3d",
+      "afterSha256": "16468c8a59536fb408b108b01a8694c5087c17e47f7525d8325456f5dab2fe3d",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "home-320.png",
+      "beforeSha256": "b9e9b10592825aa067091d9753105102400d177fbfffd6f2d8d8245753fff50f",
+      "afterSha256": "b9e9b10592825aa067091d9753105102400d177fbfffd6f2d8d8245753fff50f",
+      "byteIdentical": true
+    },
+    {
+      "screenshot": "home-390.png",
+      "beforeSha256": "4042df8d1445caf9fad5c2779a4c43ee52ad78bfe96e77faff5a39ea34bcc0dd",
+      "afterSha256": "4042df8d1445caf9fad5c2779a4c43ee52ad78bfe96e77faff5a39ea34bcc0dd",
+      "byteIdentical": true
+    }
+  ],
+  "rawEvidenceDirectory": "/tmp/nba-next-maintenance-evidence",
+  "comparisonHelper": {
+    "path": "/tmp/nba-next-baseline-2026-10-10/compare-ui.mjs",
+    "sha256": "35b7a72648fa0ed41cccd115af209d3a49328cea923a978c4a6503f5d07dbb8d"
+  },
+  "toolchain": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "python": "existing requirements environment",
+    "ciNode": "20"
+  },
+  "remainingFindings": {
+    "@next/eslint-plugin-next": {
+      "severity": "high",
+      "via": [
+        "fast-glob"
+      ]
+    },
+    "argparse": {
+      "severity": "moderate",
+      "via": [
+        "sprintf-js"
+      ]
+    },
+    "brace-expansion": {
+      "severity": "high",
+      "via": [
+        "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+        "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+        "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+        "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+        "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+        "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+        "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p",
+        "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p",
+        "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p"
+      ]
+    },
+    "braces": {
+      "severity": "high",
+      "via": [
+        "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm"
+      ]
+    },
+    "chokidar": {
+      "severity": "high",
+      "via": [
+        "braces"
+      ]
+    },
+    "eslint-config-next": {
+      "severity": "high",
+      "via": [
+        "@next/eslint-plugin-next"
+      ]
+    },
+    "fast-glob": {
+      "severity": "high",
+      "via": [
+        "micromatch"
+      ]
+    },
+    "js-yaml": {
+      "severity": "high",
+      "via": [
+        "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+        "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+        "argparse"
+      ]
+    },
+    "micromatch": {
+      "severity": "high",
+      "via": [
+        "braces"
+      ]
+    },
+    "next": {
+      "severity": "moderate",
+      "via": [
+        "postcss"
+      ]
+    },
+    "postcss": {
+      "severity": "high",
+      "via": [
+        "https://github.com/advisories/GHSA-qx2v-qp2m-jg93",
+        "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+        "https://github.com/advisories/GHSA-fxqj-rqcc-2cmp",
+        "https://github.com/advisories/GHSA-r28c-9q8g-f849"
+      ]
+    },
+    "postcss-nested": {
+      "severity": "moderate",
+      "via": [
+        "postcss-selector-parser"
+      ]
+    },
+    "postcss-selector-parser": {
+      "severity": "moderate",
+      "via": [
+        "https://github.com/advisories/GHSA-rj75-hqrm-r3gf"
+      ]
+    },
+    "source-map-js": {
+      "severity": "high",
+      "via": [
+        "https://github.com/advisories/GHSA-68fv-2mgg-jv7q"
+      ]
+    },
+    "sprintf-js": {
+      "severity": "moderate",
+      "via": [
+        "https://github.com/advisories/GHSA-hp3w-g68c-fv3c"
+      ]
+    },
+    "tailwindcss": {
+      "severity": "high",
+      "via": [
+        "chokidar",
+        "fast-glob",
+        "micromatch",
+        "postcss-nested",
+        "postcss-selector-parser"
+      ]
+    }
+  },
+  "browserComparison": {
+    "chromium": "151.0.7922.173",
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "baselineStates": 9,
+    "patchedStates": 9,
+    "byteIdenticalScreenshots": 9,
+    "axeWcag2a2aaViolations": 0,
+    "overflowStates": 0,
+    "unexpectedDiagnostics": 0,
+    "scope": "Cold Home, dated Games and Accuracy; dark-only styles under light/dark OS preference; Court off; controlled external outages"
+  },
+  "connectedBrowserAudit": {
+    "exitCode": 0,
+    "chromium": "151.0.7922.173",
+    "widths": [
+      [
+        320,
+        "light"
+      ],
+      [
+        390,
+        "dark"
+      ],
+      [
+        1440,
+        "light"
+      ]
+    ],
+    "statesPerJourney": [
+      31,
+      31,
+      31
+    ],
+    "axeScans": 94,
+    "axeWcag2a2aaViolations": 0,
+    "overflowStates": 0,
+    "unexpectedDiagnostics": 0,
+    "diagnosticClassificationCounts": {
+      "controlled-logo-outage": 968,
+      "controlled-scoreboard-503": 11,
+      "controlled-server-failure": 3
+    },
+    "destinations": [
+      {
+        "label": "home",
+        "expected": "/"
+      },
+      {
+        "label": "slate",
+        "expected": "/games"
+      },
+      {
+        "label": "empty-slate",
+        "expected": "/games?date=2026-10-21&team=BOS"
+      },
+      {
+        "label": "upcoming",
+        "expected": "/games/401909088"
+      },
+      {
+        "label": "empty-shooting",
+        "expected": "/games/401909088#shooting-context"
+      },
+      {
+        "label": "prior-shooting",
+        "expected": "/games/401909088?scoutSeason=2026&scoutWindow=5#shooting-context"
+      },
+      {
+        "label": "team",
+        "expected": "/teams/NY"
+      },
+      {
+        "label": "archived-comparison",
+        "expected": "/games/401859967"
+      },
+      {
+        "label": "player",
+        "expected": "/players/espn/900000003?game=401859967&team=24"
+      },
+      {
+        "label": "comparison-return",
+        "expected": "/games/401859967"
+      },
+      {
+        "label": "head-to-head",
+        "expected": "/predict"
+      },
+      {
+        "label": "lab",
+        "expected": "/lab"
+      },
+      {
+        "label": "ratings",
+        "expected": "/ratings"
+      },
+      {
+        "label": "methodology",
+        "expected": "/about#regression"
+      },
+      {
+        "label": "evidence",
+        "expected": "/accuracy"
+      },
+      {
+        "label": "season-list",
+        "expected": "/seasons"
+      },
+      {
+        "label": "archive-season",
+        "expected": "/seasons/2026"
+      },
+      {
+        "label": "archive-series",
+        "expected": "/seasons/2026/series/18v24"
+      },
+      {
+        "label": "archive-games",
+        "expected": "/seasons/2026/games"
+      },
+      {
+        "label": "current-season",
+        "expected": "/season"
+      },
+      {
+        "label": "bracket",
+        "expected": "/bracket"
+      },
+      {
+        "label": "allstar",
+        "expected": "/allstar"
+      },
+      {
+        "label": "upsets",
+        "expected": "/upsets"
+      },
+      {
+        "label": "season-preview",
+        "expected": "/preview"
+      },
+      {
+        "label": "playoff-picture",
+        "expected": "/playoffs"
+      },
+      {
+        "label": "empty-profile",
+        "expected": "/players/espn/900000001"
+      },
+      {
+        "label": "not-found",
+        "expected": "/games/unknown-theme"
+      },
+      {
+        "label": "not-found-recovery",
+        "expected": "/games"
+      },
+      {
+        "label": "loading",
+        "expected": "/qa-theme"
+      },
+      {
+        "label": "error",
+        "expected": "/qa-theme"
+      },
+      {
+        "label": "retry-recovery",
+        "expected": "/qa-theme"
+      }
+    ],
+    "keyboardTableScrolling": [
+      {
+        "viewportWidth": 320,
+        "left": 0,
+        "width": 286,
+        "scrollWidth": 430,
+        "after": 3,
+        "movementRequired": true
+      },
+      {
+        "viewportWidth": 390,
+        "left": 0,
+        "width": 356,
+        "scrollWidth": 430,
+        "after": 3,
+        "movementRequired": true
+      },
+      {
+        "viewportWidth": 1440,
+        "left": 0,
+        "width": 1154,
+        "scrollWidth": 1154,
+        "after": 0,
+        "movementRequired": false
+      }
+    ],
+    "archiveSeriesLayout": [
+      {
+        "viewportWidth": 320,
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      {
+        "viewportWidth": 390,
+        "checkedRows": 5,
+        "overlaps": []
+      },
+      {
+        "viewportWidth": 1440,
+        "checkedRows": 5,
+        "overlaps": []
+      }
+    ],
+    "coldPaint": [
+      {
+        "preference": "off",
+        "sampledFrames": 103,
+        "stableBackgroundAndPreference": true
+      },
+      {
+        "preference": "vivid",
+        "sampledFrames": 102,
+        "stableBackgroundAndPreference": true
+      }
+    ],
+    "preferenceRecovery": {
+      "controlledMissingRootAttribute": true,
+      "restoredPreference": "off",
+      "storageUnchanged": true,
+      "unexpectedErrors": []
+    },
+    "rawSha256": "624efe9cad039c5fc0b7f40742ee659c03b3d392565e225fc2bf97e6c1f13031",
+    "controlledFixture": "Real committed artifacts; synthetic player lines; isolated loading/error route; ESPN logo aborts and scoreboard HTTP 503 retained."
+  }
+}
