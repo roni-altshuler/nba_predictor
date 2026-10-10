@@ -193,7 +193,9 @@ npm install
 npm run dev
 ```
 
-The site is fully static: Next.js reads the published JSON artifacts at build time, so a deploy does not depend on the Python process running.
+The frontend reads published JSON artifacts at build or server-render time, so
+a deploy does not depend on the Python process running. Game and player pages
+also request ESPN context and show unavailable coverage when it cannot be read.
 
 ## Layout
 
@@ -224,6 +226,12 @@ src/
 - **The evidence panel is not a tab.** Every percentage on the site is unfalsifiable without it.
 
 ## Testing
+
+Next.js and its matching ESLint config are pinned to **15.5.27**. The
+[October maintenance evidence](docs/NEXT_MAINTENANCE_2026-10.md) records the
+official fixes, before/after audits, regression checks and responsive browser
+comparison. Existing transitive audit findings remain; this is a bounded
+framework patch, with no data or model change.
 
 See the [October quality roadmap](docs/QUALITY_ROADMAP_2026-10.md) for the next
 model evaluation and browser acceptance criteria.
