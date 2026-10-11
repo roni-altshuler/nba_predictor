@@ -5,6 +5,7 @@ import { RatingHistoryChart } from '@/components/charts/RatingHistoryChart'
 import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
+import { TeamSchedule } from '@/components/schedule/TeamSchedule'
 import { getGameForecasts, getPowerRatings, getSeasonProjections } from '@/lib/artifacts'
 import { gameDate, pct } from '@/lib/format'
 import {
@@ -13,7 +14,7 @@ import {
   getSeasonsIndex,
   teamMetaFromStandings,
 } from '@/lib/history'
-import { cn } from '@/lib/utils'
+import { teamScheduleGames } from '@/lib/teamSchedule'
 
 export const dynamic = 'force-static'
 
@@ -44,19 +45,13 @@ export default async function TeamPage({
 
   const ratings = getPowerRatings()
   const team = ratings?.teams.find((t) => t.abbreviation.toUpperCase() === key)
-  if (!team) notFound()
+  if (!team || !ratings) notFound()
 
   const projections = getSeasonProjections()
   const projection = projections?.teams.find((t) => t.team_id === team.team_id)
 
   const forecasts = getGameForecasts()
-  const upcoming = (forecasts?.games ?? [])
-    .filter(
-      (g) =>
-        g.home.abbreviation === team.abbreviation ||
-        g.away.abbreviation === team.abbreviation,
-    )
-    .slice(0, 8)
+  const upcoming = teamScheduleGames(forecasts?.games ?? [], team.team_id)
 
   const history = getRatingHistory()
   const seasonsIndex = getSeasonsIndex()
@@ -101,11 +96,20 @@ export default async function TeamPage({
             <p className="mt-1 text-xs text-[var(--text-tertiary)]">
               {team.conference} · power rating #{team.rank}
             </p>
+            <p className="mt-2 font-numeric text-xs text-[var(--text-secondary)]">
+              {ratings.season - 1}–{String(ratings.season).slice(2)} regular-season outlook
+            </p>
           </div>
         </div>
+        <nav aria-label="Team sections" className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--border-color)] pt-2 font-numeric text-xs text-[var(--accent-info)]">
+          <a href="#team-schedule" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Schedule</a>
+          <a href="#team-season-outlook" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Season</a>
+          <a href="#team-players" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Players</a>
+          {history && history.seasons.length > 2 ? <a href="#team-rating-history" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Ratings</a> : null}
+        </nav>
       </header>
 
-      <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <section id="team-season-outlook" aria-label="Season projection" className="mb-8 grid scroll-mt-20 grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="Elo" className="card p-3" valueClassName="mt-1 text-lg">
           {String(Math.round(team.elo))}
         </StatTile>
@@ -144,6 +148,10 @@ export default async function TeamPage({
         )}
       </section>
 
+      <TeamSchedule games={upcoming} team={team.abbreviation}
+        season={forecasts?.season ?? null} generatedAt={forecasts?.generated_at ?? null}
+        trainedThrough={forecasts?.trained_through} />
+
       {lastRecord ? (
         <section className="mb-8">
           <h2 className="mb-3 text-sm">
@@ -171,7 +179,7 @@ export default async function TeamPage({
 
       <section aria-labelledby="team-players" className="mb-8">
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 id="team-players" className="text-sm">Explore players</h2>
+          <h2 id="team-players" className="scroll-mt-20 text-sm">Explore players</h2>
           <p className="font-numeric text-[11px] text-[var(--text-tertiary)]">Current roster unavailable</p>
         </div>
         <p className="mb-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">Open a completed game, then select a player in its ESPN box score. These are game-specific team assignments, rather than a current roster.</p>
@@ -185,7 +193,7 @@ export default async function TeamPage({
       </section>
 
       {history && history.seasons.length > 2 ? (
-        <section className="mb-8">
+        <section id="team-rating-history" className="mb-8 scroll-mt-20">
           <h2 className="mb-3 text-sm">Rating history</h2>
           <div className="card p-4">
             <RatingHistoryChart
@@ -207,57 +215,6 @@ export default async function TeamPage({
         </section>
       ) : null}
 
-      <section>
-        <h2 className="mb-3 text-sm">Next games</h2>
-        {upcoming.length ? (
-          <div className="card divide-y divide-[var(--border-color)]">
-            {upcoming.map((game) => {
-              const isHome = game.home.abbreviation === team.abbreviation
-              const opponent = isHome ? game.away : game.home
-              const winProbability = isHome ? game.p_home : game.p_away
-              return (
-                <Link
-                  key={game.game_id}
-                  href={`/games/${game.game_id}`}
-                  className="flex flex-wrap items-center gap-x-3 gap-y-1 p-3 transition-colors hover:bg-[var(--card-hover)]"
-                >
-                  <span className="w-20 shrink-0 font-numeric text-[11px] text-[var(--text-tertiary)]">
-                    {gameDate(game.date_utc)}
-                  </span>
-                  <span className="font-numeric text-[11px] text-[var(--text-tertiary)]">
-                    {isHome ? 'vs' : '@'}
-                  </span>
-                  <span className="flex min-w-0 items-center gap-2">
-                    <TeamLogo
-                      logo={opponent.logo}
-                      abbreviation={opponent.abbreviation}
-                      name={opponent.name}
-                      size={18}
-                    />
-                    <span className="truncate text-sm text-[var(--text-primary)]">
-                      {opponent.name}
-                    </span>
-                  </span>
-                  <span
-                    className={cn(
-                      'ml-auto font-numeric text-sm',
-                      winProbability >= 0.5
-                        ? 'text-[var(--accent-primary)]'
-                        : 'text-[var(--text-tertiary)]',
-                    )}
-                  >
-                    {pct(winProbability)}
-                  </span>
-                </Link>
-              )
-            })}
-          </div>
-        ) : (
-          <p className="card p-4 text-xs text-[var(--text-tertiary)]">
-            No scheduled games in the published forecast.
-          </p>
-        )}
-      </section>
     </div>
   )
 }

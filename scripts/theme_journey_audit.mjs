@@ -113,6 +113,9 @@ const snapshot = async (page, label, steps, capture = false) => {
       tokens: Object.fromEntries(['--card-bg', '--logo-plate', '--text-primary', '--accent-brand'].map(key => [key, root.getPropertyValue(key).trim()])),
       cardBackgrounds: [...new Set(cards.map(e => getComputedStyle(e).backgroundColor))],
       nativeSchemes: [...new Set([...document.querySelectorAll('select,input')].map(e => getComputedStyle(e).colorScheme))],
+      nativeSchemeMismatches: [...document.querySelectorAll('select,input')]
+        .filter(e => getComputedStyle(e).colorScheme !== (e.closest('.team-schedule') ? 'light' : 'dark'))
+        .map(e => e.getAttribute('aria-label') || e.tagName),
       headingFont: heading ? getComputedStyle(heading).fontFamily : null,
       headingTransform: heading ? getComputedStyle(heading).textTransform : null,
       overflow: document.documentElement.scrollWidth > innerWidth,
@@ -126,7 +129,7 @@ const snapshot = async (page, label, steps, capture = false) => {
   assert.equal(state.scheme, 'dark')
   assert.deepEqual(state.tokens, { '--card-bg': '#17100a', '--logo-plate': '#fdf6ee', '--text-primary': '#fdf6ee', '--accent-brand': '#e2682a' })
   assert(state.cardBackgrounds.every(value => ['rgb(23, 16, 10)', 'rgb(33, 23, 17)'].includes(value)))
-  assert(state.nativeSchemes.every(value => value === 'dark'))
+  assert.deepEqual(state.nativeSchemeMismatches, [])
   if (state.headingFont) { assert.match(state.headingFont, /Arial/); assert.equal(state.headingTransform, 'uppercase') }
   assert.equal(state.overflow, false); assert.deepEqual(state.violations, [])
   if (capture) await page.screenshot({ path: `${out}/${label}-${page.viewportSize().width}.png` })

@@ -1,0 +1,1077 @@
+{
+  "auditedAt": "2026-10-11T13:06:59.471Z",
+  "chromium": "151.0.7922.173",
+  "baseCommit": "9cee669a169806a9535b74b4e5be83402a45069a",
+  "source": {
+    "generatedAt": "2026-10-10T16:08:02+00:00",
+    "trainedThrough": "2026-06-14T00:30:00+00:00",
+    "season": 2027
+  },
+  "forecastSha256": "43f0be4b36fd13e9f6b573fc9bb5a6dbc37a010ced4519de8f36f7fd5478cc58",
+  "productSourceSha256": {
+    "src/app/(app)/teams/[abbr]/page.tsx": "cdcea8815c1252ace7d35abfed2084738d1fb956ef19f15ff5ffa35ae3ca2baf",
+    "src/app/globals.css": "ee0a1e06cfc27106a428d52146438458590baa16a4e08a1c424a85d0e5593fcf",
+    "src/components/schedule/TeamSchedule.tsx": "b55e45fc90078448a3a6edff619a7d430b4499277c4838300959f87dd036a7ff",
+    "src/lib/teamSchedule.ts": "6f4678c398aa3f696d4d922e66fcd2ea8fc33bbad5d69a2a116976b4c01c04bd"
+  },
+  "gates": {
+    "frontendTests": 278,
+    "frontendSuites": 36,
+    "backendTests": 409,
+    "lint": "pass; no warnings",
+    "types": "pass",
+    "productionBuild": "pass; 504 static pages; Next.js 15.5.27"
+  },
+  "serialization": {
+    "kind": "UTF-8 JSON.stringify size, before RSC framing/compression",
+    "teamRows": 80,
+    "teamPropsBytes": 25962,
+    "fullForecastBytes": 740827
+  },
+  "baseline": [
+    {
+      "width": 320,
+      "scheduleTop": 1958.0625,
+      "visibleGameLinks": 8,
+      "controls": 0
+    },
+    {
+      "width": 390,
+      "scheduleTop": 1842.15625,
+      "visibleGameLinks": 8,
+      "controls": 0
+    },
+    {
+      "width": 1440,
+      "scheduleTop": 1439.4375,
+      "visibleGameLinks": 8,
+      "controls": 0
+    }
+  ],
+  "journeys": [
+    {
+      "width": 320,
+      "system": "light",
+      "scheduleTop": 534,
+      "states": [
+        {
+          "label": "entry-game",
+          "route": "/games/401909088",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "team-overview",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "team-section-links",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "forecast-details",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "show-more",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reload-count",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "paging-back-forward",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "november-away",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-1",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-2",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "daily-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-return",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "empty-filter",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=neutral#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reset",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "invalid-shared-url",
+          "route": "/teams/BOS?scheduleMonth=2026-99&scheduleVenue=roof&scheduleCount=99999999999999999&other=keep#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldRscGame": "401909916",
+        "lateResponseDidNotReplaceSlate": true,
+        "sharedTeamFiltersRestored": true
+      },
+      "unexpected": [],
+      "consoleClassificationCounts": {
+        "controlled-logo-outage": 135
+      }
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "scheduleTop": 486,
+      "states": [
+        {
+          "label": "entry-game",
+          "route": "/games/401909088",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "team-overview",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "team-section-links",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "forecast-details",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "show-more",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reload-count",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "paging-back-forward",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "november-away",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-1",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-2",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "daily-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-return",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "empty-filter",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=neutral#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reset",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "invalid-shared-url",
+          "route": "/teams/BOS?scheduleMonth=2026-99&scheduleVenue=roof&scheduleCount=99999999999999999&other=keep#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldRscGame": "401909916",
+        "lateResponseDidNotReplaceSlate": true,
+        "sharedTeamFiltersRestored": true
+      },
+      "unexpected": [],
+      "consoleClassificationCounts": {
+        "controlled-logo-outage": 131
+      }
+    },
+    {
+      "width": 768,
+      "system": "light",
+      "scheduleTop": 371.5,
+      "states": [
+        {
+          "label": "entry-game",
+          "route": "/games/401909088",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "team-overview",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "team-section-links",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "forecast-details",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "show-more",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reload-count",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "paging-back-forward",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "november-away",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-1",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-2",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "daily-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-return",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "empty-filter",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=neutral#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reset",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "invalid-shared-url",
+          "route": "/teams/BOS?scheduleMonth=2026-99&scheduleVenue=roof&scheduleCount=99999999999999999&other=keep#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldRscGame": "401909916",
+        "lateResponseDidNotReplaceSlate": true,
+        "sharedTeamFiltersRestored": true
+      },
+      "unexpected": [],
+      "consoleClassificationCounts": {
+        "controlled-logo-outage": 135
+      }
+    },
+    {
+      "width": 1440,
+      "system": "dark",
+      "scheduleTop": 343.5,
+      "states": [
+        {
+          "label": "entry-game",
+          "route": "/games/401909088",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "team-overview",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "team-section-links",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "forecast-details",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "show-more",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reload-count",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "paging-back-forward",
+          "route": "/teams/BOS?scheduleCount=12#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "november-away",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-1",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909903",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "restored-2",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "daily-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-slate",
+          "route": "/games?date=2026-11-01&team=BOS",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": null,
+          "nativeSchemes": [],
+          "violations": []
+        },
+        {
+          "label": "interrupted-response-return",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "empty-filter",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=neutral#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "reset",
+          "route": "/teams/BOS#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        },
+        {
+          "label": "invalid-shared-url",
+          "route": "/teams/BOS?scheduleMonth=2026-99&scheduleVenue=roof&scheduleCount=99999999999999999&other=keep#team-schedule",
+          "overflow": false,
+          "rootBackground": "rgb(12, 7, 5)",
+          "scheduleBackground": "rgb(253, 246, 238)",
+          "nativeSchemes": [
+            "light",
+            "light"
+          ],
+          "violations": []
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldRscGame": "401909916",
+        "lateResponseDidNotReplaceSlate": true,
+        "sharedTeamFiltersRestored": true
+      },
+      "unexpected": [],
+      "consoleClassificationCounts": {
+        "controlled-logo-outage": 130
+      }
+    }
+  ],
+  "coldLoad": {
+    "initial": {
+      "busy": "true",
+      "disabledControls": true,
+      "status": "Restoring schedule filters…"
+    },
+    "restoredSharedFilters": true,
+    "states": [
+      {
+        "label": "cold-shared-filters",
+        "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+        "overflow": false,
+        "rootBackground": "rgb(12, 7, 5)",
+        "scheduleBackground": "rgb(253, 246, 238)",
+        "nativeSchemes": [
+          "light",
+          "light"
+        ],
+        "violations": []
+      }
+    ],
+    "unexpected": []
+  },
+  "rawEvidenceDirectory": "/tmp/nba-team-exploration-2026-10-11",
+  "rawResultsSha256": "2dc41de0bd5c308e0016187bdbf03b260c1bf3729462b7540bb5b01392cf7be7",
+  "limitations": [
+    "Local production build in saved cloud Chromium; no Safari/Firefox claim.",
+    "ESPN logos deliberately unavailable; abbreviation fallbacks shown. Provider calls were controlled unavailable, not live data validation.",
+    "Vercel API/public-preview access remains restricted; exact-head deployment status is checked through GitHub.",
+    "Source includes 80 Boston regular-season forecasts; no preseason exhibitions or invented scores/settled accuracy."
+  ],
+  "additionalThemeRegression": {
+    "rawResultsSha256": "73c4c0ca815938f16cb11ce81d13e713fa4c9066c51b905c2abc65aef9384dcd",
+    "fixture": "Existing synthetic player preload and temporary error route, confined to /tmp/nba-team-theme-2026-10-11",
+    "journeys": [
+      {
+        "width": 390,
+        "system": "dark",
+        "states": [
+          "home",
+          "slate",
+          "empty-slate",
+          "upcoming",
+          "empty-shooting",
+          "prior-shooting",
+          "team",
+          "archived-comparison",
+          "player",
+          "comparison-return",
+          "head-to-head",
+          "lab",
+          "ratings",
+          "methodology",
+          "evidence",
+          "season-list",
+          "archive-season",
+          "archive-series",
+          "archive-games",
+          "current-season",
+          "bracket",
+          "allstar",
+          "upsets",
+          "season-preview",
+          "playoff-picture",
+          "empty-profile",
+          "not-found",
+          "not-found-recovery",
+          "loading",
+          "error",
+          "retry-recovery"
+        ],
+        "unexpectedErrors": [],
+        "diagnostics": {
+          "unexpected": [],
+          "consoleClassificationCounts": {
+            "controlled-logo-outage": 300,
+            "controlled-scoreboard-503": 3,
+            "controlled-server-failure": 1
+          },
+          "pageErrors": [],
+          "controlledServerErrors": [
+            {
+              "sequence": 402,
+              "at": "2026-10-11T13:11:04.548Z",
+              "elapsedMs": 42549,
+              "id": "journey-390-dark",
+              "stage": "loading",
+              "route": "http://127.0.0.1:3212/qa-theme",
+              "type": "console",
+              "level": "error",
+              "classification": "controlled-server-failure",
+              "message": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+              "location": {
+                "url": "http://127.0.0.1:3212/_next/static/chunks/6252-cd9afa7b1c0aad03.js",
+                "line": 0,
+                "column": 161633,
+                "lineNumber": 0,
+                "columnNumber": 161633
+              },
+              "args": [
+                {
+                  "message": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
+                  "stack": "Error: An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "coldPreferences": [
+      {
+        "preference": "off",
+        "initial": {
+          "ambient": "off",
+          "selectedBackground": "rgb(33, 23, 17)",
+          "pressed": [],
+          "busy": "true"
+        },
+        "stableBackgroundAndPreference": true,
+        "unexpected": []
+      },
+      {
+        "preference": "vivid",
+        "initial": {
+          "ambient": "vivid",
+          "selectedBackground": "rgb(33, 23, 17)",
+          "pressed": [],
+          "busy": "true"
+        },
+        "stableBackgroundAndPreference": true,
+        "unexpected": []
+      }
+    ],
+    "product": [
+      {
+        "label": "provider-unavailable",
+        "path": "/games/401859967",
+        "unexpected": []
+      }
+    ],
+    "preferenceRecovery": {
+      "controlledMissingRootAttribute": true,
+      "restoredPreference": "off",
+      "storageUnchanged": true,
+      "unexpectedErrors": []
+    }
+  },
+  "runnerSha256": {
+    "scripts/team_schedule_audit.mjs": "b2492760b034d5c2688ddbe0a1c34c6445d79ec71095101b7f842f3c59743aae",
+    "scripts/theme_journey_audit.mjs": "5ab5f93bdd3c1d4ed6a7a4e9fba0c9624ba24d14f1c6cc3abaf8d226f84e406a"
+  }
+}

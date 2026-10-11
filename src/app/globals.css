@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Owner-requested cream schedule surface, within the existing walnut shell.
+   Scope every foreground/control token so the light card remains accessible. */
+.team-schedule {
+  color-scheme: light;
+  --card-bg: #fdf6ee;
+  --card-hover: #f1e5d6;
+  --input-bg: #fffaf4;
+  --muted-bg: #eee0ce;
+  --text-primary: #24170e;
+  --text-secondary: #4c3929;
+  --text-tertiary: #65503d;
+  --border-color: #cfbda6;
+  --border-hover: #8a6847;
+  --accent-brand: #a74416;
+}
+.team-schedule select,
+.team-schedule button {
+  border-color: var(--border-hover);
+}
+
 /* ────────────────────────────────────────────────────────────
    Design tokens — Bugatti, ARENA variant. Dark only.
 
