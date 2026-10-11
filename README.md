@@ -45,6 +45,19 @@ one.
 Also: per-team pages with rating history against the league band, and a
 head-to-head surface over all 870 ordered matchups.
 
+**Team schedule exploration** brings published regular-season games ahead of
+historical player links and charts. Filter by Eastern-time month and home,
+away or neutral court; reveal more games or open a row's venue, published win
+probability and explicitly projected score/total. Matchup and day-slate links
+connect the view to the existing game pages. Filters and disclosure count are
+bookmarkable and restore on reload and browser history navigation. Section
+links keep season projections, players and rating history directly reachable.
+The cream panel stays within Hardwood's walnut shell and shows forecast and
+training timestamps. Coverage is the published snapshot; preseason exhibition
+forecasts are unavailable here, and the empty live regular-season record before
+tip-off is expected. No models, probabilities or source timestamps change.
+See [scope and browser evidence](docs/TEAM_SCHEDULE_2026-10.md).
+
 **Player exploration** starts on a team’s completed games or a game’s box score.
 Names and game leaders with usable ESPN athlete IDs open
 `/players/espn/[id]?game=[event]&team=[espn-team]`, showing that game’s line,
@@ -83,7 +96,8 @@ shot quality. See [scope and verification](docs/SHOOTING_CONTEXT_2026-10.md).
 **A consistent Hardwood theme** follows the full journey, including player
 profiles, shooting context, comparisons and evidence. Walnut surfaces, cream
 logo plates and orange navigation retain the original dark design under either
-system color preference. Native controls inherit that scheme; the saved Court
+system color preference. Native controls use their local surface scheme,
+including the light cream team schedule; the saved Court
 dial paints its choice before hydration. Inline links have visible underlines,
 small negative labels use readable red ink, and narrow evidence tables accept
 keyboard focus and horizontal arrow scrolling. Archive series scores keep their
