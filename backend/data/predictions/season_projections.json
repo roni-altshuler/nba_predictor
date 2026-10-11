@@ -3,7 +3,7 @@
   "simulations": 20000,
   "games_played": 0,
   "games_remaining": 1200,
-  "generated_at": "2026-10-10T16:08:02+00:00",
+  "generated_at": "2026-10-11T16:32:23+00:00",
   "teams": [
     {
       "team_id": 20,
@@ -942,7 +942,7 @@
       "elo": 1328.5
     }
   ],
-  "model_version": "2026.08.1+53b7ee64",
+  "model_version": "2026.08.1+6cc7e1cb",
   "config": {
     "features": [
       "elo_diff",
@@ -980,8 +980,8 @@
     "sims": 20000,
     "season": 2027,
     "margin_sd": 12.627796745982232,
-    "total_sd": 18.98469098716709,
-    "artifact_sha256": "8a41d189defdea78c133243a3e309a0499fc61fe44129b62042c7369307d4baa"
+    "total_sd": 18.984690987167095,
+    "artifact_sha256": "35bcaafab3c081aca7d2d8f5023b39ded1639f2bb7b78f3b611f6acafeaf1cd4"
   },
   "measured": {
     "available": true,
@@ -1005,17 +1005,17 @@
   "ingestion": {
     "source": "espn",
     "status": "ok",
-    "attempted_at": "2026-10-10T16:07:56+00:00",
+    "attempted_at": "2026-10-11T16:32:16+00:00",
     "seasons": [
       2027
     ],
-    "last_success_at": "2026-10-10T16:07:56+00:00",
+    "last_success_at": "2026-10-11T16:32:16+00:00",
     "event_count": 1273,
     "warehouse_updated": true,
     "error": null,
     "stats": {
-      "games": 25,
-      "scheduled": 1242,
+      "games": 33,
+      "scheduled": 1234,
       "skipped": 6
     }
   }
