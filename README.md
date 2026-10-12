@@ -168,7 +168,15 @@ See [snapshot rules and regression checks](docs/FORECAST_PROVENANCE_2026-10.md).
 
 ## Courtside and Forecast Lab
 
-The home page now provides an interactive matchup and team following. `/lab` adds
+The home page leads with compact published games and confirmed score overlays,
+direct team/matchup links, and a concise model outlook in each row's native
+disclosure. It names regular-season coverage and the preseason publication;
+zero settled regular-season forecasts before opening night are expected.
+Forecast timing, season projections and model evidence are available on demand.
+All games on the next published slate are shown. See the
+[homepage scope, pixels and browser checks](docs/HOME_SLATE_2026-10.md).
+
+`/lab` retains the interactive matchup, team following and
 slate and team filters, close-call discovery, shareable matchups, and hypothetical
 single-game records, a complete franchise-following panel, bookmarkable filters,
 and adjustable model-implied score ranges. Probabilities remain the published model outputs; the page

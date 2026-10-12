@@ -1,0 +1,848 @@
+{
+  "auditedAt": "2026-10-12T12:48:33.615Z",
+  "chromium": "151.0.7922.173",
+  "baseCommit": "7d616eb456ed9222e982be111498b6f2f486a025",
+  "source": {
+    "firstDay": "2026-10-20",
+    "games": [
+      "401909088",
+      "401909089",
+      "401909090"
+    ],
+    "generatedAt": "2026-10-11T16:32:23+00:00",
+    "trainedThrough": "2026-06-14T00:30:00+00:00"
+  },
+  "productSourceSha256": {
+    "src/app/(app)/page.tsx": "e19ccbe42f7f3abbe091a003eadae0ba1cad0d51a8a52c5055a7d4b59038c632",
+    "src/components/live/LiveSlate.tsx": "a66f5c27aa66f97ae7b4a6245b43ff177a486759eafd1cf0124ec844423919f9",
+    "src/components/forecast/CompactGameCard.tsx": "9ed626001bb5ca9959f68657b624835f9ca34f9e0e4a46c14b652fe0caf409a4"
+  },
+  "unchangedBackendPublicDependenciesWorkflows": {
+    "files": 133,
+    "sha256": "f25ee7dd1396128474da146690f13ecd63d87752f9b4904f7d943318a0b96157"
+  },
+  "gates": {
+    "frontendTests": 281,
+    "suites": 37,
+    "lint": "pass, no warnings",
+    "types": "pass",
+    "productionBuild": "Next.js 15.5.27; 504 static pages"
+  },
+  "baseline": [
+    {
+      "width": 320,
+      "selectedRect": {
+        "top": 710.5,
+        "height": 687.5
+      },
+      "scoreboardTop": 2290.5,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "selectedRect": {
+        "top": 642,
+        "height": 583.5
+      },
+      "scoreboardTop": 1994.5,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "selectedRect": {
+        "top": 405.5,
+        "height": 595.5
+      },
+      "scoreboardTop": 1194.5,
+      "errors": []
+    }
+  ],
+  "journeys": [
+    {
+      "width": 320,
+      "system": "light",
+      "states": [
+        {
+          "label": "home",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "model-outlook",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-1",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-2",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "team-shared-filters",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "interrupted-navigation",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "empty-date",
+          "route": "/games?date=2026-10-21&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "date-recovery",
+          "route": "/games?date=2026-10-20&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "season-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "publication-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        }
+      ],
+      "slateTop": 251,
+      "cards": [
+        {
+          "id": "401909088",
+          "top": 355,
+          "height": 195
+        },
+        {
+          "id": "401909089",
+          "top": 562,
+          "height": 195
+        },
+        {
+          "id": "401909090",
+          "top": 769,
+          "height": 195
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldGame": "401909089",
+        "lateResponseDidNotReplaceTeam": true
+      },
+      "nextSlateHref": "/games?date=2026-10-21",
+      "diagnostics": {
+        "unexpected": [],
+        "controlledConsoleCounts": {
+          "controlled-logo-outage": 342,
+          "controlled-scoreboard-503": 9
+        }
+      }
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "states": [
+        {
+          "label": "home",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "model-outlook",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-1",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-2",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "team-shared-filters",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "interrupted-navigation",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "empty-date",
+          "route": "/games?date=2026-10-21&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "date-recovery",
+          "route": "/games?date=2026-10-20&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "season-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "publication-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        }
+      ],
+      "slateTop": 219,
+      "cards": [
+        {
+          "id": "401909088",
+          "top": 323,
+          "height": 195
+        },
+        {
+          "id": "401909089",
+          "top": 530,
+          "height": 195
+        },
+        {
+          "id": "401909090",
+          "top": 737,
+          "height": 195
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldGame": "401909089",
+        "lateResponseDidNotReplaceTeam": true
+      },
+      "nextSlateHref": "/games?date=2026-10-21",
+      "diagnostics": {
+        "unexpected": [],
+        "controlledConsoleCounts": {
+          "controlled-logo-outage": 342,
+          "controlled-scoreboard-503": 9
+        }
+      }
+    },
+    {
+      "width": 768,
+      "system": "light",
+      "states": [
+        {
+          "label": "home",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "model-outlook",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-1",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-2",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "team-shared-filters",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "interrupted-navigation",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "empty-date",
+          "route": "/games?date=2026-10-21&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "date-recovery",
+          "route": "/games?date=2026-10-20&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "season-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "publication-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        }
+      ],
+      "slateTop": 143.5,
+      "cards": [
+        {
+          "id": "401909088",
+          "top": 227.5,
+          "height": 195
+        },
+        {
+          "id": "401909089",
+          "top": 434.5,
+          "height": 195
+        },
+        {
+          "id": "401909090",
+          "top": 641.5,
+          "height": 195
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldGame": "401909089",
+        "lateResponseDidNotReplaceTeam": true
+      },
+      "nextSlateHref": "/games?date=2026-10-21",
+      "diagnostics": {
+        "unexpected": [],
+        "controlledConsoleCounts": {
+          "controlled-logo-outage": 340,
+          "controlled-scoreboard-503": 9
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "system": "dark",
+      "states": [
+        {
+          "label": "home",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "model-outlook",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-1",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-2",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "team-shared-filters",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "interrupted-navigation",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "empty-date",
+          "route": "/games?date=2026-10-21&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "date-recovery",
+          "route": "/games?date=2026-10-20&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "season-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "publication-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        }
+      ],
+      "slateTop": 143.5,
+      "cards": [
+        {
+          "id": "401909088",
+          "top": 199.5,
+          "height": 195
+        },
+        {
+          "id": "401909089",
+          "top": 406.5,
+          "height": 195
+        },
+        {
+          "id": "401909090",
+          "top": 613.5,
+          "height": 195
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldGame": "401909089",
+        "lateResponseDidNotReplaceTeam": true
+      },
+      "nextSlateHref": "/games?date=2026-10-21",
+      "diagnostics": {
+        "unexpected": [],
+        "controlledConsoleCounts": {
+          "controlled-logo-outage": 337,
+          "controlled-scoreboard-503": 9
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "system": "dark",
+      "states": [
+        {
+          "label": "home",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "model-outlook",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-1",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-1",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-2",
+          "route": "/games/401909088#forecast",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "matchup-return-2",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "team-shared-filters",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away&scheduleCount=12#team-schedule",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "interrupted-navigation",
+          "route": "/teams/BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "empty-date",
+          "route": "/games?date=2026-10-21&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "date-recovery",
+          "route": "/games?date=2026-10-20&team=BOS",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "season-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        },
+        {
+          "label": "publication-details",
+          "route": "/",
+          "overflow": false,
+          "violations": [],
+          "idleFrameDelta": 0,
+          "canvasDrawDelta": 0
+        }
+      ],
+      "slateTop": 124,
+      "cards": [
+        {
+          "id": "401909088",
+          "top": 180,
+          "height": 195
+        },
+        {
+          "id": "401909089",
+          "top": 180,
+          "height": 195
+        },
+        {
+          "id": "401909090",
+          "top": 180,
+          "height": 195
+        }
+      ],
+      "interruption": {
+        "exercised": true,
+        "heldGame": "401909089",
+        "lateResponseDidNotReplaceTeam": true
+      },
+      "nextSlateHref": "/games?date=2026-10-21",
+      "diagnostics": {
+        "unexpected": [],
+        "controlledConsoleCounts": {
+          "controlled-logo-outage": 336,
+          "controlled-scoreboard-503": 9
+        }
+      }
+    }
+  ],
+  "broaderTheme": {
+    "states": [
+      "home",
+      "slate",
+      "empty-slate",
+      "upcoming",
+      "empty-shooting",
+      "prior-shooting",
+      "team",
+      "archived-comparison",
+      "player",
+      "comparison-return",
+      "head-to-head",
+      "lab",
+      "ratings",
+      "methodology",
+      "evidence",
+      "season-list",
+      "archive-season",
+      "archive-series",
+      "archive-games",
+      "current-season",
+      "bracket",
+      "allstar",
+      "upsets",
+      "season-preview",
+      "playoff-picture",
+      "empty-profile",
+      "not-found",
+      "not-found-recovery",
+      "loading",
+      "error",
+      "retry-recovery"
+    ],
+    "unexpected": [],
+    "coldLegacy": [
+      {
+        "legacyPreference": "off",
+        "initial": {
+          "ambient": null,
+          "background": "rgb(12, 7, 5)",
+          "canvases": 0,
+          "controls": 0
+        },
+        "staticBackgroundAndIgnoredPreference": true,
+        "unexpected": []
+      },
+      {
+        "legacyPreference": "vivid",
+        "initial": {
+          "ambient": null,
+          "background": "rgb(12, 7, 5)",
+          "canvases": 0,
+          "controls": 0
+        },
+        "staticBackgroundAndIgnoredPreference": true,
+        "unexpected": []
+      }
+    ],
+    "providerUnavailableUnexpected": []
+  },
+  "missingPublicationFixture": {
+    "temporaryRoute": "/qa-home",
+    "viewport": 390,
+    "withheld": "only temporary fixture forecast file; restored in finally",
+    "gameRows": 0,
+    "errors": [],
+    "violations": []
+  },
+  "syntheticScoreContract": {
+    "basis": "Explicit synthetic score envelopes for existing browser parser/overlay only; not actual preseason/live outcomes",
+    "viewport": 390,
+    "results": [
+      {
+        "mode": "live-zero",
+        "scoreState": "live",
+        "probabilityUnchanged": true
+      },
+      {
+        "mode": "final",
+        "scoreState": "final",
+        "probabilityUnchanged": true
+      },
+      {
+        "mode": "post-unconfirmed",
+        "scoreState": "pending",
+        "probabilityUnchanged": true
+      },
+      {
+        "mode": "missing",
+        "scoreState": "pending",
+        "probabilityUnchanged": true
+      },
+      {
+        "mode": "unavailable",
+        "scoreState": "pending",
+        "probabilityUnchanged": true
+      }
+    ],
+    "errors": []
+  },
+  "runnerSha256": {
+    "scripts/home_slate_audit.mjs": "ade1443e42eeef5ef61052f6d93f9648efd396ffa1ebca9ead64950865955f46",
+    "scripts/theme_journey_audit.mjs": "c92cf1f01bc1a9e0450806f7675a9a22e27b590a98e821ea1d65e90341218d4e"
+  },
+  "rawResultsSha256": {
+    "baseline/results.json": "de47b4bc86a769379d5690e43426f11547276be4d945d3733594fbf9cc858788",
+    "product-v3/results.json": "a91ebc3ca0a1224308a2548d2bdb9304d97103098bb9131feae28c1208a75301",
+    "theme-v3/results.json": "878e5fb354cf4cccb0761ba02c0b5e5088ae633bac9ce1efaf3d1024d469bb58"
+  },
+  "rawEvidenceDirectory": "/tmp/nba-home-slate-2026-10-12",
+  "retainedFailures": [
+    "Back from filtered team restores prior query instead of jumping all entries; runner corrected.",
+    "Tablet action targets overlapped; product breakpoint fixed and full responsive rerun passed."
+  ],
+  "limits": [
+    "Saved-cloud production Chromium; hosted pixels remain unverified under known proxy/preview restrictions.",
+    "Provider/logo outages controlled; synthetic score/player cases do not claim real NBA outcomes.",
+    "Existing More-menu Escape focus behavior remains unchanged.",
+    "No model quality or temporal evaluation claim."
+  ]
+}

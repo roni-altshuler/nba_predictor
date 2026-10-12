@@ -28,7 +28,7 @@ async function checkedDiagnostics(collector) {
 }
 
 const content = {
-  '/': { heading: 'Your front row to the forecast.' },
+  '/': { heading: 'NBA games & scores' },
   '/games': { heading: 'Games, one night at a time.' },
   '/games/401909088': { heading: 'Boston Celtics at Detroit Pistons' },
   '/games/401859967': { heading: 'Scoring by period' },
@@ -139,7 +139,7 @@ try {
     report.journeys.push(journey)
     await page.goto(base); await ready(page, '/')
     await snapshot(page, 'home', journey.steps, true)
-    await page.locator('#main').getByRole('link', { name: 'All games', exact: true }).click(); await ready(page, '/games')
+    await page.locator('#main').getByRole('link', { name: 'Daily slate →', exact: true }).click(); await ready(page, '/games')
     await snapshot(page, 'slate', journey.steps, true)
     await page.getByLabel('Game date', { exact: true }).fill('2026-10-21')
     await page.getByLabel('Filter by franchise', { exact: true }).selectOption('BOS')

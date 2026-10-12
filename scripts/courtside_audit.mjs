@@ -75,7 +75,7 @@ try {
     }
     if (width === 1440) {
       await page.goto(base, { waitUntil: 'domcontentloaded' })
-      await page.getByRole('heading', { name: 'Your front row to the forecast.' }).waitFor()
+      await page.getByRole('heading', { name: 'NBA games & scores' }).waitFor()
       for (const homeWidth of [320, 390, 768, 1440]) {
         await page.setViewportSize({ width: homeWidth, height: 1000 })
         await page.screenshot({ path: `${out}/home-${homeWidth}.png`, fullPage: true })
