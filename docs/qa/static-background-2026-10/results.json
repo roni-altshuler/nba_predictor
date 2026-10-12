@@ -1,0 +1,1057 @@
+{
+  "auditedAt": "2026-10-12T06:52:30.062Z",
+  "chromium": "151.0.7922.173",
+  "base": "0c46874b9eff4b41459aaa9bc45f438954a13a9f",
+  "sourceSha256": {
+    "src/app/layout.tsx": "cacd9f8f63eddd87710b9f30f5e6f14a1ffa3f2d71e7bb342290ea481a18db54",
+    "src/app/globals.css": "8993cec5482aad1f2acbb60933deb18e69a6b104fbcc1671779e7ca5a701649d",
+    "src/components/shell/AppShell.tsx": "90caa8932f135c89bc2a1ccb9403ad2161bd9b7942aac71a1dae9b643b76b158"
+  },
+  "trackedDataAndPublicFiles": 67,
+  "trackedDataAndPublicSha256": "c58d9e5468de4a09928ee0e0dab944e406ca424c97220543cd140e45d3777213",
+  "normalMotion": true,
+  "idleWindowMs": 1200,
+  "gates": {
+    "frontendTests": 273,
+    "frontendSuites": 35,
+    "retiredDialTests": 5,
+    "lint": "pass without warnings",
+    "types": "pass",
+    "productionBuild": "Next.js 15.5.27; 504 static pages"
+  },
+  "sourceAndBundleInspection": "No ambient modules/identifiers or preference startup code in src/production JS/CSS. Useful loading/live-status indicators retained.",
+  "baseline": [
+    {
+      "width": 320,
+      "system": "light",
+      "pref": null,
+      "path": "/",
+      "initial": {
+        "requested": 139,
+        "executed": 138,
+        "pending": 1,
+        "draws": 67,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "settled": {
+        "requested": 211,
+        "executed": 210,
+        "pending": 1,
+        "draws": 103,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "frameDelta": 72,
+      "drawDelta": 36,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "system": "light",
+      "pref": null,
+      "path": "/teams/BOS",
+      "initial": {
+        "requested": 136,
+        "executed": 135,
+        "pending": 1,
+        "draws": 67,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "settled": {
+        "requested": 209,
+        "executed": 208,
+        "pending": 1,
+        "draws": 103,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "frameDelta": 73,
+      "drawDelta": 36,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "pref": "vivid",
+      "path": "/",
+      "initial": {
+        "requested": 138,
+        "executed": 137,
+        "pending": 1,
+        "draws": 67,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "vivid",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": "vivid"
+      },
+      "settled": {
+        "requested": 210,
+        "executed": 209,
+        "pending": 1,
+        "draws": 103,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "vivid",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": "vivid"
+      },
+      "frameDelta": 72,
+      "drawDelta": 36,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "pref": "vivid",
+      "path": "/teams/BOS",
+      "initial": {
+        "requested": 136,
+        "executed": 135,
+        "pending": 1,
+        "draws": 67,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "vivid",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": "vivid"
+      },
+      "settled": {
+        "requested": 209,
+        "executed": 208,
+        "pending": 1,
+        "draws": 103,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "vivid",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": "vivid"
+      },
+      "frameDelta": 73,
+      "drawDelta": 36,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "system": "light",
+      "pref": null,
+      "path": "/",
+      "initial": {
+        "requested": 113,
+        "executed": 112,
+        "pending": 1,
+        "draws": 58,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "settled": {
+        "requested": 171,
+        "executed": 170,
+        "pending": 1,
+        "draws": 92,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "frameDelta": 58,
+      "drawDelta": 34,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "system": "light",
+      "pref": null,
+      "path": "/teams/BOS",
+      "initial": {
+        "requested": 114,
+        "executed": 113,
+        "pending": 1,
+        "draws": 62,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "settled": {
+        "requested": 174,
+        "executed": 173,
+        "pending": 1,
+        "draws": 96,
+        "canvases": 1,
+        "ambientNodes": 7,
+        "ambientAttribute": "soft",
+        "background": "rgb(12, 7, 5)",
+        "backgroundImage": "none",
+        "animations": [
+          {
+            "name": "ambient-drift-a",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-a"
+          },
+          {
+            "name": "ambient-drift-b",
+            "iterations": "Infinity",
+            "target": "ambient-glow ambient-glow-b"
+          }
+        ],
+        "svgLoops": 0,
+        "storage": null
+      },
+      "frameDelta": 60,
+      "drawDelta": 34,
+      "errors": []
+    }
+  ],
+  "journeys": [
+    {
+      "width": 320,
+      "system": "light",
+      "legacyPreference": null,
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 37,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 320,
+      "system": "dark",
+      "legacyPreference": "vivid",
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        },
+        {
+          "label": "team-matchup-history",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away"
+        },
+        {
+          "label": "chart-interaction",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away"
+        },
+        {
+          "label": "date-filter",
+          "route": "/games?date=2026-10-20&team=BOS"
+        },
+        {
+          "label": "predictor-swap",
+          "route": "/predict?home=BOS&away=ATL"
+        },
+        {
+          "label": "archive-bracket-navigation",
+          "route": "/seasons/2026/series/19v8"
+        },
+        {
+          "label": "mobile-menu-keyboard",
+          "route": "/seasons/2026/series/19v8"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 124,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": {
+        "keyboardOpened": true,
+        "tabReachedMenu": true,
+        "escapeClosed": true,
+        "focusReturnedToMore": false,
+        "activeElementAfterEscape": "BODY"
+      }
+    },
+    {
+      "width": 390,
+      "system": "light",
+      "legacyPreference": null,
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 37,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 390,
+      "system": "dark",
+      "legacyPreference": "vivid",
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 37,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 768,
+      "system": "light",
+      "legacyPreference": null,
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 40,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 768,
+      "system": "dark",
+      "legacyPreference": "vivid",
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 40,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 1440,
+      "system": "light",
+      "legacyPreference": null,
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 41,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    },
+    {
+      "width": 1440,
+      "system": "dark",
+      "legacyPreference": "vivid",
+      "states": [
+        {
+          "label": "home",
+          "route": "/"
+        },
+        {
+          "label": "team",
+          "route": "/teams/BOS"
+        },
+        {
+          "label": "slate",
+          "route": "/games"
+        },
+        {
+          "label": "upcoming",
+          "route": "/games/401909088"
+        },
+        {
+          "label": "archive-game",
+          "route": "/games/401859967"
+        },
+        {
+          "label": "player-unavailable",
+          "route": "/players/espn/900000001"
+        },
+        {
+          "label": "bracket",
+          "route": "/bracket"
+        },
+        {
+          "label": "predictor",
+          "route": "/predict"
+        },
+        {
+          "label": "accuracy",
+          "route": "/accuracy"
+        },
+        {
+          "label": "team-matchup-history",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away"
+        },
+        {
+          "label": "chart-interaction",
+          "route": "/teams/BOS?scheduleMonth=2026-11&scheduleVenue=away"
+        },
+        {
+          "label": "date-filter",
+          "route": "/games?date=2026-10-20&team=BOS"
+        },
+        {
+          "label": "predictor-swap",
+          "route": "/predict?home=BOS&away=ATL"
+        },
+        {
+          "label": "archive-bracket-navigation",
+          "route": "/seasons/2026/series/19v8"
+        }
+      ],
+      "maximumIdleDeltas": {
+        "requested": 0,
+        "executed": 0,
+        "draws": 0
+      },
+      "maximumPendingFrames": 0,
+      "maximumCanvasNodes": 0,
+      "maximumAmbientNodes": 0,
+      "maximumSvgLoops": 0,
+      "allNoRunningAnimations": true,
+      "allStaticBackground": true,
+      "allNoAmbientAttribute": true,
+      "allLegacyStorageUnchanged": true,
+      "allNoOverflowOrViolations": true,
+      "diagnostics": {
+        "unexpected": [],
+        "consoleClassifications": {
+          "controlled-logo-outage": 129,
+          "controlled-scoreboard-503": 1
+        }
+      },
+      "mobileMenu": null
+    }
+  ],
+  "mobileFocusBaseline": [
+    {
+      "name": "baseline",
+      "inside": true,
+      "focusReturnedToMore": false,
+      "activeElement": "BODY"
+    },
+    {
+      "name": "product",
+      "inside": true,
+      "focusReturnedToMore": false,
+      "activeElement": "BODY"
+    }
+  ],
+  "broadTheme": {
+    "states": [
+      "home",
+      "slate",
+      "empty-slate",
+      "upcoming",
+      "empty-shooting",
+      "prior-shooting",
+      "team",
+      "archived-comparison",
+      "player",
+      "comparison-return",
+      "head-to-head",
+      "lab",
+      "ratings",
+      "methodology",
+      "evidence",
+      "season-list",
+      "archive-season",
+      "archive-series",
+      "archive-games",
+      "current-season",
+      "bracket",
+      "allstar",
+      "upsets",
+      "season-preview",
+      "playoff-picture",
+      "empty-profile",
+      "not-found",
+      "not-found-recovery",
+      "loading",
+      "error",
+      "retry-recovery"
+    ],
+    "unexpectedErrors": [],
+    "coldLegacyPreferences": [
+      {
+        "legacyPreference": "off",
+        "initial": {
+          "ambient": null,
+          "background": "rgb(12, 7, 5)",
+          "canvases": 0,
+          "controls": 0
+        },
+        "sampledFrames": 101,
+        "staticBackgroundAndIgnoredPreference": true,
+        "diagnostics": {
+          "unexpected": []
+        }
+      },
+      {
+        "legacyPreference": "vivid",
+        "initial": {
+          "ambient": null,
+          "background": "rgb(12, 7, 5)",
+          "canvases": 0,
+          "controls": 0
+        },
+        "sampledFrames": 101,
+        "staticBackgroundAndIgnoredPreference": true,
+        "diagnostics": {
+          "unexpected": []
+        }
+      }
+    ],
+    "productProviderUnavailable": {
+      "label": "provider-unavailable",
+      "unexpected": []
+    }
+  },
+  "runnerSha256": {
+    "scripts/qa/motion_probe.mjs": "40b6aeda990a2a9e5eba19b354ad428c4f90879f76b7d49bdd5b778324fcba58",
+    "scripts/static_background_audit.mjs": "c46c2051962ab24df391a562d4ddc29558afc4c75740b9902a71b7517286d035",
+    "scripts/theme_journey_audit.mjs": "2635832adb94ff877a5c14ed073e434f54ff76fea4ecd0f8ae8f2e0db2c3b156"
+  },
+  "rawResultsSha256": {
+    "baseline/results.json": "e613a8a1e74c449541535bb03285d520f8a945f0d24d29f58df2b9a79d15a8b1",
+    "product-v3/results.json": "c906e229db938fb9ab987f548a869ad7d142dbcb9f5e77ecf67a3730b9ba189e",
+    "theme-regression/results.json": "e4bc147a9e65437bcb5f06ee5b6ce77e8b3903debb6141b842f63ce9453da5fe",
+    "mobile-focus-baseline.json": "bb7d146ba60362ad76489ff6e6861036cd72395c8bc779e22aa885b4bb8e414b"
+  },
+  "rawEvidenceDirectory": "/tmp/nba-static-background-2026-10-12",
+  "knownBaselineFinding": "More-menu Escape returns focus to BODY on baseline and product; unchanged and outside this removal.",
+  "retainedHarnessFailures": [
+    "Archive visit initially expected h1 instead of the existing Scoring by period heading.",
+    "Mobile Escape focus restoration failed; reproduced on baseline and recorded separately."
+  ],
+  "limitations": [
+    "Saved cloud production Chromium, not hosted pixels; existing proxy/preview restrictions remain.",
+    "Provider calls controlled HTTP 503 and logo requests deliberately unavailable.",
+    "No Safari/Firefox, live ESPN or CPU/battery benchmark claim."
+  ]
+}
