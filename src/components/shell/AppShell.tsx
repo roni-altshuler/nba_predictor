@@ -1,24 +1,14 @@
 'use client'
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 import { PageTransition } from '@/components/motion/PageTransition'
-import { AmbientBackground } from '@/components/shell/AmbientBackground'
-import { AmbientToggle } from '@/components/shell/AmbientToggle'
 import { EASE_OUT } from '@/lib/motion'
 import { recordVisit } from '@/lib/navstack'
 import { cn } from '@/lib/utils'
-
-// The chalk court never runs on the server: ssr:false keeps the canvas out
-// of the prerendered HTML (zero CLS, zero hydration cost on crawlers), the
-// same loader pattern as the NFL sibling's chalkboard.
-const CourtField = dynamic(() => import('@/components/background/CourtField'), {
-  ssr: false,
-})
 
 /**
  * The app chrome: a fixed sidebar on desktop, a bottom tab bar on mobile.
@@ -97,12 +87,7 @@ export function AppShell({
   const moreActive = MOBILE_MORE.some((item) => isActive(pathname, item.href))
 
   return (
-    // No background on this wrapper, deliberately: the body paints the
-    // black, the chalk-court canvas sits at z-index -1 above it, and an
-    // opaque wrapper here would put a wall between the two.
-    <div className="min-h-screen">
-      <CourtField />
-      <AmbientBackground />
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Desktop sidebar */}
       <aside
         className="fixed left-0 top-0 z-30 hidden h-full w-[var(--shell-sidebar-w)] flex-col border-r border-[var(--border-color)] bg-[var(--nav-bg)] md:flex"
@@ -144,11 +129,6 @@ export function AppShell({
             ),
           )}
         </nav>
-        {/* The quiet block at the bottom of the rail: the reader's dial on
-            the ambient court. */}
-        <div className="border-t border-[var(--border-color)] p-3">
-          <AmbientToggle />
-        </div>
       </aside>
 
       {/* Mobile top bar */}
@@ -336,9 +316,6 @@ function MoreSheet({
             </Link>
           ))}
         </nav>
-        <div className="mt-3 border-t border-[var(--border-color)] pt-3">
-          <AmbientToggle />
-        </div>
       </motion.div>
     </div>
   )

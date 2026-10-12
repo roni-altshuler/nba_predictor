@@ -199,23 +199,6 @@ ease-out curve, two springs) and the full inventory is:
   final value so no reader ever sees 0 counting up.
 - **`.skeleton-shimmer`** marks loading — a shimmer IS a moving gradient,
   and it moves only while something is genuinely loading.
-- **The ambient floor** (`AmbientBackground.tsx`) — two ember glows in the
-  chart ramp's wood tones drifting on 52s/68s alternating periods over the
-  plank-seamed walnut, transform-only, at negative z-index with
-  pointer-events off (opaque cards paint over it by painting order alone).
-  Under `prefers-reduced-motion` it is explicitly `animation: none` — the
-  global duration clamp alone would make an infinite-alternate animation
-  strobe rather than stop.
-- **The chalk game** (`CourtField.tsx`) — a perpetual dim five-on-five on
-  one full chalk court: O's in white, X's in amber, the ball in the brand
-  orange, possessions flowing end to end with cuts, swings, drives,
-  steals, fast breaks, boards and buckets. The whole court, both rims,
-  is always in frame and centred on every device (portrait rotates it
-  upright); the camera only breathes toward the action.
-  Owner-requested (2026-08-25) as the layer's animated half; its
-  full rules are §6a. The short version: no digits ever, chalk-dust
-  alphas, the frame never chases the play, ~30fps, `requestAnimationFrame`
-  only while the tab is visible, and a framed still under reduced motion.
 - Hover transitions on border colour at `0.18s` — and hover fires **only on
   things that navigate** (`a.card`, `.card-link`, rows containing links).
   A static card that brightens promises a click it cannot honour.
@@ -231,80 +214,26 @@ the reader did (navigated, swapped, loaded) — it never happens by itself.
 
 ---
 
-## 6a. The chalk game
+## 6a. Static sports backgrounds
 
-`CourtField` is the animated half of Hardwood's ambient layer, evolved
-from the NFL sibling's `ChalkboardField` and rebuilt as a game at the
-owner's request (2026-08-25): a fixed canvas at z-index −1 drawing one
-full chalk court — both keys, both arcs, half-court line — and on it a
-perpetual dim five-on-five. The O team is white chalk, the X team amber,
-the ball the brand orange. **The whole court — both rims — is always in
-frame, centred, on every device** (owner-directed): the floor is sized
-to fit the viewport with margin, centred in the region beside the
-desktop sidebar (a viewport-centred court hides its left rim behind the
-opaque nav — measured), and portrait viewports draw it rotated upright
-along the device's long axis. A possession runs five to twelve seconds:
-advance, spread to the corners/wings/top while the defense drops
-between its marks and the rim, swings (sometimes the passer cuts
-through the lane), a drive with its man in tow — finishing at the rim
-or kicking out for a catch-and-shoot — then the shot: a make blooms a
-soft ring off the rim with the swish flicks, a miss comes off the iron
-and the board turns the game the other way, sometimes at a dead run.
-Passes can be stolen out of the lane; steals and some boards ignite
-fast breaks. A flying ball leaves a fading chalk trail. Rules that
-keep it a background and not a broadcast:
+**Owner instruction, 2026-10-12: remove animated backgrounds entirely.**
+The global shell now paints the same solid walnut background as the body.
+Cream logo plates, the cream team schedule, warm-white text and the existing
+sports palette remain. Every page uses this shell under either system color
+preference; the app still has one deliberate dark theme.
 
-- **No digits, ever.** A score in the background is a number, and every
-  number on this site is a claim. The bucket itself is the payoff.
-- **It never sits under a number.** Cards, tables, and chrome are opaque
-  by system rule; the game lives in the canvas and the gaps.
-- Chalk-dust alphas only (court ≤ 0.23, players ≤ 0.29, ball and pulse
-  ≤ 0.39; the ball's flight trail fades from half the ball's alpha). If
-  a value wants to be higher than these, the answer is no.
-- **The frame never chases the play.** The first cut had a broadcast
-  camera that tracked the ball and pushed in to ~1.7× — the whole
-  background moving is exactly the kind of motion that pulls a reader
-  off the data, and the owner flagged it. The camera is now a breath:
-  zoom ≤ 1.03×, a lean of ~2.5% toward the ball, both eased slowly and
-  clamped so the full floor never leaves view. The drama
-  lives in the play (drives, steals, fast breaks, the trail, the
-  swish), never in the framing, and never in brighter or thicker chalk.
-- Slow and cheap: rendering is capped near 30fps, `requestAnimationFrame`
-  runs only while the tab is visible, and reduced motion gets a single
-  framed mid-possession still that never moves.
-- The shell wrapper deliberately paints **no** background — the body's
-  black is the canvas the board draws on. Reintroducing an opaque wrapper
-  there silently deletes the board (and the hardwood wash beneath it).
+The former chalk court canvas, perpetual game simulation, drifting ember
+layers, plank gradients, CSS keyframes, Court dial and pre-paint preference
+script are deleted. This includes the resize/visibility/preference listeners
+and animation-frame loop. No hidden background continues rendering, and no
+reduced-motion still remains. Existing `hardwood-ambient` storage is ignored
+without being cleared or rewritten.
 
-**2026-09-12 — softer by default, and the reader holds the dial.** The owner
-found the game "a little too sharp" to focus past, so the budgets above were
-cut inside the canvas — court lines 0.30 → 0.23 (×0.75); players 0.45 → 0.29
-and ball, trail and pulse 0.60 → 0.39 (×0.65); zoom cap 1.05 → 1.03 with the
-lean halved (±2.5% of the half-length, ±4% of the half-width); the settle,
-dwell and resolve pauses ×1.5 (850 / 550–1100 / 950 ms → 1275 / 825–1650 /
-1425 ms); the make-pulse 700 → 450 ms with a smaller ring — and a three-state
-preference sits on top: `<html data-ambient="soft|vivid|off">`, persisted as
-`hardwood-ambient`, set before first paint by an inline script in the root
-layout and switched by `AmbientToggle` (sidebar footer; bottom of the mobile
-More sheet). `soft` is the default: the canvas at 0.55 opacity with a 0.6px
-blur and the CSS floor (seams and embers) at 0.6×. `vivid` is the full look
-at the reduced budgets. `off` hides both halves, and `CourtField` stops its
-rAF loop on the `ambientchange` event, so hidden also means idle. Reduced
-motion is unchanged: a framed still, `animation: none`. The same date's
-other change is copy, not motion: page headers are eyebrow · h1 · one mono
-provenance line, section footnotes are one sentence, and the home page's
-title odds and power ratings are bar ladders (`BarLadder`, `--viz-model`,
-numbers as text) beside a team explorer and quick-pick chips into `/predict`,
-which now takes `?home=&away=`.
-
-**2026-10-08 — the dial agrees before hydration.** The root's pre-paint
-`data-ambient` attribute now owns the selected button's CSS highlight as well
-as the court. A returning reader's stored `off` or `vivid` choice therefore
-never briefly highlights `soft`. The server cannot read storage, so the group
-announces busy with no invented pressed selection until the hydrated client
-reads the attribute. The original three choices and storage key are retained.
-If a root recreated during hydration loses the attribute, the subscription
-restores the stored preference and signals the canvas without rewriting storage.
+Decorative background motion is no longer an exception to the design rules.
+Chart hover, bracket navigation, route feedback, menu transitions, probability
+updates, live-status badges and actual loading skeletons remain meaningful UI.
+Historical Court screenshots and investigations remain in their dated QA docs;
+see [current scope and verification](STATIC_BACKGROUND_2026-10.md).
 
 ## 7. The honesty rules that are also design rules
 

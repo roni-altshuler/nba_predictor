@@ -97,15 +97,19 @@ shot quality. See [scope and verification](docs/SHOOTING_CONTEXT_2026-10.md).
 profiles, shooting context, comparisons and evidence. Walnut surfaces, cream
 logo plates and orange navigation retain the original dark design under either
 system color preference. Native controls use their local surface scheme,
-including the light cream team schedule; the saved Court
-dial paints its choice before hydration. Inline links have visible underlines,
+including the light cream team schedule. The shell now uses a solid static
+background: the animated court, drifting glows and Court dial are removed,
+including their render loops and startup preference script. Existing saved
+Court choices are ignored without changing storage. Inline links have visible
+underlines,
 small negative labels use readable red ink, and narrow evidence tables accept
 keyboard focus and horizontal arrow scrolling. Archive series scores keep their
 own space on phones. The [connected browser audit](docs/THEME_JOURNEY_2026-10.md)
 verifies destination URLs and content. A component boundary also repairs a
 streamed-route hydration replay failure reproduced on main: its deterministic
 regression checks that React keeps the server page and still reports a real
-content mismatch. Earlier failures remain in the investigation record.
+content mismatch. Earlier failures remain in the investigation record. See the
+[static background scope and browser evidence](docs/STATIC_BACKGROUND_2026-10.md).
 
 ## Measured state
 

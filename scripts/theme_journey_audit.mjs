@@ -81,14 +81,6 @@ const nav = async (page, href, width) => {
   }
   await ready(page, href)
 }
-const dial = async (page, value, width) => {
-  if (width < 768) await page.getByRole('button', { name: 'More', exact: true }).click()
-  const shell = width < 768 ? page.locator('#mobile-more-sheet') : page.locator('aside')
-  await shell.getByRole('button', { name: value, exact: true }).focus(); await page.keyboard.press('Enter')
-  assert.equal(await page.evaluate(() => localStorage.getItem('hardwood-ambient')), value)
-  assert.equal(await page.evaluate(() => document.documentElement.dataset.ambient), value)
-  if (width < 768) await page.keyboard.press('Escape')
-}
 const snapshot = async (page, label, steps, capture = false) => {
   page.qaDiagnostics?.mark(label, label === 'loading' || label === 'error')
   const destination = label === 'loading' ? { selector: '[aria-label="Loading game"]' }
@@ -108,7 +100,7 @@ const snapshot = async (page, label, steps, capture = false) => {
     const cards = [...document.querySelectorAll('.card')].filter(e => e.getBoundingClientRect().width)
     const heading = document.querySelector('h1')
     return {
-      path: location.pathname + location.search, hash: location.hash, title: document.title, ambient: document.documentElement.dataset.ambient,
+      path: location.pathname + location.search, hash: location.hash, title: document.title, ambient: document.documentElement.getAttribute('data-ambient'),
       background: getComputedStyle(document.body).backgroundColor, scheme: root.colorScheme,
       tokens: Object.fromEntries(['--card-bg', '--logo-plate', '--text-primary', '--accent-brand'].map(key => [key, root.getPropertyValue(key).trim()])),
       cardBackgrounds: [...new Set(cards.map(e => getComputedStyle(e).backgroundColor))],
@@ -146,7 +138,6 @@ try {
     const journey = { width, system, steps: [], unexpectedErrors: errors }
     report.journeys.push(journey)
     await page.goto(base); await ready(page, '/')
-    await dial(page, 'vivid', width); await dial(page, 'off', width)
     await snapshot(page, 'home', journey.steps, true)
     await page.locator('#main').getByRole('link', { name: 'All games', exact: true }).click(); await ready(page, '/games')
     await snapshot(page, 'slate', journey.steps, true)
@@ -235,7 +226,7 @@ try {
     await snapshot(page, 'not-found', journey.steps)
     await page.getByRole('link', { name: 'Schedule', exact: true }).click(); await ready(page, '/games')
     await snapshot(page, 'not-found-recovery', journey.steps)
-    assert(journey.steps.every(step => step.ambient === 'off'))
+    assert(journey.steps.every(step => step.ambient === null))
     assert.deepEqual(errors, [])
 
     await nav(page, '/', width)
@@ -280,17 +271,16 @@ try {
     const collector = await diagnostics(page, `cold-paint-${preference}`)
     collector.mark(`cold-paint-${preference}`)
     await page.goto(product, { waitUntil: 'commit' }); await page.locator('#main').waitFor()
-    const initial = await page.evaluate(value => {
-      const button = document.querySelector(`aside [data-ambient-option="${value}"]`)
-      return { ambient: document.documentElement.dataset.ambient, selectedBackground: getComputedStyle(button).backgroundColor,
-        pressed: [...document.querySelectorAll('aside button[aria-pressed="true"]')].map(b => b.textContent), busy: document.querySelector('aside [role="group"]')?.getAttribute('aria-busy') }
-    }, preference)
-    assert.equal(initial.ambient, preference); assert.equal(initial.selectedBackground, 'rgb(33, 23, 17)')
-    assert.deepEqual(initial.pressed, []); assert.equal(initial.busy, 'true')
-    await page.waitForFunction(value => document.querySelector(`aside [data-ambient-option="${value}"]`)?.getAttribute('aria-pressed') === 'true', preference)
+    const initial = await page.evaluate(() => ({ ambient: document.documentElement.getAttribute('data-ambient'),
+      background: getComputedStyle(document.body).backgroundColor, canvases: document.querySelectorAll('canvas').length,
+      controls: document.querySelectorAll('[data-ambient-option]').length }))
+    assert.equal(initial.ambient, null); assert.equal(initial.background, 'rgb(12, 7, 5)')
+    assert.equal(initial.canvases, 0); assert.equal(initial.controls, 0)
+    await page.waitForFunction(() => JSON.parse(sessionStorage.getItem('hardwood.navstack') || '[]').at(-1) === '/')
     const frames = await page.evaluate(() => window.themeFrames)
-    assert(frames.length > 0); assert(frames.every(frame => frame.background === 'rgb(12, 7, 5)' && frame.ambient === preference))
-    report.coldPaint.push({ preference, initial, sampledFrames: frames.length, stableBackgroundAndPreference: true })
+    assert(frames.length > 0); assert(frames.every(frame => frame.background === 'rgb(12, 7, 5)' && frame.ambient === undefined))
+    assert.equal(await page.evaluate(() => localStorage.getItem('hardwood-ambient')), preference)
+    report.coldPaint.push({ legacyPreference: preference, initial, sampledFrames: frames.length, staticBackgroundAndIgnoredPreference: true })
     await page.screenshot({ path: `${out}/cold-${preference}-1440.png` })
     await collector.checkpoint(`cold-paint-${preference}`)
     report.coldPaint.at(-1).diagnostics = await checkedDiagnostics(collector)
@@ -306,29 +296,6 @@ try {
   report.product.at(-1).diagnostics = await checkedDiagnostics(outageCollector)
   await context.close()
 
-  const recovery = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark', reducedMotion: 'reduce' })
-  await controlLogos(recovery)
-  await recovery.addInitScript(() => {
-    localStorage.setItem('hardwood-ambient', 'off')
-    const observer = new MutationObserver(() => {
-      if (document.documentElement?.hasAttribute('data-ambient')) {
-        observer.disconnect()
-        document.documentElement.removeAttribute('data-ambient')
-      }
-    })
-    observer.observe(document, { subtree: true, attributes: true, attributeFilter: ['data-ambient'] })
-  })
-  const recovered = await recovery.newPage(), recoveryErrors = []
-  const recoveryCollector = await diagnostics(recovered, 'controlled-root-recovery')
-  recovered.on('pageerror', error => recoveryErrors.push(error.message))
-  await recovered.goto(`${product}/players/espn/900000001`); await ready(recovered, '/players/espn/900000001')
-  await recovered.waitForFunction(() => document.documentElement.dataset.ambient === 'off' && document.querySelector('aside [data-ambient-option="off"]')?.getAttribute('aria-pressed') === 'true')
-  assert.equal(await recovered.evaluate(() => localStorage.getItem('hardwood-ambient')), 'off')
-  assert.deepEqual(recoveryErrors, [])
-  report.preferenceRecovery = { controlledMissingRootAttribute: true, restoredPreference: 'off', storageUnchanged: true, unexpectedErrors: recoveryErrors }
-  await recoveryCollector.checkpoint('controlled-root-recovery')
-  report.preferenceRecovery.diagnostics = await checkedDiagnostics(recoveryCollector)
-  await recovery.close()
   await writeFile(`${out}/results.json`, JSON.stringify(report, null, 2) + '\n')
 } catch (error) {
   report.failure = { message: error.message, stack: error.stack, at: new Date().toISOString() }
