@@ -1,14 +1,13 @@
-import { Courtside } from '@/components/courtside/Courtside'
 import Link from 'next/link'
 
 import { BarLadder, type BarLadderRow } from '@/components/charts/BarLadder'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
-import { QuickPicks } from '@/components/forecast/QuickPicks'
 import { LiveSlate } from '@/components/live/LiveSlate'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamExplorer, type ExplorerRow } from '@/components/teams/TeamExplorer'
 import {
   getGameForecasts,
+  getLiveRecord,
   getPowerRatings,
   getSeasonProjections,
   groupByDay,
@@ -28,12 +27,13 @@ export default function HomePage() {
 
   const days = forecasts ? groupByDay(forecasts.games) : []
   const nextDay = days[0]
+  const liveRecord = getLiveRecord()
+  const preseason = !!forecasts?.season_start && Date.parse(forecasts.generated_at) < Date.parse(forecasts.season_start)
 
   // Projections carry a team_id but no mark; the ratings artifact carries
   // both. Joined here rather than duplicating the logo URL into a second
   // artifact, which would be one more thing to keep in step.
   const brand = new Map((ratings?.teams ?? []).map((t) => [t.team_id, t]))
-  const provenance = projections ?? forecasts
 
   // Title odds: the eight likeliest champions. Bars are a share of the
   // leader so the list has resolution; the number beside each is the claim.
@@ -92,83 +92,31 @@ export default function HomePage() {
 
   return (
     <div>
-      <header className="mb-8">
+      <header className="mb-5">
         <p className="eyebrow">Hardwood</p>
-        <h1 className="mt-1 text-2xl">Your front row to the forecast.</h1>
-        {provenance ? (
-          <p className="mt-2 font-numeric text-[11px] text-[var(--text-tertiary)]">
-            model {provenance.model_version} · generated{' '}
-            {stamp(provenance.generated_at)} · scored against the closing line
-          </p>
-        ) : null}
+        <h1 className="mt-1 text-2xl">NBA games &amp; scores</h1>
+        {forecasts ? <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">
+          {forecasts.season - 1}–{String(forecasts.season).slice(2)} regular season{preseason ? ' · preseason publication' : ''}.
+          {' '}Preseason exhibition forecasts are unavailable here.
+          {liveRecord?.season === forecasts.season && liveRecord.n === 0 ? ' No settled regular-season forecasts yet.' : ''}
+        </p> : null}
       </header>
 
-      <Courtside initial={forecasts ? { ...forecasts, games: days.slice(0, 7).flatMap(([, games]) => games) } : null} compact />
-
-      {!forecasts ? (
-        <EmptyState />
-      ) : (
-        <>
-          <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatTile label="Season" className="card p-3" valueClassName="mt-1 text-lg">
-              {String(forecasts.season)}
-            </StatTile>
-            <StatTile label="Games forecast" className="card p-3" valueClassName="mt-1 text-lg">
-              {forecasts.n_games.toLocaleString()}
-            </StatTile>
-            <StatTile label="With a line" className="card p-3" valueClassName="mt-1 text-lg">
-              {forecasts.n_priced.toLocaleString()}
-            </StatTile>
-            <StatTile label="Flagged as value" className="card p-3" valueClassName="mt-1 text-lg">
-              {forecasts.n_flagged.toLocaleString()}
-            </StatTile>
-          </section>
-
-          {nextDay ? (
-            <section className="mb-8">
-              <div className="mb-3 flex items-baseline justify-between">
-                <h2 className="text-sm">Scoreboard · {dayLabel(nextDay[0])}</h2>
-                <Link href="/games" className={sectionLink}>
-                  All games
-                </Link>
-              </div>
-              {/* A client island, so that on game night the cards overlay
-                  the live score ESPN reports — polled in the browser, at
-                  zero function cost, on games this server-picked slate
-                  already renders. Off nights it renders exactly what the
-                  old server-side map did. */}
-              <LiveSlate games={nextDay[1].slice(0, 4)} />
-              {/* Every game on the slate, not just the four cards, as a
-                  jump into the head-to-head surface. */}
-              <QuickPicks games={nextDay[1]} className="mt-4" />
-            </section>
-          ) : null}
-        </>
-      )}
-
-      {oddsRows.length ? (
-        <section className="mb-8">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-sm">Title odds</h2>
-            <Link href="/season" className={sectionLink}>
-              Full projection
-            </Link>
-          </div>
-          <BarLadder rows={oddsRows} ariaLabel="Championship odds, top eight" />
-        </section>
-      ) : null}
-
-      {ratingRows.length ? (
-        <section className="mb-8">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-sm">Power ratings</h2>
-            <Link href="/ratings" className={sectionLink}>
-              All 30
-            </Link>
-          </div>
-          <BarLadder rows={ratingRows} ariaLabel="Power ratings, top eight" />
-        </section>
-      ) : null}
+      {nextDay ? <section id="home-games" aria-labelledby="home-games-title" className="mb-6">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="home-games-title" className="text-sm">Next published games · {dayLabel(nextDay[0])}</h2>
+          <Link href={`/games?date=${nextDay[0]}`} className={`${sectionLink} inline-flex min-h-[44px] items-center underline underline-offset-4`}>Daily slate →</Link>
+        </div>
+        <LiveSlate games={nextDay[1]} compact />
+        <nav aria-label="More published slate dates" className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          {days.slice(1, 4).map(([day]) => <Link key={day} href={`/games?date=${day}`} prefetch={false} className="inline-flex min-h-[44px] items-center font-numeric text-xs text-[var(--accent-info)] underline underline-offset-4">{dayLabel(day)}</Link>)}
+        </nav>
+        <details className="mt-2 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
+          <summary className="min-h-[44px] cursor-pointer py-3 font-numeric">Forecast timing &amp; coverage</summary>
+          <p className="pb-2 leading-relaxed">Published {stamp(forecasts!.generated_at)} · results used through {stamp(forecasts!.trained_through ?? undefined)}.
+            {' '}Published regular-season coverage only; confirmed live/final scores use the existing score feed. An unavailable score is never a zero. <Link href="/accuracy" className="text-[var(--accent-info)] underline underline-offset-4">Model record</Link>.</p>
+        </details>
+      </section> : <EmptyState />}
 
       {explorer.length ? (
         <section className="mb-8">
@@ -182,23 +130,61 @@ export default function HomePage() {
         </section>
       ) : null}
 
-      <EvidencePanel measured={projections?.measured} />
+      <details id="home-season-outlook" className="border-t border-[var(--border-color)]">
+        <summary className="min-h-[44px] cursor-pointer py-3 font-numeric text-sm text-[var(--text-secondary)]">Season outlook &amp; model evidence</summary>
+        <div className="pt-3">
+          {forecasts ? <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <StatTile label="Season" className="card p-3" valueClassName="mt-1 text-lg">
+              {String(forecasts.season)}
+            </StatTile>
+            <StatTile label="Games forecast" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_games.toLocaleString()}
+            </StatTile>
+            <StatTile label="With a line" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_priced.toLocaleString()}
+            </StatTile>
+            <StatTile label="Flagged as value" className="card p-3" valueClassName="mt-1 text-lg">
+              {forecasts.n_flagged.toLocaleString()}
+            </StatTile>
+          </section> : null}
+          {oddsRows.length ? (
+            <section className="mb-8">
+              <div className="mb-3 flex items-baseline justify-between">
+                <h2 className="text-sm">Title odds</h2>
+                <Link href="/season" className={sectionLink}>
+                  Full projection
+                </Link>
+              </div>
+              <BarLadder rows={oddsRows} ariaLabel="Championship odds, top eight" />
+            </section>
+          ) : null}
+
+          {ratingRows.length ? (
+            <section className="mb-8">
+              <div className="mb-3 flex items-baseline justify-between">
+                <h2 className="text-sm">Power ratings</h2>
+                <Link href="/ratings" className={sectionLink}>
+                  All 30
+                </Link>
+              </div>
+              <BarLadder rows={ratingRows} ariaLabel="Power ratings, top eight" />
+            </section>
+          ) : null}
+
+          <EvidencePanel measured={projections?.measured} />
+        </div>
+      </details>
     </div>
   )
 }
 
 function EmptyState() {
-  return (
-    <div className="card p-6">
-      <h2 className="text-sm">No forecast published</h2>
-      <p className="mt-2 text-xs leading-relaxed text-[var(--text-tertiary)]">
-        The pipeline has not produced <code>game_forecasts.json</code> yet. Run{' '}
-        <code className="font-numeric">
-          python3 -m backend.scripts.forecast_season
-        </code>{' '}
-        to generate it. This page shows nothing rather than showing zeros: an
-        absent forecast and a forecast of zero are different facts.
-      </p>
+  return <section className="card mb-6 p-4" aria-labelledby="home-unavailable">
+    <h2 id="home-unavailable" className="text-sm">Published schedule unavailable</h2>
+    <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">No games are available in this publication. This does not mean a zero win chance or a completed game.</p>
+    <div className="mt-3 flex flex-wrap gap-4 text-xs text-[var(--accent-info)]">
+      <Link href="/games" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Browse daily slates →</Link>
+      <Link href="/seasons" className="inline-flex min-h-[44px] items-center underline underline-offset-4">Completed seasons →</Link>
     </div>
-  )
+  </section>
 }

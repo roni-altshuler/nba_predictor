@@ -38,7 +38,7 @@ async function scan(page, journey, label, capture = false) {
 }
 async function visit(page, route) {
   await page.goto(base + route)
-  const headings = { '/': 'Your front row to the forecast.', '/teams/BOS': 'Boston Celtics',
+  const headings = { '/': 'NBA games & scores', '/teams/BOS': 'Boston Celtics',
     '/games': 'Games, one night at a time.', '/games/401909088': 'Boston Celtics at Detroit Pistons',
     '/games/401859967': 'Scoring by period', '/players/espn/900000001': 'Player profile unavailable',
     '/bracket': 'The road to the title', '/predict': 'Any two teams', '/accuracy': 'How right has it been',
