@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-10-12T20:08:56+00:00",
- "n_rows": 627,
+ "last_observed": "2026-10-13T17:58:20+00:00",
+ "n_rows": 658,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -6274,6 +6274,316 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-10-12T20:08:56+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Aaron Wiggins",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:33Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "CJ McCollum",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:32Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Dyson Daniels",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:27Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Jalen Johnson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:29Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Keshon Gilbert",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left knee tendinitis",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:36Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Luguentz Dort",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:30Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Onyeka Okongwu",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:33Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Enrique Freeman",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Shoulder",
+   "return_date": "2026-10-14",
+   "espn_date": "2026-10-12T23:24Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Jonathan Kuminga",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-14",
+   "espn_date": "2026-10-12T23:29Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Rocco Zikarsky",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-14",
+   "espn_date": "2026-10-12T23:36Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Terrence Shannon Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Undisclosed",
+   "return_date": "2026-10-14",
+   "espn_date": "2026-10-12T23:30Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Jalen Brunson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-13T02:20Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Josh Hart",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-13T02:40Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Karl-Anthony Towns",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-13T02:47Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Mikal Bridges",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-13T02:47Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "OG Anunoby",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-15",
+   "espn_date": "2026-10-13T02:40Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Dylan Cardwell",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Calf",
+   "return_date": "2026-10-13",
+   "espn_date": "2026-10-12T20:31Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Blake Hinson",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left hip",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-13T00:09Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Anthony Davis",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-12T21:24Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Khris Middleton",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-16",
+   "espn_date": "2026-10-13T01:54Z",
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Dorian Finney-Smith",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Nickeil Alexander-Walker",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Anthony Edwards",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Ayo Dosunmu",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Jaden McDaniels",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "LaMelo Ball",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Rudy Gobert",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Chucky Hepburn",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Brice Sensabaugh",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Lauri Markkanen",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Tre Mann",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-13T17:58:20+00:00"
   }
  ]
 }
