@@ -69,6 +69,7 @@ SUMMARY_URL = (
 MARKET_PROVIDERS = {
     "consensus",
     "draftkings",
+    "draft kings",  # ESPN's spaced DraftKings label, seen in daily backfills.
     "espn bet",
     "espnbet",
     "caesars sportsbook",
