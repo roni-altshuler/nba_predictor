@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict'
 import { chromium } from 'playwright'
 import { mkdir, writeFile } from 'node:fs/promises'
+import { execFileSync } from 'node:child_process'
 import { browserDiagnostics } from './qa/browser_diagnostics.mjs'
 import { installMotionProbe, motionState } from './qa/motion_probe.mjs'
 
@@ -9,7 +10,7 @@ const base = process.env.QA_BASE || 'http://127.0.0.1:3221'
 const out = process.env.QA_OUT || '/tmp/nba-static-background-2026-10-12/product'
 await mkdir(out, { recursive: true })
 const browser = await chromium.launch({ executablePath: process.env.QA_BROWSER || '/usr/bin/chromium' })
-const report = { at: new Date().toISOString(), chromium: browser.version(), baseCommit: '0c46874b9eff4b41459aaa9bc45f438954a13a9f', normalMotion: true, journeys: [] }
+const report = { at: new Date().toISOString(), chromium: browser.version(), baseCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), normalMotion: true, journeys: [] }
 const collectors = []
 async function scan(page, journey, label, capture = false) {
   page.qaDiagnostics.mark(label)
@@ -46,6 +47,63 @@ async function visit(page, route) {
   await page.getByRole('heading', { name: headings[new URL(route, base).pathname], exact: true }).waitFor()
   await page.waitForFunction(() => JSON.parse(sessionStorage.getItem('hardwood.navstack') || '[]').at(-1) === location.pathname)
 }
+
+async function auditMoreMenu(page, journey) {
+  const more = page.getByRole('button', { name: 'More', exact: true })
+  const dialog = page.getByRole('dialog', { name: 'More pages', exact: true })
+  journey.mobileMenu = []
+  const focused = async (locator, label) => {
+    assert.equal(await locator.evaluate(e => e === document.activeElement), true, label)
+  }
+  for (const key of ['Enter', 'Space']) {
+    const trigger = await more.elementHandle()
+    const restored = async label => {
+      assert.equal(await trigger.evaluate(e => e.isConnected && e === document.activeElement), true, label)
+      assert.equal(await more.getAttribute('aria-expanded'), 'false')
+      await dialog.waitFor({ state: 'hidden' })
+    }
+    await more.focus(); await page.keyboard.press(key); await dialog.waitFor()
+    await focused(dialog, `${key}: opening focuses sheet`)
+    await page.keyboard.press('Tab')
+    await focused(dialog.getByRole('link', { name: 'Season preview', exact: true }), `${key}: first Tab`)
+    await page.keyboard.press('Tab')
+    await focused(dialog.getByRole('link', { name: 'Games', exact: true }), `${key}: second Tab`)
+    await page.screenshot({ path: `${out}/menu-open-${journey.width}-${journey.system}-${journey.reducedMotion || 'no-preference'}-${key}.png` })
+    await page.keyboard.press('Escape'); await restored(`${key}: Escape returns actual trigger`)
+    // Reopen immediately: an outgoing animation must not steal focus later.
+    await page.keyboard.press(key); await dialog.waitFor()
+    await focused(dialog, `${key}: immediate reopening`)
+    await page.getByRole('button', { name: 'Close menu', exact: true }).click({ position: { x: 5, y: 5 } })
+    await restored(`${key}: backdrop returns actual trigger`)
+    await page.keyboard.press(key); await dialog.waitFor()
+    await focused(dialog, `${key}: reopening after backdrop`)
+    await page.keyboard.press('Escape'); await restored(`${key}: repeated Escape restoration`)
+    await page.keyboard.press('Shift+Tab')
+    await focused(page.getByRole('link', { name: 'Record', exact: true }), `${key}: previous tab stop`)
+    await page.keyboard.press('Tab'); await focused(more, `${key}: next Tab returns to More`)
+    await page.screenshot({ path: `${out}/menu-dismissed-${journey.width}-${journey.system}-${journey.reducedMotion || 'no-preference'}-${key}.png` })
+    await page.keyboard.press(key); await dialog.waitFor()
+    await page.keyboard.press('Tab'); await page.keyboard.press('Tab'); await page.keyboard.press('Enter')
+    await page.waitForURL(base + '/games')
+    await page.getByRole('heading', { name: 'Games, one night at a time.', exact: true }).waitFor()
+    assert.equal(await trigger.evaluate(e => e === document.activeElement), false, `${key}: navigation does not reclaim trigger focus`)
+    const destination = page.getByLabel('Game date', { exact: true })
+    await destination.click()
+    await page.waitForFunction(() => !document.querySelector('[role="dialog"][aria-label="More pages"]'))
+    await page.keyboard.press('Escape')
+    await focused(destination, `${key}: exit cleanup preserves destination control focus`)
+    assert.equal(await more.getAttribute('aria-expanded'), 'false')
+    journey.mobileMenu.push({ key, sheetFocused: true, tabOrder: ['Season preview', 'Games'], escapeReturnedToActualTrigger: true,
+      backdropReturnedToActualTrigger: true, escapeReopenedDuringExit: true, backdropReopenedDuringExit: true,
+      dismissalTabOrder: ['Record', 'More'],
+      navigation: '/games', destinationFocusPreserved: true })
+    await scan(page, journey, `menu-${key.toLowerCase()}`)
+    await trigger.dispose()
+    // Return by a real route change so the next case also navigates to a destination.
+    await visit(page, '/')
+  }
+}
+
 try {
   for (const width of [320, 390, 768, 1440]) for (const system of ['light', 'dark']) {
     const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: system, reducedMotion: 'no-preference' })
@@ -97,23 +155,25 @@ try {
       const series = page.locator('#main a[href^="/seasons/2026/series/"]').first(), destination = await series.getAttribute('href')
       await series.click(); await page.waitForURL(base + destination); await page.getByRole('heading', { name: 'Every game', exact: true }).waitFor()
       await scan(page, journey, 'archive-bracket-navigation')
-      if (width < 768) {
-        const more = page.getByRole('button', { name: 'More', exact: true })
-        await more.focus(); await page.keyboard.press('Enter'); await page.getByRole('dialog', { name: 'More pages', exact: true }).waitFor()
-        await page.keyboard.press('Tab')
-        assert.equal(await page.evaluate(() => !!document.activeElement.closest('#mobile-more-sheet')), true)
-        await page.keyboard.press('Escape'); await page.getByRole('dialog', { name: 'More pages', exact: true }).waitFor({ state: 'hidden' })
-        // Record focus restoration separately; the existing menu returns focus to
-        // BODY on main too. Do not silently fix an unrelated baseline issue here.
-        journey.mobileMenu = { keyboardOpened: true, tabReachedMenu: true, escapeClosed: true,
-          focusReturnedToMore: await more.evaluate(e => e === document.activeElement),
-          activeElementAfterEscape: await page.evaluate(() => document.activeElement.tagName) }
-        await scan(page, journey, 'mobile-menu-keyboard')
-      }
     }
+    if (width < 768) await auditMoreMenu(page, journey)
     const diagnostics = await collector.finish(); assert.deepEqual(diagnostics.unexpected, [])
     journey.diagnostics = { unexpected: diagnostics.unexpected, consoleClassifications: diagnostics.events.filter(e => e.type === 'console').reduce((counts, e) => ({ ...counts, [e.classification]: (counts[e.classification] || 0) + 1 }), {}) }
     await context.close(); console.log(`Static production journey passed: ${width}px ${system}, ${journey.states.length} states`)
+  }
+  for (const width of [320, 390]) for (const system of ['light', 'dark']) {
+    const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: system, reducedMotion: 'reduce' })
+    await context.route('**://a.espncdn.com/**', route => route.abort())
+    await context.route('**://site.web.api.espn.com/**', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }))
+    await context.addInitScript(installMotionProbe)
+    const page = await context.newPage(), journey = { width, system, reducedMotion: 'reduce', legacyPreference: null, states: [] }
+    report.journeys.push(journey)
+    const collector = await browserDiagnostics(page, `${out}/diagnostics`, `${width}-${system}-reduce`, { trace: false, controlledScoreboard: true })
+    page.qaDiagnostics = collector; collectors.push(collector)
+    await visit(page, '/'); await auditMoreMenu(page, journey)
+    const diagnostics = await collector.finish(); assert.deepEqual(diagnostics.unexpected, [])
+    journey.diagnostics = { unexpected: diagnostics.unexpected }
+    await context.close(); console.log(`Reduced-motion menu journey passed: ${width}px ${system}`)
   }
   await writeFile(`${out}/results.json`, JSON.stringify(report, null, 2) + '\n')
 } catch (error) {
