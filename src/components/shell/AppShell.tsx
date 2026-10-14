@@ -1,9 +1,9 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useIsPresent, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { PageTransition } from '@/components/motion/PageTransition'
 import { EASE_OUT } from '@/lib/motion'
@@ -72,7 +72,19 @@ export function AppShell({
 }) {
   const pathname = usePathname() || '/'
   const reduced = useReducedMotion()
-  const [moreOpen, setMoreOpen] = useState(false)
+  const [moreState, setMoreState] = useState({ id: 0, open: false })
+  const moreOpen = moreState.open
+  const moreTriggerRef = useRef<HTMLButtonElement>(null)
+  const openMore = useCallback(() => {
+    setMoreState(state => ({ id: state.id + 1, open: true }))
+  }, [])
+  const closeMore = useCallback(() => {
+    setMoreState(state => state.open ? { ...state, open: false } : state)
+  }, [])
+  const dismissMore = useCallback(() => {
+    closeMore()
+    moreTriggerRef.current?.focus({ preventScroll: true })
+  }, [closeMore])
 
   // Feed the in-app history stack that <BackLink> reads.
   useEffect(() => {
@@ -80,9 +92,7 @@ export function AppShell({
   }, [pathname])
 
   // Navigating closes the sheet — the tap already answered it.
-  useEffect(() => {
-    setMoreOpen(false)
-  }, [pathname])
+  useEffect(closeMore, [pathname, closeMore])
 
   const moreActive = MOBILE_MORE.some((item) => isActive(pathname, item.href))
 
@@ -170,12 +180,15 @@ export function AppShell({
 
       {/* Mobile "More" sheet. Sits above the tab bar; closes on navigation,
           Escape, or a tap on the overlay. */}
-      <AnimatePresence>
+      {/* Reopening gets a fresh presence boundary; old exit completion must
+          not remove the new sheet or change its focus. */}
+      <AnimatePresence key={moreState.id}>
         {moreOpen ? (
           <MoreSheet
             pathname={pathname}
             reduced={!!reduced}
-            onClose={() => setMoreOpen(false)}
+            onDismiss={dismissMore}
+            onNavigate={closeMore}
           />
         ) : null}
       </AnimatePresence>
@@ -206,8 +219,9 @@ export function AppShell({
           )
         })}
         <button
+          ref={moreTriggerRef}
           type="button"
-          onClick={() => setMoreOpen((open) => !open)}
+          onClick={() => moreOpen ? dismissMore() : openMore()}
           aria-expanded={moreOpen}
           aria-controls="mobile-more-sheet"
           className={cn(
@@ -256,29 +270,42 @@ function TabIndicator({ reduced }: { reduced: boolean }) {
 function MoreSheet({
   pathname,
   reduced,
-  onClose,
+  onDismiss,
+  onNavigate,
 }: {
   pathname: string
   reduced: boolean
-  onClose: () => void
+  onDismiss: () => void
+  onNavigate: () => void
 }) {
   const panelRef = useRef<HTMLDivElement>(null)
+  const isPresent = useIsPresent()
 
   useEffect(() => {
-    panelRef.current?.focus()
+    if (!isPresent) return
+    panelRef.current?.focus({ preventScroll: true })
     function onKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onDismiss()
+      }
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [onClose])
+  }, [isPresent, onDismiss])
 
   return (
-    <div className="fixed inset-0 z-40 md:hidden" role="presentation">
+    <div
+      className="fixed inset-0 z-40 md:hidden"
+      role="presentation"
+      aria-hidden={!isPresent || undefined}
+      style={!isPresent ? { pointerEvents: 'none' } : undefined}
+    >
       <motion.button
         type="button"
         aria-label="Close menu"
-        onClick={onClose}
+        onClick={onDismiss}
+        disabled={!isPresent}
         className="absolute inset-0 h-full w-full cursor-default bg-[var(--overlay-bg)]"
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -286,7 +313,7 @@ function MoreSheet({
         transition={{ duration: 0.18 }}
       />
       <motion.div
-        id="mobile-more-sheet"
+        id={isPresent ? 'mobile-more-sheet' : undefined}
         ref={panelRef}
         role="dialog"
         aria-modal="true"
@@ -303,7 +330,8 @@ function MoreSheet({
             <Link
               key={item.href}
               href={item.href}
-              onClick={onClose}
+              onClick={onNavigate}
+              tabIndex={isPresent ? undefined : -1}
               aria-current={isActive(pathname, item.href) ? 'page' : undefined}
               className={cn(
                 'flex min-h-[44px] items-center px-3 text-xs uppercase tracking-[0.12em] transition-colors',
