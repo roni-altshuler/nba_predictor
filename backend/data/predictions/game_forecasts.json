@@ -1,21 +1,21 @@
 {
   "season": 2027,
   "season_start": "2026-10-20T19:00:00+00:00",
-  "generated_at": "2026-10-15T15:31:12+00:00",
+  "generated_at": "2026-10-16T15:10:49+00:00",
   "ingestion": {
     "source": "espn",
     "status": "ok",
-    "attempted_at": "2026-10-15T15:31:05+00:00",
+    "attempted_at": "2026-10-16T15:10:43+00:00",
     "seasons": [
       2027
     ],
-    "last_success_at": "2026-10-15T15:31:05+00:00",
+    "last_success_at": "2026-10-16T15:10:43+00:00",
     "event_count": 1273,
     "warehouse_updated": true,
     "error": null,
     "stats": {
-      "games": 53,
-      "scheduled": 1214,
+      "games": 55,
+      "scheduled": 1212,
       "skipped": 6
     }
   },
@@ -509,6 +509,36 @@
       "total_sd": 18.985
     },
     {
+      "game_id": "401909848",
+      "date_utc": "2026-10-23T20:00:00+00:00",
+      "venue": "Fiserv Forum",
+      "neutral_site": false,
+      "home": {
+        "team_id": 17,
+        "name": "Milwaukee Bucks",
+        "abbreviation": "MIL",
+        "conference": "Eastern Conference",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+        "elo": 1407.5
+      },
+      "away": {
+        "team_id": 5,
+        "name": "Chicago Bulls",
+        "abbreviation": "CHI",
+        "conference": "Eastern Conference",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
+        "elo": 1403.7
+      },
+      "p_home": 0.535919,
+      "p_away": 0.464081,
+      "exp_margin": 1.638,
+      "exp_total": 236.48,
+      "exp_home_score": 119.06,
+      "exp_away_score": 117.42,
+      "margin_sd": 12.628,
+      "total_sd": 18.985
+    },
+    {
       "game_id": "401909095",
       "date_utc": "2026-10-23T23:00:00+00:00",
       "venue": "TD Garden",
@@ -685,36 +715,6 @@
       "exp_total": 234.0,
       "exp_home_score": 116.32,
       "exp_away_score": 117.68,
-      "margin_sd": 12.628,
-      "total_sd": 18.985
-    },
-    {
-      "game_id": "401909848",
-      "date_utc": "2026-10-24T00:00:00+00:00",
-      "venue": "Fiserv Forum",
-      "neutral_site": false,
-      "home": {
-        "team_id": 17,
-        "name": "Milwaukee Bucks",
-        "abbreviation": "MIL",
-        "conference": "Eastern Conference",
-        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
-        "elo": 1407.5
-      },
-      "away": {
-        "team_id": 5,
-        "name": "Chicago Bulls",
-        "abbreviation": "CHI",
-        "conference": "Eastern Conference",
-        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
-        "elo": 1403.7
-      },
-      "p_home": 0.535919,
-      "p_away": 0.464081,
-      "exp_margin": 1.638,
-      "exp_total": 236.48,
-      "exp_home_score": 119.06,
-      "exp_away_score": 117.42,
       "margin_sd": 12.628,
       "total_sd": 18.985
     },
@@ -949,12 +949,12 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
         "elo": 1407.5
       },
-      "p_home": 0.720976,
-      "p_away": 0.279024,
-      "exp_margin": 7.897,
-      "exp_total": 222.95,
-      "exp_home_score": 115.42,
-      "exp_away_score": 107.53,
+      "p_home": 0.67767,
+      "p_away": 0.32233,
+      "exp_margin": 6.324,
+      "exp_total": 222.73,
+      "exp_home_score": 114.53,
+      "exp_away_score": 108.2,
       "margin_sd": 12.628,
       "total_sd": 18.985
     },
@@ -979,12 +979,12 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
         "elo": 1328.5
       },
-      "p_home": 0.580098,
-      "p_away": 0.419902,
-      "exp_margin": 3.053,
-      "exp_total": 242.63,
-      "exp_home_score": 122.84,
-      "exp_away_score": 119.79,
+      "p_home": 0.622288,
+      "p_away": 0.377712,
+      "exp_margin": 4.434,
+      "exp_total": 242.61,
+      "exp_home_score": 123.52,
+      "exp_away_score": 119.09,
       "margin_sd": 12.628,
       "total_sd": 18.985
     },
@@ -2209,12 +2209,12 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
         "elo": 1403.7
       },
-      "p_home": 0.787371,
-      "p_away": 0.212629,
-      "exp_margin": 10.569,
-      "exp_total": 228.97,
-      "exp_home_score": 119.77,
-      "exp_away_score": 109.2,
+      "p_home": 0.780021,
+      "p_away": 0.219979,
+      "exp_margin": 10.252,
+      "exp_total": 229.47,
+      "exp_home_score": 119.86,
+      "exp_away_score": 109.61,
       "margin_sd": 12.628,
       "total_sd": 18.985
     },
