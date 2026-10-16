@@ -8,6 +8,7 @@ import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { MatchupHeader } from '@/components/schedule/MatchupHeader'
+import { InjuryReport } from '@/components/schedule/InjuryReport'
 import { ShootingContextSection } from '@/components/scouting/ShootingContextSection'
 import { getGameForecasts } from '@/lib/artifacts'
 import {
@@ -16,7 +17,7 @@ import {
   getEspnWinProbability,
   type GameBoxScore,
   type TeamBoxScore,
-  type TeamInjuries,
+  type InjuryReportData,
   type WinProbability,
 } from '@/lib/espn'
 import { moneyline, num, pct, signed, spread } from '@/lib/format'
@@ -637,13 +638,13 @@ function BoxScore({ game }: { game: ArchiveGame }) {
 function UpcomingGame({
   game,
   gameSeason,
-  injuries = [],
+  injuries,
   generatedAt,
   trainedThrough,
 }: {
   game: NonNullable<ReturnType<typeof getGameForecasts>>['games'][number]
   gameSeason: number
-  injuries?: TeamInjuries[]
+  injuries: InjuryReportData
   generatedAt: string
   trainedThrough?: string | null
 }) {
@@ -718,114 +719,6 @@ function UpcomingGame({
         <FormPanel abbreviation={game.home.abbreviation} name={game.home.name} />
       </div>
     </div>
-  )
-}
-
-/**
- * Who is unavailable — and an explicit statement that the forecast above has
- * not read it.
- *
- * **This is the largest known gap in the model and it is labelled rather
- * than quietly filled.** The obvious move on seeing an injury list beside a
- * win probability is to adjust the probability, and it is refused here for a
- * concrete reason rather than a cautious one: ESPN publishes injuries as a
- * snapshot of today with no historical archive, so an availability-adjusted
- * rating cannot be walk-forward tested against this corpus at all. It could
- * only ever be validated forward, from zero. This project does not publish a
- * number it cannot benchmark.
- *
- * So the report is descriptive and the caption says what it is not. That is
- * more useful than it sounds: a reader deciding whether to trust a 62% wants
- * to know that the favourite's starting centre is out, and they want to know
- * that the 62% does not.
- */
-function InjuryReport({
-  injuries,
-  away,
-  home,
-}: {
-  injuries: TeamInjuries[]
-  away: { name: string; abbreviation: string }
-  home: { name: string; abbreviation: string }
-}) {
-  const ordered = [away, home]
-    .map((side) => {
-      const team = injuries.find(
-        (row) =>
-          row.displayName?.trim().toLowerCase() === side.name.trim().toLowerCase(),
-      )
-      return team ? { team, side } : null
-    })
-    .filter(Boolean) as Array<{ team: TeamInjuries; side: { abbreviation: string } }>
-
-  if (!ordered.length) {
-    return (
-      <section className="card mb-6 p-4">
-        <h2 className="text-sm">No injury report</h2>
-        <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-          ESPN lists nobody as unavailable for either side, or the request
-          failed — shown as absent, not as a clean bill of health.
-        </p>
-      </section>
-    )
-  }
-
-  return (
-    <section className="card mb-6 p-4">
-      <h2 className="mb-3 text-sm">Availability</h2>
-      <div className="grid gap-4 md:grid-cols-2">
-        {ordered.map(({ team, side }) => (
-          <div key={team.teamId}>
-            <h3 className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
-              {side.abbreviation}
-            </h3>
-            <ul className="mt-2 space-y-1.5">
-              {team.entries.map((entry) => (
-                <li
-                  key={`${entry.player}-${entry.status}`}
-                  className="flex items-baseline justify-between gap-3 text-[11px]"
-                >
-                  <span className="text-[var(--text-primary)]">
-                    {entry.player}
-                    {entry.position ? (
-                      <span className="ml-1.5 text-[var(--text-tertiary)]">
-                        {entry.position}
-                      </span>
-                    ) : null}
-                    {entry.detail ? (
-                      <span className="ml-1.5 text-[var(--text-tertiary)]">
-                        {entry.detail}
-                      </span>
-                    ) : null}
-                  </span>
-                  <span
-                    className={cn(
-                      'font-numeric whitespace-nowrap text-[10px] uppercase tracking-[0.08em]',
-                      entry.status.toLowerCase() === 'out'
-                        ? 'text-[var(--accent-warn)]'
-                        : 'text-[var(--text-tertiary)]',
-                    )}
-                  >
-                    {entry.status}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <p className="mt-4 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-        <strong className="text-[var(--text-secondary)]">
-          The forecast above has not read this
-        </strong>{' '}
-        — the model has never seen a roster, and ESPN keeps no injury archive
-        to test one against (
-        <Link href="/about#missing" className="text-[var(--accent-info)] hover:underline">
-          why
-        </Link>
-        ).
-      </p>
-    </section>
   )
 }
 

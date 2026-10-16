@@ -54,8 +54,8 @@ const INJURIES =
  *
  * The failure mode is already correct everywhere this is used: a timeout is
  * an aborted fetch, an aborted fetch throws, and every reader here catches
- * and returns null or an empty list. The page then says the data is
- * unavailable, which is true.
+ * and returns null or an explicit unavailable result. The page then says
+ * the data is unavailable, which is true.
  */
 const TIMEOUT_MS = 8_000
 
@@ -321,9 +321,15 @@ export interface InjuryEntry {
 
 export interface TeamInjuries {
   teamId: string
-  displayName: string | null
+  displayName: string
   entries: InjuryEntry[]
+  /** Invalid nested entries must never turn into an apparently empty report. */
+  coverage: 'complete' | 'partial'
 }
+
+export type InjuryReportData =
+  | { status: 'available'; teams: TeamInjuries[] }
+  | { status: 'unavailable'; reason: 'http' | 'request' | 'payload' }
 
 /**
  * Who is unavailable, as ESPN reports it right now.
@@ -358,56 +364,101 @@ const INJURIES_REVALIDATE_SECONDS = 21_600
 
 export async function getEspnInjuries(
   teamNames: string[],
-): Promise<TeamInjuries[]> {
-  let payload: any
+): Promise<InjuryReportData> {
+  let response: Response
   try {
-    const response = await fetch(INJURIES, {
+    response = await fetch(INJURIES, {
       next: { revalidate: INJURIES_REVALIDATE_SECONDS },
       headers: { Accept: 'application/json' },
       signal: AbortSignal.timeout(TIMEOUT_MS),
     })
-    if (!response.ok) return []
+  } catch {
+    return { status: 'unavailable', reason: 'request' }
+  }
+  if (!response.ok) return { status: 'unavailable', reason: 'http' }
+  let payload: unknown
+  try {
     payload = await response.json()
   } catch {
-    return []
+    return { status: 'unavailable', reason: 'payload' }
   }
-  if (!payload || !Array.isArray(payload.injuries)) return []
+  const blocks = injuryObject(payload)?.injuries
+  if (!Array.isArray(blocks)) return { status: 'unavailable', reason: 'payload' }
 
   const wanted = new Set(
     teamNames.filter(Boolean).map((name) => name.trim().toLowerCase()),
   )
   const out: TeamInjuries[] = []
+  let namedBlocks = 0
 
-  for (const block of payload.injuries) {
-    const displayName: string | null = block?.displayName ?? null
-    if (
-      wanted.size &&
-      (!displayName || !wanted.has(displayName.trim().toLowerCase()))
-    ) {
-      continue
-    }
+  for (const raw of blocks) {
+    const block = injuryObject(raw)
+    const displayName = injuryText(block?.displayName)
+    if (!displayName) continue
+    namedBlocks += 1
+    if (wanted.size && !wanted.has(displayName.toLowerCase())) continue
+    const rawEntries = block?.injuries
+    let partial = !Array.isArray(rawEntries)
     const entries: InjuryEntry[] = []
-    for (const entry of block?.injuries ?? []) {
-      const player = entry?.athlete?.displayName
-      const status = entry?.status
-      if (!player || !status) continue
+    for (const rawEntry of Array.isArray(rawEntries) ? rawEntries : []) {
+      const entry = injuryObject(rawEntry)
+      const athlete = injuryObject(entry?.athlete)
+      const player = injuryText(athlete?.displayName)
+      const status = injuryText(entry?.status)
+      if (!player || !status) {
+        partial = true
+        continue
+      }
+      const details = injuryObject(entry?.details)
       entries.push({
         player,
-        position: entry?.athlete?.position?.abbreviation ?? null,
-        status: String(status),
-        detail: describeInjury(entry?.details),
-        returnDate: entry?.details?.returnDate ?? null,
-        date: entry?.date ?? null,
+        position: injuryText(injuryObject(athlete?.position)?.abbreviation),
+        status,
+        detail: describeInjury(details),
+        returnDate: injuryDate(details?.returnDate),
+        date: injuryDate(entry?.date),
       })
     }
-    if (!entries.length) continue
+    // Preserve explicit empty reports. Duplicate team blocks are ambiguous,
+    // so retain their usable entries while marking coverage as incomplete.
+    const existing = out.find((team) => team.displayName.toLowerCase() === displayName.toLowerCase())
+    if (existing) {
+      existing.coverage = 'partial'
+      existing.entries = existing.entries.concat(entries).sort(byStatusSeverity)
+      continue
+    }
     out.push({
-      teamId: String(block?.id ?? ''),
+      teamId: providerId(block?.id) ?? '',
       displayName,
       entries: entries.sort(byStatusSeverity),
+      coverage: partial ? 'partial' : 'complete',
     })
   }
-  return out
+  return blocks.length > 0 && namedBlocks === 0
+    ? { status: 'unavailable', reason: 'payload' }
+    : { status: 'available', teams: out }
+}
+
+function injuryObject(value: unknown): Record<string, unknown> | null {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null
+}
+
+function injuryText(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null
+}
+
+/** A provider date, never a fetch/render timestamp or a permissive Date.parse guess. */
+export function injuryDate(value: unknown): string | null {
+  const text = injuryText(value)
+  if (!text) return null
+  const parts = /^(\d{4}-\d{2}-\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2}))?$/.exec(text)
+  if (!parts) return null
+  const day = new Date(`${parts[1]}T00:00:00Z`)
+  if (!Number.isFinite(day.getTime()) || day.toISOString().slice(0, 10) !== parts[1]) return null
+  if (parts[2] && (Number(parts[2]) > 23 || Number(parts[3]) > 59 || Number(parts[4] ?? 0) > 59)) return null
+  return Number.isFinite(Date.parse(text)) ? text : null
 }
 
 /**
@@ -421,11 +472,11 @@ export async function getEspnInjuries(
  */
 const UNINFORMATIVE = new Set(['', 'not specified', 'unspecified', 'n/a', 'none'])
 
-function describeInjury(details: any): string | null {
+function describeInjury(details: Record<string, unknown> | null): string | null {
   if (!details) return null
   const parts = [details.side, details.type, details.detail]
     .filter(
-      (part) =>
+      (part): part is string =>
         typeof part === 'string' && !UNINFORMATIVE.has(part.trim().toLowerCase()),
     )
     .map((part: string) => part.trim())
