@@ -1,10 +1,11 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import HomePage from '@/app/(app)/page'
 import openingSlate from '@/components/schedule/__tests__/fixtures/opening-slate.json'
 import { getGameForecasts, getLiveRecord } from '@/lib/artifacts'
 import type { GameForecasts, LiveRecord } from '@/lib/artifacts'
 
 jest.mock('@/components/live/LiveScores', () => ({ useLiveScores: () => ({}) }))
+jest.mock('@/lib/history', () => ({ getGameContext: () => null }))
 jest.mock('@/lib/artifacts', () => ({ ...jest.requireActual('@/lib/artifacts'),
   getGameForecasts: jest.fn(), getLiveRecord: jest.fn() }))
 const forecast = { season: 2027, season_start: '2026-10-20T19:00:00Z', generated_at: '2026-10-11T16:32:23Z',
@@ -20,6 +21,9 @@ test('preseason publication and zero settled regular-season forecasts are honest
   expect(screen.getByText(/Preseason exhibition forecasts are unavailable/)).toBeInTheDocument()
   expect(view.container.querySelectorAll('#home-games article')).toHaveLength(3)
   expect(view.container.querySelector('#home-season-outlook')).not.toHaveAttribute('open')
+  expect(screen.getByRole('navigation', { name: 'Explore Hardwood' })).toHaveTextContent('GamesTeamsPlayers')
+  expect(screen.getByRole('heading', { name: 'Players & box scores' })).toBeInTheDocument()
+  expect(screen.getByText(/preseason publication/).closest('details')).not.toHaveAttribute('open')
   expect(screen.queryByRole('article', { name: 'Selected matchup' })).not.toBeInTheDocument()
 })
 
@@ -33,6 +37,15 @@ test('missing and empty publications show useful browsing links without manufact
   view.rerender(<HomePage />)
   expect(screen.getByRole('heading', { name: 'Published schedule unavailable' })).toBeInTheDocument()
   expect(view.container.querySelector('[data-game-id]')).toBeNull()
+})
+
+test('date chip computed names retain the visible short label with month and year context', () => {
+  render(<HomePage />)
+  const dates = screen.getByRole('navigation', { name: 'Published game dates' })
+  const chip = within(dates).getByRole('link', { name: 'Tue 20, October 2026' })
+  expect(chip).toHaveAccessibleName('Tue 20, October 2026')
+  expect(chip).toHaveTextContent('Tue 20')
+  expect(chip).toHaveAttribute('href', '/games?date=2026-10-20')
 })
 
 test('a different season or absent live record does not invent a zero settled count', () => {

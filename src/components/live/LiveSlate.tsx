@@ -16,7 +16,7 @@ export function LiveSlate({ games, compact = false }: { games: GameForecast[]; c
   )
 
   return (
-    <div className={`grid gap-3 ${compact ? 'xl:grid-cols-3' : 'md:grid-cols-2'}`}>
+    <div className={`grid gap-3 ${compact ? 'md:grid-cols-2 xl:grid-cols-3' : 'md:grid-cols-2'}`}>
       {games.map((game) => (
         compact ? <CompactGameCard key={game.game_id} game={game} live={live[game.game_id]} />
           : <GameCard key={game.game_id} game={game} live={live[game.game_id]} />

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BarLadder, type BarLadderRow } from '@/components/charts/BarLadder'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
 import { LiveSlate } from '@/components/live/LiveSlate'
+import { RecentGames } from '@/components/players/RecentGames'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamExplorer, type ExplorerRow } from '@/components/teams/TeamExplorer'
 import {
@@ -13,6 +14,7 @@ import {
   groupByDay,
 } from '@/lib/artifacts'
 import { dayLabel, pct, stamp } from '@/lib/format'
+import { getGameContext } from '@/lib/history'
 
 export const metadata = { title: 'Today' }
 export const dynamic = 'force-static'
@@ -93,33 +95,45 @@ export default function HomePage() {
   return (
     <div>
       <header className="mb-5">
-        <p className="eyebrow">Hardwood</p>
+        <p className="eyebrow">{forecasts ? `${forecasts.season - 1}–${String(forecasts.season).slice(2)} regular season` : 'Hardwood'}</p>
         <h1 className="mt-1 text-2xl">NBA games &amp; scores</h1>
+        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">Explore the matchups, find your team, and get closer to the game.</p>
+        <nav aria-label="Explore Hardwood" className="mt-4 grid grid-cols-3 gap-2 sm:flex">
+          {[['#home-games', 'Games'], [explorer.length ? '#home-teams' : '/season', 'Teams'], ['#home-players', 'Players']].map(([href, label]) => <Link key={href} href={href} prefetch={false} className="inline-flex min-h-[44px] items-center justify-center rounded-sm border border-[var(--border-color)] bg-[var(--card-bg)] px-5 font-numeric text-xs text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)]">{label}</Link>)}
+        </nav>
+      </header>
+
+      {nextDay ? <section id="home-games" aria-labelledby="home-games-title" className="mb-6 scroll-mt-20">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="home-games-title" className="text-sm">Next games · {dayLabel(nextDay[0])}</h2>
+          <Link href={`/games?date=${nextDay[0]}`} className={`${sectionLink} inline-flex min-h-[44px] items-center underline underline-offset-4`}>Daily slate →</Link>
+        </div>
+        <nav aria-label="Published game dates" className="mb-3 flex flex-wrap gap-2">
+          {days.slice(0, 4).map(([day]) => {
+            const date = new Date(`${day}T12:00:00Z`)
+            const weekday = date.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' })
+            const number = Number(day.slice(-2))
+            const monthYear = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+            return <Link key={day} href={`/games?date=${day}`} aria-label={`${weekday} ${number}, ${monthYear}`} prefetch={false} className={`inline-flex min-h-[58px] min-w-[62px] flex-col items-center justify-center rounded-sm border px-3 font-numeric text-[11px] ${day === nextDay[0] ? 'border-[var(--accent-brand)] text-[var(--text-primary)]' : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--border-hover)]'}`}><span>{weekday}</span>{' '}<span className="numeric mt-1 text-base">{number}</span></Link>
+          })}
+        </nav>
+        <LiveSlate games={nextDay[1]} compact />
+        <details className="mt-2 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
+          <summary className="min-h-[44px] cursor-pointer py-3 font-numeric">Forecast timing &amp; coverage</summary>
         {forecasts ? <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">
           {forecasts.season - 1}–{String(forecasts.season).slice(2)} regular season{preseason ? ' · preseason publication' : ''}.
           {' '}Preseason exhibition forecasts are unavailable here.
           {liveRecord?.season === forecasts.season && liveRecord.n === 0 ? ' No settled regular-season forecasts yet.' : ''}
         </p> : null}
-      </header>
-
-      {nextDay ? <section id="home-games" aria-labelledby="home-games-title" className="mb-6">
-        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 id="home-games-title" className="text-sm">Next published games · {dayLabel(nextDay[0])}</h2>
-          <Link href={`/games?date=${nextDay[0]}`} className={`${sectionLink} inline-flex min-h-[44px] items-center underline underline-offset-4`}>Daily slate →</Link>
-        </div>
-        <LiveSlate games={nextDay[1]} compact />
-        <nav aria-label="More published slate dates" className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-          {days.slice(1, 4).map(([day]) => <Link key={day} href={`/games?date=${day}`} prefetch={false} className="inline-flex min-h-[44px] items-center font-numeric text-xs text-[var(--accent-info)] underline underline-offset-4">{dayLabel(day)}</Link>)}
-        </nav>
-        <details className="mt-2 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
-          <summary className="min-h-[44px] cursor-pointer py-3 font-numeric">Forecast timing &amp; coverage</summary>
           <p className="pb-2 leading-relaxed">Published {stamp(forecasts!.generated_at)} · results used through {stamp(forecasts!.trained_through ?? undefined)}.
             {' '}Published regular-season coverage only; confirmed live/final scores use the existing score feed. An unavailable score is never a zero. <Link href="/accuracy" className="text-[var(--accent-info)] underline underline-offset-4">Model record</Link>.</p>
         </details>
       </section> : <EmptyState />}
 
+      <RecentGames context={getGameContext()} teams={rated} />
+
       {explorer.length ? (
-        <section className="mb-8">
+        <section id="home-teams" className="mb-8 scroll-mt-20">
           <div className="mb-3 flex items-baseline justify-between">
             <h2 className="text-sm">Teams</h2>
             <span className="font-numeric text-[11px] uppercase tracking-[0.12em] text-[var(--text-tertiary)]">
@@ -179,7 +193,7 @@ export default function HomePage() {
 }
 
 function EmptyState() {
-  return <section className="card mb-6 p-4" aria-labelledby="home-unavailable">
+  return <section id="home-games" className="card mb-6 scroll-mt-20 p-4" aria-labelledby="home-unavailable">
     <h2 id="home-unavailable" className="text-sm">Published schedule unavailable</h2>
     <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">No games are available in this publication. This does not mean a zero win chance or a completed game.</p>
     <div className="mt-3 flex flex-wrap gap-4 text-xs text-[var(--accent-info)]">

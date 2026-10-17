@@ -8,6 +8,8 @@ import { BackLink } from '@/components/primitives/BackLink'
 import { StatTile } from '@/components/primitives/StatTile'
 import { TeamLogo } from '@/components/primitives/TeamLogo'
 import { MatchupHeader } from '@/components/schedule/MatchupHeader'
+import { MatchupSections } from '@/components/schedule/MatchupSections'
+import { GameOutlook } from '@/components/forecast/GameOutlook'
 import { InjuryReport } from '@/components/schedule/InjuryReport'
 import { ShootingContextSection } from '@/components/scouting/ShootingContextSection'
 import { getGameForecasts } from '@/lib/artifacts'
@@ -263,6 +265,7 @@ function PlayedGame({
   return (
     <div>
       <header className="mb-6">
+        <h1 className="sr-only">{teams[game.away]?.name ?? game.away} at {teams[game.home]?.name ?? game.home} · final</h1>
         <BackLink
           href={`/seasons/${game.season}`}
           label={`${game.season - 1}-${String(game.season).slice(2)} season`}
@@ -300,10 +303,11 @@ function PlayedGame({
           {game.venue ? ` · ${game.venue}` : ''}
           {game.neutral ? ' · neutral court' : ''}
         </p>
+        <MatchupSections mode="played" />
       </header>
 
       {game.q_home && game.q_away ? (
-        <div className="mb-6">
+        <div id="game-stats" className="mb-6 scroll-mt-20">
           <PeriodTable
             awayLabel={game.away}
             homeLabel={game.home}
@@ -331,7 +335,7 @@ function PlayedGame({
       ) : null}
 
       {!game.q_home || !game.q_away ? (
-        <section className="card mb-6 p-4">
+        <section id="game-stats" className="card mb-6 scroll-mt-20 p-4">
           <h2 className="text-sm">No period breakdown</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             The source published no quarter scores for this game — shown as
@@ -340,6 +344,8 @@ function PlayedGame({
         </section>
       ) : null}
 
+      <details id="recorded-forecast" className="card mb-4 scroll-mt-20 p-4">
+        <summary className="min-h-[44px] cursor-pointer font-numeric text-sm text-[var(--text-secondary)]">Reconstructed model details <span className="ml-2 text-[10px] text-[var(--accent-warn)]">{game.p_model !== undefined ? 'Backtest' : 'No forecast'}</span></summary>
       {game.p_model !== undefined ? (
         <RecordedForecast
           game={game}
@@ -358,9 +364,15 @@ function PlayedGame({
         </section>
       )}
 
+      </details>
+
+      <details className="card mb-4 p-4">
+        <summary className="min-h-[44px] cursor-pointer font-numeric text-sm text-[var(--text-secondary)]">Team trends &amp; shooting</summary>
       <ShootingContextSection gameDate={game.date} gameSeason={game.season} gameId={game.id} seasonFile={seasonFile}
         teams={[{ id: game.away_id, abbreviation: game.away, name: teams[game.away]?.name ?? game.away },
           { id: game.home_id, abbreviation: game.home, name: teams[game.home]?.name ?? game.home }]} />
+
+      </details>
 
       {box ? (
         <>
@@ -664,21 +676,21 @@ function UpcomingGame({
         awayAbbr={game.away.abbreviation}
       />
 
-      <section id="forecast" className="card mb-6 scroll-mt-20 p-4">
-        <h2 className="mb-3 text-sm">Forecast</h2>
-        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatTile dl label="Home win">{pct(game.p_home)}</StatTile>
-          <StatTile dl label="Proj. margin">{signed(game.exp_margin)}</StatTile>
-          <StatTile dl label="Proj. total">{num(game.exp_total, 1)}</StatTile>
-          <StatTile dl label="Proj. score">
-            {`${Math.round(game.exp_away_score)}–${Math.round(game.exp_home_score)}`}
-          </StatTile>
-        </dl>
+      <GameOutlook game={game}>
         <PredictLinks home={game.home.abbreviation} away={game.away.abbreviation} />
-      </section>
+      </GameOutlook>
+
+      <div id="availability" className="scroll-mt-20"><InjuryReport
+        injuries={injuries}
+        away={game.away}
+        home={game.home}
+      /></div>
+
+      <details id="market" className="card mb-4 scroll-mt-20 p-4">
+        <summary className="min-h-[44px] cursor-pointer py-1 font-numeric text-sm text-[var(--text-primary)]">Odds &amp; comparison</summary>
 
       {game.value ? (
-        <section id="market" className="card mb-6 scroll-mt-20 p-4">
+        <section className="mt-3">
           <h2 className="mb-3 text-sm">Value surface</h2>
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatTile dl label="Moneyline">
@@ -690,7 +702,7 @@ function UpcomingGame({
           </dl>
         </section>
       ) : (
-        <section id="market" className="card mb-6 scroll-mt-20 p-4">
+        <section className="mt-3">
           <h2 className="text-sm">No market line</h2>
           <p className="mt-2 text-[11px] text-[var(--text-tertiary)]">
             No sportsbook has published a price for this game yet, so there is
@@ -699,17 +711,18 @@ function UpcomingGame({
         </section>
       )}
 
-      <ShootingContextSection gameDate={game.date_utc} gameSeason={gameSeason} gameId={game.game_id}
-        teams={[{ id: game.away.team_id, abbreviation: game.away.abbreviation, name: game.away.name },
-          { id: game.home.team_id, abbreviation: game.home.abbreviation, name: game.home.name }]} />
+      </details>
 
-      <div id="availability" className="scroll-mt-20"><InjuryReport
-        injuries={injuries}
-        away={game.away}
-        home={game.home}
-      /></div>
+      <details className="card mb-4 p-4">
+        <summary className="min-h-[44px] cursor-pointer py-1 font-numeric text-sm text-[var(--text-primary)]">Team trends &amp; shooting</summary>
+        <div className="mt-3"><ShootingContextSection gameDate={game.date_utc} gameSeason={gameSeason} gameId={game.game_id}
+          teams={[{ id: game.away.team_id, abbreviation: game.away.abbreviation, name: game.away.name },
+            { id: game.home.team_id, abbreviation: game.home.abbreviation, name: game.home.name }]} /></div>
+      </details>
 
-      <div id="context" className="scroll-mt-20"><SeriesHistory
+      <details id="context" className="card mb-4 scroll-mt-20 p-4">
+        <summary className="min-h-[44px] cursor-pointer py-1 font-numeric text-sm text-[var(--text-primary)]">Recent meetings &amp; form</summary>
+      <div className="mt-3"><SeriesHistory
         away={game.away.abbreviation}
         home={game.home.abbreviation}
       /></div>
@@ -718,6 +731,7 @@ function UpcomingGame({
         <FormPanel abbreviation={game.away.abbreviation} name={game.away.name} />
         <FormPanel abbreviation={game.home.abbreviation} name={game.home.name} />
       </div>
+      </details>
     </div>
   )
 }
@@ -963,7 +977,7 @@ function ScoreSide({
     >
       <TeamLogo logo={meta?.logo} abbreviation={team} name={meta?.name} size={36} />
       <div className="min-w-0">
-        <p className="truncate text-sm text-[var(--text-primary)]">
+        <p className="break-words text-sm leading-snug text-[var(--text-primary)]">
           {meta?.name ?? team}
         </p>
         {score !== undefined ? (
