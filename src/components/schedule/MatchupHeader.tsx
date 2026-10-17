@@ -32,16 +32,19 @@ export function MatchupHeader({ game, generatedAt, trainedThrough, records }: {
         </div>)}
         <span className="col-start-2 row-start-1 mt-4 self-start font-numeric text-xs text-[var(--text-tertiary)]" data-score="pending">vs</span>
       </div>
-      <div className="mt-5 border-t border-[var(--border-color)] pt-4">
+      <p className="mt-4 text-xs text-[var(--text-secondary)]">{game.venue ?? 'Venue unavailable'}</p>
+      <details className="mt-4 border-t border-[var(--border-color)]">
+        <summary className="min-h-[44px] cursor-pointer py-3 font-numeric text-xs text-[var(--accent-info)]">Win chances &amp; forecast timing</summary>
+      <div className="pt-2">
         <p className="eyebrow mb-3">Published win probability</p>
         <ProbabilityBar homeLabel={game.home.abbreviation} awayLabel={game.away.abbreviation} pHome={game.p_home} />
       </div>
-      <p className="mt-4 text-xs text-[var(--text-secondary)]">{game.venue ?? 'Venue unavailable'}</p>
       <dl className="mt-4 grid gap-3 border-t border-[var(--border-color)] pt-4 text-xs sm:grid-cols-2">
         <div><dt className="text-[var(--text-tertiary)]">Forecast published</dt><dd className="mt-1 font-numeric">{stamp(generatedAt)}</dd></div>
         <div><dt className="text-[var(--text-tertiary)]">Results used through</dt><dd className="mt-1 font-numeric">{stamp(trainedThrough ?? undefined)}</dd></div>
       </dl>
       <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">Pre-game snapshot; injuries and roster changes are not inputs to these probabilities.</p>
+      </details>
     </div>
     <MatchupSections />
   </header>

@@ -24,10 +24,13 @@ import type { GameBoxScore, TeamBoxScore } from '@/lib/espn'
 export function PlayerBoxScores({ box, gameDate, enableProfiles = true }: { box: GameBoxScore; gameDate: string; enableProfiles?: boolean }) {
   return (
     <div id="player-box-scores" className="mb-6 scroll-mt-20 space-y-6">
-      {enableProfiles ? <GameLineComparison lines={comparisonLines(box)} gameDate={gameDate} /> : null}
       {box.teams.map((team) => (
         <TeamPlayers key={team.teamId} team={team} gameId={box.gameId} enableProfiles={enableProfiles} />
       ))}
+      {enableProfiles ? <details className="card p-4">
+        <summary className="min-h-[44px] cursor-pointer font-numeric text-xs text-[var(--accent-info)]">Compare player lines</summary>
+        <GameLineComparison lines={comparisonLines(box)} gameDate={gameDate} />
+      </details> : null}
     </div>
   )
 }
