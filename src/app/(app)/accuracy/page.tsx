@@ -1,11 +1,14 @@
 import Link from 'next/link'
 
 import { SeasonTable } from '@/components/accuracy/SeasonTable'
+import { PublishedRecord } from '@/components/accuracy/PublishedRecord'
 import { CalibrationChart } from '@/components/charts/CalibrationChart'
 import { PitHistogram } from '@/components/charts/PitHistogram'
 import { SeasonBrierChart } from '@/components/charts/SeasonBrierChart'
 import {
   getLiveRecord,
+  getForecastHistory,
+  getGameForecasts,
   getMarketBenchmark,
   getSeriesModel,
   type ClvBlock,
@@ -13,8 +16,9 @@ import {
   type LiveRecord,
 } from '@/lib/artifacts'
 import { num, pct, stamp } from '@/lib/format'
+import { buildTrackRecord } from '@/lib/trackRecord'
 
-export const metadata = { title: 'Accuracy' }
+export const metadata = { title: 'Model track record' }
 export const dynamic = 'force-static'
 
 interface Summary {
@@ -44,36 +48,34 @@ export default function AccuracyPage() {
   const series = getSeriesModel() as Record<string, any> | null
   const live = getLiveRecord()
 
-  if (!benchmark) {
-    return (
-      <div className="card p-6">
-        <h1 className="text-sm">No benchmark published</h1>
-        <p className="mt-2 text-xs text-[var(--text-tertiary)]">
-          Run <code className="font-numeric">benchmark_market</code> to
-          generate one.
-        </p>
-      </div>
-    )
-  }
-
-  const paired = benchmark.paired_vs_market ?? {}
-  const full = benchmark.full_corpus ?? {}
+  const record = buildTrackRecord(live, getForecastHistory(), getGameForecasts()?.season)
+  const paired = benchmark?.paired_vs_market ?? {}
+  const full = benchmark?.full_corpus ?? {}
   const boot = paired.bootstrap ?? {}
-  const bySeason: Record<string, any> = benchmark.by_season ?? {}
+  const bySeason: Record<string, any> = benchmark?.by_season ?? {}
 
   return (
     <div>
       <header className="mb-6">
         <p className="eyebrow">Record</p>
-        <h1 className="mt-1 text-2xl">How right has it been</h1>
+        <h1 className="mt-1 text-2xl">How often did our picks win?</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Two records, kept apart on purpose: the live one was published
-          before the games it scores, and everything after it is a
-          reconstruction.
+          Follow the season through saved pregame picks and confirmed results.
+          A short record can change quickly; no percentage guarantees the next game.
         </p>
       </header>
 
-      <LiveSection live={live} />
+      <PublishedRecord report={record} />
+
+      {live && record.available && !record.excluded && record.settled.length + record.unpicked.length === live.n && live.n > 0 ? <details className="mb-6 border-t border-[var(--border-color)]">
+        <summary className="min-h-[44px] cursor-pointer py-3 font-numeric text-sm text-[var(--text-secondary)]">Deeper prospective scoring · calibration &amp; market comparison</summary>
+        <p className="mb-3 text-xs text-[var(--text-secondary)]">These existing probability scores include 50/50 calls, worth half credit in the scorer&apos;s accuracy column. They are separate from the integer winner-pick count above.</p>
+        <LiveSection live={live} />
+      </details> : null}
+
+      <details className="border-t border-[var(--border-color)]" id="historical-backtests">
+        <summary className="min-h-[44px] cursor-pointer py-3 font-numeric text-sm text-[var(--text-secondary)]">Historical backtests &amp; calibration · separate from the running record</summary>
+      {benchmark ? <>
 
       <div className="mb-8 border-t border-[var(--border-color)] pt-8">
         <p className="eyebrow">Reconstructed</p>
@@ -206,6 +208,8 @@ export default function AccuracyPage() {
       <p className="mt-6 font-numeric text-[10px] text-[var(--text-tertiary)]">
         benchmark generated {stamp(benchmark.generated_at as string)}
       </p>
+      </> : <p className="py-4 text-sm text-[var(--text-secondary)]">Historical benchmark unavailable. This does not replace or erase the prospective record above.</p>}
+      </details>
     </div>
   )
 }
@@ -267,7 +271,7 @@ function LiveSection({ live }: { live: LiveRecord | null }) {
         </div>
       ) : (
         <>
-          <div className="card overflow-x-auto">
+          <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Prospective probability scoring">
             <table>
               <thead>
                 <tr>
@@ -307,7 +311,7 @@ function LiveSection({ live }: { live: LiveRecord | null }) {
           </p>
 
           {live.cohorts?.length ? (
-            <div className="mt-5 overflow-x-auto">
+            <div className="mt-5 overflow-x-auto" tabIndex={0} role="region" aria-label="Prospective model and forecast lead-time cohorts">
               <h3 className="mb-2 text-xs">By model and forecast lead time</h3>
               <p className="mb-3 text-xs text-[var(--text-tertiary)]">Separate versions and horizons; small cohorts are descriptive, not evidence of improvement.</p>
               <table className="w-full text-xs">
@@ -644,7 +648,7 @@ function CoverageVerdict({
 function CoverageTable({ rows, label }: { rows: CoverageRow[]; label: string }) {
   if (!rows.length) return null
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={`${label} interval coverage`}>
       <table>
         <caption className="pb-2 text-left text-[11px] text-[var(--text-secondary)]">
           Interval coverage, {label}

@@ -56,6 +56,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import math
 import os
 import random
 import sys
@@ -104,9 +105,19 @@ def settled_games(warehouse, season: int) -> Dict[str, Dict]:
     got wrong is not a record.
     """
     out: Dict[str, Dict] = {}
+    franchises = {r["team_id"]: r["abbreviation"] for r in warehouse.conn.execute(
+        "SELECT team_id, abbreviation FROM teams WHERE conference IS NOT NULL")}
     for row in warehouse.iter_games(seasons=[season], season_types=SCORED_TYPES):
+        if row["home_team_id"] not in franchises or row["away_team_id"] not in franchises:
+            continue
+        # An NBA final has a winner. Corrupt/tied rows are not settled picks.
+        if (any(not isinstance(row[key], int) or row[key] < 0 for key in ("home_score", "away_score"))
+                or row["home_score"] == row["away_score"]):
+            continue
         out[str(row["game_id"])] = {
             "game_id": str(row["game_id"]),
+            "home_team": franchises[row["home_team_id"]],
+            "away_team": franchises[row["away_team_id"]],
             "date_utc": row["date_utc"],
             "home_score": int(row["home_score"]),
             "away_score": int(row["away_score"]),
@@ -189,7 +200,8 @@ def _read_log(path: Path) -> Dict[str, Dict]:
 
 
 def join(
-    warehouse, season: int, devig: str = "shin", log_path: Optional[Path] = None
+    warehouse, season: int, devig: str = "shin", log_path: Optional[Path] = None,
+    *, as_of: Optional[str] = None,
 ) -> List[Dict]:
     """Settled games joined to the earliest pre-tipoff forecast of each.
 
@@ -207,7 +219,8 @@ def join(
     ):
         game_id = str(snapshot["fixture_uid"])
         result = results.get(game_id)
-        if result is None or snapshot["p_home"] is None:
+        if (result is None or not eligible_forecast(snapshot, result["date_utc"], as_of)
+                or snapshot["home_team"] != result["home_team"] or snapshot["away_team"] != result["away_team"]):
             continue
 
         record = {
@@ -238,6 +251,67 @@ def join(
         record["clv"] = _clv(record, price, devig)
         records.append(record)
     return records
+
+
+def eligible_forecast(snapshot: Dict, actual_tipoff: Optional[str] = None,
+                      as_of: Optional[str] = None) -> bool:
+    """Prove the call predates both its stored tipoff and the recorded start.
+
+    A changed schedule must never let a post-start call into the record.
+    Missing, naive or invalid timestamps/probabilities cannot prove eligibility.
+    """
+    try:
+        probability = snapshot.get("p_home")
+        if isinstance(probability, bool) or not isinstance(probability, (int, float)):
+            return False
+        if not math.isfinite(probability) or not 0 <= probability <= 1:
+            return False
+        generated, tipoff = utc(snapshot["generated_at"]), utc(snapshot["tipoff_utc"])
+        if generated >= tipoff:
+            return False
+        if actual_tipoff is not None and generated >= utc(actual_tipoff):
+            return False
+        if as_of is not None:
+            cutoff = utc(as_of)
+            if generated > cutoff or (actual_tipoff is not None and utc(actual_tipoff) > cutoff):
+                return False
+        return True
+    except (KeyError, ValueError, TypeError, OverflowError):
+        return False
+
+
+def build_report(warehouse, season: int, generated_at: str, devig: str = "shin",
+                 log_path: Optional[Path] = None) -> Dict:
+    """Publish a whole-season record and its coverage, without choosing a window."""
+    cutoff = utc(generated_at)
+    records = join(warehouse, season, devig, log_path, as_of=generated_at)
+    report = evaluate(records, devig)
+    report.update(season=season, generated_at=generated_at)
+    results = {}
+    for game_id, result in settled_games(warehouse, season).items():
+        try:
+            if utc(result["date_utc"]) <= cutoff:
+                results[game_id] = result
+        except (ValueError, TypeError):
+            continue
+    abbreviations = {r[0] for r in warehouse.conn.execute("SELECT abbreviation FROM teams WHERE conference IS NOT NULL") if r[0]}
+    forecasts = {r["fixture_uid"]: r for r in earliest_forecasts(warehouse, season, log_path or LOG_PATH)
+                 if eligible_forecast(r, as_of=generated_at) and r["home_team"] in abbreviations
+                 and r["away_team"] in abbreviations and r["home_team"] != r["away_team"]}
+    report["coverage"] = {
+        "settled_games": len(results),
+        "scored_games": len(records),
+        "without_eligible_forecast": len(set(results) - {r["game_id"] for r in records}),
+        "without_eligible_forecast_ids": sorted(set(results) - {r["game_id"] for r in records}),
+        "pending_forecasts": len(set(forecasts) - set(results)),
+    }
+    # Retain the actual start and publication stamp, so each result is auditable.
+    fields = {"game_id", "tipoff_utc", "date_utc", "generated_at", "home_team", "away_team",
+              "p_home", "home_won", "exp_margin", "margin", "exp_total", "total",
+              "lead_hours", "clv", "model_version"}
+    report["games"] = [{k: v for k, v in row.items() if k in fields}
+                       for row in sorted(records, key=lambda r: (utc(r["date_utc"]), r["game_id"]))]
+    return report
 
 
 def _clv(
@@ -602,25 +676,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     season = args.season or current_season()
     warehouse = get_warehouse()
-    records = join(warehouse, season, args.devig, Path(args.log))
-
-    report = evaluate(records, args.devig)
-    report["season"] = season
-    report["generated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    # The per-game rows ride along: a record of eleven games that will not
-    # show you the eleven games is an assertion, not evidence.
-    report["games"] = [
-        {
-            k: v
-            for k, v in record.items()
-            if k in {
-                "game_id", "tipoff_utc", "generated_at", "home_team", "away_team",
-                "p_home", "home_won", "exp_margin", "margin", "exp_total",
-                "total", "lead_hours", "clv", "model_version",
-            }
-        }
-        for record in sorted(records, key=lambda r: r["tipoff_utc"] or "")
-    ]
+    report = build_report(warehouse, season, datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                          args.devig, Path(args.log))
 
     _publish(Path(args.out_dir) / "live_record.json", report)
     _print(report)

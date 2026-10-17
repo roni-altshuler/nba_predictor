@@ -18,6 +18,79 @@ from backend.services.data.warehouse import Warehouse
 from backend.services.prediction import market as mkt
 
 
+def _played(warehouse, game_id, date="2027-01-02T00:00:00Z", *, home_score=100, away_score=90, season=2027, season_type=2):
+    from backend.services.data.warehouse import GameRow
+    home = warehouse.upsert_team("home", "Home", abbreviation="HOM", conference="East")
+    away = warehouse.upsert_team("away", "Away", abbreviation="AWY", conference="West")
+    warehouse.upsert_games([GameRow(game_id, "test", "nba", season, season_type, date,
+                                   home, away, home_score, away_score)])
+
+
+def test_actual_start_prevents_a_rescheduled_game_leaking_into_the_record(warehouse, tmp_path):
+    _played(warehouse, "moved", "2027-01-01T22:00:00Z")
+    warehouse.record_predictions([snapshot("moved", "2027-01-01T23:00:00Z", "2027-01-02T00:00:00Z", 0.9)])
+    report = score_live.build_report(warehouse, 2027, "2027-01-03T00:00:00Z", log_path=tmp_path / "absent.json")
+    assert report["n"] == 0
+    assert report["games"] == []
+    assert report["coverage"] == {"settled_games": 1, "scored_games": 0, "without_eligible_forecast": 1,
+                                  "without_eligible_forecast_ids": ["moved"], "pending_forecasts": 0}
+
+
+def test_whole_season_coverage_separates_pending_missing_and_out_of_scope(warehouse, tmp_path):
+    for game_id in ["scored", "missing"]:
+        _played(warehouse, game_id)
+    _played(warehouse, "future", "2027-01-04T00:00:00Z")
+    _played(warehouse, "exhibition", season_type=1)
+    _played(warehouse, "last-season", season=2026)
+    _played(warehouse, "tied", home_score=100, away_score=100)
+    for game_id, tipoff in [("scored", "2027-01-02T00:00:00Z"), ("future", "2027-01-04T00:00:00Z"), ("pending", "2027-01-05T00:00:00Z")]:
+        warehouse.record_predictions([snapshot(game_id, "2027-01-01T12:00:00Z", tipoff, 0.6)])
+    # A later, more flattering call never replaces the earliest one.
+    warehouse.record_predictions([snapshot("scored", "2027-01-01T23:00:00Z", "2027-01-02T00:00:00Z", 0.99)])
+    report = score_live.build_report(warehouse, 2027, "2027-01-03T00:00:00Z", log_path=tmp_path / "absent.json")
+    assert report["n"] == 1
+    assert report["games"][0]["p_home"] == 0.6
+    assert report["games"][0]["generated_at"] == "2027-01-01T12:00:00Z"
+    assert report["games"][0]["date_utc"] == "2027-01-02T00:00:00Z"
+    assert report["coverage"] == {"settled_games": 2, "scored_games": 1, "without_eligible_forecast": 1,
+                                  "without_eligible_forecast_ids": ["missing"], "pending_forecasts": 2}
+
+
+def test_coverage_filters_non_franchises_but_keeps_cup_final_and_postseason(warehouse, tmp_path):
+    from backend.services.data.warehouse import GameRow
+    for game_id, phase in [("cup-final", 2), ("play-in", 5), ("playoffs", 3)]:
+        _played(warehouse, game_id, season_type=phase)
+    outsider = warehouse.upsert_team("world", "World", abbreviation="WORLD")
+    home = warehouse.upsert_team("home", "Home", abbreviation="HOM", conference="East")
+    away = warehouse.upsert_team("stars", "Stars", abbreviation="STARS")
+    warehouse.upsert_games([
+        GameRow("international", "test", "nba", 2027, 2, "2027-01-02T00:00:00Z", home, outsider, 100, 90),
+        GameRow("all-star", "test", "nba", 2027, 2, "2027-01-02T00:00:00Z", away, outsider, 110, 100),
+    ])
+    report = score_live.build_report(warehouse, 2027, "2027-01-03T00:00:00Z", log_path=tmp_path / "absent.json")
+    assert report["coverage"]["settled_games"] == 3
+    assert report["coverage"]["without_eligible_forecast_ids"] == ["cup-final", "play-in", "playoffs"]
+
+
+def test_a_saved_call_with_swapped_participants_is_not_joined_to_the_result(warehouse, tmp_path):
+    _played(warehouse, "swapped")
+    warehouse.record_predictions([snapshot("swapped", "2027-01-01T12:00:00Z", "2027-01-02T00:00:00Z", .9,
+                                          home_team="AWY", away_team="HOM")])
+    report = score_live.build_report(warehouse, 2027, "2027-01-03T00:00:00Z", log_path=tmp_path / "absent.json")
+    assert report["n"] == 0
+    assert report["coverage"]["without_eligible_forecast_ids"] == ["swapped"]
+
+
+@pytest.mark.parametrize("probability", [None, True, float("nan"), float("inf"), -0.1, 1.1, "0.6"])
+def test_ineligible_probabilities_never_count_as_live_picks(probability):
+    assert not score_live.eligible_forecast(snapshot("bad", "2027-01-01T12:00:00Z", "2027-01-02T00:00:00Z", None) | {"p_home": probability})
+
+
+@pytest.mark.parametrize("at", [None, "2027-01-01T12:00:00", "not-a-date", "2027-01-02T00:00:00Z"])
+def test_missing_naive_or_non_pregame_stamp_is_not_eligible(at):
+    assert not score_live.eligible_forecast(snapshot("bad", at, "2027-01-02T00:00:00Z", 0.6))
+
+
 # --------------------------------------------------------------- fixtures
 
 
