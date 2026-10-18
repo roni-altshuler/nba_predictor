@@ -1,15 +1,15 @@
 {
   "season": 2027,
   "season_start": "2026-10-20T19:00:00+00:00",
-  "generated_at": "2026-10-17T14:04:20+00:00",
+  "generated_at": "2026-10-18T14:18:18+00:00",
   "ingestion": {
     "source": "espn",
     "status": "ok",
-    "attempted_at": "2026-10-17T14:04:10+00:00",
+    "attempted_at": "2026-10-18T14:18:08+00:00",
     "seasons": [
       2027
     ],
-    "last_success_at": "2026-10-17T14:04:10+00:00",
+    "last_success_at": "2026-10-18T14:18:08+00:00",
     "event_count": 1273,
     "warehouse_updated": true,
     "error": null,
