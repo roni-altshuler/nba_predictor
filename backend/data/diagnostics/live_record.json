@@ -1,25 +1,80 @@
 {
-  "n": 0,
+  "n": 3,
   "basis": "live",
   "note": "Every forecast below was written to the warehouse before its tip-off, and this is the earliest such forecast for each game. It is NOT the walk-forward on the same page and the two are never merged.",
-  "first_tipoff": null,
-  "last_tipoff": null,
-  "median_lead_hours": null,
+  "first_tipoff": "2026-10-20T19:00:00+00:00",
+  "last_tipoff": "2026-10-21T01:30:00+00:00",
+  "median_lead_hours": 1567.85,
   "model": {
-    "n": 0
+    "n": 3,
+    "brier": 0.37484437792299996,
+    "log_loss": 0.973741722177432,
+    "accuracy": 0.3333333333333333,
+    "ece": 0.31013833333333335,
+    "mean_predicted": 0.6434716666666667,
+    "base_rate": 0.3333333333333333
   },
   "margin": {
-    "n": 0
+    "n": 3,
+    "mae": 12.143333333333333,
+    "rmse": 13.089420384417334,
+    "bias": 8.65,
+    "median_ae": 15.337,
+    "mean_actual": -3.3333333333333335,
+    "mean_predicted": 5.316666666666666
   },
   "total": {
-    "n": 0
+    "n": 3,
+    "mae": 9.826666666666673,
+    "rmse": 12.007245035116648,
+    "bias": -1.4866666666666788,
+    "median_ae": 12.509999999999991,
+    "mean_actual": 220.0,
+    "mean_predicted": 218.51333333333332
   },
   "paired_vs_market": {
-    "n": 0,
-    "verdict": "insufficient",
-    "reason": "no settled game carries both a stored forecast and a price"
+    "n": 3,
+    "devig": "shin",
+    "model": {
+      "n": 3,
+      "brier": 0.37484437792299996,
+      "log_loss": 0.973741722177432,
+      "accuracy": 0.3333333333333333,
+      "ece": 0.31013833333333335,
+      "mean_predicted": 0.6434716666666667,
+      "base_rate": 0.3333333333333333
+    },
+    "market": {
+      "n": 3,
+      "brier": 0.2981016663714312,
+      "log_loss": 0.7909791471562441,
+      "accuracy": 0.3333333333333333,
+      "ece": 0.22204749286408476,
+      "mean_predicted": 0.5206859641550865,
+      "base_rate": 0.3333333333333333
+    },
+    "gap_to_market": 0.07674,
+    "bootstrap": {
+      "mean_diff": 0.07674,
+      "ci_low": -0.10099,
+      "ci_high": 0.21662,
+      "iterations": 5000
+    },
+    "verdict": "insufficient"
   },
-  "cohorts": [],
+  "cohorts": [
+    {
+      "model_version": "2026.08.1+943bde8b",
+      "horizon": "over_7_days",
+      "n": 3,
+      "brier": 0.37484437792299996,
+      "log_loss": 0.973741722177432,
+      "accuracy": 0.3333333333333333,
+      "ece": 0.31013833333333335,
+      "mean_predicted": 0.6434716666666667,
+      "base_rate": 0.3333333333333333
+    }
+  ],
   "clv": {
     "flagged": {
       "n": 0,
@@ -33,6 +88,55 @@
     "note": "CLV, not profit, is the headline. At this sample size realised return is dominated by variance and says close to nothing about whether an edge existed; whether the price moved toward us converges far sooner. ROI is printed for completeness and should not be read as a result."
   },
   "season": 2027,
-  "generated_at": "2026-10-20T15:35:31+00:00",
-  "games": []
+  "generated_at": "2026-10-21T15:51:48+00:00",
+  "games": [
+    {
+      "game_id": "401909088",
+      "tipoff_utc": "2026-10-20T19:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "DET",
+      "away_team": "BOS",
+      "lead_hours": 1563.85,
+      "p_home": 0.571007,
+      "exp_margin": 2.76,
+      "exp_total": 217.39,
+      "home_won": true,
+      "margin": 8,
+      "total": 234,
+      "clv": null
+    },
+    {
+      "game_id": "401909089",
+      "tipoff_utc": "2026-10-20T23:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "NY",
+      "away_team": "PHI",
+      "lead_hours": 1567.85,
+      "p_home": 0.770542,
+      "exp_margin": 9.853,
+      "exp_total": 218.51,
+      "home_won": false,
+      "margin": -6,
+      "total": 206,
+      "clv": null
+    },
+    {
+      "game_id": "401909090",
+      "tipoff_utc": "2026-10-21T01:30:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "SA",
+      "away_team": "OKC",
+      "lead_hours": 1570.35,
+      "p_home": 0.588866,
+      "exp_margin": 3.337,
+      "exp_total": 219.64,
+      "home_won": false,
+      "margin": -12,
+      "total": 220,
+      "clv": null
+    }
+  ]
 }
