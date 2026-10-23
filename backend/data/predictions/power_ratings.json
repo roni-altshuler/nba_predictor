@@ -1,8 +1,17 @@
 {
   "season": 2027,
-  "generated_at": "2026-10-22T15:48:57+00:00",
-  "model_version": "2026.08.1+22789861",
+  "generated_at": "2026-10-23T15:39:58+00:00",
+  "model_version": "2026.08.1+ae74e102",
   "teams": [
+    {
+      "team_id": 21,
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+      "elo": 1663.5,
+      "rank": 1
+    },
     {
       "team_id": 20,
       "name": "New York Knicks",
@@ -10,15 +19,6 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
       "elo": 1659.8,
-      "rank": 1
-    },
-    {
-      "team_id": 21,
-      "name": "Oklahoma City Thunder",
-      "abbreviation": "OKC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
-      "elo": 1656.9,
       "rank": 2
     },
     {
@@ -63,7 +63,7 @@
       "abbreviation": "DEN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-      "elo": 1572.4,
+      "elo": 1565.7,
       "rank": 7
     },
     {
@@ -99,7 +99,7 @@
       "abbreviation": "CLE",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-      "elo": 1558.1,
+      "elo": 1549.9,
       "rank": 11
     },
     {
@@ -112,21 +112,21 @@
       "rank": 12
     },
     {
+      "team_id": 23,
+      "name": "Philadelphia 76ers",
+      "abbreviation": "PHI",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+      "elo": 1544.4,
+      "rank": 13
+    },
+    {
       "team_id": 25,
       "name": "Portland Trail Blazers",
       "abbreviation": "POR",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
       "elo": 1536.8,
-      "rank": 13
-    },
-    {
-      "team_id": 23,
-      "name": "Philadelphia 76ers",
-      "abbreviation": "PHI",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-      "elo": 1536.2,
       "rank": 14
     },
     {
