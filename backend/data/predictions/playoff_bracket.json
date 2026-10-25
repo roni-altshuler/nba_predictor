@@ -1,16 +1,16 @@
 {
   "season": 2027,
-  "generated_at": "2026-10-24T14:15:35+00:00",
-  "model_version": "2026.08.1+1f7cef8f",
+  "generated_at": "2026-10-25T14:47:36+00:00",
+  "model_version": "2026.08.1+c35ebf2f",
   "simulations": 20000,
-  "games_played": 28,
+  "games_played": 36,
   "basis": "projection",
   "conferences": {
     "Western Conference": {
       "seeds": [
         {
           "seed": 1,
-          "p_seed": 0.6697,
+          "p_seed": 0.6279,
           "team_id": 21,
           "name": "Oklahoma City Thunder",
           "abbreviation": "OKC",
@@ -20,37 +20,37 @@
         },
         {
           "seed": 2,
-          "p_seed": 0.325,
+          "p_seed": 0.3272,
           "team_id": 27,
           "name": "San Antonio Spurs",
           "abbreviation": "SA",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-          "wins": 50.7,
-          "losses": 31.3
+          "wins": 51.5,
+          "losses": 30.5
         },
         {
           "seed": 3,
-          "p_seed": 0.1845,
-          "team_id": 18,
-          "name": "Minnesota Timberwolves",
-          "abbreviation": "MIN",
-          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-          "wins": 47.6,
-          "losses": 34.4
-        },
-        {
-          "seed": 4,
-          "p_seed": 0.1714,
+          "p_seed": 0.1983,
           "team_id": 11,
           "name": "Houston Rockets",
           "abbreviation": "HOU",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-          "wins": 47.2,
-          "losses": 34.8
+          "wins": 48.6,
+          "losses": 33.4
+        },
+        {
+          "seed": 4,
+          "p_seed": 0.1762,
+          "team_id": 18,
+          "name": "Minnesota Timberwolves",
+          "abbreviation": "MIN",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
+          "wins": 47.5,
+          "losses": 34.5
         },
         {
           "seed": 5,
-          "p_seed": 0.1676,
+          "p_seed": 0.1677,
           "team_id": 14,
           "name": "Los Angeles Lakers",
           "abbreviation": "LAL",
@@ -60,17 +60,17 @@
         },
         {
           "seed": 6,
-          "p_seed": 0.162,
+          "p_seed": 0.1655,
           "team_id": 8,
           "name": "Denver Nuggets",
           "abbreviation": "DEN",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-          "wins": 45.3,
-          "losses": 36.7
+          "wins": 45.8,
+          "losses": 36.2
         },
         {
           "seed": 7,
-          "p_seed": 0.1806,
+          "p_seed": 0.1912,
           "team_id": 25,
           "name": "Portland Trail Blazers",
           "abbreviation": "POR",
@@ -80,13 +80,13 @@
         },
         {
           "seed": 8,
-          "p_seed": 0.2219,
+          "p_seed": 0.2293,
           "team_id": 13,
           "name": "LA Clippers",
           "abbreviation": "LAC",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-          "wins": 41.8,
-          "losses": 40.2
+          "wins": 41.7,
+          "losses": 40.3
         }
       ],
       "first_round": [
@@ -101,17 +101,17 @@
             "wins": 55.4,
             "losses": 26.6,
             "elo": 1663.5,
-            "p_seed": 0.6697
+            "p_seed": 0.6279
           },
           "low": {
             "team_id": 13,
             "name": "LA Clippers",
             "abbreviation": "LAC",
             "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-            "wins": 41.8,
-            "losses": 40.2,
+            "wins": 41.7,
+            "losses": 40.3,
             "elo": 1519.3,
-            "p_seed": 0.2219
+            "p_seed": 0.2293
           },
           "p_high_game_home": 0.6947,
           "p_high_game_away": 0.6201,
@@ -119,28 +119,28 @@
           "p_low_series": 0.1786,
           "modal_length": 5,
           "lengths": {
-            "higher_in_4": 0.185587,
-            "higher_in_5": 0.271287,
-            "higher_in_6": 0.205463,
-            "higher_in_7": 0.159066,
-            "lower_in_4": 0.01345,
-            "lower_in_5": 0.032093,
-            "lower_in_6": 0.063157,
-            "lower_in_7": 0.069898
+            "higher_in_4": 0.185603,
+            "higher_in_5": 0.2713,
+            "higher_in_6": 0.205462,
+            "higher_in_7": 0.15906,
+            "lower_in_4": 0.013448,
+            "lower_in_5": 0.032088,
+            "lower_in_6": 0.063149,
+            "lower_in_7": 0.06989
           }
         },
         {
           "high_seed": 4,
           "low_seed": 5,
           "high": {
-            "team_id": 11,
-            "name": "Houston Rockets",
-            "abbreviation": "HOU",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-            "wins": 47.2,
-            "losses": 34.8,
-            "elo": 1569.0,
-            "p_seed": 0.1714
+            "team_id": 18,
+            "name": "Minnesota Timberwolves",
+            "abbreviation": "MIN",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
+            "wins": 47.5,
+            "losses": 34.5,
+            "elo": 1580.9,
+            "p_seed": 0.1762
           },
           "low": {
             "team_id": 14,
@@ -150,61 +150,61 @@
             "wins": 46.5,
             "losses": 35.5,
             "elo": 1566.0,
-            "p_seed": 0.1676
+            "p_seed": 0.1677
           },
-          "p_high_game_home": 0.5439,
-          "p_high_game_away": 0.4629,
-          "p_high_series": 0.5201,
-          "p_low_series": 0.4799,
+          "p_high_game_home": 0.5572,
+          "p_high_game_away": 0.4762,
+          "p_high_series": 0.5493,
+          "p_low_series": 0.4507,
           "modal_length": 7,
           "lengths": {
-            "higher_in_4": 0.063376,
-            "higher_in_5": 0.137819,
-            "higher_in_6": 0.148306,
-            "higher_in_7": 0.17062,
-            "lower_in_4": 0.060021,
-            "lower_in_5": 0.112469,
-            "lower_in_6": 0.164313,
-            "lower_in_7": 0.143076
+            "higher_in_4": 0.070425,
+            "higher_in_5": 0.14868,
+            "higher_in_6": 0.155994,
+            "higher_in_7": 0.174235,
+            "lower_in_4": 0.05378,
+            "lower_in_5": 0.103238,
+            "lower_in_6": 0.155202,
+            "lower_in_7": 0.138445
           }
         },
         {
           "high_seed": 3,
           "low_seed": 6,
           "high": {
-            "team_id": 18,
-            "name": "Minnesota Timberwolves",
-            "abbreviation": "MIN",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-            "wins": 47.6,
-            "losses": 34.4,
-            "elo": 1580.9,
-            "p_seed": 0.1845
+            "team_id": 11,
+            "name": "Houston Rockets",
+            "abbreviation": "HOU",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+            "wins": 48.6,
+            "losses": 33.4,
+            "elo": 1579.2,
+            "p_seed": 0.1983
           },
           "low": {
             "team_id": 8,
             "name": "Denver Nuggets",
             "abbreviation": "DEN",
             "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-            "wins": 45.3,
-            "losses": 36.7,
-            "elo": 1565.7,
-            "p_seed": 0.162
+            "wins": 45.8,
+            "losses": 36.2,
+            "elo": 1569.2,
+            "p_seed": 0.1655
           },
-          "p_high_game_home": 0.5575,
-          "p_high_game_away": 0.4766,
-          "p_high_series": 0.55,
-          "p_low_series": 0.45,
+          "p_high_game_home": 0.5517,
+          "p_high_game_away": 0.4707,
+          "p_high_series": 0.5373,
+          "p_low_series": 0.4627,
           "modal_length": 7,
           "lengths": {
-            "higher_in_4": 0.070598,
-            "higher_in_5": 0.148939,
-            "higher_in_6": 0.156173,
-            "higher_in_7": 0.17431,
-            "lower_in_4": 0.053639,
-            "lower_in_5": 0.103026,
-            "lower_in_6": 0.154984,
-            "lower_in_7": 0.138331
+            "higher_in_4": 0.067454,
+            "higher_in_5": 0.144169,
+            "higher_in_6": 0.15286,
+            "higher_in_7": 0.172842,
+            "lower_in_4": 0.056287,
+            "lower_in_5": 0.106992,
+            "lower_in_6": 0.158975,
+            "lower_in_7": 0.14042
           }
         },
         {
@@ -215,10 +215,10 @@
             "name": "San Antonio Spurs",
             "abbreviation": "SA",
             "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-            "wins": 50.7,
-            "losses": 31.3,
-            "elo": 1633.0,
-            "p_seed": 0.325
+            "wins": 51.5,
+            "losses": 30.5,
+            "elo": 1640.0,
+            "p_seed": 0.3272
           },
           "low": {
             "team_id": 25,
@@ -228,22 +228,22 @@
             "wins": 44.2,
             "losses": 37.8,
             "elo": 1542.8,
-            "p_seed": 0.1806
+            "p_seed": 0.1912
           },
-          "p_high_game_home": 0.6393,
-          "p_high_game_away": 0.5608,
-          "p_high_series": 0.7217,
-          "p_low_series": 0.2783,
+          "p_high_game_home": 0.6467,
+          "p_high_game_away": 0.5686,
+          "p_high_series": 0.7361,
+          "p_low_series": 0.2639,
           "modal_length": 6,
           "lengths": {
-            "higher_in_4": 0.128506,
-            "higher_in_5": 0.221399,
-            "higher_in_6": 0.194442,
-            "higher_in_7": 0.177305,
-            "lower_in_4": 0.025106,
-            "lower_in_5": 0.055225,
-            "lower_in_6": 0.097958,
-            "lower_in_7": 0.100058
+            "higher_in_4": 0.135234,
+            "higher_in_5": 0.228242,
+            "higher_in_6": 0.196799,
+            "higher_in_7": 0.175809,
+            "lower_in_4": 0.023225,
+            "lower_in_5": 0.051672,
+            "lower_in_6": 0.092975,
+            "lower_in_7": 0.096043
           }
         }
       ]
@@ -252,7 +252,7 @@
       "seeds": [
         {
           "seed": 1,
-          "p_seed": 0.4463,
+          "p_seed": 0.4612,
           "team_id": 20,
           "name": "New York Knicks",
           "abbreviation": "NY",
@@ -262,27 +262,17 @@
         },
         {
           "seed": 2,
-          "p_seed": 0.2433,
+          "p_seed": 0.2534,
           "team_id": 9,
           "name": "Detroit Pistons",
           "abbreviation": "DET",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-          "wins": 50.4,
-          "losses": 31.6
+          "wins": 50.3,
+          "losses": 31.7
         },
         {
           "seed": 3,
-          "p_seed": 0.1729,
-          "team_id": 1,
-          "name": "Atlanta Hawks",
-          "abbreviation": "ATL",
-          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-          "wins": 47.7,
-          "losses": 34.3
-        },
-        {
-          "seed": 4,
-          "p_seed": 0.16,
+          "p_seed": 0.1641,
           "team_id": 2,
           "name": "Boston Celtics",
           "abbreviation": "BOS",
@@ -291,18 +281,28 @@
           "losses": 34.5
         },
         {
-          "seed": 5,
-          "p_seed": 0.1482,
+          "seed": 4,
+          "p_seed": 0.1338,
           "team_id": 23,
           "name": "Philadelphia 76ers",
           "abbreviation": "PHI",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-          "wins": 45.3,
-          "losses": 36.7
+          "wins": 45.8,
+          "losses": 36.2
+        },
+        {
+          "seed": 5,
+          "p_seed": 0.1553,
+          "team_id": 1,
+          "name": "Atlanta Hawks",
+          "abbreviation": "ATL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+          "wins": 46.3,
+          "losses": 35.7
         },
         {
           "seed": 6,
-          "p_seed": 0.153,
+          "p_seed": 0.1464,
           "team_id": 28,
           "name": "Toronto Raptors",
           "abbreviation": "TOR",
@@ -312,23 +312,23 @@
         },
         {
           "seed": 7,
-          "p_seed": 0.1528,
-          "team_id": 6,
-          "name": "Cleveland Cavaliers",
-          "abbreviation": "CLE",
-          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-          "wins": 44.1,
-          "losses": 37.9
-        },
-        {
-          "seed": 8,
-          "p_seed": 0.1741,
+          "p_seed": 0.1588,
           "team_id": 4,
           "name": "Charlotte Hornets",
           "abbreviation": "CHA",
           "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
-          "wins": 43.0,
-          "losses": 39.0
+          "wins": 43.9,
+          "losses": 38.1
+        },
+        {
+          "seed": 8,
+          "p_seed": 0.1721,
+          "team_id": 22,
+          "name": "Orlando Magic",
+          "abbreviation": "ORL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+          "wins": 40.0,
+          "losses": 42.0
         }
       ],
       "first_round": [
@@ -343,37 +343,76 @@
             "wins": 52.0,
             "losses": 30.0,
             "elo": 1652.7,
-            "p_seed": 0.4463
+            "p_seed": 0.4612
           },
           "low": {
-            "team_id": 4,
-            "name": "Charlotte Hornets",
-            "abbreviation": "CHA",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
-            "wins": 43.0,
-            "losses": 39.0,
-            "elo": 1535.2,
-            "p_seed": 0.1741
+            "team_id": 22,
+            "name": "Orlando Magic",
+            "abbreviation": "ORL",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+            "wins": 40.0,
+            "losses": 42.0,
+            "elo": 1507.1,
+            "p_seed": 0.1721
           },
-          "p_high_game_home": 0.6677,
-          "p_high_game_away": 0.591,
-          "p_high_series": 0.7752,
-          "p_low_series": 0.2248,
+          "p_high_game_home": 0.6961,
+          "p_high_game_away": 0.6216,
+          "p_high_series": 0.8236,
+          "p_low_series": 0.1764,
           "modal_length": 5,
           "lengths": {
-            "higher_in_4": 0.155747,
-            "higher_in_5": 0.247429,
-            "higher_in_6": 0.202072,
-            "higher_in_7": 0.169958,
-            "lower_in_4": 0.018465,
-            "lower_in_5": 0.042393,
-            "lower_in_6": 0.079368,
-            "lower_in_7": 0.084569
+            "higher_in_4": 0.187233,
+            "higher_in_5": 0.272476,
+            "higher_in_6": 0.205524,
+            "higher_in_7": 0.15841,
+            "lower_in_4": 0.013223,
+            "lower_in_5": 0.031612,
+            "lower_in_6": 0.062368,
+            "lower_in_7": 0.069155
           }
         },
         {
           "high_seed": 4,
           "low_seed": 5,
+          "high": {
+            "team_id": 23,
+            "name": "Philadelphia 76ers",
+            "abbreviation": "PHI",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+            "wins": 45.8,
+            "losses": 36.2,
+            "elo": 1548.7,
+            "p_seed": 0.1338
+          },
+          "low": {
+            "team_id": 1,
+            "name": "Atlanta Hawks",
+            "abbreviation": "ATL",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+            "wins": 46.3,
+            "losses": 35.7,
+            "elo": 1563.3,
+            "p_seed": 0.1553
+          },
+          "p_high_game_home": 0.5241,
+          "p_high_game_away": 0.4431,
+          "p_high_series": 0.4767,
+          "p_low_series": 0.5233,
+          "modal_length": 6,
+          "lengths": {
+            "higher_in_4": 0.053932,
+            "higher_in_5": 0.122381,
+            "higher_in_6": 0.136524,
+            "higher_in_7": 0.163898,
+            "lower_in_4": 0.070238,
+            "lower_in_5": 0.126817,
+            "lower_in_6": 0.177384,
+            "lower_in_7": 0.148825
+          }
+        },
+        {
+          "high_seed": 3,
+          "low_seed": 6,
           "high": {
             "team_id": 2,
             "name": "Boston Celtics",
@@ -382,46 +421,7 @@
             "wins": 47.5,
             "losses": 34.5,
             "elo": 1581.5,
-            "p_seed": 0.16
-          },
-          "low": {
-            "team_id": 23,
-            "name": "Philadelphia 76ers",
-            "abbreviation": "PHI",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-            "wins": 45.3,
-            "losses": 36.7,
-            "elo": 1544.4,
-            "p_seed": 0.1482
-          },
-          "p_high_game_home": 0.5819,
-          "p_high_game_away": 0.5013,
-          "p_high_series": 0.6031,
-          "p_low_series": 0.3969,
-          "modal_length": 6,
-          "lengths": {
-            "higher_in_4": 0.085107,
-            "higher_in_5": 0.169693,
-            "higher_in_6": 0.169474,
-            "higher_in_7": 0.178782,
-            "lower_in_4": 0.043466,
-            "lower_in_5": 0.087124,
-            "lower_in_6": 0.137912,
-            "lower_in_7": 0.128442
-          }
-        },
-        {
-          "high_seed": 3,
-          "low_seed": 6,
-          "high": {
-            "team_id": 1,
-            "name": "Atlanta Hawks",
-            "abbreviation": "ATL",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-            "wins": 47.7,
-            "losses": 34.3,
-            "elo": 1573.5,
-            "p_seed": 0.1729
+            "p_seed": 0.1641
           },
           "low": {
             "team_id": 28,
@@ -431,22 +431,22 @@
             "wins": 45.0,
             "losses": 37.0,
             "elo": 1550.8,
-            "p_seed": 0.153
+            "p_seed": 0.1464
           },
-          "p_high_game_home": 0.5659,
-          "p_high_game_away": 0.485,
-          "p_high_series": 0.5682,
-          "p_low_series": 0.4318,
+          "p_high_game_home": 0.5748,
+          "p_high_game_away": 0.4941,
+          "p_high_series": 0.5877,
+          "p_low_series": 0.4123,
           "modal_length": 7,
           "lengths": {
-            "higher_in_4": 0.075319,
-            "higher_in_5": 0.155915,
-            "higher_in_6": 0.160845,
-            "higher_in_7": 0.176155,
-            "lower_in_4": 0.049988,
-            "lower_in_5": 0.097445,
-            "lower_in_6": 0.149191,
-            "lower_in_7": 0.135141
+            "higher_in_4": 0.080655,
+            "higher_in_5": 0.163538,
+            "higher_in_6": 0.165717,
+            "higher_in_7": 0.177774,
+            "lower_in_4": 0.046274,
+            "lower_in_5": 0.091624,
+            "lower_in_6": 0.142924,
+            "lower_in_7": 0.131494
           }
         },
         {
@@ -457,35 +457,35 @@
             "name": "Detroit Pistons",
             "abbreviation": "DET",
             "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-            "wins": 50.4,
-            "losses": 31.6,
+            "wins": 50.3,
+            "losses": 31.7,
             "elo": 1606.9,
-            "p_seed": 0.2433
+            "p_seed": 0.2534
           },
           "low": {
-            "team_id": 6,
-            "name": "Cleveland Cavaliers",
-            "abbreviation": "CLE",
-            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-            "wins": 44.1,
-            "losses": 37.9,
-            "elo": 1549.9,
-            "p_seed": 0.1528
+            "team_id": 4,
+            "name": "Charlotte Hornets",
+            "abbreviation": "CHA",
+            "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
+            "wins": 43.9,
+            "losses": 38.1,
+            "elo": 1539.8,
+            "p_seed": 0.1588
           },
-          "p_high_game_home": 0.6036,
-          "p_high_game_away": 0.5236,
-          "p_high_series": 0.6492,
-          "p_low_series": 0.3508,
+          "p_high_game_home": 0.6146,
+          "p_high_game_away": 0.535,
+          "p_high_series": 0.6721,
+          "p_low_series": 0.3279,
           "modal_length": 6,
           "lengths": {
-            "higher_in_4": 0.099893,
-            "higher_in_5": 0.188912,
-            "higher_in_6": 0.180157,
-            "higher_in_7": 0.180278,
-            "lower_in_4": 0.035658,
-            "lower_in_5": 0.074118,
-            "lower_in_6": 0.122599,
-            "lower_in_7": 0.118384
+            "higher_in_4": 0.10811,
+            "higher_in_5": 0.198842,
+            "higher_in_6": 0.185041,
+            "higher_in_7": 0.180096,
+            "lower_in_4": 0.032119,
+            "lower_in_5": 0.067962,
+            "lower_in_6": 0.114899,
+            "lower_in_7": 0.112932
           }
         }
       ]
@@ -498,11 +498,11 @@
       "abbreviation": "OKC",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.9992,
-      "p_conf_semis": 0.8004,
-      "p_conf_finals": 0.5674,
-      "p_finals": 0.38,
-      "p_title": 0.246
+      "p_playoffs": 0.9993,
+      "p_conf_semis": 0.7947,
+      "p_conf_finals": 0.5569,
+      "p_finals": 0.3688,
+      "p_title": 0.2386
     },
     {
       "team_id": 20,
@@ -510,11 +510,11 @@
       "abbreviation": "NY",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.9943,
-      "p_conf_semis": 0.7508,
-      "p_conf_finals": 0.5259,
-      "p_finals": 0.36,
-      "p_title": 0.2091
+      "p_playoffs": 0.9948,
+      "p_conf_semis": 0.7598,
+      "p_conf_finals": 0.5353,
+      "p_finals": 0.3695,
+      "p_title": 0.211
     },
     {
       "team_id": 27,
@@ -522,11 +522,11 @@
       "abbreviation": "SA",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.9904,
-      "p_conf_semis": 0.7084,
-      "p_conf_finals": 0.4402,
-      "p_finals": 0.2429,
-      "p_title": 0.1386
+      "p_playoffs": 0.9946,
+      "p_conf_semis": 0.7071,
+      "p_conf_finals": 0.4457,
+      "p_finals": 0.2528,
+      "p_title": 0.1492
     },
     {
       "team_id": 9,
@@ -534,11 +534,11 @@
       "abbreviation": "DET",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.9849,
-      "p_conf_semis": 0.6418,
-      "p_conf_finals": 0.3733,
-      "p_finals": 0.1955,
-      "p_title": 0.0915
+      "p_playoffs": 0.9843,
+      "p_conf_semis": 0.6385,
+      "p_conf_finals": 0.372,
+      "p_finals": 0.1923,
+      "p_title": 0.0893
     },
     {
       "team_id": 2,
@@ -546,35 +546,11 @@
       "abbreviation": "BOS",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.9441,
-      "p_conf_semis": 0.5188,
-      "p_conf_finals": 0.2512,
-      "p_finals": 0.1164,
-      "p_title": 0.0479
-    },
-    {
-      "team_id": 18,
-      "name": "Minnesota Timberwolves",
-      "abbreviation": "MIN",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-      "conference": "Western Conference",
-      "p_playoffs": 0.9554,
-      "p_conf_semis": 0.5128,
-      "p_conf_finals": 0.2281,
-      "p_finals": 0.0988,
-      "p_title": 0.0452
-    },
-    {
-      "team_id": 1,
-      "name": "Atlanta Hawks",
-      "abbreviation": "ATL",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-      "conference": "Eastern Conference",
-      "p_playoffs": 0.9468,
-      "p_conf_semis": 0.5023,
-      "p_conf_finals": 0.231,
-      "p_finals": 0.0992,
-      "p_title": 0.0391
+      "p_playoffs": 0.9462,
+      "p_conf_semis": 0.5222,
+      "p_conf_finals": 0.2559,
+      "p_finals": 0.1182,
+      "p_title": 0.0445
     },
     {
       "team_id": 11,
@@ -582,23 +558,35 @@
       "abbreviation": "HOU",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.9415,
-      "p_conf_semis": 0.4723,
-      "p_conf_finals": 0.194,
-      "p_finals": 0.074,
-      "p_title": 0.0318
+      "p_playoffs": 0.9646,
+      "p_conf_semis": 0.5143,
+      "p_conf_finals": 0.225,
+      "p_finals": 0.0948,
+      "p_title": 0.0423
     },
     {
-      "team_id": 8,
-      "name": "Denver Nuggets",
-      "abbreviation": "DEN",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+      "team_id": 18,
+      "name": "Minnesota Timberwolves",
+      "abbreviation": "MIN",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.8959,
-      "p_conf_semis": 0.4046,
-      "p_conf_finals": 0.1698,
-      "p_finals": 0.0664,
-      "p_title": 0.0273
+      "p_playoffs": 0.9509,
+      "p_conf_semis": 0.4961,
+      "p_conf_finals": 0.2175,
+      "p_finals": 0.0906,
+      "p_title": 0.0423
+    },
+    {
+      "team_id": 1,
+      "name": "Atlanta Hawks",
+      "abbreviation": "ATL",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+      "conference": "Eastern Conference",
+      "p_playoffs": 0.9133,
+      "p_conf_semis": 0.439,
+      "p_conf_finals": 0.1928,
+      "p_finals": 0.0811,
+      "p_title": 0.0286
     },
     {
       "team_id": 14,
@@ -606,23 +594,23 @@
       "abbreviation": "LAL",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.9271,
-      "p_conf_semis": 0.4328,
-      "p_conf_finals": 0.1781,
-      "p_finals": 0.0686,
-      "p_title": 0.027
+      "p_playoffs": 0.9233,
+      "p_conf_semis": 0.4246,
+      "p_conf_finals": 0.1739,
+      "p_finals": 0.0661,
+      "p_title": 0.0284
     },
     {
-      "team_id": 28,
-      "name": "Toronto Raptors",
-      "abbreviation": "TOR",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-      "conference": "Eastern Conference",
-      "p_playoffs": 0.8558,
-      "p_conf_semis": 0.3745,
-      "p_conf_finals": 0.1512,
-      "p_finals": 0.0609,
-      "p_title": 0.0208
+      "team_id": 8,
+      "name": "Denver Nuggets",
+      "abbreviation": "DEN",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+      "conference": "Western Conference",
+      "p_playoffs": 0.9039,
+      "p_conf_semis": 0.4102,
+      "p_conf_finals": 0.1693,
+      "p_finals": 0.0646,
+      "p_title": 0.0276
     },
     {
       "team_id": 6,
@@ -630,11 +618,11 @@
       "abbreviation": "CLE",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.8162,
-      "p_conf_semis": 0.3519,
-      "p_conf_finals": 0.1488,
-      "p_finals": 0.0587,
-      "p_title": 0.0195
+      "p_playoffs": 0.8397,
+      "p_conf_semis": 0.3622,
+      "p_conf_finals": 0.1512,
+      "p_finals": 0.0596,
+      "p_title": 0.0207
     },
     {
       "team_id": 23,
@@ -642,23 +630,23 @@
       "abbreviation": "PHI",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.863,
-      "p_conf_semis": 0.3621,
-      "p_conf_finals": 0.1449,
-      "p_finals": 0.0522,
-      "p_title": 0.0169
+      "p_playoffs": 0.8838,
+      "p_conf_semis": 0.3945,
+      "p_conf_finals": 0.1568,
+      "p_finals": 0.062,
+      "p_title": 0.0195
     },
     {
-      "team_id": 25,
-      "name": "Portland Trail Blazers",
-      "abbreviation": "POR",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
-      "conference": "Western Conference",
-      "p_playoffs": 0.846,
-      "p_conf_semis": 0.3218,
-      "p_conf_finals": 0.1186,
-      "p_finals": 0.0408,
-      "p_title": 0.0147
+      "team_id": 28,
+      "name": "Toronto Raptors",
+      "abbreviation": "TOR",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+      "conference": "Eastern Conference",
+      "p_playoffs": 0.851,
+      "p_conf_semis": 0.3693,
+      "p_conf_finals": 0.1516,
+      "p_finals": 0.0564,
+      "p_title": 0.0188
     },
     {
       "team_id": 4,
@@ -666,11 +654,23 @@
       "abbreviation": "CHA",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.7386,
-      "p_conf_semis": 0.279,
-      "p_conf_finals": 0.106,
-      "p_finals": 0.037,
-      "p_title": 0.0114
+      "p_playoffs": 0.7859,
+      "p_conf_semis": 0.3084,
+      "p_conf_finals": 0.1206,
+      "p_finals": 0.043,
+      "p_title": 0.0132
+    },
+    {
+      "team_id": 25,
+      "name": "Portland Trail Blazers",
+      "abbreviation": "POR",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
+      "conference": "Western Conference",
+      "p_playoffs": 0.8302,
+      "p_conf_semis": 0.3071,
+      "p_conf_finals": 0.1094,
+      "p_finals": 0.036,
+      "p_title": 0.0131
     },
     {
       "team_id": 13,
@@ -678,11 +678,11 @@
       "abbreviation": "LAC",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.6828,
-      "p_conf_semis": 0.2052,
-      "p_conf_finals": 0.0652,
-      "p_finals": 0.0194,
-      "p_title": 0.0056
+      "p_playoffs": 0.6655,
+      "p_conf_semis": 0.1941,
+      "p_conf_finals": 0.0621,
+      "p_finals": 0.0175,
+      "p_title": 0.0062
     },
     {
       "team_id": 22,
@@ -690,11 +690,11 @@
       "abbreviation": "ORL",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.4894,
-      "p_conf_semis": 0.1414,
-      "p_conf_finals": 0.0466,
-      "p_finals": 0.0145,
-      "p_title": 0.0037
+      "p_playoffs": 0.4904,
+      "p_conf_semis": 0.1463,
+      "p_conf_finals": 0.0476,
+      "p_finals": 0.014,
+      "p_title": 0.0034
     },
     {
       "team_id": 24,
@@ -702,11 +702,11 @@
       "abbreviation": "PHX",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.4453,
-      "p_conf_semis": 0.1055,
-      "p_conf_finals": 0.0316,
-      "p_finals": 0.008,
-      "p_title": 0.0024
+      "p_playoffs": 0.5212,
+      "p_conf_semis": 0.1263,
+      "p_conf_finals": 0.0364,
+      "p_finals": 0.0083,
+      "p_title": 0.0023
     },
     {
       "team_id": 16,
@@ -714,23 +714,11 @@
       "abbreviation": "MIA",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.2953,
-      "p_conf_semis": 0.0707,
-      "p_conf_finals": 0.0204,
-      "p_finals": 0.0056,
-      "p_title": 0.0014
-    },
-    {
-      "team_id": 7,
-      "name": "Dallas Mavericks",
-      "abbreviation": "DAL",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-      "conference": "Western Conference",
-      "p_playoffs": 0.0857,
-      "p_conf_semis": 0.0096,
-      "p_conf_finals": 0.0026,
-      "p_finals": 0.0003,
-      "p_title": 0.0001
+      "p_playoffs": 0.25,
+      "p_conf_semis": 0.0548,
+      "p_conf_finals": 0.0155,
+      "p_finals": 0.0037,
+      "p_title": 0.0009
     },
     {
       "team_id": 19,
@@ -738,9 +726,9 @@
       "abbreviation": "NO",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.0736,
-      "p_conf_semis": 0.0086,
-      "p_conf_finals": 0.0015,
+      "p_playoffs": 0.0619,
+      "p_conf_semis": 0.0073,
+      "p_conf_finals": 0.001,
       "p_finals": 0.0003,
       "p_title": 0.0001
     },
@@ -750,23 +738,23 @@
       "abbreviation": "GS",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.1076,
-      "p_conf_semis": 0.015,
-      "p_conf_finals": 0.0029,
-      "p_finals": 0.0004,
+      "p_playoffs": 0.0806,
+      "p_conf_semis": 0.0095,
+      "p_conf_finals": 0.0018,
+      "p_finals": 0.0003,
       "p_title": 0.0001
     },
     {
-      "team_id": 5,
-      "name": "Chicago Bulls",
-      "abbreviation": "CHI",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
-      "conference": "Eastern Conference",
-      "p_playoffs": 0.0335,
-      "p_conf_semis": 0.0035,
-      "p_conf_finals": 0.0004,
+      "team_id": 7,
+      "name": "Dallas Mavericks",
+      "abbreviation": "DAL",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
+      "conference": "Western Conference",
+      "p_playoffs": 0.0586,
+      "p_conf_semis": 0.0054,
+      "p_conf_finals": 0.0006,
       "p_finals": 0.0001,
-      "p_title": 0.0
+      "p_title": 0.0001
     },
     {
       "team_id": 15,
@@ -774,9 +762,9 @@
       "abbreviation": "MEM",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.0317,
+      "p_playoffs": 0.0276,
       "p_conf_semis": 0.0021,
-      "p_conf_finals": 0.0001,
+      "p_conf_finals": 0.0004,
       "p_finals": 0.0,
       "p_title": 0.0
     },
@@ -786,22 +774,22 @@
       "abbreviation": "IND",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.0219,
-      "p_conf_semis": 0.002,
+      "p_playoffs": 0.0243,
+      "p_conf_semis": 0.0022,
       "p_conf_finals": 0.0002,
       "p_finals": 0.0001,
       "p_title": 0.0
     },
     {
-      "team_id": 17,
-      "name": "Milwaukee Bucks",
-      "abbreviation": "MIL",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+      "team_id": 5,
+      "name": "Chicago Bulls",
+      "abbreviation": "CHI",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.0118,
-      "p_conf_semis": 0.0011,
-      "p_conf_finals": 0.0001,
-      "p_finals": 0.0,
+      "p_playoffs": 0.022,
+      "p_conf_semis": 0.0018,
+      "p_conf_finals": 0.0004,
+      "p_finals": 0.0001,
       "p_title": 0.0
     },
     {
@@ -810,9 +798,21 @@
       "abbreviation": "SAC",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.0122,
-      "p_conf_semis": 0.0009,
-      "p_conf_finals": 0.0,
+      "p_playoffs": 0.0113,
+      "p_conf_semis": 0.0006,
+      "p_conf_finals": 0.0001,
+      "p_finals": 0.0,
+      "p_title": 0.0
+    },
+    {
+      "team_id": 17,
+      "name": "Milwaukee Bucks",
+      "abbreviation": "MIL",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+      "conference": "Eastern Conference",
+      "p_playoffs": 0.008,
+      "p_conf_semis": 0.0008,
+      "p_conf_finals": 0.0001,
       "p_finals": 0.0,
       "p_title": 0.0
     },
@@ -822,7 +822,19 @@
       "abbreviation": "UTAH",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
       "conference": "Western Conference",
-      "p_playoffs": 0.0057,
+      "p_playoffs": 0.0065,
+      "p_conf_semis": 0.0006,
+      "p_conf_finals": 0.0001,
+      "p_finals": 0.0,
+      "p_title": 0.0
+    },
+    {
+      "team_id": 30,
+      "name": "Washington Wizards",
+      "abbreviation": "WSH",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
+      "conference": "Eastern Conference",
+      "p_playoffs": 0.0034,
       "p_conf_semis": 0.0001,
       "p_conf_finals": 0.0,
       "p_finals": 0.0,
@@ -834,20 +846,8 @@
       "abbreviation": "BKN",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
       "conference": "Eastern Conference",
-      "p_playoffs": 0.0024,
-      "p_conf_semis": 0.0001,
-      "p_conf_finals": 0.0,
-      "p_finals": 0.0,
-      "p_title": 0.0
-    },
-    {
-      "team_id": 30,
-      "name": "Washington Wizards",
-      "abbreviation": "WSH",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
-      "conference": "Eastern Conference",
-      "p_playoffs": 0.0019,
-      "p_conf_semis": 0.0001,
+      "p_playoffs": 0.0029,
+      "p_conf_semis": 0.0003,
       "p_conf_finals": 0.0,
       "p_finals": 0.0,
       "p_title": 0.0
