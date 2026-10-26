@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-10-25T14:48:10+00:00",
- "n_rows": 1265,
+ "last_observed": "2026-10-26T17:09:40+00:00",
+ "n_rows": 1309,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -12654,6 +12654,446 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-10-25T14:48:10+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Mikel Brown Jr.",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Rest",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-26T14:00Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Brooklyn Nets",
+   "player": "Tyler Bilodeau",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right shoulder sprain",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-25T17:19Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Coby White",
+   "position": "G",
+   "status": "Out",
+   "detail": "Left calf strain",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T20:59Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Kon Knueppel",
+   "position": "G",
+   "status": "Out",
+   "detail": "Left hamstring",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T21:20Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Naz Reid",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T15:18Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Caleb Martin",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right thumb sprain",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-25T20:28Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Cooper Flagg",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left shoulder sprain",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T15:55Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Naji Marshall",
+   "position": "F",
+   "status": "Out",
+   "detail": "Illness",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T20:25Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Spencer Jones",
+   "position": "F",
+   "status": "Out",
+   "detail": "Hamstring",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T22:37Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Ausar Thompson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right ankle sprain",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-26T14:04Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Isaiah Joe",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Hip bruise",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-26T00:58Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Jalen Duren",
+   "position": "C",
+   "status": "Out",
+   "detail": "Right hamstring strain",
+   "return_date": "2026-11-09",
+   "espn_date": "2026-10-25T14:56Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Brandon Williams",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Back soreness",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-25T21:20Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Charles Bassey",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right knee",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-25T21:13Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Gui Santos",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left knee tendinitis",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-25T21:22Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Marcus Smart",
+   "position": "G",
+   "status": "Out",
+   "detail": "Left forearm strain",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T16:20Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Steven Adams",
+   "position": "C",
+   "status": "Out",
+   "detail": "Right calf strain",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T21:24Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Ivica Zubac",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T01:03Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "LA Clippers",
+   "player": "Brandon Ingram",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right achilles surgery",
+   "return_date": "2026-11-08",
+   "espn_date": "2026-09-28T18:01Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Karim Lopez",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right knee bruise",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T14:06Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Zach Edey",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T14:05Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Anthony Edwards",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Knee",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T17:04Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "New York Knicks",
+   "player": "Jose Alvarado",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-26T14:01Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Cason Wallace",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left shoulder",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T00:19Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jalen Williams",
+   "position": "G",
+   "status": "Out",
+   "detail": "Left ankle",
+   "return_date": "2027-03-02",
+   "espn_date": "2026-10-26T14:03Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jaylin Williams",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right wrist soreness",
+   "return_date": "2026-10-26",
+   "espn_date": "2026-10-26T01:06Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jalen Suggs",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right knee",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T02:24Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Jabari Walker",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left knee soreness",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T14:05Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Joel Embiid",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right heel",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T14:04Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Tacko Fall",
+   "position": "C",
+   "status": "Out",
+   "detail": "Left quadriceps strain",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T17:13Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "VJ Edgecombe",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Abdomen bruise",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T14:05Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Keegan Murray",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-10-27",
+   "espn_date": "2026-10-26T14:22Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Kawhi Leonard",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left knee inflammation",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-26T14:01Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "AJ Dybantsa",
+   "position": "F",
+   "status": "Out",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-10-28",
+   "espn_date": "2026-10-25T20:52Z",
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Kyrie Irving",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Al Horford",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Brandin Podziemski",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Draymond Green",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Stephen Curry",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Houston Rockets",
+   "player": "Fred VanVleet",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Aaron Nesmith",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Cedric Coward",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Anthony Black",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "LeBron James",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-10-26T17:09:40+00:00"
   }
  ]
 }
