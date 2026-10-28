@@ -367,6 +367,11 @@ export function getLiveRecord(): LiveRecord | null {
   return readJson<LiveRecord>(DIAGNOSTICS_DIR, 'live_record.json')
 }
 
+/** Durable first calls, kept separate from today's changing forecast. */
+export function getForecastHistory(): unknown {
+  return readJson<unknown>(PREDICTIONS_DIR, 'forecast_log.json')
+}
+
 /**
  * Games grouped into NBA weeks, each week holding its days.
  *

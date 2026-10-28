@@ -1,0 +1,147 @@
+{
+  "live": {
+    "n": 2,
+    "basis": "live",
+    "note": "Every forecast below was written to the warehouse before its tip-off, and this is the earliest such forecast for each game. It is NOT the walk-forward on the same page and the two are never merged.",
+    "first_tipoff": "2027-01-02T00:00:00Z",
+    "last_tipoff": "2027-01-02T02:00:00Z",
+    "median_lead_hours": 13.0,
+    "model": {
+      "n": 2,
+      "brier": 0.29,
+      "log_loss": 0.7803238741323342,
+      "accuracy": 0.5,
+      "ece": 0.19999999999999996,
+      "mean_predicted": 0.7,
+      "base_rate": 0.5
+    },
+    "margin": {
+      "n": 0
+    },
+    "total": {
+      "n": 0
+    },
+    "paired_vs_market": {
+      "n": 0,
+      "verdict": "insufficient",
+      "reason": "no settled game carries both a stored forecast and a price"
+    },
+    "cohorts": [
+      {
+        "model_version": "test.1",
+        "horizon": "under_24h",
+        "n": 2,
+        "brier": 0.29,
+        "log_loss": 0.7803238741323342,
+        "accuracy": 0.5,
+        "ece": 0.19999999999999996,
+        "mean_predicted": 0.7,
+        "base_rate": 0.5
+      }
+    ],
+    "clv": {
+      "flagged": {
+        "n": 0,
+        "verdict": "insufficient"
+      },
+      "all_priced": {
+        "n": 0,
+        "verdict": "insufficient"
+      },
+      "min_n": 100,
+      "note": "CLV, not profit, is the headline. At this sample size realised return is dominated by variance and says close to nothing about whether an edge existed; whether the price moved toward us converges far sooner. ROI is printed for completeness and should not be read as a result."
+    },
+    "season": 2027,
+    "generated_at": "2027-01-03T00:00:00+00:00",
+    "coverage": {
+      "settled_games": 3,
+      "scored_games": 2,
+      "without_eligible_forecast": 1,
+      "without_eligible_forecast_ids": [
+        "contract-missing"
+      ],
+      "pending_forecasts": 1
+    },
+    "games": [
+      {
+        "game_id": "contract-win",
+        "tipoff_utc": "2027-01-02T00:00:00Z",
+        "generated_at": "2027-01-01T12:00:00Z",
+        "model_version": "test.1",
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "lead_hours": 12.0,
+        "p_home": 0.7,
+        "exp_margin": null,
+        "exp_total": null,
+        "date_utc": "2027-01-02T00:20:00Z",
+        "home_won": true,
+        "margin": 10,
+        "total": 190,
+        "clv": null
+      },
+      {
+        "game_id": "contract-loss",
+        "tipoff_utc": "2027-01-02T02:00:00Z",
+        "generated_at": "2027-01-01T12:00:00Z",
+        "model_version": "test.1",
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "lead_hours": 14.0,
+        "p_home": 0.7,
+        "exp_margin": null,
+        "exp_total": null,
+        "date_utc": "2027-01-02T02:00:00Z",
+        "home_won": false,
+        "margin": -10,
+        "total": 190,
+        "clv": null
+      }
+    ]
+  },
+  "history": {
+    "n": 4,
+    "forecasts": {
+      "contract-win": {
+        "game_id": "contract-win",
+        "generated_at": "2027-01-01T12:00:00Z",
+        "tipoff_utc": "2027-01-02T00:00:00Z",
+        "model_version": "test.1",
+        "season": 2027,
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "p_home": 0.7
+      },
+      "contract-loss": {
+        "game_id": "contract-loss",
+        "generated_at": "2027-01-01T12:00:00Z",
+        "tipoff_utc": "2027-01-02T02:00:00Z",
+        "model_version": "test.1",
+        "season": 2027,
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "p_home": 0.7
+      },
+      "contract-missing": {
+        "game_id": "contract-missing",
+        "generated_at": "2027-01-02T03:30:00Z",
+        "tipoff_utc": "2027-01-02T04:00:00Z",
+        "model_version": "test.1",
+        "season": 2027,
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "p_home": 0.7
+      },
+      "contract-pending": {
+        "game_id": "contract-pending",
+        "generated_at": "2027-01-01T12:00:00Z",
+        "tipoff_utc": "2027-01-04T00:00:00Z",
+        "model_version": "test.1",
+        "season": 2027,
+        "home_team": "HOM",
+        "away_team": "AWY",
+        "p_home": 0.7
+      }
+    }
+  }
+}

@@ -42,7 +42,7 @@ async function visit(page, route) {
   const headings = { '/': 'NBA games & scores', '/teams/BOS': 'Boston Celtics',
     '/games': 'Games, one night at a time.', '/games/401909088': 'Boston Celtics at Detroit Pistons',
     '/games/401859967': 'Scoring by period', '/players/espn/900000001': 'Player profile unavailable',
-    '/bracket': 'The road to the title', '/predict': 'Any two teams', '/accuracy': 'How right has it been',
+    '/bracket': 'The road to the title', '/predict': 'Any two teams', '/accuracy': 'How often did our picks win?',
     '/seasons/2026': '2025-26 season' }
   await page.getByRole('heading', { name: headings[new URL(route, base).pathname], exact: true }).waitFor()
   await page.waitForFunction(() => JSON.parse(sessionStorage.getItem('hardwood.navstack') || '[]').at(-1) === location.pathname)

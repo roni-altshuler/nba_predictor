@@ -1,0 +1,46 @@
+{
+  "purpose": "Deterministic test fixtures only; never a regenerated production publication or full-warehouse coverage claim.",
+  "preseason": {
+    "commit": "1a83087f92f8c52c2a6ea6fe713cecbc1d351ad7",
+    "paths": [
+      "backend/data/diagnostics/live_record.json",
+      "backend/data/predictions/forecast_log.json"
+    ]
+  },
+  "activeSeason": {
+    "headSHA": "8e8d69240213022773254b9d4c9ee8f6279536cb",
+    "files": {
+      "backend/scripts/score_live.py": {
+        "gitBlobSHA": "831cfbb7e21e767369080981150d5b9afe3cbc2d",
+        "sha256": "143c63446c68df9fc88e5d95b427d8114a02ec9c9165d21684eff3a914dab9a0",
+        "bytes": 26235
+      },
+      "backend/data/diagnostics/live_record.json": {
+        "gitBlobSHA": "e249ec8f14413d7ea23cec136025879b3734523c",
+        "sha256": "1a8edf4ef40bae4e31a743179160549e78805e67817d2d502e82cb7361c018b1",
+        "bytes": 21323
+      },
+      ".github/workflows/ci.yml": {
+        "gitBlobSHA": "f90dbf4cc3f85fcd02a9f1571653ab13475d1a5d",
+        "sha256": "c3b51fc6af2b6bacda52e5b5e22deb458b737054f8cfbae3732aa45567573cb8",
+        "bytes": 1482
+      },
+      "backend/data/predictions/forecast_log.json": {
+        "gitBlobSHA": "c8082f2e0dc358b8702ea4b87ec4a8e14dfaf913",
+        "sha256": "4417fcdc1d0aa9b77d2709a71457b1f223034962c7a3cb91c4f909fd4fb81d78",
+        "bytes": 444333
+      },
+      "backend/data/history/season_2027.json": {
+        "gitBlobSHA": "427afa042c7192197d5d8a850686764d15f30a3c",
+        "sha256": "efa192297624d2382be6c4d5d41c1f638009e750fa37e760f96da07fea28a199",
+        "bytes": 40985
+      }
+    },
+    "transformation": "Only date_utc added to each of the 43 published rows from the same-commit history game date after matching ID, participants, scores and saved pre-event call. No archive model fields used; no coverage inferred."
+  },
+  "fixtureSHA256": {
+    "active-season.json": "8076b2edba3bff920b47a332e6814364e25eb84dae168a12c27f279a038cb536",
+    "forecast_log.json": "4417fcdc1d0aa9b77d2709a71457b1f223034962c7a3cb91c4f909fd4fb81d78",
+    "preseason.json": "7dc68c2141afd1ea69f597365d32ecfe2b179d5a6f4b7a3ebe510dc6ad59612b"
+  }
+}

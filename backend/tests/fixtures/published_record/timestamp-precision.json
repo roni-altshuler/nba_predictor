@@ -1,0 +1,149 @@
+{
+  "note": "Synthetic producer/consumer timestamp contract cases only; never production results. Precision matches Python datetime microseconds.",
+  "cases": [
+    {
+      "name": "valid call 100 microseconds before recorded start",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000300Z",
+      "date_utc": "2027-01-02T00:00:00.000200Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": true
+    },
+    {
+      "name": "call equal to saved tipoff",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000100Z",
+      "date_utc": "2027-01-02T00:00:00.000200Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    },
+    {
+      "name": "call equal to recorded start",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000300Z",
+      "date_utc": "2027-01-02T00:00:00.000100Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    },
+    {
+      "name": "call one microsecond after saved tipoff",
+      "generated_at": "2027-01-02T00:00:00.000101Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000100Z",
+      "date_utc": "2027-01-02T00:00:00.000200Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    },
+    {
+      "name": "call one microsecond after recorded start",
+      "generated_at": "2027-01-02T00:00:00.000101Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000300Z",
+      "date_utc": "2027-01-02T00:00:00.000100Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    },
+    {
+      "name": "result exactly at publication cutoff",
+      "generated_at": "2027-01-01T12:00:00Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000000Z",
+      "date_utc": "2027-01-02T00:00:00.000100Z",
+      "as_of": "2027-01-02T00:00:00.000100Z",
+      "eligible": true
+    },
+    {
+      "name": "result after publication cutoff within same millisecond",
+      "generated_at": "2027-01-01T12:00:00Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000000Z",
+      "date_utc": "2027-01-02T00:00:00.000900Z",
+      "as_of": "2027-01-02T00:00:00.000100Z",
+      "eligible": false
+    },
+    {
+      "name": "result before publication cutoff within same millisecond",
+      "generated_at": "2027-01-01T12:00:00Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000000Z",
+      "date_utc": "2027-01-02T00:00:00.000100Z",
+      "as_of": "2027-01-02T00:00:00.000900Z",
+      "eligible": true
+    },
+    {
+      "name": "pending call exactly at publication cutoff",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-03T00:00:00Z",
+      "date_utc": null,
+      "as_of": "2027-01-02T00:00:00.000100Z",
+      "eligible": true
+    },
+    {
+      "name": "pending call after publication cutoff within same millisecond",
+      "generated_at": "2027-01-02T00:00:00.000900Z",
+      "tipoff_utc": "2027-01-03T00:00:00Z",
+      "date_utc": null,
+      "as_of": "2027-01-02T00:00:00.000100Z",
+      "eligible": false
+    },
+    {
+      "name": "pending call before publication cutoff within same millisecond",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-03T00:00:00Z",
+      "date_utc": null,
+      "as_of": "2027-01-02T00:00:00.000900Z",
+      "eligible": true
+    },
+    {
+      "name": "equivalent UTC offsets keep a valid pregame call",
+      "generated_at": "2027-01-01T23:00:00.000100-01:00",
+      "tipoff_utc": "2027-01-02T01:00:00.000300+01:00",
+      "date_utc": "2027-01-01T19:00:00.000200-05:00",
+      "as_of": "2027-01-02T00:00:00.000200Z",
+      "eligible": true
+    },
+    {
+      "name": "equivalent UTC offsets cannot turn equality into pregame",
+      "generated_at": "2027-01-02T00:00:00.000100Z",
+      "tipoff_utc": "2027-01-02T00:00:00.000300Z",
+      "date_utc": "2027-01-01T19:00:00.000100-05:00",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    },
+    {
+      "name": "offset calendar boundary keeps one microsecond lead",
+      "generated_at": "2027-01-01T23:59:59.999999Z",
+      "tipoff_utc": "2027-01-02T01:00:00+01:00",
+      "date_utc": "2027-01-01T19:00:00-05:00",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": true
+    },
+    {
+      "name": "UTC year boundary keeps one microsecond lead",
+      "generated_at": "2026-12-31T23:59:59.999999Z",
+      "tipoff_utc": "2027-01-01T00:00:00Z",
+      "date_utc": "2027-01-01T00:00:00Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": true
+    },
+    {
+      "name": "leap day boundary keeps one microsecond lead",
+      "generated_at": "2028-02-29T23:59:59.999999Z",
+      "tipoff_utc": "2028-03-01T00:00:00Z",
+      "date_utc": "2028-03-01T00:00:00Z",
+      "as_of": "2028-03-01T00:00:00Z",
+      "eligible": true
+    },
+    {
+      "name": "extra fractional digits truncate at producer microseconds",
+      "generated_at": "2027-01-02T00:00:00.0001009Z",
+      "tipoff_utc": "2027-01-02T00:00:00.0001010Z",
+      "date_utc": "2027-01-02T00:00:00.0001019Z",
+      "as_of": "2027-01-02T00:00:00.0001010Z",
+      "eligible": true
+    },
+    {
+      "name": "discarded submicrosecond digits do not prove a lead",
+      "generated_at": "2027-01-02T00:00:00.0001001Z",
+      "tipoff_utc": "2027-01-02T00:00:00.0001010Z",
+      "date_utc": "2027-01-02T00:00:00.0001009Z",
+      "as_of": "2027-01-03T00:00:00Z",
+      "eligible": false
+    }
+  ]
+}
