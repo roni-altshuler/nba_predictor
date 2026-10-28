@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PublishedRecord } from '@/components/accuracy/PublishedRecord'
 
 import { BarLadder, type BarLadderRow } from '@/components/charts/BarLadder'
 import { EvidencePanel } from '@/components/evidence/EvidencePanel'
@@ -8,6 +9,7 @@ import { StatTile } from '@/components/primitives/StatTile'
 import { TeamExplorer, type ExplorerRow } from '@/components/teams/TeamExplorer'
 import {
   getGameForecasts,
+  getForecastHistory,
   getLiveRecord,
   getPowerRatings,
   getSeasonProjections,
@@ -15,6 +17,7 @@ import {
 } from '@/lib/artifacts'
 import { dayLabel, pct, stamp } from '@/lib/format'
 import { getGameContext } from '@/lib/history'
+import { buildTrackRecord } from '@/lib/trackRecord'
 
 export const metadata = { title: 'Today' }
 export const dynamic = 'force-static'
@@ -102,6 +105,8 @@ export default function HomePage() {
           {[['#home-games', 'Games'], [explorer.length ? '#home-teams' : '/season', 'Teams'], ['#home-players', 'Players']].map(([href, label]) => <Link key={href} href={href} prefetch={false} className="inline-flex min-h-[44px] items-center justify-center rounded-sm border border-[var(--border-color)] bg-[var(--card-bg)] px-5 font-numeric text-xs text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)]">{label}</Link>)}
         </nav>
       </header>
+
+      <PublishedRecord report={buildTrackRecord(liveRecord, getForecastHistory(), forecasts?.season)} compact />
 
       {nextDay ? <section id="home-games" aria-labelledby="home-games-title" className="mb-6 scroll-mt-20">
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
