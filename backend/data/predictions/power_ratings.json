@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-10-27T16:12:43+00:00",
-  "model_version": "2026.08.1+4439c5c9",
+  "generated_at": "2026-10-28T16:59:50+00:00",
+  "model_version": "2026.08.1+0fb8a33d",
   "teams": [
     {
       "team_id": 21,
@@ -13,21 +13,21 @@
       "rank": 1
     },
     {
-      "team_id": 27,
-      "name": "San Antonio Spurs",
-      "abbreviation": "SA",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-      "elo": 1640.0,
-      "rank": 2
-    },
-    {
       "team_id": 20,
       "name": "New York Knicks",
       "abbreviation": "NY",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-      "elo": 1635.2,
+      "elo": 1645.1,
+      "rank": 2
+    },
+    {
+      "team_id": 27,
+      "name": "San Antonio Spurs",
+      "abbreviation": "SA",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+      "elo": 1644.4,
       "rank": 3
     },
     {
@@ -36,7 +36,7 @@
       "abbreviation": "DET",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-      "elo": 1618.8,
+      "elo": 1608.9,
       "rank": 4
     },
     {
@@ -45,7 +45,7 @@
       "abbreviation": "BOS",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
-      "elo": 1589.8,
+      "elo": 1590.7,
       "rank": 5
     },
     {
@@ -72,7 +72,7 @@
       "abbreviation": "LAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-      "elo": 1571.1,
+      "elo": 1560.2,
       "rank": 8
     },
     {
@@ -99,7 +99,7 @@
       "abbreviation": "POR",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
-      "elo": 1542.8,
+      "elo": 1553.8,
       "rank": 11
     },
     {
@@ -243,7 +243,7 @@
       "abbreviation": "SAC",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
-      "elo": 1367.9,
+      "elo": 1363.6,
       "rank": 27
     },
     {
@@ -270,7 +270,7 @@
       "abbreviation": "BKN",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
-      "elo": 1328.5,
+      "elo": 1327.5,
       "rank": 30
     }
   ]
