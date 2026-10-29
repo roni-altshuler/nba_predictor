@@ -1,25 +1,16 @@
 {
   "season": 2027,
-  "generated_at": "2026-10-28T16:59:50+00:00",
-  "model_version": "2026.08.1+0fb8a33d",
+  "generated_at": "2026-10-29T17:20:11+00:00",
+  "model_version": "2026.08.1+5b6aed04",
   "teams": [
-    {
-      "team_id": 21,
-      "name": "Oklahoma City Thunder",
-      "abbreviation": "OKC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
-      "elo": 1671.2,
-      "rank": 1
-    },
     {
       "team_id": 20,
       "name": "New York Knicks",
       "abbreviation": "NY",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-      "elo": 1645.1,
-      "rank": 2
+      "elo": 1648.1,
+      "rank": 1
     },
     {
       "team_id": 27,
@@ -27,7 +18,16 @@
       "abbreviation": "SA",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-      "elo": 1644.4,
+      "elo": 1646.9,
+      "rank": 2
+    },
+    {
+      "team_id": 21,
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+      "elo": 1637.8,
       "rank": 3
     },
     {
@@ -36,8 +36,17 @@
       "abbreviation": "DET",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-      "elo": 1608.9,
+      "elo": 1614.5,
       "rank": 4
+    },
+    {
+      "team_id": 11,
+      "name": "Houston Rockets",
+      "abbreviation": "HOU",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+      "elo": 1599.4,
+      "rank": 5
     },
     {
       "team_id": 2,
@@ -46,7 +55,7 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
       "elo": 1590.7,
-      "rank": 5
+      "rank": 6
     },
     {
       "team_id": 18,
@@ -54,16 +63,7 @@
       "abbreviation": "MIN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-      "elo": 1589.4,
-      "rank": 6
-    },
-    {
-      "team_id": 11,
-      "name": "Houston Rockets",
-      "abbreviation": "HOU",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-      "elo": 1587.2,
+      "elo": 1577.3,
       "rank": 7
     },
     {
@@ -72,7 +72,7 @@
       "abbreviation": "LAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-      "elo": 1560.2,
+      "elo": 1574.5,
       "rank": 8
     },
     {
@@ -81,16 +81,16 @@
       "abbreviation": "CLE",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-      "elo": 1556.7,
+      "elo": 1559.7,
       "rank": 9
     },
     {
-      "team_id": 1,
-      "name": "Atlanta Hawks",
-      "abbreviation": "ATL",
+      "team_id": 28,
+      "name": "Toronto Raptors",
+      "abbreviation": "TOR",
       "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-      "elo": 1555.3,
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+      "elo": 1554.7,
       "rank": 10
     },
     {
@@ -103,31 +103,13 @@
       "rank": 11
     },
     {
-      "team_id": 4,
-      "name": "Charlotte Hornets",
-      "abbreviation": "CHA",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
-      "elo": 1542.6,
-      "rank": 12
-    },
-    {
       "team_id": 8,
       "name": "Denver Nuggets",
       "abbreviation": "DEN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-      "elo": 1540.4,
-      "rank": 13
-    },
-    {
-      "team_id": 28,
-      "name": "Toronto Raptors",
-      "abbreviation": "TOR",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-      "elo": 1537.7,
-      "rank": 14
+      "elo": 1550.0,
+      "rank": 12
     },
     {
       "team_id": 23,
@@ -135,7 +117,25 @@
       "abbreviation": "PHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-      "elo": 1536.8,
+      "elo": 1541.8,
+      "rank": 13
+    },
+    {
+      "team_id": 1,
+      "name": "Atlanta Hawks",
+      "abbreviation": "ATL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+      "elo": 1537.2,
+      "rank": 14
+    },
+    {
+      "team_id": 4,
+      "name": "Charlotte Hornets",
+      "abbreviation": "CHA",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
+      "elo": 1537.0,
       "rank": 15
     },
     {
@@ -144,7 +144,7 @@
       "abbreviation": "ORL",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-      "elo": 1524.5,
+      "elo": 1507.5,
       "rank": 16
     },
     {
@@ -153,7 +153,7 @@
       "abbreviation": "LAC",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-      "elo": 1515.7,
+      "elo": 1501.4,
       "rank": 17
     },
     {
@@ -171,7 +171,7 @@
       "abbreviation": "MIA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
-      "elo": 1466.5,
+      "elo": 1484.6,
       "rank": 19
     },
     {
@@ -180,17 +180,8 @@
       "abbreviation": "GS",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
-      "elo": 1460.9,
+      "elo": 1473.0,
       "rank": 20
-    },
-    {
-      "team_id": 19,
-      "name": "New Orleans Pelicans",
-      "abbreviation": "NO",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
-      "elo": 1426.6,
-      "rank": 21
     },
     {
       "team_id": 7,
@@ -198,7 +189,16 @@
       "abbreviation": "DAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-      "elo": 1423.8,
+      "elo": 1457.3,
+      "rank": 21
+    },
+    {
+      "team_id": 19,
+      "name": "New Orleans Pelicans",
+      "abbreviation": "NO",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
+      "elo": 1417.0,
       "rank": 22
     },
     {
@@ -216,17 +216,8 @@
       "abbreviation": "IND",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
-      "elo": 1402.8,
+      "elo": 1397.8,
       "rank": 24
-    },
-    {
-      "team_id": 17,
-      "name": "Milwaukee Bucks",
-      "abbreviation": "MIL",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
-      "elo": 1388.6,
-      "rank": 25
     },
     {
       "team_id": 5,
@@ -234,7 +225,16 @@
       "abbreviation": "CHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
-      "elo": 1383.3,
+      "elo": 1380.3,
+      "rank": 25
+    },
+    {
+      "team_id": 17,
+      "name": "Milwaukee Bucks",
+      "abbreviation": "MIL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+      "elo": 1376.4,
       "rank": 26
     },
     {
@@ -252,7 +252,7 @@
       "abbreviation": "UTAH",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
-      "elo": 1351.8,
+      "elo": 1349.2,
       "rank": 28
     },
     {
@@ -261,7 +261,7 @@
       "abbreviation": "WSH",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
-      "elo": 1342.4,
+      "elo": 1339.3,
       "rank": 29
     },
     {
