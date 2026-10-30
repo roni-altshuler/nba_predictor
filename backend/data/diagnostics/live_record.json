@@ -1,63 +1,63 @@
 {
-  "n": 68,
+  "n": 71,
   "basis": "live",
   "note": "Every forecast below was written to the warehouse before its tip-off, and this is the earliest such forecast for each game. It is NOT the walk-forward on the same page and the two are never merged.",
   "first_tipoff": "2026-10-20T19:00:00+00:00",
-  "last_tipoff": "2026-10-29T02:30:00+00:00",
-  "median_lead_hours": 1665.35,
+  "last_tipoff": "2026-10-30T02:00:00+00:00",
+  "median_lead_hours": 1666.85,
   "model": {
-    "n": 68,
-    "brier": 0.21957748657075,
-    "log_loss": 0.6273073489884567,
-    "accuracy": 0.6176470588235294,
-    "ece": 0.09502195588235296,
-    "mean_predicted": 0.5647316029411765,
-    "base_rate": 0.4852941176470588
+    "n": 71,
+    "brier": 0.22385251357840844,
+    "log_loss": 0.6367791080189384,
+    "accuracy": 0.6056338028169014,
+    "ece": 0.1014699295774648,
+    "mean_predicted": 0.5663909436619718,
+    "base_rate": 0.49295774647887325
   },
   "margin": {
-    "n": 68,
-    "mae": 12.161338235294117,
-    "rmse": 15.892173922572523,
-    "bias": 1.8932205882352942,
-    "median_ae": 8.9155,
-    "mean_actual": 0.7794117647058824,
-    "mean_predicted": 2.6726323529411764
+    "n": 71,
+    "mae": 12.221422535211268,
+    "rmse": 15.97452235746959,
+    "bias": 2.064859154929578,
+    "median_ae": 8.85,
+    "mean_actual": 0.6619718309859155,
+    "mean_predicted": 2.726830985915493
   },
   "total": {
-    "n": 68,
-    "mae": 15.998529411764707,
-    "rmse": 19.90428397577354,
-    "bias": -0.02647058823529554,
-    "median_ae": 14.784999999999997,
-    "mean_actual": 228.5441176470588,
-    "mean_predicted": 228.51764705882354
+    "n": 71,
+    "mae": 15.652112676056337,
+    "rmse": 19.56942383658177,
+    "bias": -0.18507042253521266,
+    "median_ae": 14.289999999999992,
+    "mean_actual": 228.80281690140845,
+    "mean_predicted": 228.61774647887324
   },
   "paired_vs_market": {
-    "n": 68,
+    "n": 71,
     "devig": "shin",
     "model": {
-      "n": 68,
-      "brier": 0.21957748657075,
-      "log_loss": 0.6273073489884567,
-      "accuracy": 0.6176470588235294,
-      "ece": 0.09502195588235296,
-      "mean_predicted": 0.5647316029411765,
-      "base_rate": 0.4852941176470588
+      "n": 71,
+      "brier": 0.22385251357840844,
+      "log_loss": 0.6367791080189384,
+      "accuracy": 0.6056338028169014,
+      "ece": 0.1014699295774648,
+      "mean_predicted": 0.5663909436619718,
+      "base_rate": 0.49295774647887325
     },
     "market": {
-      "n": 68,
-      "brier": 0.18625619427287698,
-      "log_loss": 0.5492377783841582,
-      "accuracy": 0.7058823529411765,
-      "ece": 0.1512227506109866,
-      "mean_predicted": 0.5624227373152494,
-      "base_rate": 0.4852941176470588
+      "n": 71,
+      "brier": 0.19034855203504172,
+      "log_loss": 0.558528640247195,
+      "accuracy": 0.704225352112676,
+      "ece": 0.15263872160533082,
+      "mean_predicted": 0.5656916519838763,
+      "base_rate": 0.49295774647887325
     },
-    "gap_to_market": 0.03332,
+    "gap_to_market": 0.0335,
     "bootstrap": {
-      "mean_diff": 0.03332,
-      "ci_low": 0.01265,
-      "ci_high": 0.05339,
+      "mean_diff": 0.0335,
+      "ci_low": 0.01344,
+      "ci_high": 0.05268,
       "iterations": 5000
     },
     "verdict": "market_better"
@@ -66,13 +66,13 @@
     {
       "model_version": "2026.08.1+943bde8b",
       "horizon": "over_7_days",
-      "n": 68,
-      "brier": 0.21957748657075,
-      "log_loss": 0.6273073489884567,
-      "accuracy": 0.6176470588235294,
-      "ece": 0.09502195588235296,
-      "mean_predicted": 0.5647316029411765,
-      "base_rate": 0.4852941176470588
+      "n": 71,
+      "brier": 0.22385251357840844,
+      "log_loss": 0.6367791080189384,
+      "accuracy": 0.6056338028169014,
+      "ece": 0.1014699295774648,
+      "mean_predicted": 0.5663909436619718,
+      "base_rate": 0.49295774647887325
     }
   ],
   "clv": {
@@ -88,13 +88,13 @@
     "note": "CLV, not profit, is the headline. At this sample size realised return is dominated by variance and says close to nothing about whether an edge existed; whether the price moved toward us converges far sooner. ROI is printed for completeness and should not be read as a result."
   },
   "season": 2027,
-  "generated_at": "2026-10-29T17:20:56+00:00",
+  "generated_at": "2026-10-30T16:58:51+00:00",
   "coverage": {
-    "settled_games": 68,
-    "scored_games": 68,
+    "settled_games": 71,
+    "scored_games": 71,
     "without_eligible_forecast": 0,
     "without_eligible_forecast_ids": [],
-    "pending_forecasts": 1132
+    "pending_forecasts": 1129
   },
   "games": [
     {
@@ -1251,6 +1251,57 @@
       "home_won": false,
       "margin": -16,
       "total": 190,
+      "clv": null
+    },
+    {
+      "game_id": "401909893",
+      "tipoff_utc": "2026-10-29T23:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "ATL",
+      "away_team": "CLE",
+      "lead_hours": 1783.85,
+      "p_home": 0.497086,
+      "exp_margin": 0.408,
+      "exp_total": 221.92,
+      "date_utc": "2026-10-30T00:00:00+00:00",
+      "home_won": true,
+      "margin": 3,
+      "total": 225,
+      "clv": null
+    },
+    {
+      "game_id": "401909894",
+      "tipoff_utc": "2026-10-30T00:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "NO",
+      "away_team": "SAC",
+      "lead_hours": 1784.85,
+      "p_home": 0.583114,
+      "exp_margin": 3.15,
+      "exp_total": 237.71,
+      "date_utc": "2026-10-30T00:00:00+00:00",
+      "home_won": true,
+      "margin": 12,
+      "total": 252,
+      "clv": null
+    },
+    {
+      "game_id": "401909895",
+      "tipoff_utc": "2026-10-30T02:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "POR",
+      "away_team": "MEM",
+      "lead_hours": 1786.85,
+      "p_home": 0.731808,
+      "exp_margin": 8.308,
+      "exp_total": 233.03,
+      "date_utc": "2026-10-30T02:00:00+00:00",
+      "home_won": false,
+      "margin": -21,
+      "total": 227,
       "clv": null
     }
   ]
