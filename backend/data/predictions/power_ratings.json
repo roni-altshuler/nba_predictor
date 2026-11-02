@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-01T17:01:39+00:00",
-  "model_version": "2026.08.1+c078d5aa",
+  "generated_at": "2026-11-02T20:39:35+00:00",
+  "model_version": "2026.08.1+f80df571",
   "teams": [
     {
       "team_id": 27,
@@ -54,7 +54,7 @@
       "abbreviation": "BOS",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
-      "elo": 1594.6,
+      "elo": 1604.6,
       "rank": 6
     },
     {
@@ -76,13 +76,22 @@
       "rank": 8
     },
     {
+      "team_id": 14,
+      "name": "Los Angeles Lakers",
+      "abbreviation": "LAL",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+      "elo": 1563.0,
+      "rank": 9
+    },
+    {
       "team_id": 8,
       "name": "Denver Nuggets",
       "abbreviation": "DEN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
       "elo": 1558.2,
-      "rank": 9
+      "rank": 10
     },
     {
       "team_id": 23,
@@ -91,15 +100,6 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
       "elo": 1557.8,
-      "rank": 10
-    },
-    {
-      "team_id": 14,
-      "name": "Los Angeles Lakers",
-      "abbreviation": "LAL",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-      "elo": 1557.0,
       "rank": 11
     },
     {
@@ -108,7 +108,7 @@
       "abbreviation": "TOR",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-      "elo": 1543.1,
+      "elo": 1537.1,
       "rank": 12
     },
     {
@@ -135,7 +135,7 @@
       "abbreviation": "ORL",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-      "elo": 1519.1,
+      "elo": 1509.1,
       "rank": 15
     },
     {
@@ -148,31 +148,22 @@
       "rank": 16
     },
     {
+      "team_id": 10,
+      "name": "Golden State Warriors",
+      "abbreviation": "GS",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
+      "elo": 1500.1,
+      "rank": 17
+    },
+    {
       "team_id": 16,
       "name": "Miami Heat",
       "abbreviation": "MIA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
       "elo": 1493.8,
-      "rank": 17
-    },
-    {
-      "team_id": 10,
-      "name": "Golden State Warriors",
-      "abbreviation": "GS",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
-      "elo": 1490.5,
       "rank": 18
-    },
-    {
-      "team_id": 13,
-      "name": "LA Clippers",
-      "abbreviation": "LAC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-      "elo": 1489.7,
-      "rank": 19
     },
     {
       "team_id": 24,
@@ -181,6 +172,15 @@
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
       "elo": 1486.6,
+      "rank": 19
+    },
+    {
+      "team_id": 13,
+      "name": "LA Clippers",
+      "abbreviation": "LAC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
+      "elo": 1480.1,
       "rank": 20
     },
     {
@@ -211,21 +211,21 @@
       "rank": 23
     },
     {
-      "team_id": 12,
-      "name": "Indiana Pacers",
-      "abbreviation": "IND",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
-      "elo": 1388.5,
-      "rank": 24
-    },
-    {
       "team_id": 5,
       "name": "Chicago Bulls",
       "abbreviation": "CHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
       "elo": 1376.4,
+      "rank": 24
+    },
+    {
+      "team_id": 12,
+      "name": "Indiana Pacers",
+      "abbreviation": "IND",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
+      "elo": 1375.3,
       "rank": 25
     },
     {
@@ -270,7 +270,7 @@
       "abbreviation": "BKN",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
-      "elo": 1322.7,
+      "elo": 1336.0,
       "rank": 30
     }
   ]
