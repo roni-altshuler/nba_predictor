@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-03T18:15:26+00:00",
-  "model_version": "2026.08.1+820adc33",
+  "generated_at": "2026-11-04T18:26:38+00:00",
+  "model_version": "2026.08.1+465b28cc",
   "simulations": 20000,
   "games_played": 107,
   "basis": "projection",
