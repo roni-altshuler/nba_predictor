@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-05T18:30:48+00:00",
-  "model_version": "2026.08.1+9440bb4b",
+  "generated_at": "2026-11-06T17:50:17+00:00",
+  "model_version": "2026.08.1+0d463d63",
   "teams": [
     {
       "team_id": 27,
@@ -135,8 +135,17 @@
       "abbreviation": "GS",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
-      "elo": 1504.4,
+      "elo": 1517.0,
       "rank": 15
+    },
+    {
+      "team_id": 24,
+      "name": "Phoenix Suns",
+      "abbreviation": "PHX",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
+      "elo": 1481.5,
+      "rank": 16
     },
     {
       "team_id": 22,
@@ -144,8 +153,8 @@
       "abbreviation": "ORL",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-      "elo": 1491.6,
-      "rank": 16
+      "elo": 1480.6,
+      "rank": 17
     },
     {
       "team_id": 16,
@@ -153,8 +162,8 @@
       "abbreviation": "MIA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
-      "elo": 1488.1,
-      "rank": 17
+      "elo": 1475.5,
+      "rank": 18
     },
     {
       "team_id": 4,
@@ -163,15 +172,6 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
       "elo": 1474.2,
-      "rank": 18
-    },
-    {
-      "team_id": 24,
-      "name": "Phoenix Suns",
-      "abbreviation": "PHX",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
-      "elo": 1470.5,
       "rank": 19
     },
     {
