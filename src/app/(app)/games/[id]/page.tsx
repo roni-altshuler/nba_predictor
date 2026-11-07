@@ -12,7 +12,9 @@ import { MatchupSections } from '@/components/schedule/MatchupSections'
 import { GameOutlook } from '@/components/forecast/GameOutlook'
 import { InjuryReport } from '@/components/schedule/InjuryReport'
 import { ShootingContextSection } from '@/components/scouting/ShootingContextSection'
-import { getGameForecasts } from '@/lib/artifacts'
+import { SavedGamePrediction } from '@/components/accuracy/SavedGamePrediction'
+import { getForecastHistory, getGameForecasts, getLiveRecord } from '@/lib/artifacts'
+import { buildTrackRecord, type TrackRecord } from '@/lib/trackRecord'
 import {
   getEspnBoxScore,
   getEspnInjuries,
@@ -108,6 +110,7 @@ export default async function GamePage({
         seasonFile={archived.season}
         box={box}
         winProbability={winProbability}
+        record={buildTrackRecord(getLiveRecord(), getForecastHistory(), archived.game.season)}
       />
     )
   }
@@ -247,12 +250,14 @@ function PlayedGame({
   seasonFile,
   box,
   winProbability,
+  record,
 }: {
   game: ArchiveGame
   standings: Parameters<typeof teamMetaFromStandings>[0]
   seasonFile: SeasonFile
   box: GameBoxScore | null
   winProbability?: WinProbability | null
+  record: TrackRecord
 }) {
   const teams = teamMetaFromStandings(standings)
   const homeWon = game.home_score > game.away_score
@@ -306,6 +311,8 @@ function PlayedGame({
         <MatchupSections mode="played" />
       </header>
 
+      <SavedGamePrediction game={game} report={record} teams={teams} />
+
       {game.q_home && game.q_away ? (
         <div id="game-stats" className="mb-6 scroll-mt-20">
           <PeriodTable
@@ -355,11 +362,11 @@ function PlayedGame({
         />
       ) : (
         <section className="card mb-6 p-4">
-          <h2 className="text-sm">No forecast for this game</h2>
+          <h2 className="text-sm">No reconstructed forecast for this game</h2>
           <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-            It falls inside the warm-up seasons the model was fitted on —
-            reconstructing a forecast now would be a model that had seen the
-            answer.
+            Historical model details are unavailable for this game. The
+            published pregame record above is checked separately; a missing
+            reconstruction does not mean no call was saved.
           </p>
         </section>
       )}
@@ -437,7 +444,7 @@ function RecordedForecast({
   return (
     <section className="card mb-6 p-4">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="text-sm">What the model said</h2>
+        <h2 className="text-sm">What the reconstruction estimated</h2>
         <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--accent-warn)]">
           Backtest
         </span>

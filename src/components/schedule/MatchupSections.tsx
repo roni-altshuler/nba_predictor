@@ -8,6 +8,7 @@ const upcoming = [
   ['shooting-context', 'Team trends'], ['market', 'Odds'],
 ] as const
 const played = [
+  ['saved-prediction', 'Saved prediction'],
   ['player-box-scores', 'Players & box score'], ['game-stats', 'Game stats'],
   ['recorded-forecast', 'Model details'], ['shooting-context', 'Team trends'],
 ] as const
