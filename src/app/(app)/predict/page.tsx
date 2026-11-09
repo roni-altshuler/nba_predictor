@@ -6,7 +6,8 @@ import { getMatchups } from '@/lib/history'
 import { stamp } from '@/lib/format'
 
 export const metadata = { title: 'Head to head' }
-export const dynamic = 'force-static'
+// Keep automatic static rendering: force-static empties useSearchParams on
+// the server and prerenders the default pair instead of suspending the picker.
 
 /**
  * The next real fixture for each ordered pairing, keyed `HOME|AWAY`.

@@ -38,10 +38,7 @@ export function WeekCalendar({ week }: { week: GameWeek }) {
       {days.map(({ day, name, games }) => (
         <section
           key={day}
-          className={cn(
-            'rounded-sm border border-[var(--border-color)] p-2',
-            games.length ? '' : 'md:opacity-45',
-          )}
+          className="rounded-sm border border-[var(--border-color)] p-2"
         >
           <h4 className="mb-2 flex items-baseline justify-between gap-2 border-b border-[var(--border-color)] pb-1.5">
             <span className="font-numeric text-[10px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
