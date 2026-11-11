@@ -1,63 +1,63 @@
 {
-  "n": 154,
+  "n": 160,
   "basis": "live",
   "note": "Every forecast below was written to the warehouse before its tip-off, and this is the earliest such forecast for each game. It is NOT the walk-forward on the same page and the two are never merged.",
   "first_tipoff": "2026-10-20T19:00:00+00:00",
-  "last_tipoff": "2026-11-10T03:00:00+00:00",
-  "median_lead_hours": 1808.85,
+  "last_tipoff": "2026-11-11T04:00:00+00:00",
+  "median_lead_hours": 1810.85,
   "model": {
-    "n": 154,
-    "brier": 0.21657421934643506,
-    "log_loss": 0.6210832824809859,
-    "accuracy": 0.6298701298701299,
-    "ece": 0.07937634415584414,
-    "mean_predicted": 0.5505355519480519,
-    "base_rate": 0.5194805194805194
+    "n": 160,
+    "brier": 0.21509887249171875,
+    "log_loss": 0.6177817638153461,
+    "accuracy": 0.6375,
+    "ece": 0.07219869375000001,
+    "mean_predicted": 0.54833140625,
+    "base_rate": 0.51875
   },
   "margin": {
-    "n": 154,
-    "mae": 12.26277922077922,
-    "rmse": 15.720495682182113,
-    "bias": 0.6617142857142857,
-    "median_ae": 9.6755,
-    "mean_actual": 1.5844155844155845,
-    "mean_predicted": 2.24612987012987
+    "n": 160,
+    "mae": 12.3544625,
+    "rmse": 15.778744803928479,
+    "bias": 0.40695,
+    "median_ae": 9.6875,
+    "mean_actual": 1.775,
+    "mean_predicted": 2.18195
   },
   "total": {
-    "n": 154,
-    "mae": 15.777532467532469,
-    "rmse": 19.60112271499548,
-    "bias": 1.4729870129870126,
+    "n": 160,
+    "mae": 15.7398125,
+    "rmse": 19.530411718010452,
+    "bias": 1.6778124999999995,
     "median_ae": 14.439999999999998,
-    "mean_actual": 226.74025974025975,
-    "mean_predicted": 228.21324675324672
+    "mean_actual": 226.525,
+    "mean_predicted": 228.2028125
   },
   "paired_vs_market": {
-    "n": 154,
+    "n": 160,
     "devig": "shin",
     "model": {
-      "n": 154,
-      "brier": 0.21657421934643506,
-      "log_loss": 0.6210832824809859,
-      "accuracy": 0.6298701298701299,
-      "ece": 0.07937634415584414,
-      "mean_predicted": 0.5505355519480519,
-      "base_rate": 0.5194805194805194
+      "n": 160,
+      "brier": 0.21509887249171875,
+      "log_loss": 0.6177817638153461,
+      "accuracy": 0.6375,
+      "ece": 0.07219869375000001,
+      "mean_predicted": 0.54833140625,
+      "base_rate": 0.51875
     },
     "market": {
-      "n": 154,
-      "brier": 0.18352773274930534,
-      "log_loss": 0.5432247457365404,
-      "accuracy": 0.7207792207792207,
-      "ece": 0.08677710997711206,
-      "mean_predicted": 0.5493506854020695,
-      "base_rate": 0.5194805194805194
+      "n": 160,
+      "brier": 0.18174498295991393,
+      "log_loss": 0.539376719704886,
+      "accuracy": 0.725,
+      "ece": 0.08988967402285664,
+      "mean_predicted": 0.5477666630744793,
+      "base_rate": 0.51875
     },
-    "gap_to_market": 0.03305,
+    "gap_to_market": 0.03335,
     "bootstrap": {
-      "mean_diff": 0.03305,
-      "ci_low": 0.01515,
-      "ci_high": 0.051,
+      "mean_diff": 0.03335,
+      "ci_low": 0.01589,
+      "ci_high": 0.04994,
       "iterations": 5000
     },
     "verdict": "market_better"
@@ -66,13 +66,13 @@
     {
       "model_version": "2026.08.1+943bde8b",
       "horizon": "over_7_days",
-      "n": 154,
-      "brier": 0.21657421934643506,
-      "log_loss": 0.6210832824809859,
-      "accuracy": 0.6298701298701299,
-      "ece": 0.07937634415584414,
-      "mean_predicted": 0.5505355519480519,
-      "base_rate": 0.5194805194805194
+      "n": 160,
+      "brier": 0.21509887249171875,
+      "log_loss": 0.6177817638153461,
+      "accuracy": 0.6375,
+      "ece": 0.07219869375000001,
+      "mean_predicted": 0.54833140625,
+      "base_rate": 0.51875
     }
   ],
   "clv": {
@@ -88,13 +88,13 @@
     "note": "CLV, not profit, is the headline. At this sample size realised return is dominated by variance and says close to nothing about whether an edge existed; whether the price moved toward us converges far sooner. ROI is printed for completeness and should not be read as a result."
   },
   "season": 2027,
-  "generated_at": "2026-11-10T18:29:38+00:00",
+  "generated_at": "2026-11-11T18:21:40+00:00",
   "coverage": {
-    "settled_games": 154,
-    "scored_games": 154,
+    "settled_games": 160,
+    "scored_games": 160,
     "without_eligible_forecast": 0,
     "without_eligible_forecast_ids": [],
-    "pending_forecasts": 1046
+    "pending_forecasts": 1040
   },
   "games": [
     {
@@ -2713,6 +2713,108 @@
       "home_won": true,
       "margin": 51,
       "total": 225,
+      "clv": null
+    },
+    {
+      "game_id": "401909960",
+      "tipoff_utc": "2026-11-11T00:30:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "NY",
+      "away_team": "MIL",
+      "lead_hours": 2073.35,
+      "p_home": 0.851207,
+      "exp_margin": 13.654,
+      "exp_total": 225.3,
+      "date_utc": "2026-11-11T00:30:00+00:00",
+      "home_won": true,
+      "margin": 32,
+      "total": 202,
+      "clv": null
+    },
+    {
+      "game_id": "401909961",
+      "tipoff_utc": "2026-11-11T01:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "PHI",
+      "away_team": "BOS",
+      "lead_hours": 2073.85,
+      "p_home": 0.460151,
+      "exp_margin": -0.763,
+      "exp_total": 218.86,
+      "date_utc": "2026-11-11T01:00:00+00:00",
+      "home_won": false,
+      "margin": -22,
+      "total": 224,
+      "clv": null
+    },
+    {
+      "game_id": "401909962",
+      "tipoff_utc": "2026-11-11T02:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "PHX",
+      "away_team": "LAC",
+      "lead_hours": 2074.85,
+      "p_home": 0.534818,
+      "exp_margin": 1.604,
+      "exp_total": 226.14,
+      "date_utc": "2026-11-11T02:00:00+00:00",
+      "home_won": true,
+      "margin": 23,
+      "total": 243,
+      "clv": null
+    },
+    {
+      "game_id": "401909963",
+      "tipoff_utc": "2026-11-11T02:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "UTAH",
+      "away_team": "MIA",
+      "lead_hours": 2074.85,
+      "p_home": 0.337765,
+      "exp_margin": -4.786,
+      "exp_total": 253.04,
+      "date_utc": "2026-11-11T02:00:00+00:00",
+      "home_won": false,
+      "margin": -6,
+      "total": 224,
+      "clv": null
+    },
+    {
+      "game_id": "401909964",
+      "tipoff_utc": "2026-11-11T03:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "SAC",
+      "away_team": "ORL",
+      "lead_hours": 2075.85,
+      "p_home": 0.368998,
+      "exp_margin": -3.724,
+      "exp_total": 219.78,
+      "date_utc": "2026-11-11T03:00:00+00:00",
+      "home_won": false,
+      "margin": -7,
+      "total": 207,
+      "clv": null
+    },
+    {
+      "game_id": "401909965",
+      "tipoff_utc": "2026-11-11T04:00:00+00:00",
+      "generated_at": "2026-08-16T15:09:09+00:00",
+      "model_version": "2026.08.1+943bde8b",
+      "home_team": "POR",
+      "away_team": "OKC",
+      "lead_hours": 2076.85,
+      "p_home": 0.397611,
+      "exp_margin": -2.777,
+      "exp_total": 224.49,
+      "date_utc": "2026-11-11T04:00:00+00:00",
+      "home_won": true,
+      "margin": 20,
+      "total": 226,
       "clv": null
     }
   ]
