@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-11-13T18:24:07+00:00",
- "n_rows": 2086,
+ "last_observed": "2026-11-14T16:52:52+00:00",
+ "n_rows": 2115,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -20864,6 +20864,296 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-11-13T18:24:07+00:00"
+  },
+  {
+   "team": "Atlanta Hawks",
+   "player": "Kingston Flemings",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-11-15",
+   "espn_date": "2026-11-14T03:20Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Dailyn Swain",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right back",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:00Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Jalen Smith",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left hand",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T03:50Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Tobe Awaka",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:00Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Evan Mobley",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Toe",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:01Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Nae'Qwan Tomlin",
+   "position": "F",
+   "status": "Out",
+   "detail": "Back",
+   "return_date": "2026-11-16",
+   "espn_date": "2026-10-20T15:11Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Max Christie",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Ankle",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-13T22:06Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Morez Johnson Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left lower leg",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-13T22:05Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Ugonna Onyenso",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left foot",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-11T15:16Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Aaron Nesmith",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Hand",
+   "return_date": "2026-11-15",
+   "espn_date": "2026-11-14T03:02Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Quinten Post",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Concussion",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:02Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Zach Edey",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left ankle",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:02Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Klay Thompson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left ankle soreness",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:01Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Pelle Larsson",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-11-14",
+   "espn_date": "2026-11-14T15:02Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "New Orleans Pelicans",
+   "player": "Dejounte Murray",
+   "position": "G",
+   "status": "Out",
+   "detail": "Ankle",
+   "return_date": "2026-11-20",
+   "espn_date": "2026-11-13T20:19Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Ajay Mitchell",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left ankle sprain",
+   "return_date": "2026-11-15",
+   "espn_date": "2026-11-14T15:07Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Portland Trail Blazers",
+   "player": "Chris Youngblood",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right foot bruise",
+   "return_date": "2026-11-16",
+   "espn_date": "2026-11-14T15:05Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Sacramento Kings",
+   "player": "Precious Achiuwa",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Left ankle soreness",
+   "return_date": "2026-11-15",
+   "espn_date": "2026-11-14T15:05Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Jaxson Hayes",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left knee",
+   "return_date": "2026-11-15",
+   "espn_date": "2026-11-14T02:58Z",
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Norman Powell",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Golden State Warriors",
+   "player": "Charles Bassey",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "T.J. McConnell",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Miami Heat",
+   "player": "Giannis Antetokounmpo",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "New Orleans Pelicans",
+   "player": "Bennedict Mathurin",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jalen Suggs",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Jamal Cain",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "Orlando Magic",
+   "player": "Tristan da Silva",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "De'Aaron Fox",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Devin Vassell",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-14T16:52:52+00:00"
   }
  ]
 }
