@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-17T19:35:15+00:00",
-  "model_version": "2026.08.1+65b81735",
+  "generated_at": "2026-11-18T19:16:29+00:00",
+  "model_version": "2026.08.1+ec44f9a8",
   "teams": [
     {
       "team_id": 27,
@@ -9,7 +9,7 @@
       "abbreviation": "SA",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-      "elo": 1701.4,
+      "elo": 1682.7,
       "rank": 1
     },
     {
@@ -18,7 +18,7 @@
       "abbreviation": "NY",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-      "elo": 1641.4,
+      "elo": 1648.1,
       "rank": 2
     },
     {
@@ -40,21 +40,21 @@
       "rank": 4
     },
     {
+      "team_id": 9,
+      "name": "Detroit Pistons",
+      "abbreviation": "DET",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+      "elo": 1619.3,
+      "rank": 5
+    },
+    {
       "team_id": 14,
       "name": "Los Angeles Lakers",
       "abbreviation": "LAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-      "elo": 1616.5,
-      "rank": 5
-    },
-    {
-      "team_id": 11,
-      "name": "Houston Rockets",
-      "abbreviation": "HOU",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-      "elo": 1601.5,
+      "elo": 1619.0,
       "rank": 6
     },
     {
@@ -63,16 +63,16 @@
       "abbreviation": "MIN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-      "elo": 1601.4,
+      "elo": 1604.3,
       "rank": 7
     },
     {
-      "team_id": 9,
-      "name": "Detroit Pistons",
-      "abbreviation": "DET",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-      "elo": 1600.6,
+      "team_id": 11,
+      "name": "Houston Rockets",
+      "abbreviation": "HOU",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+      "elo": 1601.5,
       "rank": 8
     },
     {
@@ -81,7 +81,7 @@
       "abbreviation": "POR",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
-      "elo": 1568.0,
+      "elo": 1565.1,
       "rank": 9
     },
     {
@@ -162,7 +162,7 @@
       "abbreviation": "TOR",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-      "elo": 1499.0,
+      "elo": 1492.2,
       "rank": 18
     },
     {
@@ -175,21 +175,21 @@
       "rank": 19
     },
     {
-      "team_id": 13,
-      "name": "LA Clippers",
-      "abbreviation": "LAC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-      "elo": 1476.2,
-      "rank": 20
-    },
-    {
       "team_id": 4,
       "name": "Charlotte Hornets",
       "abbreviation": "CHA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
-      "elo": 1455.7,
+      "elo": 1453.2,
+      "rank": 20
+    },
+    {
+      "team_id": 13,
+      "name": "LA Clippers",
+      "abbreviation": "LAC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
+      "elo": 1439.9,
       "rank": 21
     },
     {
@@ -238,13 +238,22 @@
       "rank": 26
     },
     {
+      "team_id": 29,
+      "name": "Utah Jazz",
+      "abbreviation": "UTAH",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
+      "elo": 1342.6,
+      "rank": 27
+    },
+    {
       "team_id": 26,
       "name": "Sacramento Kings",
       "abbreviation": "SAC",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
       "elo": 1331.1,
-      "rank": 27
+      "rank": 28
     },
     {
       "team_id": 30,
@@ -253,7 +262,7 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
       "elo": 1328.7,
-      "rank": 28
+      "rank": 29
     },
     {
       "team_id": 17,
@@ -262,15 +271,6 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
       "elo": 1328.6,
-      "rank": 29
-    },
-    {
-      "team_id": 29,
-      "name": "Utah Jazz",
-      "abbreviation": "UTAH",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
-      "elo": 1306.3,
       "rank": 30
     }
   ]
