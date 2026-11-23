@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-22T18:14:11+00:00",
-  "model_version": "2026.08.1+4d8bb7e7",
+  "generated_at": "2026-11-23T22:27:35+00:00",
+  "model_version": "2026.08.1+ecc387d6",
   "teams": [
     {
       "team_id": 27,
@@ -18,7 +18,7 @@
       "abbreviation": "NY",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
-      "elo": 1656.1,
+      "elo": 1657.9,
       "rank": 2
     },
     {
@@ -27,26 +27,8 @@
       "abbreviation": "BOS",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
-      "elo": 1617.7,
+      "elo": 1612.1,
       "rank": 3
-    },
-    {
-      "team_id": 9,
-      "name": "Detroit Pistons",
-      "abbreviation": "DET",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
-      "elo": 1614.7,
-      "rank": 4
-    },
-    {
-      "team_id": 21,
-      "name": "Oklahoma City Thunder",
-      "abbreviation": "OKC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
-      "elo": 1610.7,
-      "rank": 5
     },
     {
       "team_id": 18,
@@ -55,6 +37,24 @@
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
       "elo": 1604.0,
+      "rank": 4
+    },
+    {
+      "team_id": 9,
+      "name": "Detroit Pistons",
+      "abbreviation": "DET",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+      "elo": 1603.3,
+      "rank": 5
+    },
+    {
+      "team_id": 21,
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+      "elo": 1599.6,
       "rank": 6
     },
     {
@@ -76,13 +76,22 @@
       "rank": 8
     },
     {
+      "team_id": 8,
+      "name": "Denver Nuggets",
+      "abbreviation": "DEN",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+      "elo": 1572.0,
+      "rank": 9
+    },
+    {
       "team_id": 23,
       "name": "Philadelphia 76ers",
       "abbreviation": "PHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
       "elo": 1571.4,
-      "rank": 9
+      "rank": 10
     },
     {
       "team_id": 25,
@@ -91,15 +100,6 @@
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
       "elo": 1567.4,
-      "rank": 10
-    },
-    {
-      "team_id": 8,
-      "name": "Denver Nuggets",
-      "abbreviation": "DEN",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
-      "elo": 1567.1,
       "rank": 11
     },
     {
@@ -117,7 +117,7 @@
       "abbreviation": "MIA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
-      "elo": 1540.6,
+      "elo": 1551.8,
       "rank": 13
     },
     {
@@ -126,7 +126,7 @@
       "abbreviation": "ATL",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
-      "elo": 1539.0,
+      "elo": 1550.4,
       "rank": 14
     },
     {
@@ -139,22 +139,13 @@
       "rank": 15
     },
     {
-      "team_id": 22,
-      "name": "Orlando Magic",
-      "abbreviation": "ORL",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
-      "elo": 1508.1,
-      "rank": 16
-    },
-    {
       "team_id": 15,
       "name": "Memphis Grizzlies",
       "abbreviation": "MEM",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
       "elo": 1501.8,
-      "rank": 17
+      "rank": 16
     },
     {
       "team_id": 28,
@@ -163,6 +154,15 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
       "elo": 1490.4,
+      "rank": 17
+    },
+    {
+      "team_id": 22,
+      "name": "Orlando Magic",
+      "abbreviation": "ORL",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+      "elo": 1484.8,
       "rank": 18
     },
     {
@@ -171,7 +171,7 @@
       "abbreviation": "GS",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
-      "elo": 1466.0,
+      "elo": 1471.6,
       "rank": 19
     },
     {
@@ -180,7 +180,7 @@
       "abbreviation": "DAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
-      "elo": 1465.8,
+      "elo": 1469.8,
       "rank": 20
     },
     {
@@ -207,7 +207,7 @@
       "abbreviation": "CHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
-      "elo": 1406.6,
+      "elo": 1401.6,
       "rank": 23
     },
     {
@@ -216,8 +216,17 @@
       "abbreviation": "IND",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
-      "elo": 1377.0,
+      "elo": 1375.2,
       "rank": 24
+    },
+    {
+      "team_id": 30,
+      "name": "Washington Wizards",
+      "abbreviation": "WSH",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
+      "elo": 1373.3,
+      "rank": 25
     },
     {
       "team_id": 19,
@@ -226,7 +235,7 @@
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
       "elo": 1371.6,
-      "rank": 25
+      "rank": 26
     },
     {
       "team_id": 29,
@@ -234,16 +243,7 @@
       "abbreviation": "UTAH",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
-      "elo": 1362.9,
-      "rank": 26
-    },
-    {
-      "team_id": 30,
-      "name": "Washington Wizards",
-      "abbreviation": "WSH",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
-      "elo": 1349.9,
+      "elo": 1359.0,
       "rank": 27
     },
     {

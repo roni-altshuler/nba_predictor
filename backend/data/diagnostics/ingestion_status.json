@@ -1,17 +1,17 @@
 {
   "source": "espn",
   "status": "ok",
-  "attempted_at": "2026-11-22T18:14:03+00:00",
+  "attempted_at": "2026-11-23T22:27:25+00:00",
   "seasons": [
     2027
   ],
-  "last_success_at": "2026-11-22T18:14:03+00:00",
+  "last_success_at": "2026-11-23T22:27:25+00:00",
   "event_count": 1273,
   "warehouse_updated": true,
   "error": null,
   "stats": {
-    "games": 308,
-    "scheduled": 959,
+    "games": 315,
+    "scheduled": 952,
     "skipped": 6
   }
 }
