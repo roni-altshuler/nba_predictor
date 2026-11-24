@@ -2,8 +2,8 @@
  "note": "Append-only transition log of NBA availability. A row is written when a player's status changes, not every day, and `observed_at` is when THIS PIPELINE saw the change rather than when it happened. Anything scored against this must key on observed_at or it will read the future. ESPN keeps no injury history; this file is the only record of it that will exist.",
  "source": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
  "first_observed": "2026-08-17T15:55:26+00:00",
- "last_observed": "2026-11-23T22:28:15+00:00",
- "n_rows": 2562,
+ "last_observed": "2026-11-24T21:01:47+00:00",
+ "n_rows": 2592,
  "rows": [
   {
    "team": "Atlanta Hawks",
@@ -25624,6 +25624,306 @@
    "return_date": null,
    "espn_date": null,
    "observed_at": "2026-11-23T22:28:15+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Grant Williams",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right hamstring",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T04:32Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Charlotte Hornets",
+   "player": "Ryan Kalkbrenner",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left hip soreness",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T02:14Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Jalen Smith",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T18:21Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Dallas Mavericks",
+   "player": "Tobi Lawal",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right groin",
+   "return_date": "2026-11-27",
+   "espn_date": "2026-11-23T23:25Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Ebuka Okorie",
+   "position": "G",
+   "status": "Out",
+   "detail": "Left oblique strain",
+   "return_date": "2026-12-13",
+   "espn_date": "2026-11-24T18:37Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Detroit Pistons",
+   "player": "Taurean Prince",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right knee surgery",
+   "return_date": "2026-12-26",
+   "espn_date": "2026-11-24T18:33Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Aaron Nesmith",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Foot",
+   "return_date": "2026-11-27",
+   "espn_date": "2026-11-24T04:40Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Larry Nance Jr.",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Right ankle soreness",
+   "return_date": "2026-11-27",
+   "espn_date": "2026-11-24T02:00Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "T.J. McConnell",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Left hamstring",
+   "return_date": "2026-11-27",
+   "espn_date": "2026-11-24T19:43Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "player": "Cameron Boozer",
+   "position": "F",
+   "status": "Out",
+   "detail": "Right ankle sprain",
+   "return_date": "2026-12-21",
+   "espn_date": "2026-11-23T23:07Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "player": "Donte DiVincenzo",
+   "position": "G",
+   "status": "Out",
+   "detail": "Right achilles surgery",
+   "return_date": "2027-01-03",
+   "espn_date": "2026-11-24T17:10Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Aday Mara",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Right lower leg bruise",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T04:36Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Oklahoma City Thunder",
+   "player": "Jaylin Williams",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back spasms",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T04:36Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Joel Embiid",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T04:33Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "De'Aaron Fox",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Right lower leg bruise",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T06:06Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Victor Wembanyama",
+   "position": "F",
+   "status": "Day-To-Day",
+   "detail": "Back",
+   "return_date": "2026-11-25",
+   "espn_date": "2026-11-24T06:06Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Utah Jazz",
+   "player": "Jaxson Hayes",
+   "position": "C",
+   "status": "Day-To-Day",
+   "detail": "Left knee",
+   "return_date": "2026-11-27",
+   "espn_date": "2026-11-24T06:07Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Washington Wizards",
+   "player": "Tre Mann",
+   "position": "G",
+   "status": "Day-To-Day",
+   "detail": "Illness",
+   "return_date": "2026-11-24",
+   "espn_date": "2026-11-24T16:47Z",
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Chicago Bulls",
+   "player": "Nic Claxton",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Cleveland Cavaliers",
+   "player": "Jaylon Tyson",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Denver Nuggets",
+   "player": "Julian Strawther",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Johnny Furphy",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Indiana Pacers",
+   "player": "Pascal Siakam",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "New Orleans Pelicans",
+   "player": "Zion Williamson",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Adem Bona",
+   "position": "C",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Dean Wade",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Philadelphia 76ers",
+   "player": "Jaylen Brown",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "San Antonio Spurs",
+   "player": "Jordan McLaughlin",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Collin Murray-Boyles",
+   "position": "F",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
+  },
+  {
+   "team": "Toronto Raptors",
+   "player": "Jaden Bradley",
+   "position": "G",
+   "status": "Available",
+   "detail": null,
+   "return_date": null,
+   "espn_date": null,
+   "observed_at": "2026-11-24T21:01:47+00:00"
   }
  ]
 }

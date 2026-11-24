@@ -1,7 +1,7 @@
 {
   "season": 2027,
-  "generated_at": "2026-11-23T22:27:35+00:00",
-  "model_version": "2026.08.1+ecc387d6",
+  "generated_at": "2026-11-24T21:01:17+00:00",
+  "model_version": "2026.08.1+f2eb6570",
   "teams": [
     {
       "team_id": 27,
@@ -9,7 +9,7 @@
       "abbreviation": "SA",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
-      "elo": 1688.8,
+      "elo": 1692.0,
       "rank": 1
     },
     {
@@ -36,7 +36,7 @@
       "abbreviation": "MIN",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
-      "elo": 1604.0,
+      "elo": 1608.1,
       "rank": 4
     },
     {
@@ -49,22 +49,13 @@
       "rank": 5
     },
     {
-      "team_id": 21,
-      "name": "Oklahoma City Thunder",
-      "abbreviation": "OKC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
-      "elo": 1599.6,
-      "rank": 6
-    },
-    {
       "team_id": 11,
       "name": "Houston Rockets",
       "abbreviation": "HOU",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
-      "elo": 1598.4,
-      "rank": 7
+      "elo": 1602.7,
+      "rank": 6
     },
     {
       "team_id": 14,
@@ -72,8 +63,26 @@
       "abbreviation": "LAL",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
-      "elo": 1592.7,
+      "elo": 1596.3,
+      "rank": 7
+    },
+    {
+      "team_id": 21,
+      "name": "Oklahoma City Thunder",
+      "abbreviation": "OKC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+      "elo": 1587.6,
       "rank": 8
+    },
+    {
+      "team_id": 25,
+      "name": "Portland Trail Blazers",
+      "abbreviation": "POR",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
+      "elo": 1585.0,
+      "rank": 9
     },
     {
       "team_id": 8,
@@ -82,7 +91,7 @@
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
       "elo": 1572.0,
-      "rank": 9
+      "rank": 10
     },
     {
       "team_id": 23,
@@ -90,26 +99,8 @@
       "abbreviation": "PHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
-      "elo": 1571.4,
-      "rank": 10
-    },
-    {
-      "team_id": 25,
-      "name": "Portland Trail Blazers",
-      "abbreviation": "POR",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
-      "elo": 1567.4,
+      "elo": 1553.7,
       "rank": 11
-    },
-    {
-      "team_id": 6,
-      "name": "Cleveland Cavaliers",
-      "abbreviation": "CLE",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
-      "elo": 1553.3,
-      "rank": 12
     },
     {
       "team_id": 16,
@@ -118,7 +109,7 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
       "elo": 1551.8,
-      "rank": 13
+      "rank": 12
     },
     {
       "team_id": 1,
@@ -127,6 +118,15 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
       "elo": 1550.4,
+      "rank": 13
+    },
+    {
+      "team_id": 6,
+      "name": "Cleveland Cavaliers",
+      "abbreviation": "CLE",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
+      "elo": 1535.3,
       "rank": 14
     },
     {
@@ -135,7 +135,7 @@
       "abbreviation": "PHX",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
-      "elo": 1525.1,
+      "elo": 1529.2,
       "rank": 15
     },
     {
@@ -144,17 +144,8 @@
       "abbreviation": "MEM",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
-      "elo": 1501.8,
+      "elo": 1509.4,
       "rank": 16
-    },
-    {
-      "team_id": 28,
-      "name": "Toronto Raptors",
-      "abbreviation": "TOR",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
-      "elo": 1490.4,
-      "rank": 17
     },
     {
       "team_id": 22,
@@ -163,6 +154,15 @@
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
       "elo": 1484.8,
+      "rank": 17
+    },
+    {
+      "team_id": 28,
+      "name": "Toronto Raptors",
+      "abbreviation": "TOR",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+      "elo": 1477.1,
       "rank": 18
     },
     {
@@ -189,7 +189,7 @@
       "abbreviation": "CHA",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
-      "elo": 1445.7,
+      "elo": 1438.1,
       "rank": 21
     },
     {
@@ -198,7 +198,7 @@
       "abbreviation": "LAC",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
-      "elo": 1429.1,
+      "elo": 1424.8,
       "rank": 22
     },
     {
@@ -207,7 +207,7 @@
       "abbreviation": "CHI",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
-      "elo": 1401.6,
+      "elo": 1419.6,
       "rank": 23
     },
     {
@@ -216,7 +216,7 @@
       "abbreviation": "IND",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
-      "elo": 1375.2,
+      "elo": 1387.2,
       "rank": 24
     },
     {
@@ -234,7 +234,7 @@
       "abbreviation": "NO",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
-      "elo": 1371.6,
+      "elo": 1367.5,
       "rank": 26
     },
     {
@@ -243,26 +243,8 @@
       "abbreviation": "UTAH",
       "conference": "Western Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
-      "elo": 1359.0,
+      "elo": 1355.4,
       "rank": 27
-    },
-    {
-      "team_id": 3,
-      "name": "Brooklyn Nets",
-      "abbreviation": "BKN",
-      "conference": "Eastern Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
-      "elo": 1329.5,
-      "rank": 28
-    },
-    {
-      "team_id": 26,
-      "name": "Sacramento Kings",
-      "abbreviation": "SAC",
-      "conference": "Western Conference",
-      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
-      "elo": 1328.3,
-      "rank": 29
     },
     {
       "team_id": 17,
@@ -270,7 +252,25 @@
       "abbreviation": "MIL",
       "conference": "Eastern Conference",
       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
-      "elo": 1320.2,
+      "elo": 1333.5,
+      "rank": 28
+    },
+    {
+      "team_id": 3,
+      "name": "Brooklyn Nets",
+      "abbreviation": "BKN",
+      "conference": "Eastern Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
+      "elo": 1325.3,
+      "rank": 29
+    },
+    {
+      "team_id": 26,
+      "name": "Sacramento Kings",
+      "abbreviation": "SAC",
+      "conference": "Western Conference",
+      "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
+      "elo": 1325.1,
       "rank": 30
     }
   ]
