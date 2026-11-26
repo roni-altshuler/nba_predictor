@@ -2,7 +2,7 @@
   "season": 2027,
   "basis": "live",
   "metric": "p_conference_title",
-  "generated_at": "2026-11-25T20:23:39+00:00",
+  "generated_at": "2026-11-26T20:00:21+00:00",
   "tracked_per_conference": 6,
   "teams": {
     "NY": {
@@ -4097,6 +4097,44 @@
         "NO": 0.0,
         "UTAH": 0.0,
         "BKN": 0.0,
+        "MIL": 0.0,
+        "SAC": 0.0
+      }
+    },
+    {
+      "date": "2026-11-26",
+      "generated_at": "2026-11-26T19:59:52+00:00",
+      "games_played": 270,
+      "model_version": "2026.08.1+f7db7742",
+      "probabilities": {
+        "SA": 0.4111,
+        "NY": 0.3995,
+        "BOS": 0.2004,
+        "DET": 0.1893,
+        "MIN": 0.1496,
+        "HOU": 0.1349,
+        "LAL": 0.1071,
+        "POR": 0.0909,
+        "PHI": 0.0756,
+        "OKC": 0.0549,
+        "ATL": 0.051,
+        "MIA": 0.0461,
+        "DEN": 0.0251,
+        "CLE": 0.0277,
+        "PHX": 0.0086,
+        "MEM": 0.0115,
+        "TOR": 0.005,
+        "ORL": 0.0046,
+        "DAL": 0.0043,
+        "GS": 0.0021,
+        "CHI": 0.0006,
+        "CHA": 0.0002,
+        "IND": 0.0001,
+        "LAC": 0.0,
+        "WSH": 0.0,
+        "NO": 0.0,
+        "BKN": 0.0,
+        "UTAH": 0.0,
         "MIL": 0.0,
         "SAC": 0.0
       }
