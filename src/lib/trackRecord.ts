@@ -58,7 +58,7 @@ function microseconds(value: string): bigint {
   return BigInt(Date.parse(value)) * 1000n + BigInt((fraction + '000000').slice(3, 6))
 }
 
-function compareTime(a: string, b: string): number {
+export function compareTime(a: string, b: string): number {
   const left = microseconds(a), right = microseconds(b)
   return left < right ? -1 : left > right ? 1 : 0
 }
